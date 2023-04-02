@@ -15,7 +15,7 @@ import text from "../../assets/icons/text.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 
-const SectionOne = () => {
+const Banner = () => {
   return (
     <Wrapper>
       <Row style={{ width: "100%" }}>
@@ -45,4 +45,4 @@ const SectionOne = () => {
   );
 };
 
-export default SectionOne;
+export default Banner;

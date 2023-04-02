@@ -76,7 +76,7 @@ const Header = ({ isMobile, isTablet }) => {
             {headerButtons.map((ele, indx) => (
               <Link
                 key={indx}
-                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h5}
+                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
               >
                 {ele.label}
               </Link>

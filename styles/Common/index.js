@@ -28,9 +28,9 @@ export const Text = styled.div`
   margin-bottom: ${(props) => props.mb};
 `;
 
-export const H5 = styled.h5`
+export const H5 = styled.h6`
   color: ${(props) => (props.color ? props.color : theme.colors.black)};
-  font-size: ${theme.fonts.size.h5};
+  font-size: ${theme.fonts.size.h6};
   font-weight: ${theme.fonts.weight.regular};
   line-height: 24px;
   text-align: ${(props) => props.align};

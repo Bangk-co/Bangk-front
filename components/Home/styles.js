@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
+//Banner
 export const Wrapper = styled.div`
   display: flex;
   background: ${theme.colors.green};
@@ -58,15 +59,15 @@ export const Title = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h4};
+    font-size: ${theme.fonts.size.h6};
     height: 60px;
     line-height: 25px;
   }
 `;
 
-export const Message = styled.h5`
+export const Message = styled.h6`
   color: ${theme.colors.white};
-  font-size: ${theme.fonts.size.h5};
+  font-size: ${theme.fonts.size.h6};
   font-weight: ${theme.fonts.weight.regular};
   line-height: 24px;
   margin: 50px 0 30px 0;
@@ -100,5 +101,406 @@ export const WrapperText = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
     margin-bottom: 15px;
+  }
+`;
+
+//WhyWeDoIt
+export const WrapperWhy = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 747px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    height: 810px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 356px;
+  }
+`;
+
+export const Col1 = styled.div`
+  display: flex;
+  width: 50%;
+  background: ${theme.colors.green};
+  order: 1;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    order: 2;
+  }
+`;
+
+export const Col2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.white};
+  padding: 97px 140px 38.26px 64px;
+  order: 2;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 356px;
+    padding: 38px 121px 22px 59.27px;
+    order: 1;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 19px 150px 19.21px 43px;
+  }
+`;
+
+export const TitleWhy = styled.div`
+  font-size: ${theme.fonts.size.xl};
+  line-height: 60px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 30px;
+    margin-bottom: 31px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 30px;
+  }
+`;
+
+export const WrapperStarWhy = styled.div`
+  display: flex;
+  width: 41px;
+  height: 43px;
+  margin: 31px 0px 57px 0px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    position: absolute;
+    width: 19.48px;
+    height: 20.44px;
+    top: 160vh;
+    left: 7vw;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 18px;
+    height: 19px;
+    margin: 10.87px 0px 20px 0px;
+  }
+`;
+
+export const TextWhy = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  letter-spacing: -0.05em;
+  margin-bottom: 30px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+`;
+
+export const WrapperButton = styled.div`
+  display: flex;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    position: absolute;
+    top: 190vh;
+    left: 40vw;
+  }
+`;
+
+//Bangk
+export const WrapperBangk = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 900px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    height: max-content;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 406px;
+  }
+`;
+
+export const Col3 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.white};
+  padding: 92px 154px 48.26px 42px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 405.66px;
+    padding: 29px 130px 15.66px 24px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 41px 87px 19.66px 81px;
+  }
+`;
+
+export const Col4 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.green};
+  padding: 169px 51.49px 168.99px 112px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 382px;
+    padding: 21.08px 14.17px 39.01px 61.83px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 22.19px 46.29px 41.67px 43.91px;
+  }
+`;
+
+export const TitleBangk = styled.div`
+  font-size: ${theme.fonts.size.xxl};
+  line-height: 80px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 30px;
+  }
+`;
+
+export const Text1Bangk = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 36px;
+  color: ${theme.colors.green};
+  margin: 60px 0px 56px 0px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 18px;
+    margin: 17px 0px 28px 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 18px;
+    margin: 21px 0px 8px 0px;
+  }
+`;
+
+export const Text2Bangk = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  margin-bottom: 27px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 11px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 11px;
+  }
+`;
+
+//BlogSection
+export const WrapperBlog = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 835px;
+  background: ${theme.colors.light};
+  padding: 33px 0px 0px 0px;
+  align-items: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: max-content;
+    padding: 20px 0px 0px 0px;
+  }
+`;
+
+export const WrapperBlogTablet = styled.div`
+  display: flex;
+  height: 406px;
+  background: ${theme.colors.light};
+`;
+
+export const WrapperRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
+`;
+
+export const Col5 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding: 30px 0px 0px 228px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    padding: 0;
+    align-items: center;
+  }
+`;
+
+export const Col5Tablet = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Col6 = styled.div`
+  display: flex;
+  width: 30%;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+  }
+`;
+
+export const Col6Tablet = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: self-end;
+`;
+
+export const TitleBlog = styled.div`
+  font-size: ${theme.fonts.size.xxl};
+  font-height: 80px;
+  font-height: ${theme.fonts.weight.bold};
+  text-align: center;
+  color: ${theme.colors.green};
+  margin-bottom: 47px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    font-height: 25px;
+    margin-bottom: 7px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    font-height: 25px;
+    margin-bottom: 14px;
+  }
+`;
+
+export const Text1Blog = styled.div`
+  font-size: ${theme.fonts.size.h3};
+  font-height: 43px;
+  text-align: center;
+  color: ${theme.colors.green};
+  margin-bottom: 103px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    font-height: 12px;
+    margin-bottom: 29px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    font-height: 12px;
+    margin-bottom: 40px;
+  }
+`;
+
+export const Text2Blog = styled.div`
+  font-size: ${theme.fonts.size.h4};
+  font-height: 36px;
+  color: ${theme.colors.orange};
+  margin: 90px 0px 23px 30px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    font-height: 12px;
+    margin: 0px 0px 11px 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    font-height: 12px;
+    margin: 0px 0px 9px 0px;
+  }
+`;
+
+export const WrapperIcon = styled.div`
+  display: flex;
+  width: 392px;
+  height: 110px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 92px;
+    height: 25.63px;
+    margin-bottom: 30.37px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 180.24px;
+    height: 50.18px;
+  }
+`;
+
+export const WrapperPhone = styled.div`
+  display: flex;
+  width: 293.62px;
+  height: 445px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 126.37px;
+    height: 192px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 190.48px;
+    height: 289px;
   }
 `;

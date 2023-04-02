@@ -10,7 +10,7 @@ export const CustomButton = styled(Button)`
   border-radius: 43px;
   opacity: 1;
   color: ${({ color }) => color || theme.colors.green};
-  font-size: ${({ size }) => size || theme.fonts.size.h5};
+  font-size: ${({ size }) => size || theme.fonts.size.h6};
   font-weight: ${theme.fonts.weight.bold};
   border: 1px solid;
   border-color: ${({ border }) => border || "transparent"};

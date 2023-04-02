@@ -4,6 +4,7 @@ import Banner from "@/components/Home/Banner";
 import Stepper from "@/components/Common/Stepper";
 import WhyWeDoIt from "@/components/Home/WhyWeDoIt";
 import Bangk from "@/components/Home/Bangk";
+import BlogSection from "@/components/Home/BlogSection";
 
 const Home = ({ isMobile, isTablet }) => {
   return (
@@ -12,6 +13,7 @@ const Home = ({ isMobile, isTablet }) => {
       <Stepper isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt />
       <Bangk />
+      <BlogSection isTablet={isTablet} />
     </Div>
   );
 };

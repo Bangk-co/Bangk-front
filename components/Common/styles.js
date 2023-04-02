@@ -57,13 +57,13 @@ export const Number = styled.div`
   color: ${theme.colors.orange};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h3};
+    font-size: ${theme.fonts.size.h6};
     line-height: 35px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h3};
+    font-size: ${theme.fonts.size.h6};
     line-height: 35px;
   }
 `;
@@ -93,7 +93,7 @@ export const WrapperStar = styled.div`
 `;
 
 export const Message = styled.div`
-  font-size: ${theme.fonts.size.h5};
+  font-size: ${theme.fonts.size.h6};
   line-height: 23px;
   text-align: right;
   color: ${theme.colors.white};
@@ -117,7 +117,7 @@ export const Message2 = styled.div`
 `;
 
 export const Title1 = styled.div`
-  font-size: ${theme.fonts.size.h5};
+  font-size: ${theme.fonts.size.h6};
   line-height: 23px;
   text-align: center;
   color: ${theme.colors.black};
@@ -145,7 +145,7 @@ export const Title2 = styled.div`
   margin-bottom: 130px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h4};
+    font-size: ${theme.fonts.size.h6};
     line-height: 29px;
     margin-bottom: 38px;
   }

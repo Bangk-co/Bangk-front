@@ -224,3 +224,115 @@ export const WrapperButton = styled.div`
     left: 40vw;
   }
 `;
+
+//Bangk
+export const WrapperBangk = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 900px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    height: max-content;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 406px;
+  }
+`;
+
+export const Col3 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.white};
+  padding: 92px 154px 48.26px 42px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 405.66px;
+    padding: 29px 130px 15.66px 24px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 41px 87px 19.66px 81px;
+  }
+`;
+
+export const Col4 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.green};
+  padding: 169px 51.49px 168.99px 112px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 382px;
+    padding: 21.08px 14.17px 39.01px 61.83px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 22.19px 46.29px 41.67px 43.91px;
+  }
+`;
+
+export const TitleBangk = styled.div`
+  font-size: ${theme.fonts.size.xxl};
+  line-height: 80px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h3};
+    line-height: 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h3};
+    line-height: 30px;
+  }
+`;
+
+export const Text1Bangk = styled.div`
+  font-size: ${theme.fonts.size.h3};
+  line-height: 36px;
+  color: ${theme.colors.green};
+  margin: 60px 0px 56px 0px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 18px;
+    margin: 17px 0px 28px 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 18px;
+    margin: 21px 0px 8px 0px;
+  }
+`;
+
+export const Text2Bangk = styled.div`
+  font-size: ${theme.fonts.size.h5};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  margin-bottom: 27px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 11px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 11px;
+  }
+`;

@@ -1,15 +1,15 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 import { Div } from "@/styles/Common";
-import { theme } from "@/styles/theme";
-import SectionOne from "@/components/Home/SectionOne";
+import Banner from "@/components/Home/Banner";
 import Stepper from "@/components/Common/Stepper";
+import WhyWeDoIt from "@/components/Home/WhyWeDoIt";
 
 const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
-      <SectionOne />
+      <Banner />
       <Stepper isMobile={isMobile} isTablet={isTablet} />
+      <WhyWeDoIt />
     </Div>
   );
 };

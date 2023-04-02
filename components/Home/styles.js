@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
+//Banner
 export const Wrapper = styled.div`
   display: flex;
   background: ${theme.colors.green};
@@ -100,5 +101,126 @@ export const WrapperText = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
     margin-bottom: 15px;
+  }
+`;
+
+//WhyWeDoIt
+export const WrapperWhy = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 747px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    height: 810px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 356px;
+  }
+`;
+
+export const Col1 = styled.div`
+  display: flex;
+  width: 50%;
+  background: ${theme.colors.green};
+  order: 1;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    order: 2;
+  }
+`;
+
+export const Col2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background: ${theme.colors.white};
+  padding: 97px 140px 38.26px 64px;
+  order: 2;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 356px;
+    padding: 38px 121px 22px 59.27px;
+    order: 1;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 19px 150px 19.21px 43px;
+  }
+`;
+
+export const TitleWhy = styled.div`
+  font-size: ${theme.fonts.size.xl};
+  line-height: 60px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h3};
+    line-height: 30px;
+    margin-bottom: 31px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h3};
+    line-height: 30px;
+  }
+`;
+
+export const WrapperStarWhy = styled.div`
+  display: flex;
+  width: 41px;
+  height: 43px;
+  margin: 31px 0px 57px 0px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    position: absolute;
+    width: 19.48px;
+    height: 20.44px;
+    top: 160vh;
+    left: 7vw;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 18px;
+    height: 19px;
+    margin: 10.87px 0px 20px 0px;
+  }
+`;
+
+export const TextWhy = styled.div`
+  font-size: ${theme.fonts.size.h5};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  letter-spacing: -0.05em;
+  margin-bottom: 30px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+`;
+
+export const WrapperButton = styled.div`
+  display: flex;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    position: absolute;
+    top: 190vh;
+    left: 40vw;
   }
 `;

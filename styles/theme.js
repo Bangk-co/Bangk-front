@@ -1,0 +1,48 @@
+export const theme = {
+  colors: {
+    white: "white",
+    black: "black",
+    green: "#024240",
+    orange: "#FF8400",
+    yellow: "#FFC400",
+    light: "#FBFAFB",
+    gray: "#EFEFEF",
+  },
+  fonts: {
+    size: {
+      xl: "3.75rem",
+      lg: "3.125rem",
+      h1: "3rem",
+      h2: "2.5rem",
+      h3: "1.875rem",
+      h4: "1.563rem",
+      h5: "1.25rem",
+      default: "1.125rem",
+      sm: "0.875rem",
+      xs: "0.75rem",
+      xxs: "0.625rem",
+      xxxs: "0.5rem",
+    },
+    weight: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+  },
+  breakpoints: {
+    xs: "320px",
+    sm: "480px",
+    md: "820px",
+    lg: "992px",
+    xl: "1200px",
+  },
+  zIndex: {
+    base: 1,
+    menu: 2,
+    overlay: 3,
+    modal: 4,
+    toast: 5,
+  },
+};

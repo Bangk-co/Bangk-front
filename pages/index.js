@@ -1,20 +1,19 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 import { Div } from "@/styles/Common";
-import { theme } from "@/styles/theme";
-import SectionOne from "@/components/Home/SectionOne";
+import Banner from "@/components/Home/Banner";
 import Stepper from "@/components/Common/Stepper";
+import WhyWeDoIt from "@/components/Home/WhyWeDoIt";
+import Bangk from "@/components/Home/Bangk";
+import BlogSection from "@/components/Home/BlogSection";
 
-const Home = ({ isMobileServer }) => {
-  const isMobile =
-    useMediaQuery({
-      query: `(max-width: ${theme.breakpoints.sm})`,
-    }) || isMobileServer;
-
+const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
-      <SectionOne />
-      <Stepper />
+      <Banner />
+      <Stepper isMobile={isMobile} isTablet={isTablet} />
+      <WhyWeDoIt />
+      <Bangk />
+      <BlogSection isTablet={isTablet} />
     </Div>
   );
 };

@@ -29,11 +29,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
       </Head>
 
       <Layout isMobile={isMobile} isTablet={isTablet}>
-        <Component
-          {...pageProps}
-          isMobileServer={isMobileServer}
-          isTabletServer={isTabletServer}
-        />
+        <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
       </Layout>
     </ThemeProvider>
   );

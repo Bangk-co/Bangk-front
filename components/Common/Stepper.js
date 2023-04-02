@@ -18,7 +18,7 @@ import star from "../../assets/icons/yellow-star.svg";
 import uy from "../../assets/icons/uy.svg";
 import { theme } from "@/styles/theme";
 
-const Stepper = () => {
+const Stepper = ({ isMobile, isTablet }) => {
   return (
     <Wrapper>
       <Div direction="column">
@@ -30,13 +30,21 @@ const Stepper = () => {
           <Image alt="uy" src={uy} />
         </WrapperUy>
       </Div>
-      <Row style={{ width: "100%", justifyContent: "space-around" }}>
+      <Row
+        style={{ width: "100%", justifyContent: "space-around" }}
+        gutter={isTablet && [30, 30]}
+      >
         {stepperList.map((ele, indx) => (
           <Col key={indx} lg={4.8}>
             <Card>
               <Number>{ele.number}</Number>
               <WrapperStar>
-                <Image alt="logo" src={star} width="31px" height="31px" />
+                <Image
+                  alt="logo"
+                  src={star}
+                  width={isMobile ? "13.77px" : isTablet ? "16.94px" : "31px"}
+                  height={isMobile ? "12.64px" : isTablet ? "15.55px" : "31px"}
+                />
               </WrapperStar>
               <Message width={ele.width}>
                 {ele.text1} <strong>{ele.text2}</strong> {ele.text3}

@@ -24,23 +24,23 @@ export const WrapperFooter = styled.div`
   }
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h6`
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
-  font-size: ${theme.fonts.size.h3};
+  font-size: ${theme.fonts.size.h6};
   font-weight:   color: ${(props) =>
     props.weight ? props.weight : theme.fonts.weight.bold};
   line-height: 29px;
   text-align: ${(props) => props.align};
 
   @media (max-width: ${theme.breakpoints.md}) {
-    font-size: ${theme.fonts.size.h5};
+    font-size: ${theme.fonts.size.h6};
     line-height: 23px;
   }
 `;
 
-export const MessageText = styled.h4`
+export const MessageText = styled.h6`
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
-  font-size: ${theme.fonts.size.h4};
+  font-size: ${theme.fonts.size.h6};
   font-weight: ${theme.fonts.weight.medium};
   line-height: 29px;
   text-align: ${(props) => props.align};

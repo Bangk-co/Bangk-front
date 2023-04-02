@@ -5,16 +5,11 @@ import { theme } from "@/styles/theme";
 import SectionOne from "@/components/Home/SectionOne";
 import Stepper from "@/components/Common/Stepper";
 
-const Home = ({ isMobileServer }) => {
-  const isMobile =
-    useMediaQuery({
-      query: `(max-width: ${theme.breakpoints.sm})`,
-    }) || isMobileServer;
-
+const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
       <SectionOne />
-      <Stepper />
+      <Stepper isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );
 };

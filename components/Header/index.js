@@ -8,12 +8,14 @@ import { theme } from "@/styles/theme";
 import { Dropdown } from "antd";
 import greenLogo from "../../assets/icons/green-logo.svg";
 import menu from "../../assets/icons/menu.svg";
+import { useRouter } from "next/router";
 
 const Header = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
 
   const headerButtons = [
-    { label: "Seguros", url: "" },
+    { label: "Seguros", url: "/seguros" },
     { label: "Conócenos", url: "" },
     { label: "Seguro", url: "" },
     { label: "Contacto", url: "" },
@@ -38,6 +40,10 @@ const Header = ({ isMobile, isTablet }) => {
 
   const handleMenu = (menu) => {
     setOpenMenu(!menu);
+  };
+
+  const handleGo = (url) => {
+    router.push(url);
   };
 
   return (
@@ -77,6 +83,7 @@ const Header = ({ isMobile, isTablet }) => {
               <Link
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                onClick={() => handleGo(ele.url)}
               >
                 {ele.label}
               </Link>

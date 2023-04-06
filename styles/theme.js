@@ -10,7 +10,8 @@ export const theme = {
   },
   fonts: {
     size: {
-      xxl: "5rem",
+      xxxl: "5rem",
+      xxl: "4.375rem",
       xl: "3.75rem",
       lg: "3.125rem",
       h1: "3rem",
@@ -25,6 +26,7 @@ export const theme = {
       xs: "0.75rem",
       xxs: "0.625rem",
       xxxs: "0.5rem",
+      n: "0.375rem",
     },
     weight: {
       light: 300,

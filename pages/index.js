@@ -11,7 +11,7 @@ const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
       <Banner />
-      <Stepper isMobile={isMobile} isTablet={isTablet} />
+      <Stepper isHome={true} isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt />
       <Bangk />
       <BlogSection isTablet={isTablet} />

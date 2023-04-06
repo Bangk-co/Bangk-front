@@ -17,19 +17,13 @@ import {
 import star from "../../assets/icons/yellow-star.svg";
 import uy from "../../assets/icons/uy.svg";
 import { theme } from "@/styles/theme";
+import StepperTitleHome from "../Home/StepperTitle";
+import StepperTitle from "../Insurance/StepperTitle";
 
-const Stepper = ({ isMobile, isTablet }) => {
+const Stepper = ({ isHome, isMobile, isTablet }) => {
   return (
     <Wrapper>
-      <Div direction="column">
-        <Title1>Es muy fácil, sigue</Title1>
-        <Title2>
-          El Paso a <span style={{ color: theme.colors.green }}>Paso</span>
-        </Title2>
-        <WrapperUy>
-          <Image alt="uy" src={uy} />
-        </WrapperUy>
-      </Div>
+      {isHome ? <StepperTitleHome /> : <StepperTitle />}
       <Row
         style={{ width: "100%", justifyContent: "space-around" }}
         gutter={isTablet && [30, 30]}

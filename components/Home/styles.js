@@ -282,7 +282,7 @@ export const Col4 = styled.div`
 `;
 
 export const TitleBangk = styled.div`
-  font-size: ${theme.fonts.size.xxl};
+  font-size: ${theme.fonts.size.xxxl};
   line-height: 80px;
   font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
@@ -408,7 +408,7 @@ export const Col6Tablet = styled.div`
 `;
 
 export const TitleBlog = styled.div`
-  font-size: ${theme.fonts.size.xxl};
+  font-size: ${theme.fonts.size.xxxl};
   font-height: 80px;
   font-height: ${theme.fonts.weight.bold};
   text-align: center;

@@ -168,3 +168,136 @@ export const MessageSave = styled.div`
     width: 220px;
   }
 `;
+
+// BangkData
+export const WrapperData = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 87px 69.5px 53px 69px;
+  background: ${theme.colors.yellow};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 20px 17px 0px 26px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 20px 43px 0px 26px;
+  }
+`;
+
+export const RowData = styled.div`
+  display: flex;
+  height: 207.5px;
+  width: 100%;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 91px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 71px;
+  }
+`;
+
+export const TitleData = styled.div`
+  font-size: ${theme.fonts.size.xl};
+  line-height: 60px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h3};
+    line-height: 30px;
+  }
+`;
+
+export const InfoText = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  width: 523px;
+  align-self: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxxs};
+    line-height: 10px;
+    width: 171px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxxs};
+    line-height: 10px;
+    width: 171px;
+  }
+`;
+
+export const WrapperStar = styled.div`
+  display: flex;
+  width: 20px;
+  height: 20px;
+  margin: 70px 158px 0px 341px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 9px;
+    height: 9px;
+    margin: 25px 9px 0px 68px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 11px;
+    height: 11px;
+    margin: 15px 11px 0px 409px;
+  }
+`;
+
+export const WrapperBigStar = styled.div`
+  display: flex;
+  width: 283px;
+  height: 283px;
+  position: absolute;
+  top: 296.5vh;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxxs};
+    width: 110px;
+    height: 110px;
+    top: 92.7vh;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 110px;
+    height: 116px;
+    top: 125vh;
+  }
+`;
+
+export const LineData = styled.div`
+  display: flex;
+  width: 100%;
+  height: 2px;
+  background: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 90%;
+    height: 1px;
+    align-self: self-end;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 50%;
+    height: 1px;
+    align-self: self-end;
+  }
+`;

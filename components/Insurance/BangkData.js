@@ -1,0 +1,75 @@
+import React from "react";
+import Image from "next/image";
+import {
+  InfoText,
+  LineData,
+  RowData,
+  TitleData,
+  WrapperBigStar,
+  WrapperData,
+  WrapperStar,
+} from "./styles";
+import star from "../../assets/icons/orange-star.svg";
+
+const BangkData = ({ isMobile, isTablet }) => {
+  return (
+    <WrapperData>
+      <RowData>
+        <TitleData>
+          Datos<br></br>Bangk!
+        </TitleData>
+        <WrapperStar>
+          <Image alt="star" src={star} />
+        </WrapperStar>
+        <InfoText>
+          En caso de fallecimiento o incapacidad total y permanente, la
+          aseguradora <strong>custrongirá el saldo de la deuda</strong> para que
+          tus herederos no tengan que asumirla.
+        </InfoText>
+      </RowData>
+      <LineData />
+      <RowData>
+        <WrapperStar
+          style={{
+            margin: isMobile
+              ? "25px 9px 0px 135.79px"
+              : isTablet
+              ? "15px 11px 0px 531px"
+              : "70px 158px 0px 544.35px",
+          }}
+        >
+          <Image alt="star" src={star} />
+        </WrapperStar>
+        <InfoText>
+          Al endosar los seguros de tus créditos, puedes{" "}
+          <strong>ahorrar entre un 20% y un 60%</strong> en comparación con los
+          seguros ofrecidos por la entidad ﬁnanciera.
+        </InfoText>
+      </RowData>
+      <LineData />
+      <RowData>
+        <WrapperStar
+          style={{
+            margin: isMobile
+              ? "25px 9px 0px 135.79px"
+              : isTablet
+              ? "15px 11px 0px 531px"
+              : "70px 158px 0px 544.35px",
+          }}
+        >
+          <Image alt="star" src={star} />
+        </WrapperStar>
+        <InfoText>
+          Si quieres <strong>ahorrar dinero en tus créditos,</strong> no dudes
+          en endosar los seguros. ¡Empieza a ahorrar ahora mismo! <br></br>
+          <br></br>
+        </InfoText>
+      </RowData>
+      <WrapperBigStar>
+        <Image alt="star" src={star} />
+      </WrapperBigStar>
+    </WrapperData>
+  );
+};
+
+export default BangkData;

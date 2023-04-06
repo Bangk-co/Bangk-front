@@ -119,3 +119,10 @@ export const stepperList = [
     text5: "SIN COSTO ALGUNO",
   },
 ];
+
+export const infoList = [
+  "Te cotizamos un nuevo seguro de vida para deudores y te proporcionamos una estimación de cuánto podrías ahorrar en comparación con el seguro actual.",
+  "Paga tu nuevo seguro y nos encargaremos de realizar el trámite para cancelar el anterior en el banco.",
+  "Nuestros asesores están disponibles para responder cualquier pregunta que tengas y, si decides hacer el cambio, nos encargamos de gestionar contigo la emisión de tu nuevo seguro.",
+  "Una vez que el banco haya aceptado tu nuevo seguro de vida para deudores, recibirás una notificación de confirmación del cambio y ¡comenzarás a ahorrar!",
+];

@@ -26,6 +26,7 @@ export const theme = {
       xs: "0.75rem",
       xxs: "0.625rem",
       xxxs: "0.5rem",
+      n: "0.375rem",
     },
     weight: {
       light: 300,

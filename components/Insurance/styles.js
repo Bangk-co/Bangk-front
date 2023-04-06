@@ -301,3 +301,202 @@ export const LineData = styled.div`
     align-self: self-end;
   }
 `;
+
+//FormInfo
+export const WrapperInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 48px 186px 0px 141px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 20px 47px 0px 51px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 20px 67px 0px 68px;
+  }
+`;
+
+export const WrapperInfoText = styled.div`
+  display: flex;
+  width: 1085px;
+  height: 392px;
+  background: ${theme.colors.gray};
+  border-radius: 50px 50px 0px 0px;
+  margin-left: 28px;
+  padding: 91px 82px 20px 118px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 283px;
+    height: min-content;
+    border-radius: 21px 20px 0px 0px;
+    padding: 38px 29px 20px 15px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 633px;
+    height: min-content;
+    padding: 101px 40px 23px 33px;
+  }
+`;
+
+export const WrapperTitle = styled.div`
+  display: flex;
+  width: 627px;
+  height: 92px;
+  background: ${theme.colors.orange};
+  border-radius: 20px;
+  padding: 30px 0px 17px 43px;
+  position: absolute;
+  top: 419.5vh;
+  left: 8.5vw;
+
+  font-size: ${theme.fonts.size.h3};
+  line-height: 42px;
+  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 23px;
+    width: max-content;
+    padding: 7px 8px 4px 15px;
+    top: 227vh;
+    left: 17vw;
+
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 47px;
+    width: max-content;
+    border-radius: 11px;
+    padding: 6px 18px 15px 15px;
+    top: 219vh;
+    left: 10vw;
+
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+  }
+`;
+
+export const Text1 = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  margin-bottom: 60px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.sm};
+    line-height: 17px;
+    width: 179px;
+    align-self: center;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 24px;
+    width: 320px;
+    margin-bottom: 80px;
+    margin-left: 40px;
+  }
+`;
+
+export const Text2 = styled.div`
+  font-size: ${theme.fonts.size.default};
+  line-height: 20px;
+  color: ${theme.colors.green};
+  width: 373px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    width: 215px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.sm};
+    line-height: 17px;
+    width: 252px;
+  }
+`;
+
+export const WrapperStarInfo = styled.div`
+  display: flex;
+  width: 24.12px;
+  height: 24.13px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 11px;
+    height: 11px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 11px;
+    height: 11px;
+  }
+`;
+
+export const Text3 = styled.div`
+  font-size: ${theme.fonts.size.default};
+  line-height: 18px;
+  color: ${theme.colors.white};
+  width: 203px;
+  position: absolute;
+  right: 2vw;
+  top: 445vh;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.n};
+    line-height: 6px;
+    width: 66.57px;
+    right: 2.5vw;
+    top: 255.7vh;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xs};
+    line-height: 12px;
+    width: 136px;
+    right: 20vw;
+    top: 219vh;
+  }
+`;
+
+export const WrapperImgInfo = styled.div`
+  display: flex;
+  width: 248.01px;
+  height: 139.01px;
+  position: absolute;
+  right: 1vw;
+  top: 442vh;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 75px;
+    height: 42.041px;
+    right: 2vw;
+    top: 255vh;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 168.01px;
+    height: 94.01px;
+    right: 18vw;
+    top: 217.5vh;
+  }
+`;
+
+export const RowInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;

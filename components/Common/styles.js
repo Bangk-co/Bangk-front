@@ -180,3 +180,44 @@ export const WrapperUy = styled.div`
     right: 32vw;
   }
 `;
+
+export const WrapperUy2 = styled.div`
+  position: absolute;
+  top: 320vh;
+  right: 5vw;
+  width: 65px;
+  height: 42px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 29px;
+    height: 19px;
+    top: 105vh;
+    right: 28vw;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 51px;
+    height: 34px;
+    top: 140vh;
+    right: 31vw;
+  }
+`;
+
+export const WrapperTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: self-end;
+  margin-right: 79px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    align-self: center;
+    margin-right: 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    align-self: center;
+    margin-right: 0px;
+  }
+`;

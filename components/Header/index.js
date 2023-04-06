@@ -8,12 +8,14 @@ import { theme } from "@/styles/theme";
 import { Dropdown } from "antd";
 import greenLogo from "../../assets/icons/green-logo.svg";
 import menu from "../../assets/icons/menu.svg";
+import { useRouter } from "next/router";
 
 const Header = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
 
   const headerButtons = [
-    { label: "Seguros", url: "" },
+    { label: "Seguros", url: "/seguros" },
     { label: "Conócenos", url: "" },
     { label: "Seguro", url: "" },
     { label: "Contacto", url: "" },
@@ -40,12 +42,27 @@ const Header = ({ isMobile, isTablet }) => {
     setOpenMenu(!menu);
   };
 
+  const handleGo = (url) => {
+    router.push(url);
+  };
+
+  const handleHome = () => {
+    router.push("/");
+  };
+
   return (
     <WrapperHeader>
       {isMobile ? (
         <>
           <Div>
-            <Image alt="logo" src={greenLogo} width="93px" height="34px" />
+            <Image
+              alt="logo"
+              src={greenLogo}
+              width="93px"
+              height="34px"
+              onClick={handleHome}
+              style={{ cursor: "pointer" }}
+            />
           </Div>
           <Dropdown
             open={openMenu}
@@ -70,6 +87,8 @@ const Header = ({ isMobile, isTablet }) => {
               src={greenLogo}
               width={isTablet ? "139px" : "163px"}
               height={isTablet ? "51px" : "60px"}
+              onClick={handleHome}
+              style={{ cursor: "pointer" }}
             />
           </Div>
           <Div gap={isTablet ? "63px" : "98px"}>
@@ -77,6 +96,7 @@ const Header = ({ isMobile, isTablet }) => {
               <Link
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                onClick={() => handleGo(ele.url)}
               >
                 {ele.label}
               </Link>

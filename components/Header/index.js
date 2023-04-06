@@ -46,12 +46,23 @@ const Header = ({ isMobile, isTablet }) => {
     router.push(url);
   };
 
+  const handleHome = () => {
+    router.push("/");
+  };
+
   return (
     <WrapperHeader>
       {isMobile ? (
         <>
           <Div>
-            <Image alt="logo" src={greenLogo} width="93px" height="34px" />
+            <Image
+              alt="logo"
+              src={greenLogo}
+              width="93px"
+              height="34px"
+              onClick={handleHome}
+              style={{ cursor: "pointer" }}
+            />
           </Div>
           <Dropdown
             open={openMenu}
@@ -76,6 +87,8 @@ const Header = ({ isMobile, isTablet }) => {
               src={greenLogo}
               width={isTablet ? "139px" : "163px"}
               height={isTablet ? "51px" : "60px"}
+              onClick={handleHome}
+              style={{ cursor: "pointer" }}
             />
           </Div>
           <Div gap={isTablet ? "63px" : "98px"}>

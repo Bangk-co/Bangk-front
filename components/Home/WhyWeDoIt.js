@@ -36,9 +36,7 @@ const WhyWeDoIt = () => {
           <br></br> Este trámite se conoce como endoso. La buena noticia…{" "}
           <br></br>en <strong>Bangk lo hacemos sin costo para ti.</strong>
         </TextWhy>
-        <WrapperButton>
-          <Button>Conoce más</Button>
-        </WrapperButton>
+        <Button>Conoce más</Button>
       </Col2>
     </WrapperWhy>
   );

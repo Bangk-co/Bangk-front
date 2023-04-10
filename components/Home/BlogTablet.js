@@ -11,7 +11,7 @@ import {
   WrapperPhone,
 } from "./styles";
 import blog from "../../assets/icons/blog.svg";
-import phone from "../../assets/img/phone-logo.svg";
+import phone from "../../assets/img/phone-logo.png";
 
 const BlogTablet = () => {
   return (

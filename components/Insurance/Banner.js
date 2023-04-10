@@ -11,7 +11,11 @@ const Banner = () => {
         <Col1>
           <BannerText>
             Poder aliviar<br></br> tu bolsillo sin perder tranquilidad <br></br>
-            <span style={{ color: theme.colors.orange }}>Eso es Bangk</span>
+            <span
+              style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+            >
+              Eso es Bangk
+            </span>
           </BannerText>
         </Col1>
         <Col2>

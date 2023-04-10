@@ -4,6 +4,7 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
+import "./app.css";
 
 import Layout from "../components/Layout";
 import { useMediaQuery } from "react-responsive";

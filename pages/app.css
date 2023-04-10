@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Gilroy";
+  src: local("Gilroy"), url(../assets/fonts/Gilroy-Regular.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Gilroy Medium";
+  src: local("Gilroy Medium"),
+    url(../assets/fonts/Gilroy-Medium.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Gilroy Bold";
+  src: local("Gilroy Bold"),
+    url(../assets/fonts/Gilroy-Bold.woff) format("woff");
+}
+
+* {
+  font-family: Gilroy;
+}

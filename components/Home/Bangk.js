@@ -18,7 +18,9 @@ const Bangk = () => {
       <Col3>
         <TitleBangk>
           BAAN
-          <span style={{ color: theme.colors.orange }}>
+          <span
+            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold " }}
+          >
             GGGGG<br></br>GGKKKKK!!!!
           </span>
         </TitleBangk>

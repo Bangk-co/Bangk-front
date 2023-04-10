@@ -50,9 +50,9 @@ export const Col2 = styled.div`
 `;
 
 export const BannerText = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xxl};
   line-height: 60px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -126,9 +126,9 @@ export const WrapperLogo = styled.div`
 `;
 
 export const TitleSave = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 60px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
   margin-bottom: 100px;
   width: 680px;
@@ -202,9 +202,9 @@ export const RowData = styled.div`
 `;
 
 export const TitleData = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xl};
   line-height: 60px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -353,9 +353,9 @@ export const WrapperTitle = styled.div`
   top: 419.5vh;
   left: 8.5vw;
 
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h3};
   line-height: 42px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {

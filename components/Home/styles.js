@@ -46,8 +46,8 @@ export const WrapperImage = styled.div`
 `;
 
 export const Title = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xl};
-  font-weight: ${theme.fonts.weight.bold};
   line-height: 72px;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
   height: 65px;
@@ -156,9 +156,9 @@ export const Col2 = styled.div`
 `;
 
 export const TitleWhy = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xl};
   line-height: 60px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -282,9 +282,9 @@ export const Col4 = styled.div`
 `;
 
 export const TitleBangk = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xxxl};
   line-height: 80px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -408,64 +408,65 @@ export const Col6Tablet = styled.div`
 `;
 
 export const TitleBlog = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xxxl};
-  font-height: 80px;
-  font-height: ${theme.fonts.weight.bold};
+  line-height: 80px;
   text-align: center;
   color: ${theme.colors.green};
   margin-bottom: 47px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.h6};
-    font-height: 25px;
+    line-height: 25px;
     margin-bottom: 7px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.h6};
-    font-height: 25px;
+    line-height: 25px;
     margin-bottom: 14px;
   }
 `;
 
 export const Text1Blog = styled.div`
   font-size: ${theme.fonts.size.h3};
-  font-height: 43px;
+  line-height: 43px;
   text-align: center;
   color: ${theme.colors.green};
   margin-bottom: 103px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.xxs};
-    font-height: 12px;
+    line-height: 12px;
     margin-bottom: 29px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.xxs};
-    font-height: 12px;
+    line-height: 12px;
     margin-bottom: 40px;
   }
 `;
 
 export const Text2Blog = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h4};
-  font-height: 36px;
+  line-height: 36px;
   color: ${theme.colors.orange};
   margin: 90px 0px 23px 30px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.xxs};
-    font-height: 12px;
+    line-height: 12px;
     margin: 0px 0px 11px 0px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.xxs};
-    font-height: 12px;
+    line-height: 12px;
     margin: 0px 0px 9px 0px;
   }
 `;
@@ -562,9 +563,9 @@ export const Col8 = styled.div`
 `;
 
 export const TitleReviews = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 86px;
-  font-weight: ${theme.fonts.weight.bold};
   color: ${theme.colors.green};
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme

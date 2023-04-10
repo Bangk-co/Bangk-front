@@ -50,9 +50,9 @@ export const Card = styled.div`
 `;
 
 export const Number = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h1};
   line-height: 56px;
-  font-weight: ${theme.fonts.weight.bold};
   text-align: right;
   color: ${theme.colors.orange};
 
@@ -138,9 +138,9 @@ export const Title1 = styled.div`
 `;
 
 export const Title2 = styled.div`
+  font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 59px;
-  font-weight: bold;
   color: ${theme.colors.yellow};
   margin-bottom: 130px;
 

@@ -3,6 +3,7 @@ import { Button } from "antd";
 import { theme } from "../../styles/theme";
 
 export const CustomLink = styled(Button)`
+  font-family: Gilroy;
   padding: 0px;
   color: ${({ color }) => color || theme.colors.black};
   font-size: ${({ size }) => size || theme.fonts.size.h6};

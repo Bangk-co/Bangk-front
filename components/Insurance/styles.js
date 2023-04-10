@@ -265,20 +265,20 @@ export const WrapperBigStar = styled.div`
   width: 283px;
   height: 283px;
   position: absolute;
-  top: 296.5vh;
+  top: 150em;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.xxxs};
     width: 110px;
     height: 110px;
-    top: 92.7vh;
+    top: 105.8em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 110px;
     height: 116px;
-    top: 125vh;
+    top: 92.2em;
   }
 `;
 
@@ -309,7 +309,7 @@ export const WrapperInfo = styled.div`
   padding: 48px 186px 0px 141px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 20px 47px 0px 51px;
+    padding: 20px 47px 0px 31px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -350,8 +350,8 @@ export const WrapperTitle = styled.div`
   border-radius: 20px;
   padding: 30px 0px 17px 43px;
   position: absolute;
-  top: 419.5vh;
-  left: 8.5vw;
+  top: 94.2em;
+  left: 3.4em;
 
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h3};
@@ -362,8 +362,8 @@ export const WrapperTitle = styled.div`
     height: 23px;
     width: max-content;
     padding: 7px 8px 4px 15px;
-    top: 227vh;
-    left: 17vw;
+    top: 219.5em;
+    left: 5em;
 
     font-size: ${theme.fonts.size.xxs};
     line-height: 12px;
@@ -375,8 +375,8 @@ export const WrapperTitle = styled.div`
     width: max-content;
     border-radius: 11px;
     padding: 6px 18px 15px 15px;
-    top: 219vh;
-    left: 10vw;
+    top: 129em;
+    left: 4em;
 
     font-size: ${theme.fonts.size.h6};
     line-height: 20px;
@@ -451,15 +451,15 @@ export const Text3 = styled.div`
   color: ${theme.colors.white};
   width: 203px;
   position: absolute;
-  right: 2vw;
-  top: 445vh;
+  right: 2em;
+  top: 200em;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.n};
     line-height: 6px;
     width: 66.57px;
-    right: 2.5vw;
-    top: 255.7vh;
+    right: 2em;
+    top: 411.5em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -467,8 +467,8 @@ export const Text3 = styled.div`
     font-size: ${theme.fonts.size.xs};
     line-height: 12px;
     width: 136px;
-    right: 20vw;
-    top: 219vh;
+    right: 14em;
+    top: 215.2em;
   }
 `;
 
@@ -477,22 +477,22 @@ export const WrapperImgInfo = styled.div`
   width: 248.01px;
   height: 139.01px;
   position: absolute;
-  right: 1vw;
-  top: 442vh;
+  right: 1em;
+  top: 223.5em;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 75px;
     height: 42.041px;
-    right: 2vw;
-    top: 255vh;
+    right: 0.5em;
+    top: 154em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 168.01px;
     height: 94.01px;
-    right: 18vw;
-    top: 217.5vh;
+    right: 9.5em;
+    top: 160.5em;
   }
 `;
 

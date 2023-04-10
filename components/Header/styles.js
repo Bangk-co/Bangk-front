@@ -21,3 +21,24 @@ export const WrapperHeader = styled.div`
     padding: 0px 24px;
   }
 `;
+
+export const WrapperMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 69px;
+  right: 0px;
+  left: 0px;
+  width: 100%;
+  height: 93%;
+  background: ${theme.colors.green};
+  z-index: 5;
+`;
+
+export const Text = styled.div`
+  font-size: ${theme.fonts.size.xxxs};
+  line-height: 9px;
+  color: ${theme.colors.white};
+  text-align: center;
+  margin: 18.29px 0px 38px 0px;
+`;

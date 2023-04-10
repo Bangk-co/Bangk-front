@@ -3,51 +3,38 @@ import Image from "next/image";
 import { Div } from "@/styles/Common";
 import { WrapperHeader } from "./styles";
 import { Link } from "../Link";
-import { useMediaQuery } from "react-responsive";
 import { theme } from "@/styles/theme";
-import { Dropdown } from "antd";
 import greenLogo from "../../assets/icons/green-logo.svg";
 import menu from "../../assets/icons/menu.svg";
 import { useRouter } from "next/router";
+import MenuMobile from "./MenuMobile";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
+  const [optionSelected, setOptionSelected] = useState(null);
 
   const headerButtons = [
-    { label: "Seguros", url: "/seguros" },
-    { label: "Conócenos", url: "" },
-    { label: "Seguro", url: "" },
-    { label: "Contacto", url: "" },
-  ];
-
-  const links = (label) => {
-    return <Link>{label}</Link>;
-  };
-
-  const items = [
-    {
-      key: 1,
-      label: links("Seguros"),
-    },
-    {
-      key: 2,
-      label: links("Conócenos"),
-    },
-    { key: 3, label: links("Seguro") },
-    { key: 4, label: links("Contacto") },
+    { key: 0, label: "Seguros", url: "/seguros" },
+    { key: 1, label: "Conócenos", url: "" },
+    { key: 2, label: "Seguro", url: "" },
+    { key: 3, label: "Contacto", url: "" },
   ];
 
   const handleMenu = (menu) => {
     setOpenMenu(!menu);
   };
 
-  const handleGo = (url) => {
+  const handleGo = (url, key) => {
+    setOptionSelected(key);
     router.push(url);
+    setOpenMenu(false);
   };
 
   const handleHome = () => {
     router.push("/");
+    setOptionSelected(null);
+    setOpenMenu(false);
   };
 
   return (
@@ -64,20 +51,20 @@ const Header = ({ isMobile, isTablet }) => {
               style={{ cursor: "pointer" }}
             />
           </Div>
-          <Dropdown
-            open={openMenu}
-            menu={{ items }}
-            trigger={["click"]}
-            placement="bottom"
+          <Div
+            m="0 30px 0 0"
+            style={{ cursor: "pointer" }}
+            onClick={() => handleMenu(openMenu)}
           >
-            <Div
-              m="0 30px 0 0"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleMenu(openMenu)}
-            >
-              <Image alt="menu" src={menu} width={36} height={36} />
-            </Div>
-          </Dropdown>
+            <Image alt="menu" src={menu} width={36} height={36} />
+          </Div>
+          {openMenu && (
+            <MenuMobile
+              headerButtons={headerButtons}
+              optionSelected={optionSelected}
+              handleGo={handleGo}
+            />
+          )}
         </>
       ) : (
         <>
@@ -96,7 +83,7 @@ const Header = ({ isMobile, isTablet }) => {
               <Link
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
-                onClick={() => handleGo(ele.url)}
+                onClick={() => handleGo(ele.url, ele.key)}
               >
                 {ele.label}
               </Link>

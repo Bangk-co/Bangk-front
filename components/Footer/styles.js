@@ -6,7 +6,6 @@ export const WrapperFooter = styled.div`
   flex-direction: row;
   background: ${theme.colors.green};
   height: 443px;
-  width: 100vw;
   padding: 78.93px 127px 74.07px 66px;
   justify-content: space-between;
 
@@ -25,10 +24,9 @@ export const WrapperFooter = styled.div`
 `;
 
 export const Title = styled.h6`
+  font-family: Gilroy Bold;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
   font-size: ${theme.fonts.size.h6};
-  font-weight:   color: ${(props) =>
-    props.weight ? props.weight : theme.fonts.weight.bold};
   line-height: 29px;
   text-align: ${(props) => props.align};
 
@@ -39,9 +37,9 @@ export const Title = styled.h6`
 `;
 
 export const MessageText = styled.h6`
+  font-family: Gilroy Medium;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
   font-size: ${theme.fonts.size.h6};
-  font-weight: ${theme.fonts.weight.medium};
   line-height: 29px;
   text-align: ${(props) => props.align};
   width: 202px;

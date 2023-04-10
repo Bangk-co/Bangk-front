@@ -5,7 +5,6 @@ export const WrapperHeader = styled.div`
   display: flex;
   background: ${theme.colors.white};
   height: 141px;
-  width: 100vw;
   padding: 0px 45px;
   justify-content: space-between;
   align-items: center;

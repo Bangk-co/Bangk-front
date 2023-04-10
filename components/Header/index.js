@@ -83,6 +83,11 @@ const Header = ({ isMobile, isTablet }) => {
               <Link
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                color={
+                  optionSelected === indx
+                    ? theme.colors.orange
+                    : theme.colors.black
+                }
                 onClick={() => handleGo(ele.url, ele.key)}
               >
                 {ele.label}

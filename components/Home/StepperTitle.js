@@ -10,7 +10,10 @@ const StepperTitleHome = () => {
     <Div direction="column">
       <Title1>Es muy fácil, sigue</Title1>
       <Title2>
-        El Paso a <span style={{ color: theme.colors.green }}>Paso</span>
+        El Paso a{" "}
+        <span style={{ color: theme.colors.green, fontFamily: "Gilroy Bold" }}>
+          Paso
+        </span>
       </Title2>
       <WrapperUy>
         <Image alt="uy" src={uy} />

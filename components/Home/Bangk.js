@@ -8,7 +8,7 @@ import {
   TitleBangk,
   WrapperBangk,
 } from "./styles";
-import greenCoin from "../../assets/icons/green-coin.svg";
+import greenCoin from "../../assets/icons/green-coin.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 

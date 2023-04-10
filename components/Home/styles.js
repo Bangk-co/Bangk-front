@@ -20,8 +20,8 @@ export const Wrapper = styled.div`
 export const WrapperStar = styled.div`
   display: flex;
   position: absolute;
-  top: -50px;
-  right: 0px;
+  top: -10%;
+  right: 0%;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
@@ -184,8 +184,8 @@ export const WrapperStarWhy = styled.div`
     position: absolute;
     width: 19.48px;
     height: 20.44px;
-    top: 160vh;
-    left: 7vw;
+    top: 91.3em;
+    left: 1.6em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -212,16 +212,6 @@ export const TextWhy = styled.div`
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.xxs};
     line-height: 12px;
-  }
-`;
-
-export const WrapperButton = styled.div`
-  display: flex;
-
-  @media (max-width: ${theme.breakpoints.sm}) {
-    position: absolute;
-    top: 190vh;
-    left: 40vw;
   }
 `;
 

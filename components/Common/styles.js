@@ -160,47 +160,47 @@ export const Title2 = styled.div`
 
 export const WrapperUy = styled.div`
   position: absolute;
-  top: 96vh;
-  right: 34vw;
+  top: 48.5em;
+  right: 31.5em;
   width: 65px;
   height: 42px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 29px;
     height: 19px;
-    top: 45.5vh;
-    right: 28vw;
+    top: 26.2em;
+    right: 6em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 51px;
     height: 34px;
-    top: 55.5vh;
-    right: 32vw;
+    top: 41.2em;
+    right: 15.5em;
   }
 `;
 
 export const WrapperUy2 = styled.div`
   position: absolute;
-  top: 320vh;
-  right: 5vw;
+  top: 161.7em;
+  right: 5em;
   width: 65px;
   height: 42px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 29px;
     height: 19px;
-    top: 105vh;
-    right: 28vw;
+    top: 60.2em;
+    right: 6em;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 51px;
     height: 34px;
-    top: 140vh;
-    right: 31vw;
+    top: 103.5em;
+    right: 15.5em;
   }
 `;
 

@@ -12,8 +12,12 @@ const SaveMobile = () => {
         <Div justify="center" height="100px">
           <TitleSave>
             Ahorra dinero endosando los{" "}
-            <span style={{ color: theme.colors.orange }}>seguros</span> de tus
-            créditos.
+            <span
+              style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+            >
+              seguros
+            </span>{" "}
+            de tus créditos.
           </TitleSave>
         </Div>
         <Div>

@@ -452,14 +452,14 @@ export const Text3 = styled.div`
   color: ${theme.colors.white};
   width: 203px;
   position: absolute;
-  right: 50px;
+  right: 95px;
   bottom: 180px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.n};
     line-height: 6px;
     width: 66.57px;
-    right: 15px;
+    right: 28px;
     bottom: 87px;
   }
 
@@ -478,13 +478,13 @@ export const WrapperImgInfo = styled.div`
   width: 248.01px;
   height: 139.01px;
   position: absolute;
-  right: 30px;
+  right: 70px;
   bottom: 120px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 75px;
     height: 42.041px;
-    right: 10px;
+    right: 25px;
     bottom: 70px;
   }
 

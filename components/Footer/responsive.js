@@ -21,7 +21,7 @@ const FooterResponsive = ({ isMobile }) => {
           alt="logo"
           src={logo}
           width={isMobile ? "112px" : "103.8"}
-          height={isMobile ? "61px" : "58px"}
+          height={isMobile ? "41px" : "58px"}
         />
         {isMobile ? (
           <span

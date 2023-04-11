@@ -305,6 +305,7 @@ export const LineData = styled.div`
 //FormInfo
 export const WrapperInfo = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   padding: 48px 186px 0px 141px;
 
@@ -350,8 +351,8 @@ export const WrapperTitle = styled.div`
   border-radius: 20px;
   padding: 30px 0px 17px 43px;
   position: absolute;
-  top: 94.2em;
-  left: 3.4em;
+  top: 80px;
+  left: 120px;
 
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h3};
@@ -362,8 +363,8 @@ export const WrapperTitle = styled.div`
     height: 23px;
     width: max-content;
     padding: 7px 8px 4px 15px;
-    top: 219.5em;
-    left: 5em;
+    top: 85px;
+    left: 45px;
 
     font-size: ${theme.fonts.size.xxs};
     line-height: 12px;
@@ -375,8 +376,8 @@ export const WrapperTitle = styled.div`
     width: max-content;
     border-radius: 11px;
     padding: 6px 18px 15px 15px;
-    top: 129em;
-    left: 4em;
+    top: 125px;
+    left: 80px;
 
     font-size: ${theme.fonts.size.h6};
     line-height: 20px;
@@ -451,15 +452,15 @@ export const Text3 = styled.div`
   color: ${theme.colors.white};
   width: 203px;
   position: absolute;
-  right: 2em;
-  top: 200em;
+  right: 50px;
+  bottom: 180px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.n};
     line-height: 6px;
     width: 66.57px;
-    right: 2em;
-    top: 411.5em;
+    right: 15px;
+    bottom: 87px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -467,8 +468,8 @@ export const Text3 = styled.div`
     font-size: ${theme.fonts.size.xs};
     line-height: 12px;
     width: 136px;
-    right: 14em;
-    top: 215.2em;
+    right: 165px;
+    top: 125px;
   }
 `;
 
@@ -477,22 +478,22 @@ export const WrapperImgInfo = styled.div`
   width: 248.01px;
   height: 139.01px;
   position: absolute;
-  right: 1em;
-  top: 223.5em;
+  right: 30px;
+  bottom: 120px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 75px;
     height: 42.041px;
-    right: 0.5em;
-    top: 154em;
+    right: 10px;
+    bottom: 70px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 168.01px;
     height: 94.01px;
-    right: 9.5em;
-    top: 160.5em;
+    right: 150px;
+    top: 110px;
   }
 `;
 

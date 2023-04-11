@@ -32,10 +32,10 @@ const BangkData = ({ isMobile, isTablet }) => {
         <WrapperStar
           style={{
             margin: isMobile
-              ? "25px 9px 0px 135.79px"
+              ? "25px 9px 0px 133px"
               : isTablet
-              ? "15px 11px 0px 531px"
-              : "70px 158px 0px 544.35px",
+              ? "15px 11px 0px 525.5px"
+              : "70px 158px 0px 535px",
           }}
         >
           <Image alt="star" src={star} />
@@ -51,10 +51,10 @@ const BangkData = ({ isMobile, isTablet }) => {
         <WrapperStar
           style={{
             margin: isMobile
-              ? "25px 9px 0px 135.79px"
+              ? "25px 9px 0px 133px"
               : isTablet
-              ? "15px 11px 0px 531px"
-              : "70px 158px 0px 544.35px",
+              ? "15px 11px 0px 525.5px"
+              : "70px 158px 0px 535px",
           }}
         >
           <Image alt="star" src={star} />

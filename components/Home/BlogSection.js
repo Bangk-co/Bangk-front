@@ -12,7 +12,7 @@ import {
   WrapperRow,
 } from "./styles";
 import blog from "../../assets/icons/blog.svg";
-import phone from "../../assets/img/phone-logo.svg";
+import phone from "../../assets/img/phone-logo.png";
 import BlogTablet from "./BlogTablet";
 
 const BlogSection = ({ isTablet }) => {

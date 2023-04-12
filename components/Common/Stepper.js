@@ -8,15 +8,10 @@ import {
   Message,
   Message2,
   Number,
-  Title1,
-  Title2,
   Wrapper,
   WrapperStar,
-  WrapperUy,
 } from "./styles";
 import star from "../../assets/icons/yellow-star.svg";
-import uy from "../../assets/icons/uy.svg";
-import { theme } from "@/styles/theme";
 import StepperTitleHome from "../Home/StepperTitle";
 import StepperTitle from "../Insurance/StepperTitle";
 

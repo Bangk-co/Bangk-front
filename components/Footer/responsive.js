@@ -55,7 +55,7 @@ const FooterResponsive = ({ isMobile }) => {
       <Div
         justify={isMobile ? "center" : "right"}
         height="min-content"
-        style={{ textAlignLast: isMobile && "center" }}
+        style={{ textAlignLast: isMobile ? "center" : "left" }}
       >
         <Row
           style={{

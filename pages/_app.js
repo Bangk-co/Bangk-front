@@ -17,7 +17,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
 
   const isTablet =
     useMediaQuery({
-      query: `(min-width: ${theme.breakpoints.sm}) && (max-width: ${theme.breakpoints.md})`,
+      query: `(min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md})`,
     }) || isTabletServer;
 
   return (
@@ -57,6 +57,7 @@ MyApp.propTypes = {
   Component: PropTypes.any,
   pageProps: PropTypes.object,
   isMobileServer: PropTypes.bool,
+  isTabletServer: PropTypes.bool,
 };
 
 export default MyApp;

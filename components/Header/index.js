@@ -16,8 +16,8 @@ const Header = ({ isMobile, isTablet }) => {
 
   const headerButtons = [
     { key: 0, label: "Seguros", url: "/seguros" },
-    { key: 1, label: "Conócenos", url: "" },
-    { key: 2, label: "Seguro", url: "" },
+    { key: 1, label: "Conócenos", url: "/conocenos" },
+    { key: 2, label: "Legales", url: "" },
     { key: 3, label: "Contacto", url: "" },
   ];
 

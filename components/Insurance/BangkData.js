@@ -23,8 +23,8 @@ const BangkData = ({ isMobile, isTablet }) => {
         </WrapperStar>
         <InfoText>
           En caso de fallecimiento o incapacidad total y permanente, la
-          aseguradora <strong>custrongirá el saldo de la deuda</strong> para que
-          tus herederos no tengan que asumirla.
+          aseguradora <strong>cubrirá el saldo de la deuda</strong> para que tus
+          herederos no tengan que asumirla.
         </InfoText>
       </RowData>
       <LineData />

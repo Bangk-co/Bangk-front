@@ -6,6 +6,7 @@ export const theme = {
     orange: "#FF8400",
     yellow: "#FFC400",
     light: "#FBFAFB",
+    light2: "#FCFBFC",
     gray: "#EFEFEF",
   },
   fonts: {

@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { theme } from "../../styles/theme";
 
 export const CustomButton = styled(Button)`
-  width: 163px;
+  width: ${({ width }) => width || "163px"} !important;
   height: 42.74px;
   background: ${({ background }) => background || theme.colors.yellow} 0% 0%
     no-repeat padding-box;
@@ -17,7 +17,7 @@ export const CustomButton = styled(Button)`
   border-color: ${({ border }) => border || "transparent"};
   text-align: center;
   justify-content: center;
-  padding: 0;
+  padding: ${({ padding }) => padding || "0px"};
 
   && {
     &.ant-btn-link {

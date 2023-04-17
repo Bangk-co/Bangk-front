@@ -288,3 +288,82 @@ export const TextOurGain = styled.div`
     margin-bottom: 5px;
   }
 `;
+
+//ForUs
+export const WrapperForUs = styled.div`
+  display: flex;
+  background: ${theme.colors.light2};
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const WrapperTextForUs = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 127px 0px 140px 57px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 45%;
+    padding: 57px 0px 29.32px 32px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 55%;
+    padding: 27px 0px 16px 20px;
+  }
+`;
+
+export const WrapperIcon = styled.div`
+  display: flex;
+  width: 50%;
+  height: 100%;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 40%;
+    height: 90%;
+    padding-right: 50px;
+  }
+`;
+
+export const TitleForUs = styled.div`
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.xl};
+  line-height: 70px;
+  color: ${theme.colors.green};
+  margin-bottom: 26px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h4};
+    line-height: 30px;
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+    width: 142px;
+  }
+`;
+
+export const TextForUs = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  color: ${theme.colors.green};
+  margin-bottom: 23px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    margin-bottom: 8px;
+  }
+`;

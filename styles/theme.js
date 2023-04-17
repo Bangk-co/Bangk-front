@@ -6,10 +6,12 @@ export const theme = {
     orange: "#FF8400",
     yellow: "#FFC400",
     light: "#FBFAFB",
+    light2: "#FCFBFC",
     gray: "#EFEFEF",
   },
   fonts: {
     size: {
+      m: "5.625rem",
       xxxl: "5rem",
       xxl: "4.375rem",
       xl: "3.75rem",

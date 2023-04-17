@@ -367,3 +367,101 @@ export const TextForUs = styled.div`
     margin-bottom: 8px;
   }
 `;
+
+//OurCommitment
+export const WrapperOurCommitment = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 101px 294px 101px 271px;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 18px 78px 18px 77px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 67px 302px 60px 304px;
+  }
+`;
+
+export const WrapperStarCommitment = styled.div`
+  display: flex;
+  width: 53px;
+  height: 50.05px;
+  margin-bottom: 67px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 19px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 28px;
+    height: 30px;
+    margin-bottom: 14px;
+  }
+`;
+
+export const TitleOurCommitment = styled.div`
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.m};
+  color: ${theme.colors.green};
+  line-height: 90px;
+  text-align: center;
+  margin-bottom: 33px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+    margin-bottom: 11px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+    margin-bottom: 40px;
+  }
+`;
+
+export const TextOurCommitment = styled.div`
+  font-size: ${theme.fonts.size.h4};
+  color: ${theme.colors.green};
+  line-height: 30px;
+  text-align: center;
+  width: 638px;
+  margin-bottom: 57px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    width: 205px;
+    margin-bottom: 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    width: 260px;
+    margin-bottom: 0px;
+  }
+`;
+
+export const WrapperLogoCommitment = styled.div`
+  width: 103px;
+  height: 38px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    display: none;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    display: none;
+  }
+`;

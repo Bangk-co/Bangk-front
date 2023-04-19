@@ -18,7 +18,7 @@ const Header = ({ isMobile, isTablet }) => {
     { key: 0, label: "Seguros", url: "/seguros" },
     { key: 1, label: "Conócenos", url: "/conocenos" },
     { key: 2, label: "Legales", url: "" },
-    { key: 3, label: "Contacto", url: "" },
+    { key: 3, label: "Contacto", url: "/contacto" },
   ];
 
   const handleMenu = (menu) => {

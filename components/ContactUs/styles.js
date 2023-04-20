@@ -526,3 +526,64 @@ export const Line2 = styled.div`
     display: none;
   }
 `;
+
+//ProtectedInformation
+export const WrapperInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 157px 150px 73px 166px;
+  background: ${theme.colors.yellow};
+  gap: 29px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 37px 70px 17px 70px;
+    gap: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 49px 157px 46px 164px;
+    gap: 22px;
+  }
+`;
+
+export const Title = styled.div`
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.m};
+  line-height: 90px;
+  text-align: center;
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+    width: 143px;
+    align-self: center;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+    width: 249px;
+    align-self: center;
+  }
+`;
+
+export const Text = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  text-align: center;
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 10px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 10px;
+  }
+`;

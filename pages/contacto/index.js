@@ -3,6 +3,7 @@ import Banner from "@/components/ContactUs/Banner";
 import ContactForm from "@/components/ContactUs/ContactForm";
 import { Div } from "@/styles/Common";
 import HelpYou from "@/components/ContactUs/HelpYou";
+import ProtectedInformation from "@/components/ContactUs/ProtectedInformation";
 
 const ContactUs = ({ isMobile, isTablet }) => {
   return (
@@ -10,6 +11,7 @@ const ContactUs = ({ isMobile, isTablet }) => {
       <Banner />
       <ContactForm isMobile={isMobile} isTablet={isTablet} />
       <HelpYou />
+      <ProtectedInformation />
     </Div>
   );
 };

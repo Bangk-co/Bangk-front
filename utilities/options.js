@@ -126,3 +126,10 @@ export const infoList = [
   "Nuestros asesores están disponibles para responder cualquier pregunta que tengas y, si decides hacer el cambio, nos encargamos de gestionar contigo la emisión de tu nuevo seguro.",
   "Una vez que el banco haya aceptado tu nuevo seguro de vida para deudores, recibirás una notificación de confirmación del cambio y ¡comenzarás a ahorrar!",
 ];
+
+export const contactInfoList = [
+  "Ahorrar dinero mediante el endoso de tus seguros de deudores actuales.",
+  "Disminuir el monto que pagas por las cuotas de crédito.",
+  "Financiar la compra de tu vivienda VIS.",
+  "Resolver dudas o pedir asesoría sobre nuestros productos y servicios.",
+];

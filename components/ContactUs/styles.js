@@ -137,7 +137,7 @@ export const WrapperWhatsapp = styled.div`
 export const WrapperContactForm = styled.div`
   display: flex;
   width: 100%;
-  padding: 108px 76px;
+  padding: 108px 76px 99px 76px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 35px 49px;
@@ -304,5 +304,225 @@ export const WrapperFooter = styled.div`
     gap: 21px;
     margin-top: 21px;
     align-items: center;
+  }
+`;
+
+//HelpYou
+export const WrapperHelpYou = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0px 70px 99px 80px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    padding: 0px 37px 28px 37px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    flex-direction: column;
+    padding: 0px 130px 55px 139px;
+  }
+`;
+
+export const WrapperText = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  justify-content: space-between;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 100%;
+    justify-content: center;
+    gap: 37px;
+  }
+`;
+
+export const WrapperAllInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+export const WrapperInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 674px;
+  height: 149px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    width: 100%;
+    height: 77px;
+    gap: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    width: 100%;
+    height: 110px;
+    gap: 25px;
+  }
+`;
+
+export const WrapperSmallStar = styled.div`
+  display: flex;
+  width: 19px;
+  height: 18px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 13px;
+    height: 13px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 21px;
+    height: 22px;
+  }
+`;
+
+export const Info = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 24px;
+  text-align: right;
+  color: ${theme.colors.green};
+  width: 346px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    text-align: center;
+    width: 173px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    text-align: center;
+    width: 270px;
+  }
+`;
+
+export const TitleContact = styled.div`
+  font-family: Gilroy Medium;
+  font-size: ${theme.fonts.size.h2};
+  line-height: 60px;
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 60px;
+    text-align: center;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 60px;
+    text-align: center;
+  }
+`;
+
+export const TextHelpYou = styled.div`
+  display: flex;
+  position: relative;
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.h2};
+  line-height: 40px;
+  color: ${theme.colors.green};
+  width: 350px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 15px;
+    text-align: center;
+    width: 180px;
+    align-self: center;
+    margin-bottom: 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 15px;
+    text-align: center;
+    width: 310px;
+    align-self: center;
+    margin-bottom: 12px;
+  }
+`;
+
+export const Line = styled.div`
+  display: flex;
+  position: absolute;
+  width: 250px;
+  height: 20px;
+  left: 0px;
+  bottom: 35px;
+  background: ${theme.colors.yellow};
+  z-index: -1;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 180px;
+    height: 15px;
+    bottom: 0;
+    left: 50;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 190px;
+    height: 15px;
+    bottom: 0;
+    left: 60px;
+  }
+`;
+
+export const Line2 = styled.div`
+  display: flex;
+  position: absolute;
+  width: 250px;
+  height: 20px;
+  left: 0px;
+  bottom: -5px;
+  background: ${theme.colors.yellow};
+  z-index: -1;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    display: none;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    display: none;
   }
 `;

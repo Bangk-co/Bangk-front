@@ -19,6 +19,17 @@ export const CustomButton = styled(Button)`
   justify-content: center;
   padding: ${({ padding }) => padding || "0px"};
 
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: min-content !important;
+    padding: 0 12px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: min-content !important;
+    padding: 0 16px;
+  }
+
   && {
     &.ant-btn-link {
       &:hover {

@@ -16,10 +16,6 @@ import {
   WrapperButtons,
   WrapperCloud,
   WrapperDate,
-  WrapperDay,
-  WrapperHour,
-  WrapperImage,
-  WrapperInfo,
   WrapperLogo,
   WrapperStar,
 } from "./styles";
@@ -29,6 +25,7 @@ import man from "../../assets/img/white-man.svg";
 import cloud from "../../assets/icons/cloud.svg";
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/white-logo-2.svg";
+import { Div } from "@/styles/Common";
 
 const Banner = () => {
   return (
@@ -46,7 +43,7 @@ const Banner = () => {
         </Button>
       </WrapperButtons>
       <WrapperBanner>
-        <WrapperInfo>
+        <Div direction="column">
           <Title>
             Educación<br></br>
             <span
@@ -61,17 +58,17 @@ const Banner = () => {
           </Name>
           <Position>CEO Nequi</Position>
           <WrapperDate>
-            <WrapperDay>
+            <Div direction="column" width="max-content">
               <DayHour>Día</DayHour>
               <Date>11 marzo</Date>
-            </WrapperDay>
-            <WrapperHour>
+            </Div>
+            <Div direction="column" width="max-content">
               <DayHour>Hora</DayHour>
               <Date>10 a.m.</Date>
-            </WrapperHour>
+            </Div>
           </WrapperDate>
-        </WrapperInfo>
-        <WrapperImage>
+        </Div>
+        <Div m="0px" p="0px">
           <ManImage>
             <Image alt="man" src={man} />
             <Circle1 />
@@ -83,7 +80,7 @@ const Banner = () => {
               OJO<br></br>PUESSSS
             </CloudText>
           </ManImage>
-        </WrapperImage>
+        </Div>
         <WrapperStar>
           <Image alt="star" src={star} />
         </WrapperStar>

@@ -60,17 +60,6 @@ export const WrapperBanner = styled.div`
   }
 `;
 
-export const WrapperInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const WrapperImage = styled.div`
-  display: flex;
-  padding: 0;
-  margin: 0;
-`;
-
 export const Title = styled.div`
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.xxl};
@@ -178,18 +167,6 @@ export const WrapperDate = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     gap: 6px;
   }
-`;
-
-export const WrapperDay = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: max-content;
-`;
-
-export const WrapperHour = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: max-content;
 `;
 
 export const Date = styled.div`
@@ -381,3 +358,5 @@ export const CloudText = styled.div`
     line-height: 14px;
   }
 `;
+
+//

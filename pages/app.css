@@ -15,6 +15,12 @@
     url(../assets/fonts/Gilroy-Bold.woff) format("woff");
 }
 
+@font-face {
+  font-family: "Gilroy Heavy";
+  src: local("Gilroy Heavy"),
+    url(../assets/fonts/Gilroy-Heavy.woff) format("woff");
+}
+
 * {
   font-family: Gilroy;
 }

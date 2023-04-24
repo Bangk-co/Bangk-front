@@ -23,8 +23,9 @@ import image from "../../assets/img/rectangle-2.png";
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
 import percentage from "../../assets/icons/percentage.svg";
+import { theme } from "@/styles/theme";
 
-const BlogDetailDesktop = () => {
+const BlogDetailDesktop = ({ isTablet }) => {
   return (
     <Div direction="column">
       <WrapperTop>
@@ -59,8 +60,8 @@ const BlogDetailDesktop = () => {
           <Image
             alt="percentage"
             src={percentage}
-            width={"100%"}
-            height={"100%"}
+            width={isTablet && "100%"}
+            height={isTablet && "150px"}
           />
         </WrapperIcon>
         <WrapperText>

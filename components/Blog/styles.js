@@ -1,4 +1,5 @@
 import { theme } from "@/styles/theme";
+import Image from "next/image";
 import styled from "styled-components";
 
 //Banner
@@ -359,4 +360,185 @@ export const CloudText = styled.div`
   }
 `;
 
-//
+//Cards
+export const WrapperCards = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 72.23px 86px 52px 73px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 69.49px 102px 64px 120px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 0px 63px 10px 66px;
+  }
+`;
+
+export const WrapperCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 395px;
+  position: relative;
+  border-radius: 12px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 163px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 164px;
+    width: 258px;
+  }
+`;
+
+export const WrapperButtonsCard = styled.div`
+  display: flex;
+  gap: 15px;
+  position: absolute;
+  top: -20px;
+  left: 25px;
+  z-index: 2;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    gap: 5px;
+    top: -10px;
+    left: 10px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    gap: 3px;
+    top: -8px;
+    left: 10px;
+  }
+`;
+
+export const WrapperImage = styled.div`
+  display: flex;
+  position: relative;
+  height: 60%;
+  background-image: url(${(props) => props.image.src});
+  background-size: cover;
+  background-position: center center;
+  border-radius: 12px 12px 0px 0px;
+`;
+
+export const WrapperMessage = styled.div`
+  display: flex;
+  position: absolute;
+  width: 110px;
+  top: 30px;
+  right: 30px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 50px;
+    top: 15px;
+    right: 15px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 50px;
+    top: 15px;
+    right: 15px;
+  }
+`;
+
+export const BlogNumber = styled.div`
+  position: absolute;
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.default};
+  color: ${theme.colors.white};
+  top: 36px;
+  right: 42px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxxs};
+    top: 18px;
+    right: 22px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxxs};
+    top: 18px;
+    right: 22px;
+  }
+`;
+
+export const WrapperFooter = styled.div`
+  display: flex;
+  height: 40%;
+  background: ${theme.colors.green};
+  border-radius: 0px 0px 12px 12px;
+  justify-content: space-between;
+  align-items: end;
+  padding: 0px 40px 40px 40px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 0px 15px 15px 15px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 0px 15px 15px 15px;
+  }
+`;
+
+export const TitleCard = styled.div`
+  position: absolute;
+  bottom: 125px;
+  left: 70px;
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.lg};
+  line-height: 60px;
+  color: ${theme.colors.white};
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    top: 88px;
+    left: 45px;
+    font-size: ${theme.fonts.size.h6};
+    line-height: 20px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    top: 90px;
+    left: 45px;
+    font-size: ${theme.fonts.size.default};
+    line-height: 18px;
+  }
+`;
+
+export const TextCard = styled.div`
+  font-size: ${theme.fonts.size.default};
+  line-height: 20px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+  }
+`;
+
+export const WrapperCardLogo = styled.div`
+  display: flex;
+  width: 102px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 52px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 42px;
+  }
+`;

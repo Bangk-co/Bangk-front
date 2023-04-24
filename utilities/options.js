@@ -1,3 +1,7 @@
+import { theme } from "@/styles/theme";
+import image1 from "../assets/img/rectangle-1.png";
+import image2 from "../assets/img/rectangle-2.png";
+
 export const footerList = [
   {
     title: "Nosotros",
@@ -132,4 +136,73 @@ export const contactInfoList = [
   "Disminuir el monto que pagas por las cuotas de crédito.",
   "Financiar la compra de tu vivienda VIS.",
   "Resolver dudas o pedir asesoría sobre nuestros productos y servicios.",
+];
+
+export const cardsInfo = [
+  {
+    number: "#02",
+    title: "MICRO INVERSIONES",
+    text1: "Educación",
+    text2: "financiera en el siglo XXI.",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: image2,
+    width: "180px",
+    width2: "100px",
+  },
+  {
+    number: "#03",
+    title: "INGRESOS PASIVOS",
+    text1: "Cómo gestionar ingresos pasivos que",
+    text2: "si afectan tu economía.",
+    color1: theme.colors.orange,
+    color2: theme.colors.white,
+    photo: image1,
+    width: "300px",
+    width2: "170px",
+  },
+  {
+    number: "#04",
+    title: "MICRO INVERSIONES",
+    text1: "Educación",
+    text2: "financiera en el siglo XXI.",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: image2,
+    width: "180px",
+    width2: "100px",
+  },
+  {
+    number: "#05",
+    title: "INGRESOS PASIVOS",
+    text1: "Cómo gestionar ingresos pasivos que",
+    text2: "si afectan tu economía.",
+    color1: theme.colors.orange,
+    color2: theme.colors.white,
+    photo: image1,
+    width: "300px",
+    width2: "170px",
+  },
+  {
+    number: "#07",
+    title: "INGRESOS PASIVOS",
+    text1: "Cómo gestionar ingresos pasivos que",
+    text2: "si afectan tu economía.",
+    color1: theme.colors.orange,
+    color2: theme.colors.white,
+    photo: image1,
+    width: "300px",
+    width2: "170px",
+  },
+  {
+    number: "#06",
+    title: "MICRO INVERSIONES",
+    text1: "Educación",
+    text2: "financiera en el siglo XXI.",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: image2,
+    width: "180px",
+    width2: "100px",
+  },
 ];

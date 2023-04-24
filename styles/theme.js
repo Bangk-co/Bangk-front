@@ -9,6 +9,7 @@ export const theme = {
     light2: "#FCFBFC",
     light3: "#F8F8F7",
     gray: "#EFEFEF",
+    whatsapp: "#25D366",
   },
   fonts: {
     size: {

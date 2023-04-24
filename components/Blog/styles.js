@@ -382,6 +382,7 @@ export const WrapperCard = styled.div`
   height: 395px;
   position: relative;
   border-radius: 12px;
+  cursor: pointer;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
@@ -540,5 +541,301 @@ export const WrapperCardLogo = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 42px;
+  }
+`;
+
+//BlogDetail
+
+//Top
+export const WrapperTop = styled.div`
+  display: flex;
+  height: 210px;
+  background: ${theme.colors.green};
+  padding: 105px 0px 18px 0px;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 139px;
+    padding: 60px 0px 30px 0px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 55px;
+    padding: 22px 0px 8px 0px;
+  }
+`;
+
+export const TitleDetail = styled.div`
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.xl};
+  line-height: 70px;
+  text-align: center;
+  color: ${theme.colors.white};
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h2};
+    line-height: 47px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 23px;
+  }
+`;
+
+export const WrapperBlogImage = styled.div`
+  display: flex;
+  height: 498px;
+  background-image: url(${(props) => props.image.src});
+  background-size: cover;
+  background-position: center center;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    height: 330px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 131px;
+  }
+`;
+
+export const WrapperWriterLogo = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 105px 123px 105px 93px;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 33px 54px 40px 55px;
+    align-items: start;
+  }
+`;
+
+export const WrapperWriter = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    gap: 12px;
+  }
+`;
+
+export const WriterName = styled.div`
+  font-family: Gilroy Medium;
+  font-size: ${theme.fonts.size.h4};
+  line-height: 35px;
+  color: ${theme.colors.green};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-family: Gilroy;
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    color: ${theme.colors.black};
+    margin-bottom: 20px;
+  }
+`;
+
+export const WriterPosition = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 23px;
+  color: ${theme.colors.green};
+  width: 357px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.md};
+    line-height: 18px;
+    width: 189px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    color: ${theme.colors.black};
+    margin-bottom: 9px;
+    width: 95px;
+  }
+`;
+
+export const WriterPosition2 = styled.div`
+  font-size: ${theme.fonts.size.h6};
+  line-height: 23px;
+  width: 170px;
+  margin-bottom: 50px;
+  align-items: start;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h6};
+    line-height: 23px;
+    width: 170px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-family: Gilroy Medium;
+    font-size: ${theme.fonts.size.xxs};
+    line-height: 12px;
+    color: ${theme.colors.black};
+    margin-bottom: 46px;
+    width: 216px;
+  }
+`;
+
+export const WrapperGreenStar = styled.div`
+  display: flex;
+  position: relative;
+  width: 163px;
+  height: 162px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 88px;
+    height: 86px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 47px;
+    height: 47px;
+  }
+`;
+
+export const WrapperSingleLogo = styled.div`
+  display: flex;
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  width: 82.6px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 42.6px;
+    top: 20px;
+    right: 22px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 22.28px;
+    top: 12px;
+    right: 12px;
+  }
+`;
+
+export const WrapperInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 69px 30px 88px;
+`;
+
+export const WrapperRow = styled.div`
+  display: flex;
+  padding: 50px 208px 177px 85px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 0px 96px 73px 55px;
+  }
+`;
+
+export const WrapperText = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 60%;
+  }
+`;
+
+export const WrapperIcon = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: 0;
+  padding: 0;
+  align-self: self-start;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 35%;
+  }
+`;
+
+export const BlogText = styled.div`
+  font-size: ${theme.fonts.size.h2};
+  line-height: 47px;
+  color: ${theme.colors.green};
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.default};
+    line-height: 21px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.xs};
+    line-height: 14px;
+  }
+`;
+
+export const HelpText = styled.div`
+  position: relative;
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.h2};
+  line-height: 47px;
+  text-align: right;
+  color: ${theme.colors.green};
+  width: 389px;
+  align-self: self-end;
+  margin-top: 80px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    font-size: ${theme.fonts.size.h4};
+    line-height: 35px;
+    margin-top: 47px;
+    align-self: center;
+    width: 367px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.default};
+    line-height: 21px;
+    width: 170px;
+    margin-top: 0px;
+  }
+`;
+
+export const YellowLine = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: -5px;
+  background: ${theme.colors.yellow};
+  border: 1.53px solid ${theme.colors.yellow};
+  width: 408px;
+  height: 36px;
+  z-index: -1;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 297px;
+    height: 25.85px;
+    bottom: 5px;
+    right: -5px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 177.53px;
+    height: 14.87px;
+    bottom: 5px;
+    right: -5px;
   }
 `;

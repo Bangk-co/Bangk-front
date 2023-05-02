@@ -749,10 +749,13 @@ export const WrapperRow = styled.div`
 export const WrapperText = styled.div`
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   width: 75%;
+=======
+  width: 70%;
+>>>>>>> 0dd40a9d334020fef4de17a78ce269539f066011
 
-  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-      .breakpoints.md}) {
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md}) {
     width: 60%;
   }
 `;

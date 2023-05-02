@@ -12,8 +12,15 @@ import {
 import man from "../../assets/img/yellow-man.svg";
 import star from "../../assets/icons/orange-star.svg";
 import { Button } from "../Button";
+import { useRouter } from "next/router";
 
 const WhyWeDoIt = () => {
+  const router = useRouter();
+
+  const goInsurance = () => {
+    router.push("/ahorra-en-tus-seguros");
+  };
+
   return (
     <WrapperWhy>
       <Col1>
@@ -36,7 +43,7 @@ const WhyWeDoIt = () => {
           <br></br> Este trámite se conoce como endoso. La buena noticia…{" "}
           <br></br>en <strong>Bangk lo hacemos sin costo para ti.</strong>
         </TextWhy>
-        <Button>Conoce más</Button>
+        <Button onClick={goInsurance}>Conoce más</Button>
       </Col2>
     </WrapperWhy>
   );

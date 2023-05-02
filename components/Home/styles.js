@@ -71,7 +71,7 @@ export const Message = styled.h6`
   font-weight: ${theme.fonts.weight.regular};
   line-height: 24px;
   margin: 50px 0 30px 0;
-  width: 500px;
+  width: 520px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {

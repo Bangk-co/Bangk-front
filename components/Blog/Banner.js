@@ -52,21 +52,6 @@ const Banner = () => {
               financiera.
             </span>
           </Title>
-          <Subtitle>Expositor</Subtitle>
-          <Name>
-            Andres<br></br>Vásquez
-          </Name>
-          <Position>CEO Nequi</Position>
-          <WrapperDate>
-            <Div direction="column" width="max-content">
-              <DayHour>Día</DayHour>
-              <Date>11 marzo</Date>
-            </Div>
-            <Div direction="column" width="max-content">
-              <DayHour>Hora</DayHour>
-              <Date>10 a.m.</Date>
-            </Div>
-          </WrapperDate>
         </Div>
         <Div m="0px" p="0px">
           <ManImage>

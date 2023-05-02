@@ -11,8 +11,15 @@ import {
 import greenCoin from "../../assets/icons/green-coin.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
+import { useRouter } from "next/router";
 
 const Bangk = () => {
+  const router = useRouter();
+
+  const goInsurance = () => {
+    router.push("/ahorra-en-tus-seguros");
+  };
+
   return (
     <WrapperBangk>
       <Col3>
@@ -39,7 +46,7 @@ const Bangk = () => {
           flujos mensuales<br></br>
           <br></br> Buscamos el mejor aliado y...Bangk! Es Bangk!
         </Text2Bangk>
-        <Button>Conoce más</Button>
+        <Button onClick={goInsurance}>Conoce más</Button>
       </Col3>
       <Col4>
         <Image alt="coin" src={greenCoin} />

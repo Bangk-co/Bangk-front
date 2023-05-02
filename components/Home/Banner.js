@@ -14,8 +14,15 @@ import star from "../../assets/icons/orange-star.svg";
 import text from "../../assets/icons/text.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
+import { useRouter } from "next/router";
 
 const Banner = () => {
+  const router = useRouter();
+
+  const goInsurance = () => {
+    router.push("/ahorra-en-tus-seguros");
+  };
+
   return (
     <Wrapper>
       <Row style={{ width: "100%" }}>
@@ -24,13 +31,13 @@ const Banner = () => {
           <Title color={theme.colors.yellow}>Menos cuota!</Title>
           <Message>
             Buscamos el mejor precio posible para el seguro de vida de tus
-            deudas, así ahorras en la cuota mensual que pagas al banco sin
-            cambiar la cobertura
+            deudas y de incendio y terremoto, así ahorras en la cuota mensual
+            que pagas al banco sin cambiar la cobertura
           </Message>
           <WrapperText>
             <Image alt="text" src={text} />
           </WrapperText>
-          <Button>Ahorra ya!</Button>
+          <Button onClick={goInsurance}>Ahorra ya!</Button>
         </Col>
         <Col lg={8} md={10} xs={12} style={{ alignSelf: "center" }}>
           <WrapperStar>

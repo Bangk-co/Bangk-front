@@ -8,8 +8,15 @@ import { Col, Row } from "antd";
 import { Link } from "../Link";
 import { footerListResponsive } from "@/utilities/options";
 import Social from "./social";
+import { useRouter } from "next/router";
 
 const FooterResponsive = ({ isMobile }) => {
+  const router = useRouter();
+
+  const goLink = (url) => {
+    router.push(`${url}`);
+  };
+
   return (
     <>
       <Div
@@ -80,6 +87,7 @@ const FooterResponsive = ({ isMobile }) => {
                     key={index}
                     size={"8px"}
                     color={theme.colors.white}
+                    onClick={() => goLink(elem.link)}
                     style={{
                       height: ele.height,
                       lineHeight: "9px",

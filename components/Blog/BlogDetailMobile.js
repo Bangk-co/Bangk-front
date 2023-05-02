@@ -27,11 +27,11 @@ const BlogDetailMobile = () => {
     <Div direction="column">
       <WrapperTop>
         <TitleDetail>
-          MICRO{" "}
+          ¡Ahorrar es{" "}
           <span
             style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
           >
-            INVERSIONES
+            posible!
           </span>
         </TitleDetail>
       </WrapperTop>
@@ -45,25 +45,51 @@ const BlogDetailMobile = () => {
         </WrapperGreenStar>
       </Div>
       <WrapperInfo>
-        <WriterName>Samuel Valencia</WriterName>
-        <WriterPosition>Padre de familia y administrador,</WriterPosition>
-        <WriterPosition2>
-          Máster en economía de Harvard con múltiples empresas al rededor del
-          país
-        </WriterPosition2>
+        <WriterName>
+          Bangk es una Startup que nace para aliviar tu bolsillo; entre otras
+        </WriterName>
         <BlogText>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-          volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-          ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
-          molestie consequat, vel illum dolore eu feugiat nulla facilisis at
-          vero eros et accumsan et iusto odio dignissim qui blandit praesent
-          luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-          Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam
-          nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-          volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-          ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat
+          Las startups, empresas emergentes con un alto potencial de crecimiento
+          y expansión, han tenido un impacto significativo en la sociedad en las
+          últimas décadas. Desde la creación de nuevas soluciones tecnológicas
+          hasta la generación de empleo y la promoción del emprendimiento, las
+          startups han demostrado ser un motor clave para el desarrollo
+          económico y social en todo el mundo.<br></br>
+          <br></br>Uno de los principales impactos de las startups en la
+          sociedad es la creación de nuevos productos y servicios. A menudo, las
+          startups son empresas innovadoras que desarrollan soluciones
+          tecnológicas y de vanguardia para resolver problemas complejos en
+          diferentes sectores. Por ejemplo, las startups de tecnología han
+          creado soluciones en áreas como la salud, la educación, la
+          agricultura, el transporte y las energías renovables, entre otros.
+          Estas soluciones han mejorado la calidad de vida de las personas,
+          aumentando su eficiencia y su capacidad de acceso a los servicios y
+          productos que necesitan.<br></br>
+          <br></br>Bangk es una Startup que nace para aliviar tu bolsillo, el
+          primer producto que tenemos disponible para lograr este fin es el{" "}
+          <strong>“endoso de los seguros atados a tus créditos”.</strong>
+          <br></br>
+          <br></br>Y seguramente te estás preguntando, ¿cuáles seguros atados a
+          mis créditos? Cuando solicitas un crédito y te lo desembolsan en tu
+          cuenta, usualmente un mes después tienes que pagar la cuota de este.
+          Dentro de esa cuota pagas el capital, los intereses y también un
+          seguro llamado “vida deudores”. Este seguro es obligatorio, de tal
+          forma que la entidad bancaria lo exige para cubrir la deuda en caso de
+          que fallezcas o tengas una incapacidad permanente que te impida seguir
+          pagando las cuotas de tu crédito.<br></br>
+          <br></br>¿Y qué es un endoso? Endosar es una acción legal que implica
+          transferir los derechos de propiedad de un documento, título o
+          instrumento financiero a otra persona o entidad. Por ejemplo, cuando
+          una persona endosa un cheque, está cediendo su derecho a cobrar el
+          cheque a otra persona o entidad.<br></br>
+          <br></br>Endosar los seguros atados a tus créditos es una buena forma
+          de ahorrar dinero. El endoso es una práctica que consiste en ceder los
+          derechos de un seguro a otra persona o entidad, lo que significa que
+          la cobertura del seguro se transfiere a esa persona o entidad.
+          <br></br>
+          <br></br> Para endosar los seguros de tus créditos escríbenos: Bangk
+          se encarga de cotizar tu nuevo seguro, emitir la póliza, y formalizar
+          el endoso en tu entidad bancaria.
         </BlogText>
       </WrapperInfo>
       <Div align="center" p="0px 69px 23.32px 40.35px" justify="space-between">

@@ -11,11 +11,12 @@ import MenuMobile from "./MenuMobile";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { pathname } = router;
   const [openMenu, setOpenMenu] = useState(false);
   const [optionSelected, setOptionSelected] = useState(null);
 
   const headerButtons = [
-    { key: 0, label: "Seguros", url: "/seguros" },
+    { key: 0, label: "Seguros", url: "/ahorra-en-tus-seguros" },
     { key: 1, label: "Conócenos", url: "/conocenos" },
     { key: 2, label: "Blog", url: "/blog" },
     { key: 3, label: "Contacto", url: "/contacto" },
@@ -84,7 +85,7 @@ const Header = ({ isMobile, isTablet }) => {
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
                 color={
-                  optionSelected === indx
+                  ele.url === pathname
                     ? theme.colors.orange
                     : theme.colors.black
                 }

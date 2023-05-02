@@ -34,18 +34,6 @@ const Cards = ({ isMobile, isTablet }) => {
         {cardsInfo.map((ele, indx) => (
           <Col key={indx} lg={12} md={12} sm={24}>
             <WrapperCard onClick={() => handleGo(ele.title)}>
-              <WrapperButtonsCard>
-                <Button width="113px" background={theme.colors.orange}>
-                  BLOG
-                </Button>
-                <Button
-                  width="113px"
-                  background={theme.colors.green}
-                  color={theme.colors.white}
-                >
-                  Consejos
-                </Button>
-              </WrapperButtonsCard>
               <WrapperImage image={ele.photo}>
                 <WrapperMessage>
                   <Image alt="" src={message} />

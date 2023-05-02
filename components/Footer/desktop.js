@@ -8,8 +8,15 @@ import { Col, Row } from "antd";
 import { Link } from "../Link";
 import { footerList } from "@/utilities/options";
 import Social from "./social";
+import { useRouter } from "next/router";
 
 const FooterDesktop = () => {
+  const router = useRouter();
+
+  const goLink = (url) => {
+    router.push(`${url}`);
+  };
+
   return (
     <>
       <Div direction="column">
@@ -37,6 +44,7 @@ const FooterDesktop = () => {
                     key={index}
                     size={"10px"}
                     color={theme.colors.white}
+                    onClick={() => goLink(elem.link)}
                     style={{
                       lineHeight: "12px",
                       whiteSpace: "normal",

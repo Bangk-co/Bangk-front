@@ -13,8 +13,16 @@ import { useRouter } from "next/router";
 const FooterResponsive = ({ isMobile }) => {
   const router = useRouter();
 
-  const goLink = (url) => {
-    router.push(`${url}`);
+  const goLink = (url, extern) => {
+    if (extern) {
+      const a = document.createElement("a");
+      a.href = `${url}`;
+      document.body.appendChild(a);
+      a.target = "_blank";
+      a.click();
+    } else {
+      router.push(`${url}`);
+    }
   };
 
   return (
@@ -87,7 +95,7 @@ const FooterResponsive = ({ isMobile }) => {
                     key={index}
                     size={"8px"}
                     color={theme.colors.white}
-                    onClick={() => goLink(elem.link)}
+                    onClick={() => goLink(elem.link, elem.isExtern)}
                     style={{
                       height: ele.height,
                       lineHeight: "9px",

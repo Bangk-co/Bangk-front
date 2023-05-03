@@ -13,8 +13,16 @@ import { useRouter } from "next/router";
 const FooterDesktop = () => {
   const router = useRouter();
 
-  const goLink = (url) => {
-    router.push(`${url}`);
+  const goLink = (url, extern) => {
+    if (extern) {
+      const a = document.createElement("a");
+      a.href = `${url}`;
+      document.body.appendChild(a);
+      a.target = "_blank";
+      a.click();
+    } else {
+      router.push(`${url}`);
+    }
   };
 
   return (
@@ -44,7 +52,7 @@ const FooterDesktop = () => {
                     key={index}
                     size={"10px"}
                     color={theme.colors.white}
-                    onClick={() => goLink(elem.link)}
+                    onClick={() => goLink(elem.link, elem.isExtern)}
                     style={{
                       lineHeight: "12px",
                       whiteSpace: "normal",

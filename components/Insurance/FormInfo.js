@@ -13,7 +13,8 @@ import {
 import star from "../../assets/icons/orange-star.svg";
 import info from "../../assets/img/info.svg";
 import { Col, Row } from "antd";
-import { infoList } from "@/utilities/options";
+import { infoList, wappLink } from "@/utilities/options";
+import { theme } from "@/styles/theme";
 
 const FormInfo = () => {
   return (
@@ -42,8 +43,16 @@ const FormInfo = () => {
         <Image alt="info" src={info} />
       </WrapperImgInfo>
       <Text3>
-        También podemos ayudarte vía <strong>WhatsApp</strong> o por{" "}
-        <strong>teléfono.</strong>
+        También podemos ayudarte vía{" "}
+        <a
+          href={`${wappLink}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: theme.colors.white, textDecoration: "none" }}
+        >
+          <strong>WhatsApp</strong>
+        </a>{" "}
+        o por <strong>teléfono.</strong>
       </Text3>
     </WrapperInfo>
   );

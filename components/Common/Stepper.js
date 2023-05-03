@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Div } from "@/styles/Common";
-import { stepperList } from "@/utilities/options";
+import { stepperList, wappLink } from "@/utilities/options";
 import { Col, Row } from "antd";
 import {
   Card,
@@ -14,6 +14,7 @@ import {
 import star from "../../assets/icons/yellow-star.svg";
 import StepperTitleHome from "../Home/StepperTitle";
 import StepperTitle from "../Insurance/StepperTitle";
+import { theme } from "@/styles/theme";
 
 const Stepper = ({ isHome, isMobile, isTablet }) => {
   return (
@@ -35,9 +36,26 @@ const Stepper = ({ isHome, isMobile, isTablet }) => {
                   height={isMobile ? "12.64px" : isTablet ? "15.55px" : "31px"}
                 />
               </WrapperStar>
-              <Message width={ele.width}>
-                {ele.text1} <strong>{ele.text2}</strong> {ele.text3}
-              </Message>
+              {indx === 0 ? (
+                <a
+                  href={`${wappLink}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    textDecoration: "underline",
+                    color: theme.colors.white,
+                  }}
+                >
+                  <Message width={ele.width}>
+                    {ele.text1} <strong>{ele.text2}</strong> {ele.text3}
+                  </Message>
+                </a>
+              ) : (
+                <Message width={ele.width}>
+                  {ele.text1} <strong>{ele.text2}</strong> {ele.text3}
+                </Message>
+              )}
+
               {indx === 4 && (
                 <Message2>
                   {ele.text4} <strong>{ele.text5}</strong>

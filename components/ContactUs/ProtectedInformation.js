@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Title, WrapperInformation } from "./styles";
 import { theme } from "@/styles/theme";
+import { wappLink } from "@/utilities/options";
 
 const ProtectedInformation = () => {
   return (
@@ -13,11 +14,16 @@ const ProtectedInformation = () => {
         <strong>política de privacidad y tratamiento de datos,</strong> diseñada
         para ofrecerte seguridad y transparencia en el manejo de tu información.
         Conoce más sobre cómo tratamos tus datos haciendo{" "}
-        <a href="" style={{ color: theme.colors.green }}>
+        <a href="/legales" style={{ color: theme.colors.green }}>
           clic aquí
         </a>{" "}
         o{" "}
-        <a href="" style={{ color: theme.colors.green }}>
+        <a
+          href={`${wappLink}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: theme.colors.green }}
+        >
           contáctanos
         </a>{" "}
         para resolver cualquier duda o inquietud

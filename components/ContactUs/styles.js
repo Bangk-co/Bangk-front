@@ -289,12 +289,11 @@ export const WrapperFooter = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 22px;
-  margin-top: 32px;
+  margin-top: 22px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     flex-direction: column;
     gap: 26px;
-    margin-top: 13px;
     align-items: center;
   }
 
@@ -302,8 +301,24 @@ export const WrapperFooter = styled.div`
       .breakpoints.md}) {
     flex-direction: column;
     gap: 21px;
-    margin-top: 21px;
     align-items: center;
+  }
+`;
+
+export const WrapperCheck = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    gap: 8px;
+    margin-top: 22px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    gap: 8px;
+    align-self: center;
   }
 `;
 

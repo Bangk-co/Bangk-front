@@ -19,7 +19,7 @@ import {
   WriterPosition2,
   YellowLine,
 } from "./styles";
-import image from "../../assets/img/rectangle-2.png";
+import image from "../../assets/img/photo-blog.jpg";
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
 import percentage from "../../assets/icons/percentage.svg";

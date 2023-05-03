@@ -5,6 +5,7 @@ import {
   Label,
   TextForm,
   TitleForm,
+  WrapperCheck,
   WrapperContactForm,
   WrapperFooter,
   WrapperForm,
@@ -15,8 +16,9 @@ import {
 import padlock from "../../assets/icons/padlock.png";
 import star from "../../assets/icons/orange-star.svg";
 import { Input } from "../Input";
-import { Div } from "@/styles/Common";
 import { Button } from "../Button";
+import { Checkbox } from "antd";
+import { theme } from "@/styles/theme";
 
 const ContactForm = ({ isMobile, isTablet }) => {
   const [contactForm, setContactForm] = useState({
@@ -24,6 +26,7 @@ const ContactForm = ({ isMobile, isTablet }) => {
     cellphone: "",
     email: "",
     message: "",
+    check: false,
   });
   const [forceUpdate, setForceUpdate] = useState(false);
 
@@ -33,6 +36,12 @@ const ContactForm = ({ isMobile, isTablet }) => {
     const newForm = contactForm;
     newForm[id] = value;
     setContactForm(newForm);
+    setForceUpdate(!forceUpdate);
+  };
+
+  const handleCheck = (event) => {
+    const newForm = contactForm;
+    setContactForm({ ...newForm, check: event.target.checked });
     setForceUpdate(!forceUpdate);
   };
 
@@ -69,6 +78,19 @@ const ContactForm = ({ isMobile, isTablet }) => {
             height={isMobile ? "49px" : isTablet ? "78px" : "99px"}
             radius={"9px"}
           />
+          <WrapperCheck>
+            <Checkbox value={contactForm.check} onChange={handleCheck} />
+            <TextForm>
+              Acepto el tratamiento de mis datos personales conforme a la{" "}
+              <a
+                href="/legales"
+                target="_blank"
+                style={{ color: theme.colors.green }}
+              >
+                Política de Privacidad y Tratamiento de Datos.
+              </a>
+            </TextForm>
+          </WrapperCheck>
           <WrapperFooter>
             <TextForm>
               Te atendemos de Lunes a Viernes entre las{" "}

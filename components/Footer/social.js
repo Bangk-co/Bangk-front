@@ -6,10 +6,16 @@ import facebook from "../../assets/icons/facebook.svg";
 import linkedin from "../../assets/icons/linkedin.svg";
 import { Div } from "@/styles/Common";
 import Image from "next/image";
+import { wappLink } from "@/utilities/options";
 
 const Social = () => {
   const social = [
-    { icon: whatsapp, width: "30.81px", height: "31px", url: "" },
+    {
+      icon: whatsapp,
+      width: "30.81px",
+      height: "31px",
+      url: wappLink,
+    },
     {
       icon: instagram,
       width: "29.04px",
@@ -35,6 +41,7 @@ const Social = () => {
       url: "https://www.linkedin.com/company/91508522/admin/?feedType=following",
     },
   ];
+
   return (
     <Div gap="2.24px" height="21px">
       {social.map((ele, indx) => (

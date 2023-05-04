@@ -84,9 +84,21 @@ export const footerListResponsive = [
     width: "110px",
     height: "37.5px",
     list: [
-      { label: "Términos & Condiciones.", link: "/legales", isExtern: false },
-      { label: "Política de Privacidad.", link: "/legales", isExtern: false },
-      { label: "Datos & Cookies.", link: "/legales", isExtern: false },
+      {
+        label: "Términos & Condiciones.",
+        link: "/legales?section=terms",
+        isExtern: false,
+      },
+      {
+        label: "Política de Privacidad.",
+        link: "/legales?section=policy",
+        isExtern: false,
+      },
+      {
+        label: "Datos & Cookies.",
+        link: "/legales?section=cookies",
+        isExtern: false,
+      },
     ],
   },
   {

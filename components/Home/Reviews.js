@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Col7,
@@ -20,8 +20,16 @@ import {
 } from "./styles";
 import message from "../../assets/icons/message.svg";
 import ReviewsMobile from "./ReviewsMobile";
+import ReactPlayer from "react-player/lazy";
+import marcela from "../../assets/img/marcela.jpg";
 
-const Reviews = ({ isMobile }) => {
+const Reviews = ({ isMobile, isTablet }) => {
+  const [showPlayer, setShowPlayer] = useState(false);
+
+  useEffect(() => {
+    setShowPlayer(true);
+  }, []);
+
   return (
     <WrapperReviews>
       {isMobile ? (
@@ -43,15 +51,41 @@ const Reviews = ({ isMobile }) => {
               </CommentText>
               <Line />
               <WrapperPerson>
-                <WrapperAvatar />
+                <WrapperAvatar>
+                  <Image
+                    alt="marcela"
+                    src={marcela}
+                    style={{ borderRadius: "100%" }}
+                  />
+                </WrapperAvatar>
                 <WrapperNameText>
-                  <NameText>Samuel Valencia</NameText>
-                  <NameText2>Padre de familia y administrador,</NameText2>
+                  <NameText>Marcela</NameText>
+                  <NameText2>Hija, Mamá, Diseñadora</NameText2>
                 </WrapperNameText>
               </WrapperPerson>
             </Col7>
             <Col8>
-              <WrapperVideo />
+              <div
+                id="review-video"
+                style={{
+                  borderRadius: "24px",
+                  overflow: "hidden",
+                  marginLeft: isTablet ? "50px" : "0px",
+                  height: isTablet ? "199px" : "422px",
+                }}
+              >
+                {showPlayer ? (
+                  <ReactPlayer
+                    url={
+                      "https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"
+                    }
+                    width={isTablet ? "309px" : "656px"}
+                    height={isTablet ? "199px" : "422px"}
+                    controls
+                    suppressHydrationWarning={true}
+                  />
+                ) : null}
+              </div>
             </Col8>
           </RowReviews>
         </>

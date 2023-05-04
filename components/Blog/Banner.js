@@ -4,12 +4,7 @@ import {
   Circle1,
   Circle2,
   CloudText,
-  Date,
-  DayHour,
   ManImage,
-  Name,
-  Position,
-  Subtitle,
   Title,
   Wrapper,
   WrapperBanner,
@@ -28,6 +23,14 @@ import logo from "../../assets/icons/white-logo-2.svg";
 import { Div } from "@/styles/Common";
 
 const Banner = () => {
+  const handleYoutube = () => {
+    const a = document.createElement("a");
+    a.href = "https://www.youtube.com/@bangk_la/featured";
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
+  };
+
   return (
     <Wrapper>
       <WrapperButtons>
@@ -38,8 +41,9 @@ const Banner = () => {
           width={"113px"}
           background={theme.colors.white}
           border={theme.colors.orange}
+          onClick={handleYoutube}
         >
-          Charla
+          Youtube
         </Button>
       </WrapperButtons>
       <WrapperBanner>

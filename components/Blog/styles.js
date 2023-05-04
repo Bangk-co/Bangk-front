@@ -364,7 +364,7 @@ export const CloudText = styled.div`
 export const WrapperCards = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 72.23px 86px 52px 73px;
+  padding: 72.23px 99px 52px 93px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {

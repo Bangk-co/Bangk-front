@@ -15,7 +15,7 @@ const Home = ({ isMobile, isTablet }) => {
       <WhyWeDoIt />
       <Bangk />
       <BlogSection isTablet={isTablet} />
-      <Reviews isMobile={isMobile} />
+      <Reviews isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );
 };

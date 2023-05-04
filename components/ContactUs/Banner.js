@@ -12,13 +12,21 @@ import {
 import star from "../../assets/icons/orange-half-star.svg";
 import mail from "../../assets/icons/orange-mail.svg";
 import whatsapp from "../../assets/icons/orange-whatsapp.svg";
-import { wappLink } from "@/utilities/options";
+import { email, wappLink } from "@/utilities/options";
 import { theme } from "@/styles/theme";
 
 const Banner = () => {
   const handleWapp = () => {
     const a = document.createElement("a");
     a.href = `${wappLink}`;
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
+  };
+
+  const handleMail = () => {
+    const a = document.createElement("a");
+    a.href = `mailto:${email}`;
     document.body.appendChild(a);
     a.target = "_blank";
     a.click();
@@ -32,7 +40,16 @@ const Banner = () => {
       <TitleBanner>Contáctanos</TitleBanner>
       <TextBanner>
         Comunícate con nosotros para resolver cualquier duda o inquietud en la
-        siguiente dirección de correo electrónico y número de{" "}
+        siguiente dirección de{" "}
+        <a
+          href={`mailto:${email}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: theme.colors.white, textDecoration: "none" }}
+        >
+          correo electrónico
+        </a>{" "}
+        y número de{" "}
         <a
           href={`${wappLink}`}
           target="_blank"
@@ -45,7 +62,12 @@ const Banner = () => {
       </TextBanner>
       <WrapperSocial gap="34.5px" align="center">
         <WrapperMail>
-          <Image alt="mail" src={mail} />
+          <Image
+            alt="mail"
+            src={mail}
+            style={{ cursor: "pointer" }}
+            onClick={handleMail}
+          />
         </WrapperMail>
         <WrapperWhatsapp>
           <Image

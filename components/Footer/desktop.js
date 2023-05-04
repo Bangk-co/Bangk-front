@@ -13,10 +13,10 @@ import { useRouter } from "next/router";
 const FooterDesktop = () => {
   const router = useRouter();
 
-  const goLink = (url, extern) => {
+  const goLink = (url, extern, email) => {
     if (extern) {
       const a = document.createElement("a");
-      a.href = `${url}`;
+      a.href = email ? `mailto:${url}` : `${url}`;
       document.body.appendChild(a);
       a.target = "_blank";
       a.click();
@@ -52,7 +52,7 @@ const FooterDesktop = () => {
                     key={index}
                     size={"10px"}
                     color={theme.colors.white}
-                    onClick={() => goLink(elem.link, elem.isExtern)}
+                    onClick={() => goLink(elem.link, elem.isExtern, elem.email)}
                     style={{
                       lineHeight: "12px",
                       whiteSpace: "normal",

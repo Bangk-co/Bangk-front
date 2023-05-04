@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   CommentText,
@@ -13,12 +13,38 @@ import {
   WrapperVideo,
 } from "./styles";
 import message from "../../assets/icons/message.svg";
+import ReactPlayer from "react-player/lazy";
+import marcela from "../../assets/img/marcela.jpg";
 
 const ReviewsMobile = () => {
+  const [showPlayer, setShowPlayer] = useState(false);
+
+  useEffect(() => {
+    setShowPlayer(true);
+  }, []);
+
   return (
     <>
       <TitleReviews>Reseñas</TitleReviews>
-      <WrapperVideo />
+      <div
+        id="review-video"
+        style={{
+          borderRadius: "24px",
+          overflow: "hidden",
+          marginBottom: "16px",
+          height: "142px",
+        }}
+      >
+        {showPlayer ? (
+          <ReactPlayer
+            url={"https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"}
+            width={"219px"}
+            height={"142px"}
+            controls
+            suppressHydrationWarning={true}
+          />
+        ) : null}
+      </div>
       <WrapperComment>
         <Image alt="message" src={message} />
       </WrapperComment>
@@ -28,10 +54,12 @@ const ReviewsMobile = () => {
         me permiten ahorrar.”
       </CommentText>
       <WrapperPerson>
-        <WrapperAvatar />
+        <WrapperAvatar>
+          <Image alt="marcela" src={marcela} style={{ borderRadius: "100%" }} />
+        </WrapperAvatar>
         <WrapperNameText>
-          <NameText>Samuel Valencia</NameText>
-          <NameText2>Padre de familia y administrador,</NameText2>
+          <NameText>Marcela</NameText>
+          <NameText2>Hija, Mamá, Diseñadora</NameText2>
         </WrapperNameText>
       </WrapperPerson>
     </>

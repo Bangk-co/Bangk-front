@@ -501,15 +501,9 @@ export const WrapperReviews = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 837px;
-
-  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-      .breakpoints.md}) {
-    height: max-content;
-  }
+  height: max-content;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    height: max-content;
     padding: 25px 80px 32px 80px;
     align-items: center;
   }
@@ -671,7 +665,6 @@ export const WrapperAvatar = styled.div`
   width: 69px;
   height: 69px;
   border-radius: 100%;
-  background: ${theme.colors.orange};
   margin-bottom: 34px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme

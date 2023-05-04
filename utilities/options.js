@@ -4,6 +4,8 @@ import photoBlog from "../assets/img/photo-blog.jpg";
 export const wappLink =
   "https://api.whatsapp.com/send?phone=573009136761&text=";
 
+export const email = "soporte@bangk.co";
+
 export const footerList = [
   {
     title: "Nosotros",
@@ -48,7 +50,12 @@ export const footerList = [
     title: "Contáctanos",
     width: "64px",
     list: [
-      { label: "Déjanos un mensaje.", link: "", isExtern: true },
+      {
+        label: "Déjanos un mensaje.",
+        link: email,
+        isExtern: true,
+        email: true,
+      },
       {
         label: "Escribenos a Whatsapp.",
         link: wappLink,
@@ -106,7 +113,12 @@ export const footerListResponsive = [
     width: "64px",
     height: "50px",
     list: [
-      { label: "Déjanos un mensaje.", link: "", isExtern: true },
+      {
+        label: "Déjanos un mensaje.",
+        link: email,
+        isExtern: true,
+        email: true,
+      },
       {
         label: "Escribenos a Whatsapp.",
         link: wappLink,

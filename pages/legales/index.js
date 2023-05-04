@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import arrow from "../../assets/icons/green-arrow.svg";
 import { BulletPoint, Text, Title, Wrapper } from "@/styles/Legales";
@@ -12,8 +12,46 @@ import {
   personalData,
   personalData2,
 } from "@/utilities/options";
+import { useRouter } from "next/router";
 
 const Legales = ({ isMobile, isTablet }) => {
+  const router = useRouter();
+  const { query } = router;
+
+  const legalRedirect = (section) => {
+    switch (section) {
+      case "terms":
+        const position = document.getElementById("terms").offsetTop;
+        window.scrollTo({
+          top: position,
+          behavior: "smooth",
+        });
+        break;
+      case "policy":
+        const position2 = document.getElementById("policy").offsetTop;
+        window.scrollTo({
+          top: position2,
+          behavior: "smooth",
+        });
+        break;
+      case "cookies":
+        const position3 = document.getElementById("cookies").offsetTop;
+        window.scrollTo({
+          top: position3,
+          behavior: "smooth",
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (query.section) {
+      legalRedirect(query.section);
+    }
+  }, [query]);
+
   const hrProps = {
     background: theme.colors.green,
     height: "1px",
@@ -24,7 +62,7 @@ const Legales = ({ isMobile, isTablet }) => {
 
   return (
     <Wrapper>
-      <Title>
+      <Title id="policy">
         Política de privacidad <br></br>y tratamiento de datos{" "}
         <Image
           alt="arrow"
@@ -245,7 +283,7 @@ const Legales = ({ isMobile, isTablet }) => {
         consulta.
       </Text>
       <hr style={hrProps} />
-      <Title>
+      <Title id="cookies">
         Cookies{" "}
         <Image
           alt="arrow"
@@ -350,7 +388,7 @@ const Legales = ({ isMobile, isTablet }) => {
         de esta Política por parte del Usuario.
       </Text>
       <hr style={hrProps} />
-      <Title>
+      <Title id="terms">
         Términos y condiciones <br></br>página web{" "}
         <Image
           alt="arrow"

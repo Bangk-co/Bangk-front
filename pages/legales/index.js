@@ -362,14 +362,8 @@ const Legales = ({ isMobile, isTablet }) => {
       {cookiesSettings.map((ele, indx) => (
         <Text key={indx} style={{ marginBottom: "25px" }}>
           {ele.label}{" "}
-          <Link
-            href={ele.link}
-            passHref={true}
-            style={{ color: theme.colors.green }}
-          >
-            <a target="_blank" rel="noreferrer">
-              aquí
-            </a>
+          <Link href={ele.link} style={{ color: theme.colors.green }}>
+            aquí
           </Link>
         </Text>
       ))}

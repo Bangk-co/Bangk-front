@@ -19,6 +19,7 @@ import { Input } from "../Input";
 import { Button } from "../Button";
 import { Checkbox } from "antd";
 import { theme } from "@/styles/theme";
+import Link from "next/link";
 
 const ContactForm = ({ isMobile, isTablet }) => {
   const [contactForm, setContactForm] = useState({
@@ -82,13 +83,13 @@ const ContactForm = ({ isMobile, isTablet }) => {
             <Checkbox value={contactForm.check} onChange={handleCheck} />
             <TextForm>
               Acepto el tratamiento de mis datos personales conforme a la{" "}
-              <a
+              <Link
                 href="/legales"
                 target="_blank"
                 style={{ color: theme.colors.green }}
               >
                 Política de Privacidad y Tratamiento de Datos.
-              </a>
+              </Link>
             </TextForm>
           </WrapperCheck>
           <WrapperFooter>

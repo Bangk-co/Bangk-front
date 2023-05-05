@@ -13,6 +13,7 @@ import {
   personalData2,
 } from "@/utilities/options";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Legales = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -361,14 +362,15 @@ const Legales = ({ isMobile, isTablet }) => {
       {cookiesSettings.map((ele, indx) => (
         <Text key={indx} style={{ marginBottom: "25px" }}>
           {ele.label}{" "}
-          <a
+          <Link
             href={ele.link}
-            target="_blank"
-            rel="noreferrer"
+            passHref={true}
             style={{ color: theme.colors.green }}
           >
-            aquí
-          </a>
+            <a target="_blank" rel="noreferrer">
+              aquí
+            </a>
+          </Link>
         </Text>
       ))}
       <br></br>

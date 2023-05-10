@@ -130,7 +130,7 @@ const Legales = ({ isMobile, isTablet }) => {
         <strong>NIT 901.647.130-5</strong>, con domicilio en la{" "}
         <strong>Calle 26 # 38 - 26 Edificio BIO 26</strong> de la ciudad de
         Medellín y con dirección de correo electrónico{" "}
-        <strong>info@bangk.la</strong>
+        <strong>soporte@bangk.co</strong>
       </Text>
       <hr style={hrProps} />
       <Title>
@@ -264,7 +264,7 @@ const Legales = ({ isMobile, isTablet }) => {
         Para el ejercicio de sus derechos sobre los Datos Personales tratados
         directamente por la Empresa, el Titular podrá presentar la solicitud
         respectiva a través de correo electrónico dirigido a{" "}
-        <strong>info@bangk.la</strong> <br></br>
+        <strong>soporte@bangk.co</strong> <br></br>
         <br></br>La solicitud mencionada deberá contener toda la información
         necesaria para adelantar de manera oportuna el trámite, incluyendo la
         descripción de los Datos Personales sobre los cuales se pretende ejercer
@@ -692,9 +692,9 @@ const Legales = ({ isMobile, isTablet }) => {
         y que se constituyan en una justa causa con las nuevas políticas de
         manejo de la información personal, los titulares de la información o sus
         representantes podrán solicitar a la Empresa el retiro de su información
-        a través del correo electrónico info@bangk.la, sin embargo, no se podrá
-        solicitar el retiro de los datos mientras se mantenga un vínculo de
-        cualquier orden con la Empresa. <br></br>
+        a través del correo electrónico soporte@bangk.co, sin embargo, no se
+        podrá solicitar el retiro de los datos mientras se mantenga un vínculo
+        de cualquier orden con la Empresa. <br></br>
         <br></br>Si decides no hacerlo, vencido el referido plazo,
         consideraremos autorizado el tratamiento de sus datos personales, de
         acuerdo con las nuevas políticas de manejo de la información personal.

@@ -383,6 +383,12 @@ export const WrapperCard = styled.div`
   position: relative;
   border-radius: 12px;
   cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: scale(1.02) translateZ(5px);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
@@ -590,7 +596,7 @@ export const TitleDetail = styled.div`
 export const WrapperBlogImage = styled.div`
   display: flex;
   height: 498px;
-  background-image: url(${(props) => props.image.src});
+  background-image: url(${(props) => props?.image?.src});
   background-size: cover;
   background-position: center center;
 
@@ -796,23 +802,23 @@ export const HelpText = styled.div`
   line-height: 47px;
   text-align: right;
   color: ${theme.colors.green};
-  width: 389px;
+  padding: 0px 20px;
   align-self: self-end;
   margin-top: 80px;
+  background: ${theme.colors.yellow};
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.h4};
     line-height: 35px;
     margin-top: 47px;
-    align-self: center;
-    width: 367px;
+    padding: 0px 20px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.default};
     line-height: 21px;
-    width: 170px;
+    padding: 0px 20px;
     margin-top: 0px;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Div } from "@/styles/Common";
 import {
@@ -38,25 +38,25 @@ const BlogDetailDesktop = ({ isTablet }) => {
   const blogInfo = currentBlog();
 
   const createMarkup = () => {
-    return { __html: blogInfo.text };
+    return { __html: blogInfo?.text };
   };
 
   return (
     <Div direction="column">
       <WrapperTop>
         <TitleDetail>
-          {blogInfo.title1}{" "}
+          {blogInfo?.title1}{" "}
           <span
             style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
           >
-            {blogInfo.title2}
+            {blogInfo?.title2}
           </span>
         </TitleDetail>
       </WrapperTop>
-      <WrapperBlogImage image={blogInfo.image} />
+      <WrapperBlogImage image={blogInfo?.image} />
       <WrapperWriterLogo>
         <WrapperWriter>
-          <WriterName>{blogInfo.subtitle}</WriterName>
+          <WriterName>{blogInfo?.subtitle}</WriterName>
         </WrapperWriter>
         <WrapperGreenStar>
           <Image alt="star" src={star} />

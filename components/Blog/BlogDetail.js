@@ -41,6 +41,8 @@ const BlogDetailDesktop = ({ isTablet }) => {
     return { __html: blogInfo?.text };
   };
 
+  console.log("-------", blogInfo.image);
+
   return (
     <Div direction="column">
       <WrapperTop>

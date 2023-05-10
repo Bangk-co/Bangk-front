@@ -491,12 +491,13 @@ export const WrapperFooter = styled.div`
 
 export const TitleCard = styled.div`
   position: absolute;
-  bottom: 125px;
+  bottom: 130px;
   left: 70px;
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 60px;
   color: ${theme.colors.white};
+  text-align: center;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
@@ -589,7 +590,7 @@ export const TitleDetail = styled.div`
 export const WrapperBlogImage = styled.div`
   display: flex;
   height: 498px;
-  background-image: url(${(props) => props.image.src});
+  background-image: url(${(props) => props?.image?.src});
   background-size: cover;
   background-position: center center;
 

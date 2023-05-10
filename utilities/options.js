@@ -1,5 +1,7 @@
 import { theme } from "@/styles/theme";
 import photoBlog from "../assets/img/photo-blog.jpg";
+import photoBlog2 from "../assets/img/photo-blog2.jpg";
+import photoBlog3 from "../assets/img/photo-blog3.jpg";
 
 export const wappLink =
   "https://api.whatsapp.com/send?phone=573009136761&text=";
@@ -185,13 +187,38 @@ export const contactInfoList = [
 
 export const cardsInfo = [
   {
+    id: 1,
     number: "#01",
     title: "¡Ahorrar es posible!",
+    text1: "Bangk es una Startup",
+    text2: "que nace para aliviar tu bolsillo",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: photoBlog,
+    width: "230px",
+    width2: "100px",
+  },
+  {
+    id: 2,
+    number: "#02",
+    title: "¡Responsabilidad social!",
     text1: "Educación",
     text2: "financiera en el siglo XXI.",
     color1: theme.colors.white,
     color2: theme.colors.orange,
-    photo: photoBlog,
+    photo: photoBlog2,
+    width: "180px",
+    width2: "100px",
+  },
+  {
+    id: 3,
+    number: "#03",
+    title: "¡Sigo aprendiendo!",
+    text1: "Educación",
+    text2: "financiera en el siglo XXI.",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: photoBlog3,
     width: "180px",
     width2: "100px",
   },

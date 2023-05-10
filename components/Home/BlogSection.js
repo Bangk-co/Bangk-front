@@ -14,8 +14,16 @@ import {
 import blog from "../../assets/icons/blog.svg";
 import phone from "../../assets/img/phone-logo.png";
 import BlogTablet from "./BlogTablet";
+import { theme } from "@/styles/theme";
+import { useRouter } from "next/router";
 
 const BlogSection = ({ isTablet }) => {
+  const router = useRouter();
+
+  const handleBlog = () => {
+    router.push("/blog");
+  };
+
   return (
     <>
       {isTablet ? (
@@ -30,7 +38,20 @@ const BlogSection = ({ isTablet }) => {
           </Text1Blog>
           <WrapperRow>
             <Col5>
-              <Text2Blog>Conócelo en nuestro</Text2Blog>
+              <Text2Blog>
+                <span
+                  onClick={handleBlog}
+                  style={{
+                    color: theme.colors.orange,
+                    fontFamily: "Gilroy Bold",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                >
+                  Conócelo
+                </span>{" "}
+                en nuestro
+              </Text2Blog>
               <WrapperIcon>
                 <Image alt="blog" src={blog} />
               </WrapperIcon>

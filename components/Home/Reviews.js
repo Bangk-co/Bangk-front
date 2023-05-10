@@ -46,8 +46,9 @@ const Reviews = ({ isMobile, isTablet }) => {
                 <Image alt="message" src={message} />
               </WrapperComment>
               <CommentText>
-                “Nunca había apreciado tanto no tener que hacer trámites de
-                banco y que me permiten ahorrar.”
+                “Fue como WOW, no sabía que era endosar un seguro, no sabía que
+                podía cambiar el seguro que me cobran en la cuota del crédito” …
+                y ahorrar dinero
               </CommentText>
               <Line />
               <WrapperPerson>

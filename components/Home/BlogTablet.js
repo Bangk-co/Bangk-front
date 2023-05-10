@@ -12,8 +12,16 @@ import {
 } from "./styles";
 import blog from "../../assets/icons/blog.svg";
 import phone from "../../assets/img/phone-logo.png";
+import { theme } from "@/styles/theme";
+import { useRouter } from "next/router";
 
 const BlogTablet = () => {
+  const router = useRouter();
+
+  const handleBlog = () => {
+    router.push("/blog");
+  };
+
   return (
     <WrapperBlogTablet>
       <Col5Tablet>
@@ -23,7 +31,20 @@ const BlogTablet = () => {
         <Text1Blog>
           Tips, consejos, testimonios y<br></br> nuevas formas de ahorrar.
         </Text1Blog>
-        <Text2Blog>Conócelo en nuestro</Text2Blog>
+        <Text2Blog>
+          <span
+            onClick={handleBlog}
+            style={{
+              color: theme.colors.orange,
+              fontFamily: "Gilroy Bold",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            Conócelo
+          </span>{" "}
+          en nuestro
+        </Text2Blog>
         <WrapperIcon>
           <Image alt="blog" src={blog} />
         </WrapperIcon>

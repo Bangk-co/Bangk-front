@@ -135,7 +135,7 @@ export const stepperList = [
     width: "190px",
     number: "#01",
     text1: "Diligencia los datos de tu deuda actual",
-    text2: "(Saldo y edad).",
+    text2: "(saldo y edad)",
     text3: "",
   },
   {
@@ -143,14 +143,14 @@ export const stepperList = [
     number: "#02",
     text1: "Recibe una",
     text2: "cotización",
-    text3: "de una póliza.",
+    text3: "de una póliza",
   },
 
   {
     width: "200px",
     number: "#03",
     text1: "Si aceptas, diligencia el",
-    text2: "formulario y paga la prima anual.",
+    text2: "formulario y paga la prima anual",
     text3: "",
   },
   {

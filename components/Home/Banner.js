@@ -14,13 +14,15 @@ import star from "../../assets/icons/orange-star.svg";
 import text from "../../assets/icons/text.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
-import { useRouter } from "next/router";
+import { wappLink } from "@/utilities/options";
 
 const Banner = () => {
-  const router = useRouter();
-
-  const goInsurance = () => {
-    router.push("/ahorra-en-tus-seguros");
+  const handleWapp = () => {
+    const a = document.createElement("a");
+    a.href = `${wappLink}`;
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
   };
 
   return (
@@ -37,7 +39,7 @@ const Banner = () => {
           <WrapperText>
             <Image alt="text" src={text} />
           </WrapperText>
-          <Button onClick={goInsurance}>Ahorra ya!</Button>
+          <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col>
         <Col lg={8} md={10} xs={12} style={{ alignSelf: "center" }}>
           <WrapperStar>

@@ -10,8 +10,15 @@ import {
 import coins from "../../assets/icons/white-coin.svg";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
+import { useRouter } from "next/router";
 
 const ForUs = ({ isMobile }) => {
+  const router = useRouter();
+
+  const handleBlog = () => {
+    router.push("/blog");
+  };
+
   return (
     <WrapperForUs>
       <WrapperTextForUs>
@@ -46,6 +53,7 @@ const ForUs = ({ isMobile }) => {
           size={theme.fonts.size.default}
           width={"max-content"}
           padding={"0px 3%"}
+          onClick={handleBlog}
         >
           Conoce nuestro Blog
         </Button>

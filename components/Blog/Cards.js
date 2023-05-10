@@ -23,9 +23,9 @@ import { useRouter } from "next/router";
 const Cards = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
-  const handleGo = (slug) => {
+  const handleGo = (slug, id) => {
     const url = slug.toLowerCase().replace(/ /g, "-");
-    router.push(`/blog/${url}`);
+    router.push(`/blog/${id}?name:${url}`);
   };
 
   return (
@@ -33,7 +33,7 @@ const Cards = ({ isMobile, isTablet }) => {
       <Row gutter={isMobile ? [0, 22] : isTablet ? [30, 41] : [45, 92]}>
         {cardsInfo.map((ele, indx) => (
           <Col key={indx} lg={12} md={12} sm={24}>
-            <WrapperCard onClick={() => handleGo(ele.title)}>
+            <WrapperCard onClick={() => handleGo(ele.title, ele.id)}>
               <WrapperImage image={ele.photo}>
                 <WrapperMessage>
                   <Image alt="" src={message} />
@@ -50,7 +50,9 @@ const Cards = ({ isMobile, isTablet }) => {
                   </span>
                 </BlogNumber>
               </WrapperImage>
-              <TitleCard>{ele.title}</TitleCard>
+              <TitleCard style={{ bottom: indx === 1 && "100px" }}>
+                {ele.title}
+              </TitleCard>
               <WrapperFooter>
                 <TextCard
                   style={{

@@ -590,7 +590,7 @@ export const TitleDetail = styled.div`
 export const WrapperBlogImage = styled.div`
   display: flex;
   height: 498px;
-  background-image: url(${(props) => props?.image?.src || ""});
+  background-image: url(${(props) => props?.image?.src});
   background-size: cover;
   background-position: center center;
 

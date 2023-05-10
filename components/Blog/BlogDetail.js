@@ -20,6 +20,7 @@ import {
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
 import percentage from "../../assets/icons/percentage.svg";
+import loading from "../../assets/img/loading.png";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { blogsInfo } from "@/utilities/blogsInfo";
@@ -41,8 +42,6 @@ const BlogDetailDesktop = ({ isTablet }) => {
     return { __html: blogInfo?.text };
   };
 
-  console.log("-------", blogInfo.image);
-
   return (
     <Div direction="column">
       <WrapperTop>
@@ -55,7 +54,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
           </span>
         </TitleDetail>
       </WrapperTop>
-      <WrapperBlogImage image={blogInfo?.image} />
+      <WrapperBlogImage image={blogInfo?.image || loading} />
       <WrapperWriterLogo>
         <WrapperWriter>
           <WriterName>{blogInfo?.subtitle}</WriterName>

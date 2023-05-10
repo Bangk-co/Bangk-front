@@ -15,9 +15,9 @@ import {
   YellowLine,
 } from "./styles";
 import { theme } from "@/styles/theme";
-import image from "../../assets/img/photo-blog.jpg";
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
+import loading from "../../assets/img/loading.png";
 import percentage from "../../assets/icons/percentage.svg";
 import { useRouter } from "next/router";
 import { blogsInfo } from "@/utilities/blogsInfo";
@@ -51,7 +51,7 @@ const BlogDetailMobile = () => {
           </span>
         </TitleDetail>
       </WrapperTop>
-      <WrapperBlogImage image={blogInfo?.image} />
+      <WrapperBlogImage image={blogInfo?.image || loading} />
       <Div m="37px 29px 51px 0px" style={{ alignSelf: "self-end" }}>
         <WrapperGreenStar>
           <Image alt="star" src={star} />

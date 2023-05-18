@@ -4,7 +4,7 @@ import photoBlog2 from "../assets/img/photo-blog2.jpg";
 import photoBlog3 from "../assets/img/photo-blog3.jpg";
 
 export const wappLink =
-  "https://api.whatsapp.com/send?phone=573009136761&text=";
+  "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!";
 
 export const email = "soporte@bangk.co";
 

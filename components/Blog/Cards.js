@@ -50,9 +50,7 @@ const Cards = ({ isMobile, isTablet }) => {
                   </span>
                 </BlogNumber>
               </WrapperImage>
-              <TitleCard style={{ bottom: indx === 1 && "100px" }}>
-                {ele.title}
-              </TitleCard>
+              <TitleCard>{ele.title}</TitleCard>
               <WrapperFooter>
                 <TextCard
                   style={{

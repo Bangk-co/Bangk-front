@@ -26,7 +26,7 @@ export const WrapperFooter = styled.div`
 export const Title = styled.h6`
   font-family: Gilroy Bold;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 29px;
   text-align: ${(props) => props.align};
 

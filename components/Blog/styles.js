@@ -498,7 +498,9 @@ export const WrapperFooter = styled.div`
 export const TitleCard = styled.div`
   position: absolute;
   bottom: 130px;
-  left: 70px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 60px;
@@ -508,14 +510,12 @@ export const TitleCard = styled.div`
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     top: 88px;
-    left: 45px;
     font-size: ${theme.fonts.size.h6};
     line-height: 20px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     top: 90px;
-    left: 45px;
     font-size: ${theme.fonts.size.default};
     line-height: 18px;
   }

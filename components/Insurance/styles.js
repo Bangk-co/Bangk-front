@@ -31,7 +31,8 @@ export const BannerCard = styled.div`
 
 export const Col1 = styled.div`
   display: flex;
-  padding: 200px 0px 42px 62px;
+  flex-direction: column;
+  padding: 120px 0px 42px 62px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 36px 0px 16px 18px;
@@ -54,16 +55,19 @@ export const BannerText = styled.div`
   font-size: ${theme.fonts.size.xxl};
   line-height: 60px;
   color: ${theme.colors.green};
+  margin-bottom: 50px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.h6};
     line-height: 20px;
+    margin-bottom: 20px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.h2};
     line-height: 40px;
+    margin-bottom: 30px;
   }
 `;
 
@@ -154,18 +158,21 @@ export const MessageSave = styled.div`
   line-height: 24px;
   color: ${theme.colors.green};
   width: 760px;
+  margin-bottom: 40px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.h6};
     line-height: 24px;
     width: 317px;
+    margin-bottom: 30px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.xxs};
     line-height: 12px;
     width: 220px;
+    margin-bottom: 12px;
   }
 `;
 

@@ -15,9 +15,9 @@ import {
   YellowLine,
 } from "./styles";
 import { theme } from "@/styles/theme";
-import image from "../../assets/img/photo-blog.jpg";
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
+import loading from "../../assets/img/loading.png";
 import percentage from "../../assets/icons/percentage.svg";
 import { useRouter } from "next/router";
 import { blogsInfo } from "@/utilities/blogsInfo";
@@ -36,22 +36,22 @@ const BlogDetailMobile = () => {
   const blogInfo = currentBlog();
 
   const createMarkup = () => {
-    return { __html: blogInfo.text };
+    return { __html: blogInfo?.text };
   };
 
   return (
     <Div direction="column">
       <WrapperTop>
         <TitleDetail>
-          {blogInfo.title1}{" "}
+          {blogInfo?.title1}{" "}
           <span
             style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
           >
-            {blogInfo.title2}
+            {blogInfo?.title2}
           </span>
         </TitleDetail>
       </WrapperTop>
-      <WrapperBlogImage image={blogInfo.image} />
+      <WrapperBlogImage image={blogInfo?.image || loading} />
       <Div m="37px 29px 51px 0px" style={{ alignSelf: "self-end" }}>
         <WrapperGreenStar>
           <Image alt="star" src={star} />
@@ -61,7 +61,7 @@ const BlogDetailMobile = () => {
         </WrapperGreenStar>
       </Div>
       <WrapperInfo>
-        <WriterName>{blogInfo.subtitle} </WriterName>
+        <WriterName>{blogInfo?.subtitle} </WriterName>
         <BlogText dangerouslySetInnerHTML={createMarkup()} />
       </WrapperInfo>
       <Div align="center" p="0px 69px 23.32px 40.35px" justify="space-between">

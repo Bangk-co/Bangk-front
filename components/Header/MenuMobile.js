@@ -15,7 +15,7 @@ const MenuMobile = ({ headerButtons, optionSelected, handleGo }) => {
           direction="column"
           height="70%"
           width="100%"
-          gap="28px"
+          gap="23px"
           justify="center"
           align="center"
         >
@@ -30,7 +30,7 @@ const MenuMobile = ({ headerButtons, optionSelected, handleGo }) => {
                   : theme.colors.white
               }
               onClick={() => handleGo(ele.url, ele.key)}
-              style={{ lineHeight: "47px" }}
+              style={{ lineHeight: "47px", height: "50px" }}
             >
               {ele.label}
             </Link>

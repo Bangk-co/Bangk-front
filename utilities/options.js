@@ -4,7 +4,7 @@ import photoBlog2 from "../assets/img/photo-blog2.jpg";
 import photoBlog3 from "../assets/img/photo-blog3.jpg";
 
 export const wappLink =
-  "https://api.whatsapp.com/send?phone=573009136761&text=";
+  "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!";
 
 export const email = "soporte@bangk.co";
 
@@ -198,26 +198,26 @@ export const cardsInfo = [
     color2: theme.colors.orange,
     photo: photoBlog,
     width: "230px",
-    width2: "100px",
+    width2: "130px",
   },
   {
     id: 2,
     number: "#02",
     title: "¡Responsabilidad social!",
-    text1: "Educación",
-    text2: "financiera en el siglo XXI.",
+    text1: "Quiero asegurarme de que",
+    text2: "este sea nuestro camino",
     color1: theme.colors.white,
     color2: theme.colors.orange,
     photo: photoBlog2,
-    width: "180px",
-    width2: "100px",
+    width: "230px",
+    width2: "130px",
   },
   {
     id: 3,
     number: "#03",
     title: "¡Sigo aprendiendo!",
-    text1: "Educación",
-    text2: "financiera en el siglo XXI.",
+    text1: "Julián Oquendo -",
+    text2: "Cofundador de Hatsu",
     color1: theme.colors.white,
     color2: theme.colors.orange,
     photo: photoBlog3,

@@ -23,6 +23,7 @@ export const theme = {
       h3: "2.25rem",
       h4: "1.875rem",
       h5: "1.563rem",
+      ft: "1.375rem",
       h6: "1.25rem",
       default: "1.125rem",
       md: "0.938rem",

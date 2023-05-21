@@ -3,8 +3,18 @@ import Image from "next/image";
 import { BannerCard, BannerText, Col1, Col2, WrapperBanner } from "./styles";
 import { theme } from "@/styles/theme";
 import woman from "../../assets/img/green-woman.svg";
+import { Button } from "../Button";
+import { wappLink } from "@/utilities/options";
 
 const Banner = () => {
+  const handleWapp = () => {
+    const a = document.createElement("a");
+    a.href = `${wappLink}`;
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
+  };
+
   return (
     <WrapperBanner>
       <BannerCard>
@@ -17,6 +27,7 @@ const Banner = () => {
               Eso es Bangk
             </span>
           </BannerText>
+          <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col1>
         <Col2>
           <Image alt="woman" src={woman} />

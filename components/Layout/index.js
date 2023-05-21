@@ -15,15 +15,18 @@ const Layout = ({ children, isMobile, isTablet }) => {
     const handleComplete = () => {
       setShowTransition(true);
       setContentLoaded(false);
-      setTimeout(() => {
-        setContentLoaded(true);
-      }, 300);
     };
 
-    router.events.on("routeChangeComplete", handleComplete);
+    const handleContentLoaded = () => {
+      setContentLoaded(true);
+    };
+
+    router.events.on("routeChangeStart", handleComplete);
+    router.events.on("routeChangeComplete", handleContentLoaded);
 
     return () => {
-      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeStart", handleComplete);
+      router.events.off("routeChangeComplete", handleContentLoaded);
     };
   }, [router]);
 
@@ -47,9 +50,7 @@ const Layout = ({ children, isMobile, isTablet }) => {
         />
       )}
       <Header isMobile={isMobile} isTablet={isTablet} />
-      <div className={contentLoaded ? styles.showContent : styles.hideContent}>
-        {children}
-      </div>
+      <div className={styles.contentContainer}>{children}</div>
       <Footer isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Div } from "@/styles/Common";
 import {
@@ -20,6 +20,7 @@ import {
 import star from "../../assets/icons/green-star.svg";
 import logo from "../../assets/icons/single-white-logo.png";
 import percentage from "../../assets/icons/percentage.svg";
+import loading from "../../assets/img/loading.png";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { blogsInfo } from "@/utilities/blogsInfo";
@@ -47,7 +48,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
       modifiedBlog.id === 1
         ? modifiedBlog.text.replace(
             "escríbenos",
-            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
+            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
           )
         : modifiedBlog.text;
 
@@ -64,18 +65,18 @@ const BlogDetailDesktop = ({ isTablet }) => {
     <Div direction="column">
       <WrapperTop>
         <TitleDetail>
-          {blogInfo.title1}{" "}
+          {blogInfo?.title1}{" "}
           <span
             style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
           >
-            {blogInfo.title2}
+            {blogInfo?.title2}
           </span>
         </TitleDetail>
       </WrapperTop>
-      <WrapperBlogImage image={blogInfo.image} />
+      <WrapperBlogImage image={blogInfo?.image || loading} />
       <WrapperWriterLogo>
         <WrapperWriter>
-          <WriterName>{blogInfo.subtitle}</WriterName>
+          <WriterName>{blogInfo?.subtitle}</WriterName>
         </WrapperWriter>
         <WrapperGreenStar>
           <Image alt="star" src={star} />

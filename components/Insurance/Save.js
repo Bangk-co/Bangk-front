@@ -12,8 +12,18 @@ import woman from "../../assets/img/white-woman.svg";
 import logo from "../../assets/icons/single-green-logo.svg";
 import { theme } from "@/styles/theme";
 import SaveMobile from "./SaveMobile";
+import { Button } from "../Button";
+import { wappLink } from "@/utilities/options";
 
 const Save = ({ isMobile, isTablet }) => {
+  const handleWapp = () => {
+    const a = document.createElement("a");
+    a.href = `${wappLink}`;
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
+  };
+
   return (
     <WrapperSave>
       {isMobile ? (
@@ -55,6 +65,7 @@ const Save = ({ isMobile, isTablet }) => {
               condiciones que pide el banco o la entidad ﬁnanciera, pero que te
               cueste mucho menos.
             </MessageSave>
+            <Button onClick={handleWapp}>Ahorra ya!</Button>
           </Col4>
         </>
       )}

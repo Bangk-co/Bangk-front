@@ -13,14 +13,24 @@ import {
 import star from "../../assets/icons/orange-star.svg";
 import info from "../../assets/img/info.svg";
 import { Col, Row } from "antd";
-import { infoList, wappLink } from "@/utilities/options";
+import { infoList, phone, wappLink } from "@/utilities/options";
 import { theme } from "@/styles/theme";
 
 const FormInfo = () => {
   return (
     <WrapperInfo>
       <Text1>Para ayudarte de manera más personalizada </Text1>
-      <WrapperTitle>Completa Nuestro Formulario</WrapperTitle>
+      <WrapperTitle>
+        <a
+          href={`${wappLink}`}
+          target="_blank"
+          style={{ color: theme.colors.green, fontFamily: "Gilroy Bold" }}
+          rel="noreferrer"
+        >
+          Completa
+        </a>
+        &nbsp;Nuestro Formulario
+      </WrapperTitle>
       <WrapperInfoText>
         <Row gutter={[40, 40]}>
           {infoList.map((ele, indx) => (
@@ -52,7 +62,15 @@ const FormInfo = () => {
         >
           <strong>WhatsApp</strong>
         </a>{" "}
-        o por <strong>teléfono.</strong>
+        o por{" "}
+        <a
+          href={`${phone}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: theme.colors.white, textDecoration: "none" }}
+        >
+          <strong>teléfono</strong>
+        </a>
       </Text3>
     </WrapperInfo>
   );

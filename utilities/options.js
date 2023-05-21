@@ -8,6 +8,8 @@ export const wappLink =
 
 export const email = "soporte@bangk.co";
 
+export const phone = "tel:+573009136761";
+
 export const footerList = [
   {
     title: "Nosotros",

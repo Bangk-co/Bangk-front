@@ -37,10 +37,29 @@ const BlogDetailDesktop = ({ isTablet }) => {
   };
 
   const blogInfo = currentBlog();
-
   const createMarkup = () => {
-    return { __html: blogInfo?.text };
+    const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
+
+    if (!modifiedBlog) {
+      return null;
+    }
+
+    const modifiedText =
+      modifiedBlog.id === 1
+        ? modifiedBlog.text.replace(
+            "escríbenos",
+            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
+          )
+        : modifiedBlog.text;
+
+    return { __html: modifiedText };
   };
+
+  const markup = createMarkup();
+
+  if (!markup) {
+    return null;
+  }
 
   return (
     <Div direction="column">
@@ -76,7 +95,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
           />
         </WrapperIcon>
         <WrapperText>
-          <BlogText dangerouslySetInnerHTML={createMarkup()} />
+          <BlogText dangerouslySetInnerHTML={markup} />
           <HelpText>
             Uno de nuestros asesores estará dispuesto a ayudarte en temas.
             <YellowLine />

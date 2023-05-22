@@ -36,8 +36,28 @@ const BlogDetailMobile = () => {
   const blogInfo = currentBlog();
 
   const createMarkup = () => {
-    return { __html: blogInfo?.text };
+    const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
+
+    if (!modifiedBlog) {
+      return null;
+    }
+
+    const modifiedText =
+      modifiedBlog.id === 1
+        ? modifiedBlog.text.replace(
+            "escríbenos",
+            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
+          )
+        : modifiedBlog.text;
+
+    return { __html: modifiedText };
   };
+
+  const markup = createMarkup();
+
+  if (!markup) {
+    return null;
+  }
 
   return (
     <Div direction="column">
@@ -73,10 +93,7 @@ const BlogDetailMobile = () => {
             height={"70%"}
           />
         </WrapperIcon>
-        <HelpText>
-          Uno de nuestros asesores estará dispuesto a ayudarte en temas.
-          <YellowLine />
-        </HelpText>
+        <HelpText>{blogInfo?.author}</HelpText>
       </Div>
     </Div>
   );

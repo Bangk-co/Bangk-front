@@ -37,6 +37,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
   };
 
   const blogInfo = currentBlog();
+
   const createMarkup = () => {
     const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
 
@@ -96,10 +97,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
         </WrapperIcon>
         <WrapperText>
           <BlogText dangerouslySetInnerHTML={markup} />
-          <HelpText>
-            Uno de nuestros asesores estará dispuesto a ayudarte en temas.
-            <YellowLine />
-          </HelpText>
+          <HelpText>{blogInfo?.author}</HelpText>
         </WrapperText>
       </WrapperRow>
     </Div>

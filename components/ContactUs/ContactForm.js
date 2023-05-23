@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
 import {
@@ -21,6 +21,8 @@ import { Input } from "../Input";
 import { Checkbox } from "antd";
 import { theme } from "@/styles/theme";
 import Link from "next/link";
+import { Helmet } from "react-helmet";
+import Script from "next/script";
 
 const ContactForm = ({ isMobile, isTablet }) => {
   const defaultValues = {
@@ -44,7 +46,11 @@ const ContactForm = ({ isMobile, isTablet }) => {
             También puedes dejarnos tus datos en el siguiente formulario y nos
             contactaremos contigo lo más pronto posible.
           </TitleForm>
-          <form onSubmit={handleSubmit()}>
+          <form
+            action="https://api.clientify.net/web-marketing/webforms/external/form/131388"
+            method="POST"
+            id="clientifyForm"
+          >
             <Controller
               control={control}
               name="fullname"
@@ -169,6 +175,12 @@ const ContactForm = ({ isMobile, isTablet }) => {
           </WrapperPadlock>
         </WrapperIcons>
       </CardForm>
+      <Helmet>
+        <Script
+          type="text/javascript"
+          src="https://api.clientify.net/web-marketing/webforms/external/script/131388.js"
+        />
+      </Helmet>
     </WrapperContactForm>
   );
 };

@@ -105,7 +105,7 @@ const ContactForm = ({ isMobile, isTablet }) => {
                 <strong>7:00 am y 9:00 pm</strong> y los Sábados entre los{" "}
                 <strong>9:00 am y 6:00 pm</strong>
               </TextForm>
-              <Button>Enviar</Button>
+              <Button type="submit">Enviar</Button>
             </WrapperFooter>
           </form>
         </WrapperForm>

@@ -52,10 +52,6 @@ const ContactForm = ({ isMobile, isTablet }) => {
     { label: "E-mail", id: "email", value: contactForm.email },
   ];
 
-  const handleSend = () => {
-    console.log("----------", contactForm);
-  };
-
   return (
     <WrapperContactForm>
       <CardForm>
@@ -109,7 +105,7 @@ const ContactForm = ({ isMobile, isTablet }) => {
                 <strong>7:00 am y 9:00 pm</strong> y los Sábados entre los{" "}
                 <strong>9:00 am y 6:00 pm</strong>
               </TextForm>
-              <Button onClick={handleSend}>Enviar</Button>
+              <Button>Enviar</Button>
             </WrapperFooter>
           </form>
         </WrapperForm>

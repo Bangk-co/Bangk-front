@@ -52,6 +52,10 @@ const ContactForm = ({ isMobile, isTablet }) => {
     { label: "E-mail", id: "email", value: contactForm.email },
   ];
 
+  const handleSend = () => {
+    console.log("----------", contactForm);
+  };
+
   return (
     <WrapperContactForm>
       <CardForm>
@@ -60,45 +64,53 @@ const ContactForm = ({ isMobile, isTablet }) => {
             También puedes dejarnos tus datos en el siguiente formulario y nos
             contactaremos contigo lo más pronto posible.
           </TitleForm>
-          {form.map((ele, indx) => (
-            <>
-              <Label key={indx}>{ele.label}</Label>
-              <Input
-                id={ele.id}
-                value={ele.value}
-                onChange={handleChange}
-                height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
+          <form>
+            {form.map((ele, indx) => (
+              <>
+                <Label key={indx}>{ele.label}</Label>
+                <Input
+                  id={ele.id}
+                  name={ele.id}
+                  value={ele.value}
+                  onChange={handleChange}
+                  height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
+                />
+              </>
+            ))}
+            <Label>Mensaje</Label>
+            <Input
+              id="message"
+              name="message"
+              value={contactForm.message}
+              onChange={handleChange}
+              height={isMobile ? "49px" : isTablet ? "78px" : "99px"}
+              radius={"9px"}
+            />
+            <WrapperCheck>
+              <Checkbox
+                name="privacy"
+                value={contactForm.check}
+                onChange={handleCheck}
               />
-            </>
-          ))}
-          <Label>Mensaje</Label>
-          <Input
-            id="message"
-            value={contactForm.message}
-            onChange={handleChange}
-            height={isMobile ? "49px" : isTablet ? "78px" : "99px"}
-            radius={"9px"}
-          />
-          <WrapperCheck>
-            <Checkbox value={contactForm.check} onChange={handleCheck} />
-            <TextForm>
-              Acepto el tratamiento de mis datos personales conforme a la{" "}
-              <Link
-                href="/legales"
-                target="_blank"
-                style={{ color: theme.colors.green }}
-              >
-                Política de Privacidad y Tratamiento de Datos.
-              </Link>
-            </TextForm>
-          </WrapperCheck>
+              <TextForm>
+                Acepto el tratamiento de mis datos personales conforme a la{" "}
+                <Link
+                  href="/legales"
+                  target="_blank"
+                  style={{ color: theme.colors.green }}
+                >
+                  Política de Privacidad y Tratamiento de Datos.
+                </Link>
+              </TextForm>
+            </WrapperCheck>
+          </form>
           <WrapperFooter>
             <TextForm>
               Te atendemos de Lunes a Viernes entre las{" "}
               <strong>7:00 am y 9:00 pm</strong> y los Sábados entre los{" "}
               <strong>9:00 am y 6:00 pm</strong>
             </TextForm>
-            <Button>Enviar</Button>
+            <Button onClick={handleSend}>Enviar</Button>
           </WrapperFooter>
         </WrapperForm>
         <WrapperIcons>

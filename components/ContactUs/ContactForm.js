@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
 import {
   Button,
@@ -22,35 +23,18 @@ import { theme } from "@/styles/theme";
 import Link from "next/link";
 
 const ContactForm = ({ isMobile, isTablet }) => {
-  const [contactForm, setContactForm] = useState({
-    name: "",
+  const defaultValues = {
+    fullname: "",
     cellphone: "",
     email: "",
     message: "",
-    check: false,
-  });
-  const [forceUpdate, setForceUpdate] = useState(false);
-
-  const handleChange = (event) => {
-    const { value, id } = event.target;
-
-    const newForm = contactForm;
-    newForm[id] = value;
-    setContactForm(newForm);
-    setForceUpdate(!forceUpdate);
+    privacy: false,
   };
-
-  const handleCheck = (event) => {
-    const newForm = contactForm;
-    setContactForm({ ...newForm, check: event.target.checked });
-    setForceUpdate(!forceUpdate);
-  };
-
-  const form = [
-    { label: "Nombres", id: "name", value: contactForm.name },
-    { label: "Celular", id: "cellphone", value: contactForm.cellphone },
-    { label: "E-mail", id: "email", value: contactForm.email },
-  ];
+  const {
+    control,
+    formState: { errors: formErrors },
+    handleSubmit,
+  } = useForm({ defaultValues, mode: "all" });
 
   return (
     <WrapperContactForm>
@@ -60,45 +44,112 @@ const ContactForm = ({ isMobile, isTablet }) => {
             También puedes dejarnos tus datos en el siguiente formulario y nos
             contactaremos contigo lo más pronto posible.
           </TitleForm>
-          <form>
-            {form.map((ele, indx) => (
-              <>
-                <Label key={indx}>{ele.label}</Label>
-                <Input
-                  id={ele.id}
-                  name={ele.id}
-                  value={ele.value}
-                  onChange={handleChange}
-                  height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
-                />
-              </>
-            ))}
-            <Label>Mensaje</Label>
-            <Input
-              id="message"
-              name="message"
-              value={contactForm.message}
-              onChange={handleChange}
-              height={isMobile ? "49px" : isTablet ? "78px" : "99px"}
-              radius={"9px"}
+          <form onSubmit={handleSubmit()}>
+            <Controller
+              control={control}
+              name="fullname"
+              rules={{ required: true }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <>
+                  <Label>{"Nombres"}</Label>
+                  <Input
+                    name="fullname"
+                    type="text"
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={!!formErrors.fullname}
+                    height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
+                  />
+                </>
+              )}
             />
-            <WrapperCheck>
-              <Checkbox
-                name="privacy"
-                value={contactForm.check}
-                onChange={handleCheck}
-              />
-              <TextForm>
-                Acepto el tratamiento de mis datos personales conforme a la{" "}
-                <Link
-                  href="/legales"
-                  target="_blank"
-                  style={{ color: theme.colors.green }}
-                >
-                  Política de Privacidad y Tratamiento de Datos.
-                </Link>
-              </TextForm>
-            </WrapperCheck>
+            <Controller
+              control={control}
+              name="cellphone"
+              rules={{ required: true }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <>
+                  <Label>{"Celular"}</Label>
+                  <Input
+                    name="cellphone"
+                    type="number"
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={!!formErrors.cellphone}
+                    height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
+                  />
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="email"
+              rules={{ required: true }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <>
+                  <Label>{"E-mail"}</Label>
+                  <Input
+                    name="email"
+                    type="text"
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={!!formErrors.email}
+                    height={isMobile ? "22px" : isTablet ? "35px" : "44px"}
+                  />
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="message"
+              rules={{ required: true }}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <>
+                  <Label>Mensaje</Label>
+                  <Input
+                    name="message"
+                    type="text"
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={!!formErrors.message}
+                    height={isMobile ? "49px" : isTablet ? "78px" : "99px"}
+                    radius={"9px"}
+                  />
+                </>
+              )}
+            />
+            <Controller
+              control={control}
+              name="privacy"
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <>
+                  <WrapperCheck>
+                    <Checkbox
+                      name="privacy"
+                      type="checkbox"
+                      value={value}
+                      onChange={onChange}
+                    />
+                    <TextForm>
+                      Acepto el tratamiento de mis datos personales conforme a
+                      la{" "}
+                      <Link
+                        href="/legales"
+                        target="_blank"
+                        style={{ color: theme.colors.green }}
+                      >
+                        Política de Privacidad y Tratamiento de Datos.
+                      </Link>
+                    </TextForm>
+                  </WrapperCheck>
+                </>
+              )}
+            />
             <WrapperFooter>
               <TextForm>
                 Te atendemos de Lunes a Viernes entre las{" "}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
+  Button,
   CardForm,
   Label,
   TextForm,
@@ -16,7 +17,6 @@ import {
 import padlock from "../../assets/icons/padlock.png";
 import star from "../../assets/icons/orange-star.svg";
 import { Input } from "../Input";
-import { Button } from "../Button";
 import { Checkbox } from "antd";
 import { theme } from "@/styles/theme";
 import Link from "next/link";

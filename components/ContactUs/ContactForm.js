@@ -22,8 +22,6 @@ import { Input } from "../Input";
 import { Checkbox } from "antd";
 import { theme } from "@/styles/theme";
 import Link from "next/link";
-import { Helmet } from "react-helmet";
-import Script from "next/script";
 
 const ContactForm = ({ isMobile, isTablet }) => {
   const defaultValues = {
@@ -161,10 +159,6 @@ const ContactForm = ({ isMobile, isTablet }) => {
               </TextForm>
               <Button type="submit">Enviar</Button>
             </WrapperFooter>
-            <script
-              type="text/javascript"
-              src="https://api.clientify.net/web-marketing/webforms/external/script/131456.js"
-            ></script>
           </form>
         </WrapperForm>
         <WrapperIcons>

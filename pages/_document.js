@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
@@ -35,7 +36,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head></Head>
+        <Head>
+          <script
+            type="text/javascript"
+            src="https://api.clientify.net/web-marketing/webforms/external/script/131388.js"
+          ></script>
+        </Head>
         <body style={{ overflowY: "auto" }}>
           <Main />
           <NextScript />

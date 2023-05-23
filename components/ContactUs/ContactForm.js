@@ -46,11 +46,7 @@ const ContactForm = ({ isMobile, isTablet }) => {
             También puedes dejarnos tus datos en el siguiente formulario y nos
             contactaremos contigo lo más pronto posible.
           </TitleForm>
-          <form
-            action="https://api.clientify.net/web-marketing/webforms/external/form/131388"
-            method="POST"
-            id="clientifyForm"
-          >
+          <form>
             <Controller
               control={control}
               name="fullname"

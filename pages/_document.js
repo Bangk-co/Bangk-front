@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
 import { ServerStyleSheet } from "styled-components";
 
 class MyDocument extends Document {
@@ -36,17 +35,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <Script
-            type="text/javascript"
-            src="https://api.clientify.net/web-marketing/webforms/external/script/131388.js"
-          ></Script>
-        </Head>
+        <Head></Head>
         <body style={{ overflowY: "auto" }}>
-          <Script
-            type="text/javascript"
-            src="https://api.clientify.net/web-marketing/webforms/external/script/131388.js"
-          ></Script>
           <Main />
           <NextScript />
         </body>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Image from "next/image";
@@ -160,6 +161,10 @@ const ContactForm = ({ isMobile, isTablet }) => {
               </TextForm>
               <Button type="submit">Enviar</Button>
             </WrapperFooter>
+            <script
+              type="text/javascript"
+              src="https://api.clientify.net/web-marketing/webforms/external/script/131456.js"
+            ></script>
           </form>
         </WrapperForm>
         <WrapperIcons>
@@ -171,12 +176,6 @@ const ContactForm = ({ isMobile, isTablet }) => {
           </WrapperPadlock>
         </WrapperIcons>
       </CardForm>
-      <Helmet>
-        <Script
-          type="text/javascript"
-          src="https://api.clientify.net/web-marketing/webforms/external/script/131456.js"
-        />
-      </Helmet>
     </WrapperContactForm>
   );
 };

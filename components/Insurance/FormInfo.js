@@ -48,30 +48,30 @@ const FormInfo = () => {
             </Col>
           ))}
         </Row>
+        <WrapperImgInfo>
+          <Image alt="info" src={info} />
+        </WrapperImgInfo>
+        <Text3>
+          También podemos ayudarte vía{" "}
+          <a
+            href={`${wappLink}`}
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: theme.colors.white, textDecoration: "none" }}
+          >
+            <strong>WhatsApp</strong>
+          </a>{" "}
+          o por{" "}
+          <a
+            href={`${phone}`}
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: theme.colors.white, textDecoration: "none" }}
+          >
+            <strong>teléfono</strong>
+          </a>
+        </Text3>
       </WrapperInfoText>
-      <WrapperImgInfo>
-        <Image alt="info" src={info} />
-      </WrapperImgInfo>
-      <Text3>
-        También podemos ayudarte vía{" "}
-        <a
-          href={`${wappLink}`}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: theme.colors.white, textDecoration: "none" }}
-        >
-          <strong>WhatsApp</strong>
-        </a>{" "}
-        o por{" "}
-        <a
-          href={`${phone}`}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: theme.colors.white, textDecoration: "none" }}
-        >
-          <strong>teléfono</strong>
-        </a>
-      </Text3>
     </WrapperInfo>
   );
 };

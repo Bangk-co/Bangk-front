@@ -14,10 +14,10 @@ const StepperTitleHome = () => {
         <span style={{ color: theme.colors.green, fontFamily: "Gilroy Bold" }}>
           Paso
         </span>
+        <WrapperUy>
+          <Image alt="uy" src={uy} />
+        </WrapperUy>
       </Title2>
-      <WrapperUy>
-        <Image alt="uy" src={uy} />
-      </WrapperUy>
     </Div>
   );
 };

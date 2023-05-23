@@ -328,6 +328,7 @@ export const WrapperInfo = styled.div`
 
 export const WrapperInfoText = styled.div`
   display: flex;
+  position: relative;
   width: 1085px;
   height: 392px;
   background: ${theme.colors.gray};
@@ -360,6 +361,7 @@ export const WrapperTitle = styled.div`
   position: absolute;
   top: 80px;
   left: 120px;
+  z-index: 5;
 
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h3};
@@ -459,14 +461,14 @@ export const Text3 = styled.div`
   color: ${theme.colors.white};
   width: 203px;
   position: absolute;
-  right: 95px;
+  right: -110px;
   bottom: 180px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.n};
     line-height: 6px;
     width: 66.57px;
-    right: 28px;
+    right: -18px;
     bottom: 87px;
   }
 
@@ -475,8 +477,8 @@ export const Text3 = styled.div`
     font-size: ${theme.fonts.size.xs};
     line-height: 12px;
     width: 136px;
-    right: 165px;
-    top: 125px;
+    right: 75px;
+    top: -25px;
   }
 `;
 
@@ -485,13 +487,13 @@ export const WrapperImgInfo = styled.div`
   width: 248.01px;
   height: 139.01px;
   position: absolute;
-  right: 70px;
+  right: -130px;
   bottom: 120px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 75px;
     height: 42.041px;
-    right: 25px;
+    right: -20px;
     bottom: 70px;
   }
 
@@ -499,8 +501,8 @@ export const WrapperImgInfo = styled.div`
       .breakpoints.md}) {
     width: 168.01px;
     height: 94.01px;
-    right: 150px;
-    top: 110px;
+    right: 60px;
+    top: -40px;
   }
 `;
 

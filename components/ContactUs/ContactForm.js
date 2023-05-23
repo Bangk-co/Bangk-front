@@ -103,15 +103,15 @@ const ContactForm = ({ isMobile, isTablet }) => {
                 </Link>
               </TextForm>
             </WrapperCheck>
+            <WrapperFooter>
+              <TextForm>
+                Te atendemos de Lunes a Viernes entre las{" "}
+                <strong>7:00 am y 9:00 pm</strong> y los Sábados entre los{" "}
+                <strong>9:00 am y 6:00 pm</strong>
+              </TextForm>
+              <Button onClick={handleSend}>Enviar</Button>
+            </WrapperFooter>
           </form>
-          <WrapperFooter>
-            <TextForm>
-              Te atendemos de Lunes a Viernes entre las{" "}
-              <strong>7:00 am y 9:00 pm</strong> y los Sábados entre los{" "}
-              <strong>9:00 am y 6:00 pm</strong>
-            </TextForm>
-            <Button onClick={handleSend}>Enviar</Button>
-          </WrapperFooter>
         </WrapperForm>
         <WrapperIcons>
           <WrapperStar>

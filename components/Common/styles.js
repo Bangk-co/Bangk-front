@@ -138,6 +138,7 @@ export const Title1 = styled.div`
 `;
 
 export const Title2 = styled.div`
+  position: relative;
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.lg};
   line-height: 59px;
@@ -160,47 +161,24 @@ export const Title2 = styled.div`
 
 export const WrapperUy = styled.div`
   position: absolute;
-  top: 48.5em;
-  right: 31.5em;
+  top: -30px;
+  right: -40px;
   width: 65px;
   height: 42px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 29px;
     height: 19px;
-    top: 26.2em;
-    right: 6em;
+    top: -15px;
+    right: -17px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 51px;
     height: 34px;
-    top: 41.2em;
-    right: 15.5em;
-  }
-`;
-
-export const WrapperUy2 = styled.div`
-  position: absolute;
-  top: 161.7em;
-  right: 5em;
-  width: 65px;
-  height: 42px;
-
-  @media (max-width: ${theme.breakpoints.sm}) {
-    width: 29px;
-    height: 19px;
-    top: 60.2em;
-    right: 6em;
-  }
-
-  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-      .breakpoints.md}) {
-    width: 51px;
-    height: 34px;
-    top: 103.5em;
-    right: 15.5em;
+    top: -25px;
+    right: -10px;
   }
 `;
 

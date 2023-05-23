@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Div } from "@/styles/Common";
-import { Title1, Title2, WrapperTitle, WrapperUy2 } from "../Common/styles";
+import { Title1, Title2, WrapperTitle, WrapperUy } from "../Common/styles";
 import { theme } from "@/styles/theme";
 import uy from "../../assets/icons/uy.svg";
 
@@ -14,10 +14,10 @@ const StepperTitle = () => {
         <span style={{ color: theme.colors.green, fontFamily: "Gilroy Bold" }}>
           Paso
         </span>
+        <WrapperUy>
+          <Image alt="uy" src={uy} />
+        </WrapperUy>
       </Title2>
-      <WrapperUy2>
-        <Image alt="uy" src={uy} />
-      </WrapperUy2>
     </WrapperTitle>
   );
 };

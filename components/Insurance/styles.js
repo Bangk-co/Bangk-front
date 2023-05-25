@@ -173,6 +173,7 @@ export const MessageSave = styled.div`
 // BangkData
 export const WrapperData = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   padding: 87px 69.5px 53px 69px;
   background: ${theme.colors.yellow};
@@ -266,20 +267,20 @@ export const WrapperBigStar = styled.div`
   width: 283px;
   height: 283px;
   position: absolute;
-  top: 150em;
+  bottom: -140px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.xxxs};
     width: 110px;
     height: 110px;
-    top: 105.8em;
+    bottom: -55px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 110px;
     height: 116px;
-    top: 92.2em;
+    bottom: -58px;
   }
 `;
 

@@ -4,19 +4,16 @@ import styled from "styled-components";
 //Baner
 export const WrapperBanner = styled.div`
   display: flex;
-  height: 738px;
   width: 100%;
   background: ${theme.colors.light};
   padding: 42px 72px 78px 45px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    height: 182px;
     padding: 7px 19px 13px 24px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    height: 464px;
     padding: 35.14px 34px 114.58px 34px;
   }
 `;
@@ -75,17 +72,14 @@ export const BannerText = styled.div`
 
 export const WrapperSave = styled.div`
   display: flex;
-  height: 896px;
-  padding: 0px 44px 0px 69px;
+  padding: 0px 44px 40px 69px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    height: 742px;
-    padding: 0px 0px 0px 42px;
+    padding: 0px 0px 70px 42px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    height: 356px;
     padding: 24px 0px 22px 14px;
   }
 `;

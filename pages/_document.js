@@ -45,7 +45,7 @@ class MyDocument extends Document {
             src="https://api.clientify.net/web-marketing/webforms/external/script/131456.js"
           />
 
-          <script type="text/javascript" src="./static/entry-script.js" />
+          <script type="text/javascript" src="/static/entry-script.js" />
         </body>
       </Html>
     );

@@ -36,16 +36,15 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head></Head>
+        <Head>
+          <script
+            type="text/javascript"
+            src="https://api.clientify.net/web-marketing/webforms/external/script/132164.js"
+          ></script>
+        </Head>
         <body style={{ overflowY: "auto" }}>
           <Main />
           <NextScript />
-          <script
-            type="text/javascript"
-            src="https://api.clientify.net/web-marketing/webforms/external/script/131456.js"
-          />
-
-          <script type="text/javascript" src="/static/entry-script.js" />
         </body>
       </Html>
     );

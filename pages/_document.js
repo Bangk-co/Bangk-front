@@ -45,6 +45,7 @@ class MyDocument extends Document {
         <body style={{ overflowY: "auto" }}>
           <Main />
           <NextScript />
+          <script type="text/javascript" src="/static/entry-script.js" />
         </body>
       </Html>
     );

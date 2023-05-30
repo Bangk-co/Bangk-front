@@ -7,7 +7,7 @@ module.exports = {
     return [
       {
         source: "/blog/articulo/:id",
-        destination: "/blog/articulo/[id]",
+        destination: "/blog/articulo/:id",
         permanent: true,
       },
     ];

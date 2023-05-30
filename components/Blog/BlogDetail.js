@@ -59,7 +59,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
   const markup = createMarkup();
 
   if (!markup) {
-    return null;
+    return <></>;
   }
 
   return (

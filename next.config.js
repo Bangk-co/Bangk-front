@@ -3,15 +3,6 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  async redirects() {
-    return [
-      {
-        source: "/blog/articulo/:id",
-        destination: "/blog/articulo/:id",
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     return [
       {

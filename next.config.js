@@ -23,12 +23,4 @@ module.exports = {
   },
   basePath: "",
   assetPrefix: "//",
-  async rewrites() {
-    return [
-      {
-        source: "/blog/articulo/:id",
-        destination: "/blog/articulo/[id]",
-      },
-    ];
-  },
 };

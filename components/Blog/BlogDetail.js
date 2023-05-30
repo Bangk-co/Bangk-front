@@ -30,32 +30,32 @@ const BlogDetailDesktop = ({ isTablet }) => {
   const { id } = router.query;
   const blogId = Number(id);
 
-  const currentBlog = () => {
-    const blog = blogsInfo.find((ele) => ele.id === blogId);
+  // const currentBlog = () => {
+  //   const blog = blogsInfo.find((ele) => ele.id === blogId);
 
-    return blog;
-  };
+  //   return blog;
+  // };
 
-  const blogInfo = currentBlog();
+  // const blogInfo = currentBlog();
 
-  const createMarkup = () => {
-    const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
+  // const createMarkup = () => {
+  //   const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
 
-    if (!modifiedBlog) {
-      console.log("se entró allá");
-      return null;
-    }
+  //   if (!modifiedBlog) {
+  //     console.log("se entró allá");
+  //     return null;
+  //   }
 
-    const modifiedText =
-      Number(modifiedBlog.id) === 1
-        ? modifiedBlog.text.replace(
-            "escríbenos",
-            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
-          )
-        : modifiedBlog.text;
+  //   const modifiedText =
+  //     modifiedBlog.id === 1
+  //       ? modifiedBlog.text.replace(
+  //           "escríbenos",
+  //           '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
+  //         )
+  //       : modifiedBlog.text;
 
-    return { __html: modifiedText };
-  };
+  //   return { __html: modifiedText };
+  // };
 
   const markup = createMarkup();
 
@@ -66,7 +66,8 @@ const BlogDetailDesktop = ({ isTablet }) => {
 
   return (
     <Div direction="column">
-      <WrapperTop>
+      Hola
+      {/* <WrapperTop>
         <TitleDetail>
           {blogInfo?.title1}{" "}
           <span
@@ -98,10 +99,10 @@ const BlogDetailDesktop = ({ isTablet }) => {
           />
         </WrapperIcon>
         <WrapperText>
-          {/* <BlogText dangerouslySetInnerHTML={markup} /> */}
+           <BlogText dangerouslySetInnerHTML={markup} /> 
           <HelpText>{blogInfo?.author}</HelpText>
         </WrapperText>
-      </WrapperRow>
+      </WrapperRow> */}
     </Div>
   );
 };

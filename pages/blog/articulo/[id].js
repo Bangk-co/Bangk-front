@@ -3,12 +3,11 @@ import BlogDetailDesktop from "@/components/Blog/BlogDetail";
 import BlogDetailMobile from "@/components/Blog/BlogDetailMobile";
 
 const BlogDetail = ({ isMobile, isTablet }) => {
-  return <>HOLA</>;
-  // return isMobile ? (
-  //   <BlogDetailMobile />
-  // ) : (
-  //   <BlogDetailDesktop isTablet={isTablet} />
-  // );
+  return isMobile ? (
+    <BlogDetailMobile />
+  ) : (
+    <BlogDetailDesktop isTablet={isTablet} />
+  );
 };
 
 export default BlogDetail;

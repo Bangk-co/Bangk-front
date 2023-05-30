@@ -42,11 +42,12 @@ const BlogDetailDesktop = ({ isTablet }) => {
     const modifiedBlog = blogsInfo.find((blog) => blog.id === blogId);
 
     if (!modifiedBlog) {
+      console.log("se entró allá");
       return null;
     }
 
     const modifiedText =
-      modifiedBlog.id === 1
+      Number(modifiedBlog.id) === 1
         ? modifiedBlog.text.replace(
             "escríbenos",
             '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
@@ -97,7 +98,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
           />
         </WrapperIcon>
         <WrapperText>
-          <BlogText dangerouslySetInnerHTML={markup} />
+          {/* <BlogText dangerouslySetInnerHTML={markup} /> */}
           <HelpText>{blogInfo?.author}</HelpText>
         </WrapperText>
       </WrapperRow>

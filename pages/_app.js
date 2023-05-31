@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import "antd/dist/reset.css";
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "styled-components";
@@ -20,6 +22,20 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     useMediaQuery({
       query: `(min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md})`,
     }) || isTabletServer;
+  const router = useRouter()
+
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init('278194147905078')
+        ReactPixel.pageView()
+
+        router.events.on('routeChangeComplete', () => {
+          ReactPixel.pageView()
+        })
+      })
+  }, [router.events])
 
   return (
     <ThemeProvider theme={theme}>

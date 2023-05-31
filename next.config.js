@@ -3,6 +3,7 @@ module.exports = {
   images: {
     unoptimized: true,
   },
+
   async headers() {
     return [
       {

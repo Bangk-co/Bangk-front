@@ -2,6 +2,7 @@ import { theme } from "@/styles/theme";
 import photoBlog from "../assets/img/photo-blog.jpg";
 import photoBlog2 from "../assets/img/photo-blog2.jpg";
 import photoBlog3 from "../assets/img/photo-blog3.jpg";
+import photoBlog4 from "../assets/img/photo-blog4.jpg";
 
 export const wappLink =
   "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!";
@@ -221,6 +222,18 @@ export const cardsInfo = [
     color1: theme.colors.white,
     color2: theme.colors.orange,
     photo: photoBlog3,
+    width: "180px",
+    width2: "100px",
+  },
+  {
+    id: 4,
+    number: "#04",
+    title: "¡Buena Suerte!",
+    text1: "Camilo Restrepo -",
+    text2: "Empresario",
+    color1: theme.colors.white,
+    color2: theme.colors.orange,
+    photo: photoBlog4,
     width: "180px",
     width2: "100px",
   },

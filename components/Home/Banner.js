@@ -37,16 +37,16 @@ const Banner = () => {
             que pagas al banco sin cambiar la cobertura
           </Message>
           <WrapperText>
-            <Image alt="text" src={text} />
+            <Image alt="text" src={text} width={560} height={44} />
           </WrapperText>
           <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col>
         <Col lg={8} md={10} xs={12} style={{ alignSelf: "center" }}>
           <WrapperStar>
-            <Image alt="star" src={star} width="48px" height="48px" />
+            <Image alt="star" src={star} width={48} height={48} />
           </WrapperStar>
           <WrapperImage>
-            <Image alt="surprised-man" src={man} />
+            <Image alt="surprised-man" src={man} width={467} height={466} />
           </WrapperImage>
         </Col>
       </Row>

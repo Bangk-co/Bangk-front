@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3002",
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
@@ -20,7 +20,7 @@
     "babel-runtime": "^6.26.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
-    "next": "^12.0.10",
+    "next": "^14.0.4",
     "next-plugin-antd-less": "^1.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

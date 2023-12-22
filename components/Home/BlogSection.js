@@ -53,12 +53,12 @@ const BlogSection = ({ isTablet }) => {
                 en nuestro
               </Text2Blog>
               <WrapperIcon>
-                <Image alt="blog" src={blog} />
+                <Image alt="blog" src={blog} width={392} height={110} />
               </WrapperIcon>
             </Col5>
             <Col6>
               <WrapperPhone>
-                <Image alt="phone" src={phone} />
+                <Image alt="phone" src={phone} width={293} height={445} />
               </WrapperPhone>
             </Col6>
           </WrapperRow>

@@ -37,7 +37,7 @@ const MenuMobile = ({ headerButtons, optionSelected, handleGo }) => {
           ))}
         </Div>
         <Div direction="column" height="30%" align="center">
-          <Image alt="logo" src={logo} width={"148.71px"} height={"52.71px"} />
+          <Image alt="logo" src={logo} width={148.71} height={52.71} />
           <Text>
             Una plataforma{" "}
             <span style={{ color: theme.colors.orange }}>

@@ -1,8 +1,6 @@
 module.exports = {
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
+  // trailingSlash: true,
+  images: {},
 
   async headers() {
     return [

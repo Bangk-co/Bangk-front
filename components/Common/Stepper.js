@@ -32,8 +32,8 @@ const Stepper = ({ isHome, isMobile, isTablet }) => {
                 <Image
                   alt="logo"
                   src={star}
-                  width={isMobile ? "13.77px" : isTablet ? "16.94px" : "31px"}
-                  height={isMobile ? "12.64px" : isTablet ? "15.55px" : "31px"}
+                  width={isMobile ? 14 : isTablet ? 17 : 31}
+                  height={isMobile ? 13 : isTablet ? 16 : 31}
                 />
               </WrapperStar>
               {indx === 0 ? (

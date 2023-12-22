@@ -32,7 +32,7 @@ const SaveMobile = () => {
         </Div>
         <Div>
           <Col3>
-            <Image alt="woman" src={woman} width={"137px"} height={"199px"} />
+            <Image alt="woman" src={woman} width={137} height={199} />
           </Col3>
           <Col4>
             <MessageSave>

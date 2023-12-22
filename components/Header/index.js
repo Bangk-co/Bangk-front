@@ -46,8 +46,8 @@ const Header = ({ isMobile, isTablet }) => {
             <Image
               alt="logo"
               src={greenLogo}
-              width="93px"
-              height="34px"
+              width={93}
+              height={34}
               onClick={handleHome}
               style={{ cursor: "pointer" }}
             />
@@ -73,8 +73,8 @@ const Header = ({ isMobile, isTablet }) => {
             <Image
               alt="logo"
               src={greenLogo}
-              width={isTablet ? "139px" : "163px"}
-              height={isTablet ? "51px" : "60px"}
+              width={isTablet ? 139 : 163}
+              height={isTablet ? 51 : 60}
               onClick={handleHome}
               style={{ cursor: "pointer" }}
             />

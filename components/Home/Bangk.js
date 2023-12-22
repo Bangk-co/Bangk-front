@@ -49,7 +49,7 @@ const Bangk = () => {
         <Button onClick={goInsurance}>Conoce más</Button>
       </Col3>
       <Col4>
-        <Image alt="coin" src={greenCoin} />
+        <Image alt="coin" src={greenCoin} width={592} height={562} />
       </Col4>
     </WrapperBangk>
   );

@@ -24,14 +24,14 @@ const WhyWeDoIt = () => {
   return (
     <WrapperWhy>
       <Col1>
-        <Image alt="man" src={man} />
+        <Image alt="man" src={man} width={960} height={747} />
       </Col1>
       <Col2>
         <TitleWhy>
           ¿Por qué lo <br></br> hacemos?
         </TitleWhy>
         <WrapperStarWhy>
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={41} height={43} />
         </WrapperStarWhy>
         <TextWhy>
           Cuando pides un crédito, dentro del valor de las cuotas, pagas además

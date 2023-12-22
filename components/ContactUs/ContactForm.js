@@ -163,10 +163,10 @@ const ContactForm = ({ isMobile, isTablet }) => {
         </WrapperForm>
         <WrapperIcons>
           <WrapperStar>
-            <Image alt="star" src={star} />
+            <Image alt="star" src={star} width={66} height={66} />
           </WrapperStar>
           <WrapperPadlock>
-            <Image alt="padlock" src={padlock} />
+            <Image alt="padlock" src={padlock} width={544} height={554} />
           </WrapperPadlock>
         </WrapperIcons>
       </CardForm>

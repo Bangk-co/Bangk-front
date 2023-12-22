@@ -67,6 +67,8 @@ const Banner = () => {
             src={mail}
             style={{ cursor: "pointer" }}
             onClick={handleMail}
+            width={60}
+            height={48}
           />
         </WrapperMail>
         <WrapperWhatsapp>

@@ -31,7 +31,7 @@ const HelpYou = () => {
         {contactInfoList.map((ele, indx) => (
           <WrapperInfo key={indx}>
             <WrapperSmallStar>
-              <Image alt="star" src={star} />
+              <Image alt="star" src={star} width={19} height={19} />
             </WrapperSmallStar>
             <Info>{ele}</Info>
           </WrapperInfo>

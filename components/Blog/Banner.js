@@ -59,11 +59,11 @@ const Banner = () => {
         </Div>
         <Div m="0px" p="0px">
           <ManImage>
-            <Image alt="man" src={man} />
+            <Image alt="man" src={man} width={496} height={496} />
             <Circle1 />
             <Circle2 />
             <WrapperCloud>
-              <Image alt="cloud" src={cloud} />
+              <Image alt="cloud" src={cloud} width={195} height={125} />
             </WrapperCloud>
             <CloudText>
               OJO<br></br>PUESSSS
@@ -71,10 +71,10 @@ const Banner = () => {
           </ManImage>
         </Div>
         <WrapperStar>
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={36} height={36} />
         </WrapperStar>
         <WrapperLogo>
-          <Image alt="logo" src={logo} />
+          <Image alt="logo" src={logo} width={201} height={77} />
         </WrapperLogo>
       </WrapperBanner>
     </Wrapper>

@@ -14,7 +14,7 @@ const OurCommitment = () => {
   return (
     <WrapperOurCommitment>
       <WrapperStarCommitment>
-        <Image alt="star" src={star} />
+        <Image alt="star" src={star} width={53} height={50} />
       </WrapperStarCommitment>
       <TitleOurCommitment>Nuestro compromiso es acompañarte</TitleOurCommitment>
       <TextOurCommitment>
@@ -22,7 +22,7 @@ const OurCommitment = () => {
         vida.
       </TextOurCommitment>
       <WrapperLogoCommitment>
-        <Image alt="logo" src={logo} />
+        <Image alt="logo" src={logo} width={103} height={37} />
       </WrapperLogoCommitment>
     </WrapperOurCommitment>
   );

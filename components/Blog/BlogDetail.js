@@ -91,8 +91,8 @@ const BlogDetailDesktop = ({ isTablet }) => {
           <Image
             alt="percentage"
             src={percentage}
-            width={isTablet && "100%"}
-            height={isTablet && "150px"}
+            width={isTablet && 87}
+            height={isTablet && 70}
           />
         </WrapperIcon>
         <WrapperText>

@@ -39,7 +39,7 @@ const KnowUsSection = () => {
         </TextKnowUs>
       </WrapperText>
       <WrapperLogo>
-        <Image alt="logo" src={logo} />
+        <Image alt="logo" src={logo} width={293} height={465} />
       </WrapperLogo>
     </WrapperKnowUs>
   );

@@ -16,7 +16,7 @@ import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { wappLink } from "@/utilities/options";
 
-const Banner = () => {
+const Banner = ({ isMobile }) => {
   const handleWapp = () => {
     const a = document.createElement("a");
     a.href = `${wappLink}`;
@@ -37,7 +37,12 @@ const Banner = () => {
             que pagas al banco sin cambiar la cobertura
           </Message>
           <WrapperText>
-            <Image alt="text" src={text} width={560} height={44} />
+            <Image
+              alt="text"
+              src={text}
+              width={isMobile ? 374 : 560}
+              height={isMobile ? 29 : 44}
+            />
           </WrapperText>
           <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col>
@@ -46,7 +51,12 @@ const Banner = () => {
             <Image alt="star" src={star} width={48} height={48} />
           </WrapperStar>
           <WrapperImage>
-            <Image alt="surprised-man" src={man} width={467} height={466} />
+            <Image
+              alt="surprised-man"
+              src={man}
+              width={isMobile ? 337 : 467}
+              height={isMobile ? 336 : 466}
+            />
           </WrapperImage>
         </Col>
       </Row>

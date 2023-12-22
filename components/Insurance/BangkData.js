@@ -19,7 +19,7 @@ const BangkData = ({ isMobile, isTablet }) => {
           Datos<br></br>Bangk!
         </TitleData>
         <WrapperStar>
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={20} height={20} />
         </WrapperStar>
         <InfoText>
           En caso de fallecimiento o incapacidad total y permanente, la
@@ -38,7 +38,7 @@ const BangkData = ({ isMobile, isTablet }) => {
               : "70px 158px 0px 535px",
           }}
         >
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={20} height={20} />
         </WrapperStar>
         <InfoText>
           Al endosar los seguros de tus créditos, puedes{" "}
@@ -57,7 +57,7 @@ const BangkData = ({ isMobile, isTablet }) => {
               : "70px 158px 0px 535px",
           }}
         >
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={20} height={20} />
         </WrapperStar>
         <InfoText>
           Si quieres <strong>ahorrar dinero en tus créditos,</strong> no dudes
@@ -66,7 +66,7 @@ const BangkData = ({ isMobile, isTablet }) => {
         </InfoText>
       </RowData>
       <WrapperBigStar>
-        <Image alt="star" src={star} />
+        <Image alt="star" src={star} width={283} height={283} />
       </WrapperBigStar>
     </WrapperData>
   );

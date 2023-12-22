@@ -34,13 +34,13 @@ const Save = ({ isMobile, isTablet }) => {
             <Image
               alt="woman"
               src={woman}
-              width={isTablet ? "256px" : "1147px"}
-              height={isTablet ? "372px" : "1395px"}
+              width={isTablet ? 256 : 639}
+              height={isTablet ? 372 : 859}
             />
           </Col3>
           <Col4>
             <WrapperLogo>
-              <Image alt="logo" src={logo} />
+              <Image alt="logo" src={logo} width={63} height={100} />
             </WrapperLogo>
             <TitleSave>
               Ahorra dinero endosando los{" "}

@@ -35,8 +35,8 @@ const FooterResponsive = ({ isMobile }) => {
         <Image
           alt="logo"
           src={logo}
-          width={isMobile ? "112px" : "103.8"}
-          height={isMobile ? "41px" : "58px"}
+          width={isMobile ? 112 : 103.8}
+          height={isMobile ? 41 : 58}
         />
         {isMobile ? (
           <span

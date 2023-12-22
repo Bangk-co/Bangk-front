@@ -30,7 +30,7 @@ const Banner = () => {
           <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col1>
         <Col2>
-          <Image alt="woman" src={woman} />
+          <Image alt="woman" src={woman} width={753} height={630} />
         </Col2>
       </BannerCard>
     </WrapperBanner>

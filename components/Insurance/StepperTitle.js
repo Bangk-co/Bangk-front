@@ -15,7 +15,7 @@ const StepperTitle = () => {
           Paso
         </span>
         <WrapperUy>
-          <Image alt="uy" src={uy} />
+          <Image alt="uy" src={uy} width={65} height={43} />
         </WrapperUy>
       </Title2>
     </WrapperTitle>

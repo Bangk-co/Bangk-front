@@ -43,7 +43,7 @@ const Reviews = ({ isMobile, isTablet }) => {
           <RowReviews>
             <Col7>
               <WrapperComment>
-                <Image alt="message" src={message} />
+                <Image alt="message" src={message} width={35} height={31} />
               </WrapperComment>
               <CommentText>
                 “Fue como WOW, no sabía que era endosar un seguro, no sabía que
@@ -57,6 +57,8 @@ const Reviews = ({ isMobile, isTablet }) => {
                     alt="marcela"
                     src={marcela}
                     style={{ borderRadius: "100%" }}
+                    width={69}
+                    height={69}
                   />
                 </WrapperAvatar>
                 <WrapperNameText>
@@ -80,8 +82,8 @@ const Reviews = ({ isMobile, isTablet }) => {
                     url={
                       "https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"
                     }
-                    width={isTablet ? "309px" : "656px"}
-                    height={isTablet ? "199px" : "422px"}
+                    width={isTablet ? 309 : 656}
+                    height={isTablet ? 199 : 422}
                     controls
                     suppressHydrationWarning={true}
                   />

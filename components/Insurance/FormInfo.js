@@ -42,7 +42,7 @@ const FormInfo = () => {
               style={{ display: "flex", flexDirection: "row", gap: "16px" }}
             >
               <WrapperStarInfo>
-                <Image alt="star" src={star} />
+                <Image alt="star" src={star} width={24} height={24} />
               </WrapperStarInfo>
               <Text2>{ele}</Text2>
             </Col>

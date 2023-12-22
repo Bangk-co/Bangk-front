@@ -46,7 +46,7 @@ const ReviewsMobile = () => {
         ) : null}
       </div>
       <WrapperComment>
-        <Image alt="message" src={message} />
+        <Image alt="message" src={message} width={35} height={31} />
       </WrapperComment>
       <SubTitleReviews>Comentarios sobre Bangk</SubTitleReviews>
       <CommentText>
@@ -56,7 +56,13 @@ const ReviewsMobile = () => {
       </CommentText>
       <WrapperPerson>
         <WrapperAvatar>
-          <Image alt="marcela" src={marcela} style={{ borderRadius: "100%" }} />
+          <Image
+            alt="marcela"
+            src={marcela}
+            style={{ borderRadius: "100%" }}
+            width={69}
+            height={69}
+          />
         </WrapperAvatar>
         <WrapperNameText>
           <NameText>Marcela</NameText>

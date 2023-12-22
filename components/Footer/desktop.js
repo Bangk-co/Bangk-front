@@ -28,7 +28,7 @@ const FooterDesktop = () => {
   return (
     <>
       <Div direction="column">
-        <Image alt="logo" src={logo} width={"202px"} height={"100%"} />
+        <Image alt="logo" src={logo} width={202} height={71} />
         <MessageText style={{ marginBottom: 0 }}>Una plataforma </MessageText>
         <MessageText style={{ color: theme.colors.orange, marginTop: 0 }}>
           en la que ahorras <br></br> tiempo y dinero

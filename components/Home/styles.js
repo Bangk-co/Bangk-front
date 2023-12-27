@@ -41,7 +41,7 @@ export const WrapperImage = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 90%;
     height: 90%;
-    margin-left: 30px;
+    margin-left: 10px;
   }
 `;
 

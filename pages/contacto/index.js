@@ -8,10 +8,10 @@ import ProtectedInformation from "@/components/ContactUs/ProtectedInformation";
 const ContactUs = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
-      <Banner />
+      <Banner isMobile={isMobile} />
       <ContactForm isMobile={isMobile} isTablet={isTablet} />
-      <HelpYou />
-      <ProtectedInformation />
+      <HelpYou isMobile={isMobile} />
+      <ProtectedInformation isMobile={isMobile} />
     </Div>
   );
 };

@@ -19,7 +19,11 @@ import { theme } from "@/styles/theme";
 const Stepper = ({ isHome, isMobile, isTablet }) => {
   return (
     <Wrapper>
-      {isHome ? <StepperTitleHome /> : <StepperTitle />}
+      {isHome ? (
+        <StepperTitleHome isMobile={isMobile} />
+      ) : (
+        <StepperTitle isMobile={isMobile} />
+      )}
       <Row
         style={{ width: "100%", justifyContent: "space-around" }}
         gutter={isTablet && [30, 30]}

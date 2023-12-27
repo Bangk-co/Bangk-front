@@ -20,9 +20,9 @@ const Home = ({ isMobile, isTablet }) => {
     <Div direction="column">
       <Banner isMobile={isMobile} />
       <Stepper isHome={true} isMobile={isMobile} isTablet={isTablet} />
-      <WhyWeDoIt />
-      <Bangk />
-      <BlogSection isTablet={isTablet} />
+      <WhyWeDoIt isMobile={isMobile} />
+      <Bangk isMobile={isMobile} />
+      <BlogSection isTablet={isTablet} isMobile={isMobile} />
       <Reviews isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );

@@ -169,7 +169,7 @@ export const WrapperUy = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 29px;
     height: 19px;
-    top: -15px;
+    top: -20px;
     right: -17px;
   }
 

@@ -5,6 +5,7 @@ module.exports = {
   async headers() {
     return [
       {
+        output: "export",
         source: "/(.*)?", // Matches all pages
         headers: [
           {

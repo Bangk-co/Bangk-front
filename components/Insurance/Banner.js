@@ -6,7 +6,7 @@ import woman from "../../assets/img/green-woman.svg";
 import { Button } from "../Button";
 import { wappLink } from "@/utilities/options";
 
-const Banner = () => {
+const Banner = ({ isMobile }) => {
   const handleWapp = () => {
     const a = document.createElement("a");
     a.href = `${wappLink}`;
@@ -30,7 +30,12 @@ const Banner = () => {
           <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col1>
         <Col2>
-          <Image alt="woman" src={woman} width={753} height={630} />
+          <Image
+            alt="woman"
+            src={woman}
+            width={isMobile ? 191 : 753}
+            height={isMobile ? 160 : 630}
+          />
         </Col2>
       </BannerCard>
     </WrapperBanner>

@@ -13,7 +13,7 @@ import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
 
-const Bangk = () => {
+const Bangk = ({ isMobile }) => {
   const router = useRouter();
 
   const goInsurance = () => {
@@ -49,7 +49,12 @@ const Bangk = () => {
         <Button onClick={goInsurance}>Conoce más</Button>
       </Col3>
       <Col4>
-        <Image alt="coin" src={greenCoin} width={592} height={562} />
+        <Image
+          alt="coin"
+          src={greenCoin}
+          width={isMobile ? 336 : 592}
+          height={isMobile ? 321 : 562}
+        />
       </Col4>
     </WrapperBangk>
   );

@@ -16,7 +16,7 @@ import email from "../../assets/icons/email.svg";
 import profile from "../../assets/icons/profile.svg";
 import lock from "../../assets/icons/lock.svg";
 
-const ContactUs = ({ isMobile, isTablet }) => {
+const Login = ({ isMobile, isTablet }) => {
   return (
     <BackgroundContainer>
       <WrapperImage>
@@ -37,6 +37,7 @@ const ContactUs = ({ isMobile, isTablet }) => {
             </Row>
             <Row width="100%" justify="center" m="16px 0 0 0">
               <TextField
+                placeholder={"Correo"}
                 radius="1px"
                 width="100%"
                 height="48px"
@@ -48,6 +49,7 @@ const ContactUs = ({ isMobile, isTablet }) => {
             </Row>
             <Row width="100%" justify="center">
               <TextField
+                placeholder={"Escribe tu nombre"}
                 radius="1px"
                 width="100%"
                 height="48px"
@@ -59,6 +61,7 @@ const ContactUs = ({ isMobile, isTablet }) => {
             </Row>
             <Row width="100%" justify="center">
               <TextField
+                placeholder={"Contraseña"}
                 radius="1px"
                 width="100%"
                 height="48px"
@@ -71,6 +74,7 @@ const ContactUs = ({ isMobile, isTablet }) => {
             </Row>
             <Row width="100%" justify="center">
               <TextField
+                placeholder={"Confirmar contraseña"}
                 radius="1px"
                 width="100%"
                 height="48px"
@@ -91,4 +95,4 @@ const ContactUs = ({ isMobile, isTablet }) => {
   );
 };
 
-export default ContactUs;
+export default Login;

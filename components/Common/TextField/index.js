@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../../../styles/Common";
+import { Text, Div } from "../../../styles/Common";
 import { CustomTextField } from "./styles";
 import { theme } from "../../../styles/theme";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -19,7 +19,7 @@ export const TextField = ({
   ...rest
 }) => {
   return (
-    <div>
+    <Div width="100%" direction="column">
       <Text
         size={theme.fonts.size.sm}
         color={theme.colors.gray900}
@@ -49,6 +49,6 @@ export const TextField = ({
           {helper}
         </Text>
       )}
-    </div>
+    </Div>
   );
 };

@@ -4,14 +4,13 @@ import styled from "styled-components";
 export const BackgroundContainer = styled.div`
   display: flex;
   min-height: 100vh;
-  width: 100%;
   background: ${theme.colors.green};
-  align-items: center;
+  align-items: stretch;
+  overflow: hidden;
 `;
 
 export const WrapperImage = styled.div`
   display: flex;
-  min-height: 100vh;
   min-width: 686px;
   background: ${theme.colors.white};
   justify-content: center;
@@ -20,11 +19,11 @@ export const WrapperImage = styled.div`
 
 export const WrapperForm = styled.div`
   display: flex;
-  height: 100%;
-  width: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0 102px 0 102px;
+  padding: 0 102px;
+  box-sizing: border-box;
 `;
 
 export const LoginCard = styled.div`
@@ -37,4 +36,5 @@ export const LoginCard = styled.div`
   border-radius: 32px;
   align-items: center;
   padding: 64px 40px;
+  box-sizing: border-box;
 `;

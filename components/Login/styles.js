@@ -1,10 +1,9 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
-export const BackgroundContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   min-height: 100vh;
-  background: ${theme.colors.green};
   align-items: stretch;
   overflow: hidden;
 `;
@@ -12,9 +11,30 @@ export const BackgroundContainer = styled.div`
 export const WrapperImage = styled.div`
   display: flex;
   min-width: 686px;
-  background: ${theme.colors.white};
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+`;
+
+export const WrapperUpStar = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 80%;
+  left: -10%;
+`;
+export const WrapperDownStar = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+`;
+
+export const WrapperRightStar = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 70%;
+  right: -15%;
 `;
 
 export const WrapperForm = styled.div`
@@ -24,6 +44,7 @@ export const WrapperForm = styled.div`
   align-items: center;
   padding: 0 102px;
   box-sizing: border-box;
+  background: ${theme.colors.green};
 `;
 
 export const LoginCard = styled.div`

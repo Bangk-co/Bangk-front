@@ -2,10 +2,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { theme } from "@/styles/theme";
 import {
-  BackgroundContainer,
+  Container,
   WrapperImage,
   WrapperForm,
   LoginCard,
+  WrapperUpStar,
+  WrapperDownStar,
+  WrapperRightStar,
 } from "@/components/Login/styles";
 import { Text, Row, Col } from "@/styles/Common";
 import woman from "../../assets/img/surprised-woman-orange.svg";
@@ -15,6 +18,7 @@ import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import email from "../../assets/icons/email.svg";
 import lock from "../../assets/icons/lock.svg";
+import star from "../../assets/icons/gray-star.svg";
 import { validateLoginForm } from "@/utilities/validations";
 
 const Login = ({ isMobile, isTablet }) => {
@@ -68,14 +72,24 @@ const Login = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <BackgroundContainer>
+    <Container>
       <WrapperImage>
+        <WrapperUpStar>
+          <Image alt="star" src={star} width={180} height={180} />
+        </WrapperUpStar>
         <Image
           alt="surprised-women"
           src={woman}
           width={isMobile ? 337 : 600}
           height={isMobile ? 336 : 600}
+          style={{ zIndex: theme.zIndex.overlay }}
         />
+        <WrapperDownStar>
+          <Image alt="star" src={star} width={366} height={366} />
+        </WrapperDownStar>
+        <WrapperRightStar>
+          <Image alt="star" src={star} width={180} height={180} />
+        </WrapperRightStar>
       </WrapperImage>
       <WrapperForm>
         <LoginCard>
@@ -148,7 +162,7 @@ const Login = ({ isMobile, isTablet }) => {
           </Col>
         </LoginCard>
       </WrapperForm>
-    </BackgroundContainer>
+    </Container>
   );
 };
 

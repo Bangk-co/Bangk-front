@@ -7,9 +7,9 @@ export const CustomTextField = styled(TextField)`
     border-radius: ${({ radius }) => radius || "43px"};
     width: ${({ width }) => width || "90%"};
     height: ${({ height }) => height || "44px"};
-
     &.Mui-focused fieldset {
-      border: 1px solid ${theme.colors.orange} !important;
+      border: 1px solid
+        ${({ error }) => (error ? theme.colors.red : theme.colors.orange)} !important;
     }
   }
 

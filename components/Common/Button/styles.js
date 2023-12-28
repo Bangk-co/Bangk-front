@@ -18,6 +18,7 @@ export const CustomButton = styled(Button)`
     text-align: center;
     justify-content: center;
     padding: ${({ padding }) => padding || "0px"};
+    text-transform: none;
 
     &:hover {
       background: ${theme.colors.orange} 0% 0% no-repeat padding-box;

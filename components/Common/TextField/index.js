@@ -31,6 +31,7 @@ export const TextField = ({
       <CustomTextField
         placeholder={placeholder}
         suffix={suffix}
+        error={error}
         status={error ? "error" : ""}
         disabled={disabled}
         onChange={onChange}
@@ -45,7 +46,12 @@ export const TextField = ({
         {...rest}
       />
       {helper && (
-        <Text size={theme.fonts.size.sm} color={theme.colors.salmon} mt="2px">
+        <Text
+          size={theme.fonts.size.sm}
+          color={theme.colors.red}
+          mt="2px"
+          align="left"
+        >
           {helper}
         </Text>
       )}

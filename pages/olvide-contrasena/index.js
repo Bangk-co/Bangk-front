@@ -1,4 +1,4 @@
-import { Container } from "@/components/Login/styles";
+import { Container } from "@/components/ForgotPassword/styles";
 import Banner from "@/components/ForgotPassword/Banner";
 import Form from "@/components/ForgotPassword/Form";
 

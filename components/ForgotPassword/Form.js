@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import { theme } from "@/styles/theme";
 import { WrapperForm, LoginCard } from "@/components/ForgotPassword/styles";
 import { Text, Row, Col } from "@/styles/Common";
@@ -10,10 +11,13 @@ import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import email from "../../assets/icons/email.svg";
 import { validateEmailRequired } from "@/utilities/validations";
+import useSendEmailResetPassword from "@/hooks/ForgotPassword/useSendEmailResetPassword";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
-
+  const sendEmail = useSendEmailResetPassword();
+  const { isLoading } = sendEmail;
   const [forceUpdate, setForceUpdate] = useState(false);
   const [emailForm, setEmailForm] = useState("");
 
@@ -55,7 +59,18 @@ const Form = ({ isMobile, isTablet }) => {
       setErrorForm(newErrorForm);
       setForceUpdate(!forceUpdate);
     } else {
-      console.log("forgot");
+      sendEmail.reset();
+      sendEmail.mutate(emailForm, {
+        onSuccess: () => {
+          router.push("/recuperacion-contrasena");
+        },
+        onError: (err) => {
+          console.log("email", err.response.data);
+          err.response.data.map((error) => {
+            toast.error(error);
+          });
+        },
+      });
     }
   };
 
@@ -110,7 +125,19 @@ const Form = ({ isMobile, isTablet }) => {
           </Row>
 
           <Row width="100%" justify="center" m="9px 0 0 0">
-            <Button width="325px" onClick={handleSend}>
+            <Button
+              width="325px"
+              onClick={handleSend}
+              disabled={isLoading}
+              startIcon={
+                isLoading ? (
+                  <CircularProgress
+                    size={20}
+                    style={{ color: theme.colors.white }}
+                  />
+                ) : null
+              }
+            >
               Enviar
             </Button>
           </Row>

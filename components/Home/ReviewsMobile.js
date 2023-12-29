@@ -38,15 +38,15 @@ const ReviewsMobile = () => {
         {showPlayer ? (
           <ReactPlayer
             url={"https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"}
-            width={"219px"}
-            height={"142px"}
+            width={219}
+            height={142}
             controls
             suppressHydrationWarning={true}
           />
         ) : null}
       </div>
       <WrapperComment>
-        <Image alt="message" src={message} width={35} height={31} />
+        <Image alt="message" src={message} width={20} height={17} />
       </WrapperComment>
       <SubTitleReviews>Comentarios sobre Bangk</SubTitleReviews>
       <CommentText>
@@ -60,8 +60,8 @@ const ReviewsMobile = () => {
             alt="marcela"
             src={marcela}
             style={{ borderRadius: "100%" }}
-            width={69}
-            height={69}
+            width={22}
+            height={22}
           />
         </WrapperAvatar>
         <WrapperNameText>

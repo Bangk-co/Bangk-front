@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://fraktal-bangk-api.azurewebsites.net",
+  baseURL: "https://fraktal-bangk-api.azurewebsites.net/api",
 });
 
 const getLocalUser = () => {

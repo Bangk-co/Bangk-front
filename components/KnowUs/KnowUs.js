@@ -12,7 +12,7 @@ import logo from "../../assets/icons/single-green-logo.svg";
 import star from "../../assets/icons/orange-star.svg";
 import { theme } from "@/styles/theme";
 
-const KnowUsSection = () => {
+const KnowUsSection = ({ isMobile }) => {
   return (
     <WrapperKnowUs>
       <WrapperText>
@@ -24,9 +24,11 @@ const KnowUsSection = () => {
             !
           </span>
         </TitleKnowUs>
-        <WrapperStar>
-          <Image alt="star" src={star} />
-        </WrapperStar>
+        {isMobile && (
+          <WrapperStar>
+            <Image alt="star" src={star} width={15} height={15} />
+          </WrapperStar>
+        )}
         <TextKnowUs>
           Somos un equipo de nerds que combinaron sus conocimientos en
           tecnología, pólizas de seguros, y finanzas para revolucionar la forma

@@ -28,7 +28,7 @@ const Banner = ({ isMobile }) => {
   return (
     <Wrapper>
       <Row style={{ width: "100%" }}>
-        <Col lg={16} md={14} xs={11}>
+        <Col lg={16} md={14} xs={12}>
           <Title>Misma cobertura</Title>
           <Title color={theme.colors.yellow}>Menos cuota!</Title>
           <Message>
@@ -40,13 +40,13 @@ const Banner = ({ isMobile }) => {
             <Image
               alt="text"
               src={text}
-              width={isMobile ? 374 : 560}
-              height={isMobile ? 29 : 44}
+              width={isMobile ? 178 : 560}
+              height={isMobile ? 14 : 44}
             />
           </WrapperText>
           <Button onClick={handleWapp}>Ahorra ya!</Button>
         </Col>
-        <Col lg={8} md={10} xs={12} style={{ alignSelf: "center" }}>
+        <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
           <WrapperStar>
             <Image alt="star" src={star} width={48} height={48} />
           </WrapperStar>
@@ -54,8 +54,8 @@ const Banner = ({ isMobile }) => {
             <Image
               alt="surprised-man"
               src={man}
-              width={isMobile ? 337 : 467}
-              height={isMobile ? 336 : 466}
+              width={isMobile ? 167 : 467}
+              height={isMobile ? 167 : 466}
             />
           </WrapperImage>
         </Col>

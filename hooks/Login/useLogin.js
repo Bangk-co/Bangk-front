@@ -3,7 +3,7 @@ import { axiosClient } from "../services/axiosInstance";
 
 const useLogin = () => {
   const mutation = useMutation((formData) => {
-    return axiosClient.post("/api/Authentication/Login", formData);
+    return axiosClient.post("/Authentication/Login", formData);
   });
   return mutation;
 };

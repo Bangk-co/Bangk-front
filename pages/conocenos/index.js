@@ -10,10 +10,10 @@ const KnowUs = ({ isMobile }) => {
   return (
     <Div direction="column">
       <Banner />
-      <KnowUsSection />
-      <OurGain />
+      <KnowUsSection isMobile={isMobile} />
+      <OurGain isMobile={isMobile} />
       <ForUs isMobile={isMobile} />
-      <OurCommitment />
+      <OurCommitment isMobile={isMobile} />
     </Div>
   );
 };

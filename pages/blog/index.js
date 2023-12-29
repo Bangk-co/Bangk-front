@@ -6,7 +6,7 @@ import Cards from "@/components/Blog/Cards";
 const Blog = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
-      <Banner />
+      <Banner isMobile={isMobile} />
       <Cards isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );

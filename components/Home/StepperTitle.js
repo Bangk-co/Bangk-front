@@ -5,7 +5,7 @@ import { Title1, Title2, WrapperUy } from "../Common/styles";
 import { theme } from "@/styles/theme";
 import uy from "../../assets/icons/uy.svg";
 
-const StepperTitleHome = () => {
+const StepperTitleHome = ({ isMobile }) => {
   return (
     <Div direction="column">
       <Title1>Es muy fácil, sigue</Title1>
@@ -15,7 +15,12 @@ const StepperTitleHome = () => {
           Paso
         </span>
         <WrapperUy>
-          <Image alt="uy" src={uy} width={65} height={43.63} />
+          <Image
+            alt="uy"
+            src={uy}
+            width={isMobile ? 29 : 65}
+            height={isMobile ? 19 : 43.63}
+          />
         </WrapperUy>
       </Title2>
     </Div>

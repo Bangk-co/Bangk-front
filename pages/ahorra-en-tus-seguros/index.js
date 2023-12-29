@@ -9,11 +9,11 @@ import { Div } from "@/styles/Common";
 const Insurance = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
-      <Banner />
+      <Banner isMobile={isMobile} />
       <Save isMobile={isMobile} isTablet={isTablet} />
       <BangkData isMobile={isMobile} isTablet={isTablet} />
       <Stepper isMobile={isMobile} isTablet={isTablet} />
-      <FormInfo />
+      <FormInfo isMobile={isMobile} />
     </Div>
   );
 };

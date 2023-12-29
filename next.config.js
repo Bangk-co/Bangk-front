@@ -1,11 +1,13 @@
 module.exports = {
-  // trailingSlash: true,
-  images: {},
-
+  output: "export",
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
   async headers() {
     return [
       {
-        source: "/(.*)?", // Matches all pages
+        source: "/(.*)?",
         headers: [
           {
             key: "X-Frame-Options",

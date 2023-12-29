@@ -9,7 +9,7 @@ const validatePassword = Joi.string()
     )
   );
 
-const validateEmailRequired = Joi.string()
+export const validateEmailRequired = Joi.string()
   .email({ tlds: { allow: tlds } })
   .required();
 

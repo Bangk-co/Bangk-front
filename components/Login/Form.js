@@ -16,7 +16,7 @@ const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
   const [forceUpdate, setForceUpdate] = useState(false);
-  const [LoginForm, setLoginForm] = useState({
+  const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
@@ -40,18 +40,18 @@ const Form = ({ isMobile, isTablet }) => {
     newErrorForm[id].message = "";
     setErrorForm(newErrorForm);
 
-    const newRegisterForm = { ...LoginForm };
+    const newRegisterForm = { ...loginForm };
     newRegisterForm[id] = value;
     setLoginForm(newRegisterForm);
     setForceUpdate(!forceUpdate);
   };
 
   const handleForgotPassword = () => {
-    router.push("/recuperar-contrasena");
+    router.push("/olvide-contrasena");
   };
 
   const handleLogin = () => {
-    const validation = validateLoginForm.validate(LoginForm, {
+    const validation = validateLoginForm.validate(loginForm, {
       abortEarly: false,
     });
 

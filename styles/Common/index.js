@@ -26,6 +26,7 @@ export const Text = styled.div`
   text-align: ${(props) => props.align};
   margin-top: ${(props) => props.mt};
   margin-bottom: ${(props) => props.mb};
+  line-height: ${(props) => props.lineHeight || "normal"};
 `;
 
 export const H5 = styled.h6`

@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": "18.17.1"
+    "node": "20.10.0"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -31,6 +31,7 @@
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "joi": "^17.11.0",
+    "jwt-decode": "^4.0.0",
     "next": "^14.0.4",
     "next-plugin-antd-less": "^1.8.0",
     "next-transpile-modules": "^10.0.1",

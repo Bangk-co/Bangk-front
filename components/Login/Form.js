@@ -13,6 +13,8 @@ import email from "../../assets/icons/email.svg";
 import lock from "../../assets/icons/lock.svg";
 import { validateLoginForm } from "@/utilities/validations";
 import useLogin from "@/hooks/Login/useLogin";
+import { setLocalUser } from "../../hooks/services/axiosInstance";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -72,12 +74,14 @@ const Form = ({ isMobile, isTablet }) => {
         { email: loginForm.email, password: loginForm.password },
         {
           onSuccess: (res) => {
-            console.log("login", res.data.data.token);
-            toast.success("logueado");
+            setLocalUser(res.data.token);
+            //TODO navigate to dashboard
+            toast.success("Logueado");
           },
           onError: (err) => {
-            console.log("err", err.response.data.error);
-            toast.error("error");
+            err.response.data.map((error) => {
+              toast.error(error);
+            });
           },
         }
       );
@@ -150,7 +154,19 @@ const Form = ({ isMobile, isTablet }) => {
             </Link>
           </Row>
           <Row width="100%" justify="center">
-            <Button width="325px" onClick={handleLogin} loading={isLoading}>
+            <Button
+              width="325px"
+              onClick={handleLogin}
+              disabled={isLoading}
+              startIcon={
+                isLoading ? (
+                  <CircularProgress
+                    size={20}
+                    style={{ color: theme.colors.white }}
+                  />
+                ) : null
+              }
+            >
               Iniciar sesión
             </Button>
           </Row>

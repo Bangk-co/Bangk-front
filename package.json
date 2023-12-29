@@ -43,11 +43,7 @@
     "react-player": "^2.12.0",
     "react-query": "^3.39.3",
     "react-responsive": "^9.0.2",
-<<<<<<< HEAD
-    "styled-components": "^6.1.4"
-=======
     "sharp": "^0.33.1",
-    "styled-components": "^6.1.3"
->>>>>>> 24e52c3fdf1e3c8eb0e388b8a2c84a7b37f9a49d
+    "styled-components": "^6.1.4"
   }
 }

@@ -5,7 +5,7 @@ const validatePassword = Joi.string()
   .required()
   .pattern(
     new RegExp(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,16}$/
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{10,16}$/
     )
   );
 
@@ -16,6 +16,13 @@ export const validateEmailRequired = Joi.string()
 export const validateLoginForm = Joi.object({
   email: validateEmailRequired,
   password: validatePassword,
+});
+
+export const validateChangePassword = Joi.object({
+  password: validatePassword,
+  confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
+    "any.only": "Las contraseñas deben coincidir",
+  }),
 });
 
 export const validateRegisterForm = Joi.object({

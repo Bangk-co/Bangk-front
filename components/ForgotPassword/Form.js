@@ -62,7 +62,7 @@ const Form = ({ isMobile, isTablet }) => {
       sendEmail.reset();
       sendEmail.mutate(emailForm, {
         onSuccess: () => {
-          router.push("/recuperacion-contrasena");
+          router.push("/recuperar-contrasena");
         },
         onError: (err) => {
           console.log("email", err.response.data);

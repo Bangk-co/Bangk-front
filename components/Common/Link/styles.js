@@ -15,6 +15,7 @@ export const CustomLink = styled(Button)`
 
     &:hover {
       color: ${theme.colors.orange};
+      cursor: pointer;
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {

@@ -23,6 +23,7 @@ export const CustomButton = styled(Button)`
     &:hover {
       background: ${theme.colors.orange} 0% 0% no-repeat padding-box;
       border-color: ${theme.colors.orange};
+      cursor: pointer;
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {

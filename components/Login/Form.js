@@ -46,7 +46,7 @@ const Form = ({ isMobile, isTablet }) => {
     setErrorForm(newErrorForm);
 
     const newRegisterForm = { ...loginForm };
-    newRegisterForm[id] = value;
+    newRegisterForm[id] = id === "email" ? value.toLowerCase() : value;
     setLoginForm(newRegisterForm);
     setForceUpdate(!forceUpdate);
   };
@@ -121,6 +121,7 @@ const Form = ({ isMobile, isTablet }) => {
                 <Image alt="email" src={email} width={16} height={16} />
               }
               onChange={handleChange}
+              value={loginForm.email}
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""}
             />
@@ -138,6 +139,7 @@ const Form = ({ isMobile, isTablet }) => {
                 <Image alt="password" src={lock} width={16} height={16} />
               }
               onChange={handleChange}
+              value={loginForm.password}
               error={errorForm.password.error}
               helper={
                 errorForm.password.error ? errorForm.password.message : ""

@@ -36,7 +36,7 @@ const Form = ({ isMobile, isTablet }) => {
     newErrorForm[id].message = "";
     setErrorForm(newErrorForm);
 
-    setEmailForm(value);
+    setEmailForm(value.toLowerCase());
     setForceUpdate(!forceUpdate);
   };
 
@@ -107,6 +107,7 @@ const Form = ({ isMobile, isTablet }) => {
                 <Image alt="email" src={email} width={16} height={16} />
               }
               onChange={handleChange}
+              value={emailForm}
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""}
             />
@@ -146,6 +147,7 @@ const Form = ({ isMobile, isTablet }) => {
               size={theme.fonts.size.sm}
               weight={theme.fonts.weight.regular}
               onClick={handleNavigateLogin}
+              style={{ textDecoration: "underline" }}
             >
               Iniciar sesión
             </Link>

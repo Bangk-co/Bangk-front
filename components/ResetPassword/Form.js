@@ -19,11 +19,9 @@ const Form = ({ isMobile, isTablet }) => {
   const resetPassword = useResetPassword();
   const { isLoading } = resetPassword;
 
-  //TODO validar hash
-  const { hash } = router.query;
-  const emailVale = "prueba@gmail.com";
-  const displayedValue = emailVale.substring(0, 4);
-  const hiddenPart = "*".repeat(emailVale.length - 4);
+  const { hash, email: emailValue } = router.query;
+  const displayedValue = emailValue.substring(0, 6);
+  const hiddenPart = "*".repeat(emailValue.length - 6);
 
   const [forceUpdate, setForceUpdate] = useState(false);
   const [resetPassForm, setChangePassForm] = useState({
@@ -87,8 +85,7 @@ const Form = ({ isMobile, isTablet }) => {
         },
         {
           onSuccess: () => {
-            //TODO navigate to succes
-            toast.success("Cambiada");
+            router.push("/recuperar-contrasena?action=reset");
           },
           onError: (err) => {
             err.response.data.map((error) => {

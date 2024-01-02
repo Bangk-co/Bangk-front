@@ -10,15 +10,10 @@ import { Button } from "@/components/Common/Button";
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
-  const [errorForm, setErrorForm] = useState({
-    email: {
-      error: false,
-      message: "",
-    },
-  });
+  const { action } = router.query;
 
   const handleNavigateLogin = () => {
-    router.push("/login");
+    router.push("/iniciar-sesion");
   };
 
   return (
@@ -27,14 +22,25 @@ const Form = ({ isMobile, isTablet }) => {
         <Image alt="logo" src={logo} width={120} height={45} />
         <Col gap="16px" align="center" width="100%" m="40px 0 0 0">
           <Row gap="5px">
-            <Text
-              size={theme.fonts.size.h5}
-              weight={theme.fonts.weight.medium}
-              color={theme.colors.gray900}
-            >
-              Revisa tu correo electrónico y restablece tu{" "}
-              <span style={{ color: theme.colors.orange }}>contraseña</span>
-            </Text>
+            {action === "send" ? (
+              <Text
+                size={theme.fonts.size.h5}
+                weight={theme.fonts.weight.medium}
+                color={theme.colors.gray900}
+              >
+                Revisa tu correo electrónico y restablece tu{" "}
+                <span style={{ color: theme.colors.orange }}>contraseña</span>
+              </Text>
+            ) : (
+              <Text
+                size={theme.fonts.size.h5}
+                weight={theme.fonts.weight.medium}
+                color={theme.colors.gray900}
+              >
+                Tu contraseña ha sido cambiada{" "}
+                <span style={{ color: theme.colors.orange }}>exitosamente</span>
+              </Text>
+            )}
           </Row>
 
           <Row width="100%" justify="center" m="9px 0 0 0">

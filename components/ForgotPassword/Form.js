@@ -41,7 +41,7 @@ const Form = ({ isMobile, isTablet }) => {
   };
 
   const handleNavigateLogin = () => {
-    router.push("/login");
+    router.push("/iniciar-sesion");
   };
 
   const handleSend = () => {
@@ -62,7 +62,7 @@ const Form = ({ isMobile, isTablet }) => {
       sendEmail.reset();
       sendEmail.mutate(emailForm, {
         onSuccess: () => {
-          router.push("/recuperar-contrasena");
+          router.push("/recuperar-contrasena?action=send");
         },
         onError: (err) => {
           err.response.data.map((error) => {

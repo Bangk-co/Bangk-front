@@ -22,7 +22,8 @@ const Form = ({ isMobile, isTablet }) => {
   const { hash, email: emailValue } = router.query;
   const emailString = emailValue || "";
   const displayedValue = emailString.substring(0, 6);
-  const hiddenPart = "*".repeat(emailString.length - 6);
+  const hiddenPart =
+    emailString.length > 6 && "*".repeat(emailString.length - 6);
 
   const [forceUpdate, setForceUpdate] = useState(false);
   const [resetPassForm, setChangePassForm] = useState({

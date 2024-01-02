@@ -5,7 +5,7 @@ import Form from "@/components/Login/Form";
 const Login = ({ isMobile, isTablet }) => {
   return (
     <Container>
-      <Banner isMobile={isMobile} isTablet={isTablet} />
+      {!isMobile && !isTablet && <Banner />}
       <Form isMobile={isMobile} isTablet={isTablet} />
     </Container>
   );

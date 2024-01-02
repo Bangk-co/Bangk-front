@@ -15,6 +15,9 @@ export const WrapperImage = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  @media (max-width: ${theme.breakpoints.xl}) {
+    min-width: 400px;
+  }
 `;
 
 export const WrapperUpStar = styled.div`
@@ -45,6 +48,19 @@ export const WrapperForm = styled.div`
   padding: 0 102px;
   box-sizing: border-box;
   background: ${theme.colors.green};
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 0 22px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 0 22px;
+  }
+
+  @media (max-width: ${theme.breakpoints.xl}) {
+    padding: 0 30px;
+  }
 `;
 
 export const LoginCard = styled.div`

@@ -99,14 +99,7 @@ const Form = ({ isMobile, isTablet }) => {
               weight={theme.fonts.weight.medium}
               color={theme.colors.gray900}
             >
-              Inicia
-            </Text>
-            <Text
-              size={theme.fonts.size.h5}
-              weight={theme.fonts.weight.medium}
-              color={theme.colors.orange}
-            >
-              sesión
+              Inicia <span style={{ color: theme.colors.orange }}>sesión</span>
             </Text>
           </Row>
           <Row width="100%" justify="center" m="16px 0 0 0">

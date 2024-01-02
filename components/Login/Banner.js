@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 import { theme } from "@/styles/theme";
 import {
   WrapperImage,
@@ -18,8 +19,20 @@ const Banner = ({ isMobile, isTablet }) => {
       <Image
         alt="surprised-women"
         src={woman}
-        width={isMobile ? 337 : 600}
-        height={isMobile ? 336 : 600}
+        width={
+          useMediaQuery({
+            query: `(max-width: ${theme.breakpoints.xl})`,
+          })
+            ? 337
+            : 600
+        }
+        height={
+          useMediaQuery({
+            query: `(max-width: ${theme.breakpoints.xl})`,
+          })
+            ? 336
+            : 600
+        }
         style={{ zIndex: theme.zIndex.overlay }}
       />
       <WrapperDownStar>

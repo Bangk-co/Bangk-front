@@ -81,8 +81,8 @@ const Form = ({ isMobile, isTablet }) => {
       resetPassword.reset();
       resetPassword.mutate(
         {
-          email: resetPassForm.email,
           password: resetPassForm.password,
+          passwordConfirm: resetPassForm.confirmPassword,
           hash: hash,
         },
         {

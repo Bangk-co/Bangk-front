@@ -65,7 +65,6 @@ const Form = ({ isMobile, isTablet }) => {
           router.push("/recuperar-contrasena");
         },
         onError: (err) => {
-          console.log("email", err.response.data);
           err.response.data.map((error) => {
             toast.error(error);
           });
@@ -85,14 +84,8 @@ const Form = ({ isMobile, isTablet }) => {
               weight={theme.fonts.weight.medium}
               color={theme.colors.gray900}
             >
-              ¿Olvidaste tu
-            </Text>
-            <Text
-              size={theme.fonts.size.h5}
-              weight={theme.fonts.weight.medium}
-              color={theme.colors.orange}
-            >
-              contraseña?
+              ¿Olvidaste tu{" "}
+              <span style={{ color: theme.colors.orange }}>contraseña?</span>
             </Text>
           </Row>
           <Row width="100%" justify="center" m="16px 0 0 0">

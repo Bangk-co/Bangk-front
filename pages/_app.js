@@ -1,7 +1,10 @@
 /* eslint-disable no-undef */
+import { QueryClient, QueryClientProvider } from "react-query";
 import "antd/dist/reset.css";
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { Toaster, ToastBar, toast } from "react-hot-toast";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "styled-components";
@@ -9,10 +12,16 @@ import { theme } from "@/styles/theme";
 import "./app.css";
 
 import Layout from "../components/Layout";
+import { Div } from "@/styles/Common";
+import { Link } from "@/components/Common/Link";
 import { useMediaQuery } from "react-responsive";
 import WhatsappButton from "@/components/WhatsappButton";
+import checkSuccess from "../assets/icons/succes-toast.svg";
+import errorToast from "../assets/icons/error-toast.svg";
 
 const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
+  const queryClient = new QueryClient();
+
   const isMobile =
     useMediaQuery({
       query: `(max-width: ${theme.breakpoints.sm})`,
@@ -22,34 +31,94 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     useMediaQuery({
       query: `(min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md})`,
     }) || isTabletServer;
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-    import('react-facebook-pixel')
+    import("react-facebook-pixel")
       .then((x) => x.default)
       .then((ReactPixel) => {
-        ReactPixel.init('278194147905078')
-        ReactPixel.pageView()
+        ReactPixel.init("278194147905078");
+        ReactPixel.pageView();
 
-        router.events.on('routeChangeComplete', () => {
-          ReactPixel.pageView()
-        })
-      })
-  }, [router.events])
+        router.events.on("routeChangeComplete", () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [router.events]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <title>Bangk</title>
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta name="description" content="Ahorra tiempo y dinero" />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      <WhatsappButton />
-      <Layout isMobile={isMobile} isTablet={isTablet}>
-        <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
-      </Layout>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <title>Bangk</title>
+          <meta content="width=device-width, initial-scale=1" name="viewport" />
+          <meta name="description" content="Ahorra tiempo y dinero" />
+          <link rel="icon" href="/favicon.png" />
+        </Head>
+        <WhatsappButton />
+        <Layout isMobile={isMobile} isTablet={isTablet}>
+          <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
+        </Layout>
+        <Toaster
+          position="bottom-right"
+          reverseOrder={true}
+          containerStyle={{ zIndex: 999999 }}
+          toastOptions={{
+            duration: 8000,
+            success: {
+              icon: (
+                <Image alt="check" src={checkSuccess} width={16} height={16} />
+              ),
+              style: {
+                background: theme.colors.green,
+              },
+            },
+            error: {
+              icon: (
+                <Image alt="check" src={errorToast} width={20} height={20} />
+              ),
+
+              style: {
+                background: theme.colors.green,
+              },
+            },
+            loading: {
+              iconTheme: {
+                primary: theme.colors.gray,
+                secondary: theme.colors.gray300,
+              },
+              style: {
+                background: theme.colors.white,
+              },
+            },
+            style: {
+              minWidth: "400px",
+              zIndex: 999999,
+              color: theme.colors.white,
+              fontWeight: theme.fonts.weight.regular,
+              fontSize: theme.fonts.size.default,
+              fontFamily: theme.fonts.family,
+              display: "flex",
+              alignItems: "center",
+            },
+          }}
+        >
+          {(t) => (
+            <ToastBar toast={t}>
+              {({ icon, message }) => (
+                <>
+                  {icon}
+                  {message}
+                  {t.type !== "loading" && (
+                    <Link height="100%" onClick={() => toast.dismiss(t.id)} />
+                  )}
+                </>
+              )}
+            </ToastBar>
+          )}
+        </Toaster>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 

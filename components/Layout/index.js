@@ -34,6 +34,18 @@ const Layout = ({ children, isMobile, isTablet }) => {
     setShowTransition(false);
   };
 
+  const routesWithHeaderAndFooter = [
+    "/",
+    "/ahorra-en-tus-seguros",
+    "/conocenos",
+    "/blog",
+    "/contacto",
+    "/legales",
+  ];
+  const showHeaderAndFooter = routesWithHeaderAndFooter.includes(
+    router.pathname
+  );
+
   return (
     <Div direction="column">
       <Head>
@@ -49,9 +61,13 @@ const Layout = ({ children, isMobile, isTablet }) => {
           onAnimationEnd={handleAnimationEnd}
         />
       )}
-      <Header isMobile={isMobile} isTablet={isTablet} />
+      {showHeaderAndFooter && (
+        <Header isMobile={isMobile} isTablet={isTablet} />
+      )}
       <div className={styles.contentContainer}>{children}</div>
-      <Footer isMobile={isMobile} isTablet={isTablet} />
+      {showHeaderAndFooter && (
+        <Footer isMobile={isMobile} isTablet={isTablet} />
+      )}
     </Div>
   );
 };

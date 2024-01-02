@@ -1,0 +1,24 @@
+import TextField from "@mui/material/TextField";
+import { theme } from "../../../styles/theme";
+import styled from "styled-components";
+
+export const CustomTextField = styled(TextField)`
+  .MuiOutlinedInput-root {
+    border-radius: ${({ radius }) => radius || "43px"};
+    width: ${({ width }) => width || "90%"};
+    height: ${({ height }) => height || "44px"};
+    &.Mui-focused fieldset {
+      border: 1px solid
+        ${({ error }) => (error ? theme.colors.red : theme.colors.orange)} !important;
+    }
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    width: 100%;
+  }
+`;

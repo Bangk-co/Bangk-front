@@ -26,6 +26,7 @@ export const Text = styled.div`
   text-align: ${(props) => props.align};
   margin-top: ${(props) => props.mt};
   margin-bottom: ${(props) => props.mb};
+  line-height: ${(props) => props.lineHeight || "normal"};
 `;
 
 export const H5 = styled.h6`
@@ -36,4 +37,28 @@ export const H5 = styled.h6`
   text-align: ${(props) => props.align};
   margin-top: ${(props) => props.mt};
   margin-bottom: ${(props) => props.mb};
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: ${({ height }) => height || null};
+  width: ${({ width }) => width || null};
+  margin: ${({ m }) => m || "0px 0px 0px 0px"};
+  padding: ${({ p }) => p || "0px 0px 0px 0px"};
+  align-items: ${({ align }) => align || null};
+  justify-content: ${({ justify }) => justify || null};
+  gap: ${({ gap }) => gap || null};
+`;
+
+export const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: ${({ height }) => height || null};
+  width: ${({ width }) => width || null};
+  margin: ${({ m }) => m || "0px 0px 0px 0px"};
+  padding: ${({ p }) => p || "0px 0px 0px 0px"};
+  align-items: ${({ align }) => align || null};
+  justify-content: ${({ justify }) => justify || null};
+  gap: ${({ gap }) => gap || null};
 `;

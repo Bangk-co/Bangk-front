@@ -11,10 +11,15 @@ export const theme = {
     light3: "#F8F8F7",
     gray: "#EFEFEF",
     gray300: "#929292",
+    gray500: "#676767",
     gray900: "#191919",
     whatsapp: "#25D366",
   },
   fonts: {
+    family: {
+      primary: "Gilroy",
+      secundary: "Rubik",
+    },
     size: {
       m: "5.625rem",
       xxxl: "5rem",

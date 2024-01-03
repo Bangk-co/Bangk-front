@@ -4,7 +4,7 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-  crossOrigin: "anonymous",
+
   async headers() {
     return [
       {
@@ -22,7 +22,8 @@ module.exports = {
           },
           {
             key: "Content-Security-Policy",
-            value: "font-src 'self'; style-src 'self' 'unsafe-inline'",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'",
           },
         ],
       },

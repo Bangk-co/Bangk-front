@@ -4,7 +4,7 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-
+  crossOrigin: "anonymous",
   async headers() {
     return [
       {
@@ -18,12 +18,12 @@ module.exports = {
           { key: "Access-Control-Allow-Origin", value: "*" },
           {
             key: "Access-Control-Allow-Methods",
-            value: "GET,DELETE,PATCH,POST,PUT",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
           },
           {
-            key: "Content-Security-Policy",
+            key: "Access-Control-Allow-Headers",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'",
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         ],
       },

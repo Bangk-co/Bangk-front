@@ -21,10 +21,11 @@ export const TextField = ({
   return (
     <Div width="100%" direction="column">
       <Text
-        size={theme.fonts.size.sm}
+        size={theme.fonts.size.xs}
         color={theme.colors.gray900}
         mb="2px"
         align="left"
+        style={{ fontFamily: "Rubik" }}
       >
         {label}
       </Text>

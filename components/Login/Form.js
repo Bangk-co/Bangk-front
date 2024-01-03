@@ -106,7 +106,7 @@ const Form = ({ isMobile, isTablet }) => {
             <TextField
               placeholder={"Correo"}
               id="email"
-              radius="1px"
+              radius="4px"
               width="100%"
               height="48px"
               label="Correo"
@@ -123,7 +123,7 @@ const Form = ({ isMobile, isTablet }) => {
             <TextField
               placeholder={"Contraseña"}
               id="password"
-              radius="1px"
+              radius="4px"
               width="100%"
               height="48px"
               label="Contraseña"

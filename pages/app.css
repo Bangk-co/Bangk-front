@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+
 @font-face {
   font-family: "Gilroy";
   src: local("Gilroy"), url(../assets/fonts/Gilroy-Regular.woff) format("woff");
@@ -22,5 +24,5 @@
 }
 
 * {
-  font-family: Gilroy;
+  font-family: "Gilroy", "Rubik";
 }

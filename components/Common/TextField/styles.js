@@ -7,9 +7,15 @@ export const CustomTextField = styled(TextField)`
     border-radius: ${({ radius }) => radius || "43px"};
     width: ${({ width }) => width || "90%"};
     height: ${({ height }) => height || "44px"};
+    font-family: "Rubik";
+    font-weight: ${theme.fonts.weight.regular};
+    font-size: ${theme.fonts.size.sm};
     &.Mui-focused fieldset {
       border: 1px solid
         ${({ error }) => (error ? theme.colors.red : theme.colors.orange)} !important;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border-color: ${theme.colors.gray500};
     }
   }
 

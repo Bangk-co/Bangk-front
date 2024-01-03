@@ -20,6 +20,10 @@ module.exports = {
             key: "Access-Control-Allow-Methods",
             value: "GET,DELETE,PATCH,POST,PUT",
           },
+          {
+            key: "Content-Security-Policy",
+            value: "font-src 'self'; style-src 'self' 'unsafe-inline'",
+          },
         ],
       },
     ];

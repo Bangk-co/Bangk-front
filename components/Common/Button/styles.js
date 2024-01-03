@@ -10,7 +10,7 @@ export const CustomButton = styled(Button)`
       no-repeat padding-box;
     border-radius: ${({ radius }) => radius || "50px"};
     color: ${({ color }) => color || theme.colors.white};
-    font-family: "Rubik";
+    font-family: ${({ font }) => font || theme.fonts.family.secundary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
     font-weight: ${theme.fonts.weight.semibold};
     border: 1px solid;

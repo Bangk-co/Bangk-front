@@ -111,7 +111,7 @@ const Form = () => {
               weight={theme.fonts.weight.regular}
               color={theme.colors.gray900}
               lineHeight={"28px"}
-              style={{ fontFamily: "Rubik" }}
+              font="Rubik"
             >
               Si ha olvidado su contraseña, ingrese la dirección de correo
               electrónico asociada con su cuenta y le enviaremos un enlace para

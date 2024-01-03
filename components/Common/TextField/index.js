@@ -25,7 +25,7 @@ export const TextField = ({
         color={theme.colors.gray900}
         mb="2px"
         align="left"
-        style={{ fontFamily: "Rubik" }}
+        font="Rubik"
       >
         {label}
       </Text>

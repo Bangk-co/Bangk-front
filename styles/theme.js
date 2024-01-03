@@ -16,6 +16,10 @@ export const theme = {
     whatsapp: "#25D366",
   },
   fonts: {
+    family: {
+      primary: "Gilroy",
+      secundary: "Rubik",
+    },
     size: {
       m: "5.625rem",
       xxxl: "5rem",

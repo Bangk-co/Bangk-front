@@ -27,6 +27,7 @@ export const Text = styled.div`
   margin-top: ${(props) => props.mt};
   margin-bottom: ${(props) => props.mb};
   line-height: ${(props) => props.lineHeight || "normal"};
+  font-family: ${({ font }) => font || theme.fonts.family.primary};
 `;
 
 export const H5 = styled.h6`

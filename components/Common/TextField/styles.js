@@ -7,7 +7,7 @@ export const CustomTextField = styled(TextField)`
     border-radius: ${({ radius }) => radius || "43px"};
     width: ${({ width }) => width || "90%"};
     height: ${({ height }) => height || "44px"};
-    font-family: "Rubik";
+    font-family: ${({ font }) => font || theme.fonts.family.secundary};
     font-weight: ${theme.fonts.weight.regular};
     font-size: ${theme.fonts.size.sm};
     &.Mui-focused fieldset {

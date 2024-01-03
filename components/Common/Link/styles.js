@@ -4,7 +4,7 @@ import { theme } from "../../../styles/theme";
 
 export const CustomLink = styled(Button)`
   && {
-    font-family: ${({ font }) => font || theme.fonts.family.secundary};
+    font-family: ${({ font }) => font || theme.fonts.family.secondary};
     padding: 0px;
     color: ${({ color }) => color || theme.colors.gray900};
     font-size: ${({ size }) => size || theme.fonts.size.h6};

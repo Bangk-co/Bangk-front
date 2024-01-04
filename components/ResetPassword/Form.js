@@ -13,6 +13,7 @@ import lock from "../../assets/icons/lock.svg";
 import { validateChangePassword } from "@/utilities/validations";
 import useResetPassword from "@/hooks/ResetPassword/useResetPassword";
 import CircularProgress from "@mui/material/CircularProgress";
+import { encrypt } from "@/utilities/helpers";
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -81,8 +82,8 @@ const Form = ({ isMobile, isTablet }) => {
       resetPassword.reset();
       resetPassword.mutate(
         {
-          password: resetPassForm.password,
-          passwordConfirm: resetPassForm.confirmPassword,
+          password: encrypt(resetPassForm.password),
+          passwordConfirm: encrypt(resetPassForm.confirmPassword),
           hash: hash,
         },
         {

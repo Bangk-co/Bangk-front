@@ -15,6 +15,7 @@ import { validateLoginForm } from "@/utilities/validations";
 import useLogin from "@/hooks/Login/useLogin";
 import { setLocalUser } from "../../hooks/services/axiosInstance";
 import CircularProgress from "@mui/material/CircularProgress";
+import { encrypt } from "@/utilities/helpers";
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -79,7 +80,7 @@ const Form = ({ isMobile, isTablet }) => {
     } else {
       authentication.reset();
       authentication.mutate(
-        { email: loginForm.email, password: loginForm.password },
+        { email: loginForm.email, password: encrypt(loginForm.password) },
         {
           onSuccess: (res) => {
             setLocalUser(res.data.token);

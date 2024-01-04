@@ -27,7 +27,7 @@ export const CustomButton = styled(Button)`
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {
-      width: 130px;
+      width: 140px;
       padding: 0 12px;
     }
 

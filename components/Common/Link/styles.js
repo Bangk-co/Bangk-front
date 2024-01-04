@@ -19,7 +19,7 @@ export const CustomLink = styled(Button)`
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {
-      width: 130px;
+      width: 205px;
       padding: 12px 12px;
     }
 

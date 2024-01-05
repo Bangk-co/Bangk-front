@@ -1,8 +1,8 @@
 const CryptoJS = require("crypto-js");
 
 export const encrypt = (message) => {
-  const key = process.env.REACT_APP_CRYPT_KEY;
-  const iv = process.env.REACT_APP_CRYPT_IV;
+  const key = process.env.NEXT_PUBLIC_CRYPT_KEY;
+  const iv = process.env.NEXT_PUBLIC_CRYPT_IV;
 
   const encryptedData = CryptoJS.AES.encrypt(
     message,
@@ -14,5 +14,6 @@ export const encrypt = (message) => {
       padding: CryptoJS.pad.Pkcs7,
     }
   );
+
   return encryptedData.toString();
 };

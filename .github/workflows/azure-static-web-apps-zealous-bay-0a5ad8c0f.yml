@@ -34,8 +34,8 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env: # Add environment variables here
           IS_STATIC_EXPORT: true
-          REACT_APP_CRYPT_KEY: ${{secrets.REACT_APP_CRYPT_KEY }}
-          REACT_APP_CRYPT_IV: ${{secrets.REACT_APP_CRYPT_IV}}
+          NEXT_PUBLIC_CRYPT_KEY: ${{secrets.NEXT_PUBLIC_CRYPT_KEY }}
+          NEXT_PUBLIC_CRYPT_IV: ${{secrets.NEXT_PUBLIC_CRYPT_IV}}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -17,6 +17,9 @@ export const CustomTextField = styled(TextField)`
     .MuiOutlinedInput-notchedOutline {
       border-color: ${theme.colors.gray500};
     }
+    &.Mui-disabled fieldset {
+      border-color: ${theme.colors.gray500};
+    }
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {

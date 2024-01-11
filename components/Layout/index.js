@@ -11,9 +11,21 @@ const Layout = ({ children, isMobile, isTablet }) => {
   const [contentLoaded, setContentLoaded] = useState(false);
   const router = useRouter();
 
+  const routesWithHeaderAndFooter = [
+    "/",
+    "/ahorra-en-tus-seguros",
+    "/conocenos",
+    "/blog",
+    "/contacto",
+    "/legales",
+  ];
+  const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(
+    router.pathname
+  );
+
   useEffect(() => {
     const handleComplete = () => {
-      setShowTransition(true);
+      setShowTransition(showHeaderAndAnimation);
       setContentLoaded(false);
     };
 
@@ -34,18 +46,6 @@ const Layout = ({ children, isMobile, isTablet }) => {
     setShowTransition(false);
   };
 
-  const routesWithHeaderAndFooter = [
-    "/",
-    "/ahorra-en-tus-seguros",
-    "/conocenos",
-    "/blog",
-    "/contacto",
-    "/legales",
-  ];
-  const showHeaderAndFooter = routesWithHeaderAndFooter.includes(
-    router.pathname
-  );
-
   return (
     <Div direction="column">
       <Head>
@@ -61,11 +61,11 @@ const Layout = ({ children, isMobile, isTablet }) => {
           onAnimationEnd={handleAnimationEnd}
         />
       )}
-      {showHeaderAndFooter && (
+      {showHeaderAndAnimation && (
         <Header isMobile={isMobile} isTablet={isTablet} />
       )}
       <div className={styles.contentContainer}>{children}</div>
-      {showHeaderAndFooter && (
+      {showHeaderAndAnimation && (
         <Footer isMobile={isMobile} isTablet={isTablet} />
       )}
     </Div>

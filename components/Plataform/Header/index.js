@@ -41,9 +41,9 @@ const Header = ({ isMobile, isTablet }) => {
             font={theme.fonts.family.primary}
             size={theme.fonts.size.h6}
             onClick={handleLogout}
-            startIcon={<Image alt="logo" src={logout} width={16} height={16} />}
+            startIcon={<Image alt="logo" src={logout} width={20} height={20} />}
             style={{ width: "30px" }}
-          ></Button>
+          />
         </>
       ) : (
         <>
@@ -58,14 +58,13 @@ const Header = ({ isMobile, isTablet }) => {
             />
           </Div>
           <Button
-            width={"188px"}
+            width={"184px"}
             padding="12px 16px"
             background={theme.colors.green}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.h6}
             onClick={handleLogout}
             startIcon={<Image alt="logo" src={logout} width={16} height={16} />}
-            style={{ gap: "8px" }}
           >
             Cerrar Sesión
           </Button>

@@ -2,15 +2,20 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import { theme } from "../../../styles/theme";
 
-export const CustomLink = styled(Button)`
+export const CustomLink = styled(({ color, ...props }) => (
+  <Button {...props} />
+))`
   && {
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     padding: 0px;
     color: ${({ color }) => color || theme.colors.gray900};
     font-size: ${({ size }) => size || theme.fonts.size.h6};
     font-weight: ${({ weight }) => weight || theme.fonts.weight.regular};
-    background: transparent;
+    background: ${({ background }) => background || "transparent"};
     border: none;
+    border-radius: ${({ radius }) => radius || "0px"};
     text-transform: none;
 
     &:hover {

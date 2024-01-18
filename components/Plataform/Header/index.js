@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Div, Row } from "@/styles/Common";
+import { Div } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
 import { WrapperHeader } from "./styles";
 import greenLogo from "../../../assets/icons/green-logo.svg";
@@ -58,13 +58,14 @@ const Header = ({ isMobile, isTablet }) => {
             />
           </Div>
           <Button
-            width={"184px"}
+            width={"192px"}
             padding="12px 16px"
             background={theme.colors.green}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.h6}
             onClick={handleLogout}
             startIcon={<Image alt="logo" src={logout} width={16} height={16} />}
+            style={{ gap: "8px" }}
           >
             Cerrar Sesión
           </Button>

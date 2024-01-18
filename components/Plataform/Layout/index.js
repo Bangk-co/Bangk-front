@@ -12,10 +12,13 @@ import moneyIcon from "../../../assets/icons/money.svg";
 import moneyIconWhite from "../../../assets/icons/moneyWhite.svg";
 import calculatorIcon from "../../../assets/icons/calculator.svg";
 import calculatorIconWhite from "../../../assets/icons/calculatorWhite.svg";
+import toolIcon from "../../../assets/icons/tool.svg";
+import Customers from "../Customers";
 
 export const Layout = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
+  console.log("pathname", pathname);
 
   const items = [
     {
@@ -25,14 +28,16 @@ export const Layout = ({ children }) => {
           src={active ? homeIcon : homeIconWhite}
           width={24}
           height={24}
-          style={{ cursor: "pointer", stroke: "red" }}
+          style={{ cursor: "pointer" }}
         />
       ),
       name: "Home",
-      handleClick: () => {
-        router.push("/home");
-      },
-      path: "/plataforma",
+      handleClick: () =>
+        router.push({
+          pathname: "/plataforma",
+          query: { section: "home" },
+        }),
+      path: "home",
     },
     {
       icon: (active) => (
@@ -45,10 +50,12 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Clientes",
-      handleClick: () => {
-        router.push("/home");
-      },
-      path: "/home",
+      handleClick: () =>
+        router.push({
+          pathname: "/plataforma",
+          query: { section: "clientes" },
+        }),
+      path: "clientes",
     },
     {
       icon: (active) => (
@@ -61,10 +68,12 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Solicitudes",
-      handleClick: () => {
-        router.push("/home");
-      },
-      path: "/home",
+      handleClick: () =>
+        router.push({
+          pathname: "/plataforma",
+          query: { section: "solicitudes" },
+        }),
+      path: "solicitudes",
     },
     {
       icon: (active) => (
@@ -77,12 +86,32 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Reportes",
-      handleClick: () => {
-        router.push("/home");
-      },
-      path: "/home",
+      handleClick: () =>
+        router.push({
+          pathname: "/plataforma",
+          query: { section: "reportes" },
+        }),
+      path: "reportes",
     },
   ];
+
+  const renderContent = () => {
+    console.log(" router.query", router.query);
+    switch (true) {
+      case router.query.section === "home":
+        return <Text>Home</Text>;
+      case router.query.section === "clientes":
+        return <Customers />;
+      case router.query.section === "solicitudes":
+        return <Text>solicitudes</Text>;
+      case router.query.section === "reportes":
+        return <Text>reportes</Text>;
+      case router.query.section === "configuracion":
+        return <Text>Configuracion</Text>;
+      default:
+        return <Text>Home</Text>;
+    }
+  };
 
   return (
     <WrapperLayout>
@@ -99,20 +128,20 @@ export const Layout = ({ children }) => {
                   radius="0px 16px 16px 0px"
                   onClick={item.handleClick}
                   background={
-                    pathname.includes(item.path) && theme.colors.yellow500
+                    router.query.section === item.path && theme.colors.yellow500
                   }
                 >
                   <Col align="center" gap="8px">
-                    {item.icon(pathname.includes(item.path))}
+                    {item.icon(router.query.section === item.path)}
                     <Text
                       size={theme.fonts.size.sm}
                       weight={
-                        pathname.includes(item.path)
+                        router.query.section === item.path
                           ? theme.fonts.weight.bold
                           : theme.fonts.weight.regular
                       }
                       color={
-                        pathname.includes(item.path)
+                        router.query.section === item.path
                           ? theme.colors.green900
                           : theme.colors.white
                       }
@@ -123,44 +152,46 @@ export const Layout = ({ children }) => {
                 </Link>
               </Div>
             ))}
-            <Div style={{ marginTop: "auto" }}>
+
+            <Div
+              direction={"column"}
+              align="center"
+              style={{ marginTop: "auto" }}
+            >
+              <Div
+                width="112px"
+                justify="center"
+                align="center"
+                m="0 0 12px 0"
+                style={{ border: "1px solid #FFFFFF" }}
+              />
               <Link
                 height="93px"
                 width="134px"
-                padding="0px 0px 0px 16px"
-                m="0px 0px 16px 20px"
                 radius="0px 16px 16px 0px"
-                onClick={() => {
-                  router.push("/home");
-                }}
+                onClick={() =>
+                  router.push({
+                    pathname: "/plataforma",
+                    query: { section: "configuracion" },
+                  })
+                }
                 background={
-                  pathname.includes("/config") && theme.colors.yellow500
+                  router.query.section === "configuracion" &&
+                  theme.colors.yellow500
                 }
               >
                 <Col align="center" gap="8px">
                   <Image
                     alt="logo"
-                    src={
-                      pathname.includes("/config")
-                        ? calculatorIcon
-                        : calculatorIconWhite
-                    }
+                    src={toolIcon}
                     width={24}
                     height={24}
-                    style={{ cursor: "pointer", stroke: "red" }}
+                    style={{ cursor: "pointer" }}
                   />
                   <Text
                     size={theme.fonts.size.sm}
-                    weight={
-                      pathname.includes("/config")
-                        ? theme.fonts.weight.bold
-                        : theme.fonts.weight.regular
-                    }
-                    color={
-                      pathname.includes("/config")
-                        ? theme.colors.green900
-                        : theme.colors.white
-                    }
+                    weight={theme.fonts.weight.regular}
+                    color={theme.colors.white}
                   >
                     Configuración
                   </Text>
@@ -168,7 +199,7 @@ export const Layout = ({ children }) => {
               </Link>
             </Div>
           </Sider>
-          <Content> {children}</Content>
+          <Content>{renderContent()}</Content>
         </WrapperContent>
       </>
     </WrapperLayout>

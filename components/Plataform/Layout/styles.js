@@ -3,7 +3,7 @@ import { theme } from "../../../styles/theme";
 
 export const WrapperLayout = styled.div`
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -34,7 +34,6 @@ export const Sider = styled.div`
   &::-webkit-scrollbar {
     width: 0px;
   }
-  overflow-y: auto;
 `;
 
 export const Content = styled.div`
@@ -45,6 +44,5 @@ export const Content = styled.div`
   width: calc(100% - 150px);
   background: ${theme.colors.white} 0% 0% no-repeat padding-box;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  overflow-y: scroll;
   justify-content: center;
 `;

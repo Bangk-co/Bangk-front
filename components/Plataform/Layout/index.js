@@ -16,7 +16,6 @@ import calculatorIconWhite from "../../../assets/icons/calculatorWhite.svg";
 export const Layout = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
-  console.log("pathname", pathname.includes("plataforma"));
 
   const items = [
     {

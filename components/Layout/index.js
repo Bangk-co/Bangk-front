@@ -6,22 +6,10 @@ import styles from "./Layout.module.css";
 import Header from "../Header";
 import Footer from "../Footer";
 
-const Layout = ({ children, isMobile, isTablet }) => {
+const Layout = ({ children, isMobile, isTablet, showHeaderAndAnimation }) => {
   const [showTransition, setShowTransition] = useState(true);
   const [contentLoaded, setContentLoaded] = useState(false);
   const router = useRouter();
-
-  const routesWithHeaderAndFooter = [
-    "/",
-    "/ahorra-en-tus-seguros",
-    "/conocenos",
-    "/blog",
-    "/contacto",
-    "/legales",
-  ];
-  const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(
-    router.pathname
-  );
 
   useEffect(() => {
     const handleComplete = () => {

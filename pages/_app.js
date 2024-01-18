@@ -46,6 +46,19 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
       });
   }, [router.events]);
 
+  const routesWithHeaderAndFooter = [
+    "/",
+    "/ahorra-en-tus-seguros",
+    "/conocenos",
+    "/blog",
+    "/contacto",
+    "/legales",
+  ];
+
+  const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(
+    router.pathname
+  );
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
@@ -55,8 +68,12 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
           <meta name="description" content="Ahorra tiempo y dinero" />
           <link rel="icon" href="/favicon.png" />
         </Head>
-        <WhatsappButton />
-        <Layout isMobile={isMobile} isTablet={isTablet}>
+        {showHeaderAndAnimation && <WhatsappButton />}
+        <Layout
+          isMobile={isMobile}
+          isTablet={isTablet}
+          showHeaderAndAnimation={showHeaderAndAnimation}
+        >
           <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
         </Layout>
         <Toaster

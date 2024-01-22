@@ -1,7 +1,7 @@
 import styled from "styled-components";
 /* import { Table } from "antd"; */
 import { theme } from "../../../styles/theme";
-import { Table } from "@mui/material";
+import { Table, TablePagination } from "@mui/material";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -32,5 +32,34 @@ export const CustomTable = styled(Table)`
     font-size: ${theme.fonts.size.sm};
     font-weight: ${theme.fonts.weight.regular};
     font-family: ${theme.fonts.family.primary};
+  }
+
+  .MuiTablePagination-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #d3d3d3;
+    padding: 16px;
+  }
+
+  .MuiTablePagination-actions {
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+
+  .MuiTablePagination-input {
+    margin-right: 16px;
+  }
+
+  .MuiTablePagination-spacer {
+    display: none;
+  }
+
+  .MuiTablePagination-select {
+    display: none;
+  }
+
+  .MuiTablePagination-caption {
+    display: none;
   }
 `;

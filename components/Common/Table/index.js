@@ -1,20 +1,34 @@
-import React from "react";
-
-import { TableSkeleton } from "./Skeleton";
-
 import { Wrapper, CustomTable } from "./styles";
-import { TableRow, TableCell, TableHead } from "@mui/material";
+import {
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+  TablePagination,
+} from "@mui/material";
 import { Row } from "@/styles/Common";
+import { theme } from "../../../styles/theme";
 import Image from "next/image";
 import sortIcon from "../../../assets/icons/sort.svg";
+import { Link } from "@/components/Common/Link";
+import { Button } from "@/components/Common/Button";
 
-const Table = ({ columns, data, sizerLabels, children, ...rest }) => {
+const Table = ({
+  columns,
+  data,
+  sizerLabels,
+  children,
+  page,
+  pages,
+  ...rest
+}) => {
   return (
     <Wrapper>
       <CustomTable
         columns={columns}
         data={data}
         sizerLabels={sizerLabels}
+        page={page}
         {...rest}
       >
         <TableHead>
@@ -40,22 +54,59 @@ const Table = ({ columns, data, sizerLabels, children, ...rest }) => {
             ))}
           </TableRow>
         </TableHead>
-        {data.map((row, index) => (
-          <TableRow key={index}>
-            {columns.map((column, idx) => (
-              <TableCell key={idx}>{row[column.dataIndex]}</TableCell>
-            ))}
-          </TableRow>
-        ))}
+        <TableBody>
+          {data.map((row, index) => (
+            <TableRow key={index}>
+              {columns.map((column, idx) => (
+                <TableCell key={idx}>{row[column.dataIndex]}</TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
       </CustomTable>
+      <Row m="16px 0 0 0" gap="8px" align="center" justify="center">
+        <Link
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 0}
+          hover={theme.colors.gray100}
+          color={theme.colors.black}
+        >
+          {"<"}
+        </Link>
+        {pages.map((pageNumber) => (
+          <Button
+            key={pageNumber}
+            width="30px"
+            height="30px"
+            radius="3px"
+            background={
+              pageNumber === page ? theme.colors.green900 : theme.colors.white
+            }
+            labelColor={
+              pageNumber === page ? theme.colors.white : theme.colors.black
+            }
+            hover={
+              pageNumber === page ? theme.colors.green900 : theme.colors.gray100
+            }
+            border={"transparent"}
+            size={theme.fonts.size.sm}
+            weight={theme.fonts.weight.medium}
+            onClick={() => onPageChange(pageNumber - 1)}
+          >
+            {pageNumber}
+          </Button>
+        ))}
+        <Link
+          onClick={() => onPageChange(page + 1)}
+          disabled={page === Math.ceil(data.length / 2) - 1}
+          hover={theme.colors.gray100}
+          color={theme.colors.black}
+        >
+          {">"}
+        </Link>
+      </Row>
     </Wrapper>
   );
 };
-
-Table.defaultProps = {
-  sizerLabels: ["Show", "Results"],
-};
-
-Table.Skeleton = TableSkeleton;
 
 export default Table;

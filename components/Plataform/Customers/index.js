@@ -92,7 +92,18 @@ const Customers = ({ isMobile, isTablet }) => {
       advisor: "name",
       state: "Pending",
     },
+    {
+      client: "name",
+      createdAt: "01-14-22",
+      requests: 2,
+      insuredAmount: 20000,
+      sales: 2,
+      advisor: "name",
+      state: "Pending",
+    },
   ];
+
+  const rowsPerPageOptions = [2, 5, 10];
 
   return (
     <Div direction="column" width="100%">
@@ -101,7 +112,13 @@ const Customers = ({ isMobile, isTablet }) => {
           Clientes
         </Text>
       </Row>
-      <Table columns={tableColumns} data={data} />
+      <Table
+        columns={tableColumns}
+        data={data}
+        page={1}
+        pages={[1, 2, 3, 4, 5]}
+        pagination={{ rowsPerPageOptions }}
+      />
     </Div>
   );
 };

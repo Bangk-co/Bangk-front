@@ -12,7 +12,7 @@ export const CustomButton = styled(Button)`
     color: ${({ labelColor }) => labelColor || theme.colors.white};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
-    font-weight: ${theme.fonts.weight.semibold};
+    font-weight: ${({ weight }) => weight || theme.fonts.weight.semibold};
     border: 1px solid;
     border-color: ${({ border }) => border || theme.colors.gray300};
     text-align: center;
@@ -21,7 +21,8 @@ export const CustomButton = styled(Button)`
     text-transform: none;
 
     &:hover {
-      background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat padding-box;
+      background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat
+        padding-box;
       border-color: ${({ hover }) => hover || theme.colors.orange};
       cursor: pointer;
     }

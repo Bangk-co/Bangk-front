@@ -19,7 +19,8 @@ export const CustomLink = styled(({ color, ...props }) => (
     text-transform: none;
 
     &:hover {
-      color: ${theme.colors.orange};
+      color: ${({ color }) => color || theme.colors.orange};
+      background: ${({ hover }) => hover || "transparent"};
       cursor: pointer;
     }
 

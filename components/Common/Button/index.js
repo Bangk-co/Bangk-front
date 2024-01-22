@@ -6,9 +6,12 @@ export const Button = ({
   width,
   height,
   background,
-  color,
+  labelColor,
   border,
   size,
+  radius,
+  hover,
+  mobileWidth,
   onClick,
   ...rest
 }) => {
@@ -17,9 +20,12 @@ export const Button = ({
       width={width}
       height={height}
       background={background}
-      color={color}
+      labelColor={labelColor}
       border={border}
       size={size}
+      radius={radius}
+      hover={hover}
+      mobileWidth={mobileWidth}
       onClick={onClick}
       {...rest}
     >

@@ -15,8 +15,15 @@ import star from "../../assets/icons/yellow-star.svg";
 import StepperTitleHome from "../Home/StepperTitle";
 import StepperTitle from "../Insurance/StepperTitle";
 import { theme } from "@/styles/theme";
+import { useRouter } from "next/router";
 
 const Stepper = ({ isHome, isMobile, isTablet }) => {
+  const router = useRouter();
+
+  const handleQuote = () => {
+    router.push("/cotiza-tu-ahorro")
+  }
+
   return (
     <Wrapper>
       {isHome ? (
@@ -42,7 +49,7 @@ const Stepper = ({ isHome, isMobile, isTablet }) => {
               </WrapperStar>
               {indx === 0 ? (
                 <a
-                  href={`${wappLink}`}
+                  onClick={handleQuote}
                   target="_blank"
                   rel="noreferrer"
                   style={{

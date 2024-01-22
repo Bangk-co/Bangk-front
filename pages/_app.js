@@ -18,6 +18,8 @@ import { useMediaQuery } from "react-responsive";
 import WhatsappButton from "@/components/WhatsappButton";
 import checkSuccess from "../assets/icons/succes-toast.svg";
 import errorToast from "../assets/icons/error-toast.svg";
+import { Provider } from "react-redux";
+import { store } from "@/store";
 
 const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
   const queryClient = new QueryClient();
@@ -61,80 +63,82 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Head>
-          <title>Bangk</title>
-          <meta content="width=device-width, initial-scale=1" name="viewport" />
-          <meta name="description" content="Ahorra tiempo y dinero" />
-          <link rel="icon" href="/favicon.png" />
-        </Head>
-        {showHeaderAndAnimation && <WhatsappButton />}
-        <Layout
-          isMobile={isMobile}
-          isTablet={isTablet}
-          showHeaderAndAnimation={showHeaderAndAnimation}
-        >
-          <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
-        </Layout>
-        <Toaster
-          position="bottom-right"
-          reverseOrder={true}
-          containerStyle={{ zIndex: 999999 }}
-          toastOptions={{
-            duration: 8000,
-            success: {
-              icon: (
-                <Image alt="check" src={checkSuccess} width={16} height={16} />
-              ),
-              style: {
-                background: theme.colors.green,
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Bangk</title>
+            <meta content="width=device-width, initial-scale=1" name="viewport" />
+            <meta name="description" content="Ahorra tiempo y dinero" />
+            <link rel="icon" href="/favicon.png" />
+          </Head>
+          {showHeaderAndAnimation && <WhatsappButton />}
+          <Layout
+            isMobile={isMobile}
+            isTablet={isTablet}
+            showHeaderAndAnimation={showHeaderAndAnimation}
+          >
+            <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
+          </Layout>
+          <Toaster
+            position="bottom-right"
+            reverseOrder={true}
+            containerStyle={{ zIndex: 999999 }}
+            toastOptions={{
+              duration: 8000,
+              success: {
+                icon: (
+                  <Image alt="check" src={checkSuccess} width={16} height={16} />
+                ),
+                style: {
+                  background: theme.colors.green,
+                },
               },
-            },
-            error: {
-              icon: (
-                <Image alt="check" src={errorToast} width={20} height={20} />
-              ),
+              error: {
+                icon: (
+                  <Image alt="check" src={errorToast} width={20} height={20} />
+                ),
 
+                style: {
+                  background: theme.colors.green,
+                },
+              },
+              loading: {
+                iconTheme: {
+                  primary: theme.colors.gray,
+                  secondary: theme.colors.gray300,
+                },
+                style: {
+                  background: theme.colors.white,
+                },
+              },
               style: {
-                background: theme.colors.green,
+                minWidth: "400px",
+                zIndex: 999999,
+                color: theme.colors.white,
+                fontWeight: theme.fonts.weight.regular,
+                fontSize: theme.fonts.size.default,
+                fontFamily: theme.fonts.family,
+                display: "flex",
+                alignItems: "center",
               },
-            },
-            loading: {
-              iconTheme: {
-                primary: theme.colors.gray,
-                secondary: theme.colors.gray300,
-              },
-              style: {
-                background: theme.colors.white,
-              },
-            },
-            style: {
-              minWidth: "400px",
-              zIndex: 999999,
-              color: theme.colors.white,
-              fontWeight: theme.fonts.weight.regular,
-              fontSize: theme.fonts.size.default,
-              fontFamily: theme.fonts.family,
-              display: "flex",
-              alignItems: "center",
-            },
-          }}
-        >
-          {(t) => (
-            <ToastBar toast={t}>
-              {({ icon, message }) => (
-                <>
-                  {icon}
-                  {message}
-                  {t.type !== "loading" && (
-                    <Link height="100%" onClick={() => toast.dismiss(t.id)} />
-                  )}
-                </>
-              )}
-            </ToastBar>
-          )}
-        </Toaster>
-      </ThemeProvider>
+            }}
+          >
+            {(t) => (
+              <ToastBar toast={t}>
+                {({ icon, message }) => (
+                  <>
+                    {icon}
+                    {message}
+                    {t.type !== "loading" && (
+                      <Link height="100%" onClick={() => toast.dismiss(t.id)} />
+                    )}
+                  </>
+                )}
+              </ToastBar>
+            )}
+          </Toaster>
+        </ThemeProvider>
+      </Provider>
     </QueryClientProvider>
   );
 };

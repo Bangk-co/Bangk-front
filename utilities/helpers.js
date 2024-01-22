@@ -17,3 +17,23 @@ export const encrypt = (message) => {
 
   return encryptedData.toString();
 };
+
+export const numberFormat = (value) => {
+  if (value !== "") {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
+  return null
+}
+
+export const getDatesArray = () => {
+  const currentDate = new Date();
+  const eighteenYearsAgo = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+
+  const dateArray = [];
+
+  for (let date = eighteenYearsAgo; date <= currentDate; date.setDate(date.getDate() + 1)) {
+    dateArray.push(new Date(date));
+  }
+
+  return dateArray;
+}

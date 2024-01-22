@@ -12,6 +12,7 @@ export const theme = {
     light2: "#FCFBFC",
     light3: "#F8F8F7",
     gray: "#EFEFEF",
+    gray100: "#E5E5E5",
     gray300: "#929292",
     gray500: "#676767",
     gray900: "#191919",

@@ -13,19 +13,30 @@ export const TextField = ({
   onChange,
   onPressEnter,
   width,
+  height,
+  radius,
+  font,
+  size,
   border,
   label,
   prefixIcon,
+  labelSize,
+  labelColor,
+  labelFont,
+  labelWeight,
+  notFocused,
+  placeholderColor,
   ...rest
 }) => {
   return (
     <Div width="100%" direction="column">
       <Text
-        size={theme.fonts.size.xs}
-        color={theme.colors.gray900}
+        size={labelSize || theme.fonts.size.xs}
+        color={labelColor || theme.colors.gray900}
         mb="2px"
         align="left"
-        font="Rubik"
+        font={labelFont || "Rubik"}
+        weight={labelWeight}
       >
         {label}
       </Text>
@@ -38,7 +49,13 @@ export const TextField = ({
         onChange={onChange}
         onPressEnter={onPressEnter}
         width={width}
+        height={height}
+        radius={radius}
+        font={font}
+        size={size}
         border={border}
+        notFocused={notFocused}
+        placeholderColor={placeholderColor}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">{prefixIcon}</InputAdornment>

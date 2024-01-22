@@ -63,3 +63,8 @@ export const Col = styled.div`
   justify-content: ${({ justify }) => justify || null};
   gap: ${({ gap }) => gap || null};
 `;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`

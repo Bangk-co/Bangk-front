@@ -1,0 +1,124 @@
+import React, { useEffect, useState } from "react";
+import { Header } from "@/components/Common/Header";
+import { Container, Div } from "@/styles/Common";
+import { theme } from "@/styles/theme";
+import { WrapperQuote, WrapperWapp } from "@/styles/Quote";
+import Image from "next/image";
+import femaleIcon from "@/assets/icons/female.svg"
+import maleIcon from "@/assets/icons/male.svg"
+import { useDispatch, useSelector } from "react-redux";
+import { setInitData } from "@/store/balance";
+import { useRouter } from "next/router";
+import wappIcon from "@/assets/icons/whatsapp-original.svg"
+import { wappLink } from "@/utilities/options";
+import { BackButton } from "@/components/Quote/BackButton.js";
+import { ImageCol } from "@/components/Quote/ImageCol";
+import { InitForm } from "@/components/Quote/InitForm";
+
+
+const Quote = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const { initData } = useSelector((state) => state)?.balance
+  const [isHovered, setIsHovered] = useState(false);
+  const [errorDate, setErrorDate] = useState(false)
+  const [formInfo, setFormInfo] = useState({
+    balance: "",
+    birthdate: null,
+    gender: ""
+  })
+
+  useEffect(() => {
+    setFormInfo(initData)
+  }, [initData])
+
+  const genderButtons = [
+    { icon: femaleIcon, label: "Femenino", value: "female" },
+    { icon: maleIcon, label: "Masculino", value: "male" }
+  ]
+
+  const handleBack = () => {
+    router.push("/")
+  }
+
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+
+    const newValue = value.replace(/\D/g, '');
+    if (newValue === '' || parseInt(newValue, 10) <= 5000000000) {
+      setFormInfo((prevFormInfo) => ({
+        ...prevFormInfo,
+        [id]: newValue,
+      }));
+    }
+  };
+
+  const handleChangeDate = (event) => {
+    const today = new Date();
+    const birthDate = new Date(event);
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (age < 18) {
+      setErrorDate(true)
+    } else {
+      setErrorDate(false)
+      setFormInfo({ ...formInfo, birthdate: birthDate })
+    }
+  }
+
+  const handleSelect = (value) => {
+    const newInfo = { ...formInfo };
+    setFormInfo({ ...newInfo, gender: value });
+  }
+
+  const emptyValidation = formInfo.balance !== "" && formInfo.birthdate !== null && formInfo.gender !== "" && !errorDate;
+
+  const handleNext = () => {
+    dispatch(setInitData(formInfo))
+    router.push("/cotiza-tu-ahorro/oferta")
+  }
+
+  const handleWapp = () => {
+    const a = document.createElement("a");
+    a.href = `${wappLink}`;
+    document.body.appendChild(a);
+    a.target = "_blank";
+    a.click();
+  };
+
+  return (
+    <Container style={{ background: isMobile && theme.colors.green }}>
+      <Header isMobile={isMobile} />
+      <WrapperQuote>
+        {!isMobile &&
+          <BackButton isHovered={isHovered} setIsHovered={setIsHovered} handleBack={handleBack} />
+        }
+        <Div gap="127px" justify={isMobile && "center"}>
+          {!isMobile &&
+            <ImageCol />
+          }
+
+          <InitForm
+            isMobile={isMobile}
+            formInfo={formInfo}
+            handleChange={handleChange}
+            handleChangeDate={handleChangeDate}
+            handleSelect={handleSelect}
+            handleNext={handleNext}
+            handleWapp={handleWapp}
+            errorDate={errorDate}
+            genderButtons={genderButtons}
+            emptyValidation={emptyValidation}
+          />
+        </Div>
+        {!isMobile && (
+          <WrapperWapp>
+            <Image alt="wapp-icon" src={wappIcon} onClick={handleWapp} style={{ cursor: "pointer" }} />
+          </WrapperWapp>
+        )}
+      </WrapperQuote>
+    </Container>
+  )
+}
+
+export default Quote;

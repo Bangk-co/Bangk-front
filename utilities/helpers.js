@@ -24,16 +24,3 @@ export const numberFormat = (value) => {
   }
   return null
 }
-
-export const getDatesArray = () => {
-  const currentDate = new Date();
-  const eighteenYearsAgo = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
-
-  const dateArray = [];
-
-  for (let date = eighteenYearsAgo; date <= currentDate; date.setDate(date.getDate() + 1)) {
-    dateArray.push(new Date(date));
-  }
-
-  return dateArray;
-}

@@ -9,7 +9,7 @@ export const CustomButton = styled(Button)`
     background: ${({ background }) => background || theme.colors.gray300} 0% 0%
       no-repeat padding-box;
     border-radius: ${({ radius }) => radius || "50px"};
-    color: ${({ color }) => color || theme.colors.white};
+    color: ${({ labelColor }) => labelColor || theme.colors.white};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
     font-weight: ${theme.fonts.weight.semibold};
@@ -21,13 +21,18 @@ export const CustomButton = styled(Button)`
     text-transform: none;
 
     &:hover {
-      background: ${theme.colors.orange} 0% 0% no-repeat padding-box;
-      border-color: ${theme.colors.orange};
+      background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat padding-box;
+      border-color: ${({ hover }) => hover || theme.colors.orange};
       cursor: pointer;
     }
 
+    &:disabled {
+      background: ${theme.colors.neutralGray200} 0% 0% no-repeat padding-box;
+      color: ${theme.colors.neutralGray400};
+    }
+
     @media (max-width: ${theme.breakpoints.sm}) {
-      width: 140px;
+      width: ${({ mobileWidth }) => mobileWidth || "140px"};
       padding: 0 12px;
     }
 

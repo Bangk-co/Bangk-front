@@ -17,6 +17,12 @@ export const theme = {
     gray500: "#676767",
     gray900: "#191919",
     whatsapp: "#25D366",
+    primary25: "#E9EFEF",
+    neutralGray200: "#D2D1D4",
+    neutralGray400: "#A6A4A8",
+    neutralGray500: "#8F8D93",
+    neutralGray900: "#28272A",
+    terciary50: "#FFFBEE"
   },
   fonts: {
     family: {
@@ -37,6 +43,7 @@ export const theme = {
       ft: "1.375rem",
       h6: "1.25rem",
       default: "1.125rem",
+      default2: "1rem",
       md: "0.938rem",
       sm: "0.875rem",
       xs: "0.75rem",

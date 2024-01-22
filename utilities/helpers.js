@@ -17,3 +17,10 @@ export const encrypt = (message) => {
 
   return encryptedData.toString();
 };
+
+export const numberFormat = (value) => {
+  if (value !== "") {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
+  return null
+}

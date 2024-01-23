@@ -62,6 +62,7 @@ export const Col = styled.div`
   align-items: ${({ align }) => align || null};
   justify-content: ${({ justify }) => justify || null};
   gap: ${({ gap }) => gap || null};
+  min-width: ${({ minWidth }) => minWidth || null};
 `;
 
 export const Container = styled.div`

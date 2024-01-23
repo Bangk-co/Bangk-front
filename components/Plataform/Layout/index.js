@@ -12,7 +12,7 @@ import moneyIcon from "../../../assets/icons/money.svg";
 import moneyIconWhite from "../../../assets/icons/moneyWhite.svg";
 import calculatorIcon from "../../../assets/icons/calculator.svg";
 import calculatorIconWhite from "../../../assets/icons/calculatorWhite.svg";
-import toolIcon from "../../../assets/icons/tool.svg";
+import settingIcon from "../../../assets/icons/settings.svg";
 import Customers from "../Customers";
 
 export const Layout = ({ children }) => {
@@ -183,7 +183,7 @@ export const Layout = ({ children }) => {
                 <Col align="center" gap="8px">
                   <Image
                     alt="logo"
-                    src={toolIcon}
+                    src={settingIcon}
                     width={24}
                     height={24}
                     style={{ cursor: "pointer" }}

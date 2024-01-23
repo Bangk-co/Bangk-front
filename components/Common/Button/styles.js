@@ -5,6 +5,7 @@ import { theme } from "../../../styles/theme";
 export const CustomButton = styled(Button)`
   && {
     width: ${({ width }) => width || "163px"};
+    min-width: ${({ width }) => width || "50px"};
     height: ${({ height }) => height || "48px"};
     background: ${({ background }) => background || theme.colors.gray300} 0% 0%
       no-repeat padding-box;
@@ -13,7 +14,7 @@ export const CustomButton = styled(Button)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
     font-weight: ${({ weight }) => weight || theme.fonts.weight.semibold};
-    border: 1px solid;
+    border: ${({ borderWidth }) => `${borderWidth} solid` || "1px solid"};
     border-color: ${({ border }) => border || theme.colors.gray300};
     text-align: center;
     justify-content: center;
@@ -23,7 +24,7 @@ export const CustomButton = styled(Button)`
     &:hover {
       background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat
         padding-box;
-      border-color: ${({ hover }) => hover || theme.colors.orange};
+      border-color: ${({ labelColor }) => labelColor || theme.colors.orange};
       cursor: pointer;
     }
 

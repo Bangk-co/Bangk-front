@@ -37,3 +37,20 @@ export const WrapperWapp = styled.div`
     padding: 0px;
   }
 `
+
+export const WrapperWappCal = styled.div`
+  position: absolute;
+  top: 610px;
+  right: 38px;
+`
+
+export const WrapperInsurance = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 26px;
+  height: 112px;
+  width: 100%;
+  background: ${theme.colors.white};
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 0px #00000014;
+`

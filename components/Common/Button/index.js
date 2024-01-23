@@ -7,10 +7,14 @@ export const Button = ({
   height,
   background,
   labelColor,
+  labelWeight,
   border,
   size,
   radius,
   hover,
+  borderHover,
+  colorHover,
+  borderHeight,
   mobileWidth,
   onClick,
   ...rest
@@ -21,10 +25,14 @@ export const Button = ({
       height={height}
       background={background}
       labelColor={labelColor}
+      labelWeight={labelWeight}
       border={border}
       size={size}
       radius={radius}
       hover={hover}
+      borderHover={borderHover}
+      colorHover={colorHover}
+      borderHeight={borderHeight}
       mobileWidth={mobileWidth}
       onClick={onClick}
       {...rest}

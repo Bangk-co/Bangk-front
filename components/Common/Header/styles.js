@@ -18,6 +18,6 @@ export const WrapperHeader = styled.div`
     z-index: 0;
     justify-content: center;
     padding-left: 0px;
-    align-items: self-end;
+    padding-top: 10px;
   }
 `

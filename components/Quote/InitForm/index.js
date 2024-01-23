@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { TextField } from "@/components/Common/TextField";
 import { Col, Div, Row, Text } from "@/styles/Common";
-import { CardButton, WrapperWapp } from "@/styles/Quote";
+import { CardButton, WrapperFooter, WrapperWapp } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
 import { numberFormat } from "@/utilities/helpers";
 import Image from "next/image";
@@ -25,7 +25,7 @@ export const InitForm = ({
   return (
     <Col
       width={isMobile ? "312px" : "541px"}
-      m={isMobile ? "10px 0 0 0" : "92px 0 0 0"}
+      m={isMobile ? "0 0 0 0" : "92px 0 0 0"}
       justify={isMobile && "center"}
     >
       <Text
@@ -132,11 +132,13 @@ export const InitForm = ({
           </CardButton>
         ))}
       </Row>
+
       {isMobile && (
         <WrapperWapp>
           <Image alt="wapp-icon" src={wappIcon} onClick={handleWapp} style={{ cursor: "pointer" }} />
         </WrapperWapp>
       )}
+
       <Div m={isMobile ? "8px 0 0 0" : "52px 0 0 0"} justify="center">
         <Button
           mobileWidth={"100%"}
@@ -146,6 +148,7 @@ export const InitForm = ({
           radius={"40px"}
           labelColor={theme.colors.green900}
           hover={theme.colors.yellow500}
+          borderHover={theme.colors.yellow500}
           disabled={!emptyValidation}
           onClick={handleNext}
         >

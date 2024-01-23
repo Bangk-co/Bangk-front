@@ -14,8 +14,6 @@ import { Calculator } from "@/components/Quote/Calculator";
 import { useSelector } from "react-redux";
 import { numberFormat } from "@/utilities/helpers";
 import useGetInsuranceValues from "@/hooks/QuoteSavings/useGetInsuranceValues";
-import _, { constant } from "lodash";
-
 
 const Sale = ({ isMobile, isTablet }) => {
   const insuranceValues = useGetInsuranceValues()

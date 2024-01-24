@@ -18,7 +18,6 @@ import Customers from "../Customers";
 export const Layout = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
-  console.log("pathname", pathname);
 
   const items = [
     {
@@ -96,7 +95,6 @@ export const Layout = ({ children }) => {
   ];
 
   const renderContent = () => {
-    console.log(" router.query", router.query);
     switch (true) {
       case router.query.section === "home":
         return <Text>Home</Text>;

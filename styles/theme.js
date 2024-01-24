@@ -2,12 +2,21 @@ export const theme = {
   colors: {
     white: "white",
     black: "black",
+    blue: "#1F78D1",
+    blue100: "#1F78D126",
     green: "#024240",
+    green100: "#0B8A000D",
+    green200: "#0B8A0026",
+    green500: "#0B8A00",
     green900: "#074240",
     orange: "#FF8400",
     red: "#E94E4E",
+    red100: "#F8D8D3",
+    red500: "#DB3B21",
     yellow: "#FFC400",
+    yellow100: "#FC940326",
     yellow500: "#FFBC00",
+    yellow600: "#FC9403",
     light: "#FBFAFB",
     light2: "#FCFBFC",
     light3: "#F8F8F7",
@@ -22,7 +31,7 @@ export const theme = {
     neutralGray400: "#A6A4A8",
     neutralGray500: "#8F8D93",
     neutralGray900: "#28272A",
-    terciary50: "#FFFBEE"
+    terciary50: "#FFFBEE",
   },
   fonts: {
     family: {

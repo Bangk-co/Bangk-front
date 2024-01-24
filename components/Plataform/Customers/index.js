@@ -7,7 +7,11 @@ import { Div, Row } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import useGetClients from "@/hooks/Customers/useGetClients";
 import useDebounce from "@/hooks/useDebounce";
-import { formattedDate, formattedPrice } from "@/utilities/helpers";
+import {
+  formattedDate,
+  formattedPrice,
+  renderStateDiv,
+} from "@/utilities/helpers";
 
 const Customers = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -35,11 +39,10 @@ const Customers = ({ isMobile, isTablet }) => {
   const { data, isLoading, isFetching } = getClients;
 
   const [clientsList, setClientsList] = useState([]);
-  console.log("clientsList", clientsList);
   useEffect(() => {
     if (!isLoading && !isFetching) {
-      setClientsList(data.data.projects.items);
-      setTotalItems(data.data.projects.totalItems);
+      setClientsList(data?.data?.clients?.items);
+      setTotalItems(data?.data?.clients?.totalItems);
     }
   }, [data, isLoading, isFetching]);
 
@@ -114,6 +117,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "stateName",
         width: 180,
         sorter: true,
+        render: (value, record) => renderStateDiv(value),
       },
     ],
     []

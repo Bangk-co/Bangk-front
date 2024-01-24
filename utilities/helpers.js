@@ -1,3 +1,6 @@
+import { theme } from "../styles/theme";
+import { Div } from "@/styles/Common";
+
 const CryptoJS = require("crypto-js");
 
 export const encrypt = (message) => {
@@ -41,4 +44,60 @@ export const formattedPrice = (price) => {
       minimumFractionDigits: 0,
     });
   }
+};
+
+export const renderStateDiv = (stateName) => {
+  let backgroundColor, borderColor, color;
+
+  switch (stateName) {
+    case "Potencial":
+      backgroundColor = theme.colors.blue100;
+      borderColor = theme.colors.blue;
+      color = theme.colors.blue;
+      break;
+    case "Prospecto":
+      backgroundColor = theme.colors.green100;
+      borderColor = theme.colors.green500;
+      color = theme.colors.green500;
+      break;
+    case "Activo":
+      backgroundColor = theme.colors.green200;
+      borderColor = theme.colors.green500;
+      color = theme.colors.green500;
+      break;
+    case "Inactivo":
+      backgroundColor = theme.colors.yellow100;
+      borderColor = theme.colors.yellow600;
+      color = theme.colors.yellow600;
+      break;
+    case "Perdido por frio":
+      backgroundColor = theme.colors.red100;
+      borderColor = theme.colors.red500;
+      color = theme.colors.red500;
+      break;
+    case "Perdido por rechazo":
+      backgroundColor = theme.colors.red100;
+      borderColor = theme.colors.red500;
+      color = theme.colors.red500;
+      break;
+    default:
+      backgroundColor = "transparent";
+      borderColor = "transparent";
+      color = theme.colors.black;
+      break;
+  }
+  return (
+    <Div
+      background={backgroundColor}
+      border={borderColor}
+      color={color}
+      align="center"
+      justify="center"
+      radius="4px"
+      p="6px 10px"
+      style={{ border: `1px solid ${borderColor}` }}
+    >
+      {stateName}
+    </Div>
+  );
 };

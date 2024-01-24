@@ -6,7 +6,7 @@ import {
   TableBody,
   TablePagination,
 } from "@mui/material";
-import { Row } from "@/styles/Common";
+import { Row, Text } from "@/styles/Common";
 import { theme } from "../../../styles/theme";
 import Image from "next/image";
 import sortIcon from "../../../assets/icons/sort.svg";
@@ -56,17 +56,25 @@ const Table = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) => (
-            <TableRow key={index}>
-              {columns.map((column, idx) => (
-                <TableCell key={idx}>
-                  {column.render
-                    ? column.render(row[column.dataIndex], row)
-                    : row[column.dataIndex]}
-                </TableCell>
-              ))}
+          {data && data.length > 0 ? (
+            data?.map((row, index) => (
+              <TableRow key={index}>
+                {columns.map((column, idx) => (
+                  <TableCell key={idx}>
+                    {column.render
+                      ? column.render(row[column.dataIndex], row)
+                      : row[column.dataIndex]}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} align="center">
+                No data
+              </TableCell>
             </TableRow>
-          ))}
+          )}
         </TableBody>
       </CustomTable>
       <Row m="16px 0 0 0" gap="8px" align="center" justify="center">
@@ -103,7 +111,7 @@ const Table = ({
         ))}
         <Link
           onClick={() => onPageChange(page + 1)}
-          disabled={page === Math.ceil(data.length / 2)}
+          disabled={page === Math.ceil(data?.length / 2)}
           hover={theme.colors.gray100}
           color={theme.colors.black}
         >

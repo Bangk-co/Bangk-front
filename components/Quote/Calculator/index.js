@@ -1,8 +1,8 @@
+import React from "react";
 import { Button } from "@/components/Common/Button";
 import { Col, Div, Row, Text } from "@/styles/Common";
-import { WrapperFooter, WrapperInsurance, WrapperWapp, WrapperWappCal } from "@/styles/Quote";
+import { WrapperInsurance, WrapperWapp, WrapperWappCal } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
-import React from "react";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import Image from "next/image";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"

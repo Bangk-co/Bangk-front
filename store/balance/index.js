@@ -8,6 +8,15 @@ export const slice = createSlice({
       birthdate: null,
       gender: ""
     },
+    userInfo: {
+      documentType: 76,
+      identificationNumber: "",
+      name: "",
+      lastname: "",
+      countryCode: 6,
+      phone: "",
+      email: "",
+    },
   },
   reducers: {
     resetInitData: (state) => {
@@ -18,12 +27,27 @@ export const slice = createSlice({
           birthdate: null,
           gender: ""
         },
+        userInfo: {
+          documentType: 76,
+          identificationNumber: "",
+          name: "",
+          lastname: "",
+          countryCode: 6,
+          phone: "",
+          email: "",
+        },
       };
     },
     setInitData: (state, action) => {
       return {
         ...state,
         initData: action.payload
+      };
+    },
+    setUserInfo: (state, action) => {
+      return {
+        ...state,
+        userInfo: action.payload
       };
     },
   },
@@ -33,6 +57,7 @@ export default slice.reducer;
 
 export const {
   resetInitData,
-  setInitData
+  setInitData,
+  setUserInfo,
 } = slice.actions;
 

@@ -18,13 +18,17 @@ export const theme = {
     gray900: "#191919",
     whatsapp: "#25D366",
     primary25: "#E9EFEF",
+    primary50: "#CDD9D9",
     primary900: "#021615",
     neutralGray200: "#D2D1D4",
     neutralGray400: "#A6A4A8",
     neutralGray500: "#8F8D93",
     neutralGray900: "#28272A",
     terciary50: "#FFFBEE",
-    secondary: "#FD6700"
+    secondary: "#FD6700",
+    error: "#DB3B21",
+    error300: "#ED9D90",
+    error800: "#6D1D10"
   },
   fonts: {
     family: {

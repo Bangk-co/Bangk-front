@@ -39,6 +39,15 @@ export const CustomLink = styled(({ color, ...props }) => (
       }
     }
 
+    &:disabled {
+      color: ${theme.colors.neutralGray400};
+      &:hover {
+        background: transparent;
+        color: ${theme.colors.neutralGray400};
+        cursor: not-allowed;
+      }
+    }
+
     @media (max-width: ${theme.breakpoints.sm}) {
       width: 205px;
       padding: 12px 12px;

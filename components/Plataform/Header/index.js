@@ -39,7 +39,7 @@ const Header = ({ isMobile, isTablet }) => {
             padding="12px 16px"
             labelColor={theme.colors.green900}
             border={theme.colors.green900}
-            borderWidth={"3px"}
+            borderwidth={"3px"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
@@ -67,7 +67,7 @@ const Header = ({ isMobile, isTablet }) => {
             padding="12px 16px"
             labelColor={theme.colors.green900}
             border={theme.colors.green900}
-            borderWidth={"3px"}
+            borderwidth={"3px"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}

@@ -20,6 +20,7 @@ const Table = ({
   children,
   page,
   pages,
+  onPageChange,
   ...rest
 }) => {
   return (
@@ -58,7 +59,11 @@ const Table = ({
           {data.map((row, index) => (
             <TableRow key={index}>
               {columns.map((column, idx) => (
-                <TableCell key={idx}>{row[column.dataIndex]}</TableCell>
+                <TableCell key={idx}>
+                  {column.render
+                    ? column.render(row[column.dataIndex], row)
+                    : row[column.dataIndex]}
+                </TableCell>
               ))}
             </TableRow>
           ))}
@@ -67,7 +72,7 @@ const Table = ({
       <Row m="16px 0 0 0" gap="8px" align="center" justify="center">
         <Link
           onClick={() => onPageChange(page - 1)}
-          disabled={page === 0}
+          disabled={page === 0 || page === 1}
           hover={theme.colors.gray100}
           color={theme.colors.black}
         >
@@ -91,14 +96,14 @@ const Table = ({
             border={"transparent"}
             size={theme.fonts.size.sm}
             weight={theme.fonts.weight.medium}
-            onClick={() => onPageChange(pageNumber - 1)}
+            onClick={() => onPageChange(pageNumber)}
           >
             {pageNumber}
           </Button>
         ))}
         <Link
           onClick={() => onPageChange(page + 1)}
-          disabled={page === Math.ceil(data.length / 2) - 1}
+          disabled={page === Math.ceil(data.length / 2)}
           hover={theme.colors.gray100}
           color={theme.colors.black}
         >

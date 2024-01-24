@@ -1,43 +1,97 @@
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import Table from "@/components/Common/Table";
 import { Div, Row } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
+import useGetClients from "@/hooks/Customers/useGetClients";
+import useDebounce from "@/hooks/useDebounce";
+import { formattedDate, formattedPrice } from "@/utilities/helpers";
 
 const Customers = ({ isMobile, isTablet }) => {
   const router = useRouter();
+
+  const [forceUpdate, setForceUpdate] = useState(true);
+  const [pages, setPages] = useState({ pageNumber: 1, pageSize: 8 });
+
+  const [totalItems, setTotalItems] = useState(10);
+  const [searchText, setSearchText] = useState(null);
+  const searchValue = useDebounce(searchText, 600);
+
+  const [payloadOptions, setPayloadOptions] = useState({
+    page: pages.pageNumber,
+    pageSize: pages.pageSize,
+    searchBy: searchValue,
+  });
+
+  function calculatePages(pageSize, totalItems) {
+    const totalPages = Math.ceil(totalItems / pageSize);
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+  const paginationArray = calculatePages(pages.pageSize, totalItems);
+
+  const getClients = useGetClients(payloadOptions);
+  const { data, isLoading, isFetching } = getClients;
+
+  const [clientsList, setClientsList] = useState([]);
+  console.log("clientsList", clientsList);
+  useEffect(() => {
+    if (!isLoading && !isFetching) {
+      setClientsList(data.data.projects.items);
+      setTotalItems(data.data.projects.totalItems);
+    }
+  }, [data, isLoading, isFetching]);
+
+  useEffect(() => {
+    setPayloadOptions({
+      ...payloadOptions,
+      page: pages.pageNumber,
+      pageSize: pages.pageSize,
+      searchBy: searchValue,
+    });
+  }, [pages, searchValue]);
+
+  const handleChangeTable = (newPage) => {
+    setPages({
+      pageNumber: newPage,
+      pageSize: pages.pageSize,
+    });
+
+    setForceUpdate(!forceUpdate);
+  };
 
   const tableColumns = useMemo(
     () => [
       {
         title: "Cliente",
-        dataIndex: "client",
-        key: "client",
+        dataIndex: "name",
+        key: "name",
         width: 200,
         sorter: true,
       },
       {
         title: "Fecha de creación",
-        dataIndex: "createdAt",
-        key: "createdAt",
+        dataIndex: "creationDate",
+        key: "creationDate",
         width: 200,
         sorter: true,
+        render: (value, record) => <span>{formattedDate(value)}</span>,
       },
       {
         title: "Solicitudes",
-        dataIndex: "requests",
-        key: "requests",
+        dataIndex: "applications",
+        key: "applications",
         width: 150,
         sorter: true,
       },
       {
         title: "Monto Asegurado",
-        dataIndex: "insuredAmount",
-        key: "insuredAmount",
+        dataIndex: "loanBalance",
+        key: "loanBalance",
         width: 180,
         sorter: true,
+        render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
         title: "Ventas",
@@ -45,65 +99,25 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "sales",
         width: 150,
         sorter: true,
+        render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
         title: "Asesor",
-        dataIndex: "advisor",
-        key: "advisor",
+        dataIndex: "reviewerName",
+        key: "reviewerName",
         width: 150,
         sorter: true,
       },
       {
         title: "Estado",
-        dataIndex: "state",
-        key: "state",
+        dataIndex: "stateName",
+        key: "stateName",
         width: 180,
         sorter: true,
       },
     ],
     []
   );
-
-  const data = [
-    {
-      client: "name",
-      createdAt: "01-12-22",
-      requests: 2,
-      insuredAmount: 20000,
-      sales: 2,
-      advisor: "name",
-      state: "Pending",
-    },
-    {
-      client: "name",
-      createdAt: "01-13-22",
-      requests: 2,
-      insuredAmount: 20000,
-      sales: 2,
-      advisor: "name",
-      state: "Pending",
-    },
-    {
-      client: "name",
-      createdAt: "01-14-22",
-      requests: 2,
-      insuredAmount: 20000,
-      sales: 2,
-      advisor: "name",
-      state: "Pending",
-    },
-    {
-      client: "name",
-      createdAt: "01-14-22",
-      requests: 2,
-      insuredAmount: 20000,
-      sales: 2,
-      advisor: "name",
-      state: "Pending",
-    },
-  ];
-
-  const rowsPerPageOptions = [2, 5, 10];
 
   return (
     <Div direction="column" width="100%">
@@ -114,10 +128,10 @@ const Customers = ({ isMobile, isTablet }) => {
       </Row>
       <Table
         columns={tableColumns}
-        data={data}
-        page={1}
-        pages={[1, 2, 3, 4, 5]}
-        pagination={{ rowsPerPageOptions }}
+        data={clientsList}
+        page={pages.pageNumber}
+        pages={paginationArray}
+        onPageChange={handleChangeTable}
       />
     </Div>
   );

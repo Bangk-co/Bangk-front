@@ -14,7 +14,7 @@ export const CustomButton = styled(Button)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
     font-weight: ${({ weight }) => weight || theme.fonts.weight.semibold};
-    border: ${({ borderWidth }) => `${borderWidth} solid` || "1px solid"};
+    border: ${({ borderwidth }) => `${borderwidth} solid` || "1px solid"};
     border-color: ${({ border }) => border || theme.colors.gray300};
     text-align: center;
     justify-content: center;

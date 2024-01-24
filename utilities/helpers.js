@@ -20,7 +20,25 @@ export const encrypt = (message) => {
 
 export const numberFormat = (value) => {
   if (value !== "") {
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
-  return null
-}
+  return null;
+};
+
+export const formattedDate = (date) => {
+  return new Date(date).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
+
+export const formattedPrice = (price) => {
+  {
+    return Number(price).toLocaleString("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    });
+  }
+};

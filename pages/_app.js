@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import "antd/dist/reset.css";
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import { ThemeProvider } from "styled-components";
@@ -22,20 +22,33 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     useMediaQuery({
       query: `(min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md})`,
     }) || isTabletServer;
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-    import('react-facebook-pixel')
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-NSWGB6R3");
+  }, []);
+
+  useEffect(() => {
+    import("react-facebook-pixel")
       .then((x) => x.default)
       .then((ReactPixel) => {
-        ReactPixel.init('278194147905078')
-        ReactPixel.pageView()
+        ReactPixel.init("278194147905078");
+        ReactPixel.pageView();
 
-        router.events.on('routeChangeComplete', () => {
-          ReactPixel.pageView()
-        })
-      })
-  }, [router.events])
+        router.events.on("routeChangeComplete", () => {
+          ReactPixel.pageView();
+        });
+      });
+  }, [router.events]);
 
   return (
     <ThemeProvider theme={theme}>

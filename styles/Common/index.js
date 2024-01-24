@@ -16,6 +16,9 @@ export const Div = styled.div`
   max-width: ${({ maxwidth }) => maxwidth || null};
   max-height: ${({ maxheight }) => maxheight || null};
   flex-direction: ${({ direction }) => direction || null};
+  background: ${({ background }) => background || null};
+  color: ${(color) => (color ? color : theme.colors.black)};
+  border-radius: ${({ radius }) => radius || null};
 `;
 
 export const Text = styled.div`
@@ -68,4 +71,4 @@ export const Col = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;

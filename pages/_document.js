@@ -46,6 +46,14 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <script type="text/javascript" src="/static/entry-script.js" />
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-NSWGB6R3"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
         </body>
       </Html>
     );

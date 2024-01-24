@@ -41,6 +41,7 @@ export const TextField = ({
         {label}
       </Text>
       <CustomTextField
+        autoComplete="off"
         placeholder={placeholder}
         suffix={suffix}
         error={error}

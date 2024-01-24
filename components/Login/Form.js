@@ -84,7 +84,7 @@ const Form = ({ isMobile, isTablet }) => {
         {
           onSuccess: (res) => {
             setLocalUser(res.data.token);
-            router.push("/plataforma?section=home");
+            router.push("/plataforma/home");
           },
           onError: (err) => {
             err.response.data.map((error) => {

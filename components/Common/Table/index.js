@@ -95,7 +95,7 @@ const Table = ({
             background={
               pageNumber === page ? theme.colors.green900 : theme.colors.white
             }
-            labelColor={
+            borderHover={
               pageNumber === page ? theme.colors.white : theme.colors.black
             }
             hover={
@@ -103,7 +103,7 @@ const Table = ({
             }
             border={"transparent"}
             size={theme.fonts.size.sm}
-            weight={theme.fonts.weight.medium}
+            labelWeight={theme.fonts.weight.medium}
             onClick={() => onPageChange(pageNumber)}
           >
             {pageNumber}

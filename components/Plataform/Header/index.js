@@ -38,8 +38,9 @@ const Header = ({ isMobile, isTablet }) => {
           <Button
             padding="12px 16px"
             labelColor={theme.colors.green900}
+            borderHover={theme.colors.green900}
             border={theme.colors.green900}
-            borderwidth={"3px"}
+            borderHeigh={"3px"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
@@ -66,8 +67,9 @@ const Header = ({ isMobile, isTablet }) => {
             width={"196px"}
             padding="12px 16px"
             labelColor={theme.colors.green900}
+            borderHover={theme.colors.green900}
             border={theme.colors.green900}
-            borderwidth={"3px"}
+            borderHeigh={"3px"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}

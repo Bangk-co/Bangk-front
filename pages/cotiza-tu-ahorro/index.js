@@ -37,10 +37,6 @@ const Quote = ({ isMobile, isTablet }) => {
     { icon: maleIcon, label: "Masculino", value: "male" }
   ]
 
-  const handleBack = () => {
-    router.push("/")
-  }
-
   const handleChange = (event) => {
     const { id, value } = event.target;
 
@@ -62,7 +58,7 @@ const Quote = ({ isMobile, isTablet }) => {
       setErrorDate(true)
     } else {
       setErrorDate(false)
-      setFormInfo({ ...formInfo, birthdate: birthDate })
+      setFormInfo({ ...formInfo, birthdate: event })
     }
   }
 
@@ -91,7 +87,7 @@ const Quote = ({ isMobile, isTablet }) => {
       <Header isMobile={isMobile} />
       <WrapperQuote>
         {!isMobile &&
-          <BackButton isHovered={isHovered} setIsHovered={setIsHovered} handleBack={handleBack} />
+          <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
         }
         <Div gap="127px" justify={isMobile && "center"}>
           {!isMobile &&

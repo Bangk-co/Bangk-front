@@ -21,6 +21,25 @@ export const encrypt = (message) => {
   return encryptedData.toString();
 };
 
+export const decrypt = (encryptedMessage) => {
+  const key = process.env.NEXT_PUBLIC_CRYPT_KEY;
+  const iv = process.env.NEXT_PUBLIC_CRYPT_IV;
+
+  const decryptedData = CryptoJS.AES.decrypt(
+    encryptedMessage,
+    CryptoJS.enc.Utf8.parse(key),
+    {
+      iv: CryptoJS.enc.Utf8.parse(iv),
+      keySize: 256,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }
+  );
+
+  return decryptedData.toString(CryptoJS.enc.Utf8);
+};
+
+
 export const numberFormat = (value) => {
   if (value !== "") {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");

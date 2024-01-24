@@ -31,11 +31,7 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Home",
-      handleClick: () =>
-        router.push({
-          pathname: "/plataforma",
-          query: { section: "home" },
-        }),
+      handleClick: () => router.push("/plataforma/home"),
       path: "home",
     },
     {
@@ -49,11 +45,7 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Clientes",
-      handleClick: () =>
-        router.push({
-          pathname: "/plataforma",
-          query: { section: "clientes" },
-        }),
+      handleClick: () => router.push("/plataforma/clientes"),
       path: "clientes",
     },
     {
@@ -67,11 +59,7 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Solicitudes",
-      handleClick: () =>
-        router.push({
-          pathname: "/plataforma",
-          query: { section: "solicitudes" },
-        }),
+      handleClick: () => {},
       path: "solicitudes",
     },
     {
@@ -85,31 +73,10 @@ export const Layout = ({ children }) => {
         />
       ),
       name: "Reportes",
-      handleClick: () =>
-        router.push({
-          pathname: "/plataforma",
-          query: { section: "reportes" },
-        }),
+      handleClick: () => {},
       path: "reportes",
     },
   ];
-
-  const renderContent = () => {
-    switch (true) {
-      case router.query.section === "home":
-        return <Text>Home</Text>;
-      case router.query.section === "clientes":
-        return <Customers />;
-      case router.query.section === "solicitudes":
-        return <Text>solicitudes</Text>;
-      case router.query.section === "reportes":
-        return <Text>reportes</Text>;
-      case router.query.section === "configuracion":
-        return <Text>Configuracion</Text>;
-      default:
-        return <Text>Home</Text>;
-    }
-  };
 
   return (
     <WrapperLayout>
@@ -126,20 +93,21 @@ export const Layout = ({ children }) => {
                   radius="0px 16px 16px 0px"
                   onClick={item.handleClick}
                   background={
-                    router.query.section === item.path && theme.colors.yellow500
+                    pathname.includes(item.path) && theme.colors.yellow500
                   }
+                  hover={pathname.includes(item.path) && theme.colors.yellow500}
                 >
                   <Col align="center" gap="8px">
-                    {item.icon(router.query.section === item.path)}
+                    {item.icon(pathname.includes(item.path))}
                     <Text
                       size={theme.fonts.size.sm}
                       weight={
-                        router.query.section === item.path
+                        pathname.includes(item.path)
                           ? theme.fonts.weight.bold
                           : theme.fonts.weight.regular
                       }
                       color={
-                        router.query.section === item.path
+                        pathname.includes(item.path)
                           ? theme.colors.green900
                           : theme.colors.white
                       }
@@ -167,15 +135,12 @@ export const Layout = ({ children }) => {
                 height="93px"
                 width="134px"
                 radius="0px 16px 16px 0px"
-                onClick={() =>
-                  router.push({
-                    pathname: "/plataforma",
-                    query: { section: "configuracion" },
-                  })
-                }
+                onClick={() => {}}
                 background={
-                  router.query.section === "configuracion" &&
-                  theme.colors.yellow500
+                  pathname.includes("configuracion") && theme.colors.yellow500
+                }
+                hover={
+                  pathname.includes("configuracion") && theme.colors.yellow500
                 }
               >
                 <Col align="center" gap="8px">
@@ -197,7 +162,7 @@ export const Layout = ({ children }) => {
               </Link>
             </Div>
           </Sider>
-          <Content>{renderContent()}</Content>
+          <Content>{children}</Content>
         </WrapperContent>
       </>
     </WrapperLayout>

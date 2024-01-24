@@ -142,23 +142,23 @@ const UserData = ({ isMobile, isTablet }) => {
           <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
         }
         <Div justify="center" width="100%">
-        <UserForm
-          isMobile={isMobile}
-          documentTypeOptions={documentTypeOptions}
-          indicativesOptions={indicativesOptions}
-          formInfo={formInfo}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          handleClose={handleClose}
-          handleAccept={handleAccept}
-          handleSelect={handleSelect}
-          handleChange={handleChange}
-          terms={terms}
-          handleTerms={handleTerms}
-          handleBack={handleBack}
-          handleContinue={handleContinue}
-          handleWapp={handleWapp}
-        />
+          <UserForm
+            isMobile={isMobile}
+            documentTypeOptions={documentTypeOptions}
+            indicativesOptions={indicativesOptions}
+            formInfo={formInfo}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            handleClose={handleClose}
+            handleAccept={handleAccept}
+            handleSelect={handleSelect}
+            handleChange={handleChange}
+            terms={terms}
+            handleTerms={handleTerms}
+            handleBack={handleBack}
+            handleContinue={handleContinue}
+            handleWapp={handleWapp}
+          />
         </Div>
         {!isMobile && (
           <WrapperWapp>

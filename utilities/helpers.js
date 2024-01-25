@@ -39,7 +39,6 @@ export const decrypt = (encryptedMessage) => {
   return decryptedData.toString(CryptoJS.enc.Utf8);
 };
 
-
 export const numberFormat = (value) => {
   if (value !== "") {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -110,6 +109,7 @@ export const renderStateDiv = (stateName) => {
       background={backgroundColor}
       border={borderColor}
       color={color}
+      width="100%"
       align="center"
       justify="center"
       radius="4px"

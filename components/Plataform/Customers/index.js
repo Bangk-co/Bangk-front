@@ -123,6 +123,10 @@ const Customers = ({ isMobile, isTablet }) => {
     []
   );
 
+  const handleRow = (row) => {
+    router.push("/plataforma/clientes/cliente");
+  };
+
   return (
     <Div direction="column" width="100%">
       <Row m="0 0 37px 0">
@@ -136,6 +140,7 @@ const Customers = ({ isMobile, isTablet }) => {
         page={pages.pageNumber}
         pages={paginationArray}
         onPageChange={handleChangeTable}
+        handleRow={handleRow}
       />
     </Div>
   );

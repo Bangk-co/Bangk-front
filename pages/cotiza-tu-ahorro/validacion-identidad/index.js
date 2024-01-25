@@ -3,38 +3,45 @@ import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
 import { Col, Container, Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { InputCode, WrapperCodeNumber, WrapperCounter, WrapperError, WrapperQuote, WrapperReSend } from "@/styles/Quote";
-import phoneIcon from "@/assets/icons/phone-code.svg"
+import {
+  InputCode,
+  WrapperCodeNumber,
+  WrapperCounter,
+  WrapperError,
+  WrapperQuote,
+  WrapperReSend,
+} from "@/styles/Quote";
+import phoneIcon from "@/assets/icons/phone-code.svg";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { decrypt } from "@/utilities/helpers";
-import clock from "@/assets/icons/clock.svg"
+import clock from "@/assets/icons/clock.svg";
 import { LinkButton } from "@/components/Common/LinkButton";
 import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
+import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import toast from "react-hot-toast";
 
 const ValidateUser = ({ isMobile, isTablet }) => {
-  const reSendCode = useReSendCode()
+  const reSendCode = useReSendCode();
   const router = useRouter();
-  const { val } = router.query;
-  const [newCode, setNewCode] = useState(null)
-  const successCode = newCode ? decrypt(newCode) : decrypt(val)
-  const { userInfo } = useSelector((state) => state)?.balance
+  const { val } = router.query || "";
+  const [newCode, setNewCode] = useState(null);
+  const successCode = newCode ? decrypt(newCode) : decrypt(val);
+  const { userInfo } = useSelector((state) => state)?.balance;
   const [code, setCode] = useState([
     { id: "first", value: "" },
     { id: "second", value: "" },
     { id: "third", value: "" },
     { id: "fourth", value: "" },
-  ])
-  const [finalCode, setFinalCode] = useState(null)
-  const [isCodeSuccess, setIsCodeSuccess] = useState(null)
+  ]);
+  const [finalCode, setFinalCode] = useState(null);
+  const [isCodeSuccess, setIsCodeSuccess] = useState(null);
   const [timeLeft, setTimeLeft] = useState(180);
   const [showResendButton, setShowResendButton] = useState(false);
-  const [isReSend, setIsResend] = useState(false)
-  const [forceUpdate, setForceUpdate] = useState(false)
+  const [isReSend, setIsResend] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -48,65 +55,63 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   useEffect(() => {
     if (finalCode) {
       if (successCode === finalCode) {
-        setIsCodeSuccess(true)
-        setForceUpdate(!forceUpdate)
+        setIsCodeSuccess(true);
+        setForceUpdate(!forceUpdate);
       } else {
-        setIsCodeSuccess(false)
-        setForceUpdate(!forceUpdate)
+        setIsCodeSuccess(false);
+        setForceUpdate(!forceUpdate);
       }
     } else {
-      setIsCodeSuccess(null)
-      setForceUpdate(!forceUpdate)
+      setIsCodeSuccess(null);
+      setForceUpdate(!forceUpdate);
     }
-  }, [finalCode, successCode])
+  }, [finalCode, successCode]);
 
   useEffect(() => {
     if (code.every((ele) => ele.value !== "")) {
-      const number = code.map((elem) => elem.value).join('')
-      setFinalCode(number)
-      setForceUpdate(!forceUpdate)
+      const number = code.map((elem) => elem.value).join("");
+      setFinalCode(number);
+      setForceUpdate(!forceUpdate);
     }
-  }, [code])
+  }, [code]);
 
   const hideEmailUsername = (email) => {
-    const [username, domain] = email.split('@');
-    const hiddenUsername = username.slice(0, 1) + '*'.repeat(username.length - 1);
+    const [username, domain] = email.split("@");
+    const hiddenUsername =
+      username.slice(0, 1) + "*".repeat(username.length - 1);
     return `${hiddenUsername}@${domain}`;
   };
 
-  const email = hideEmailUsername(userInfo.email)
+  const email = hideEmailUsername(userInfo.email);
 
   const handleChange = (event, indx) => {
-    const { value } = event.target
-    const newCode = [ ... code]
+    const { value } = event.target;
+    const newCode = [...code];
 
-    newCode[indx].value = value
-    setCode(newCode)
-    setIsCodeSuccess(null)
-    setIsResend(false)
-    setForceUpdate(!forceUpdate)
-  }
+    newCode[indx].value = value;
+    setCode(newCode);
+    setIsCodeSuccess(null);
+    setIsResend(false);
+    setForceUpdate(!forceUpdate);
+  };
 
   const handleResendCode = () => {
     reSendCode.reset();
-    reSendCode.mutate(
-      userInfo.email,
-      {
-        onSuccess: (res) => {
-          setNewCode(res.data.code)
-          setIsCodeSuccess(null)
-          setIsResend(true)
-          setTimeLeft(180);
-          setShowResendButton(false);
-          setForceUpdate(!forceUpdate)
-        },
-        onError: (err) => {
-          err.response.data.map((error) => {
-            toast.error(error);
-          });
-        },
-      }
-    );
+    reSendCode.mutate(userInfo.email, {
+      onSuccess: (res) => {
+        setNewCode(res.data.code);
+        setIsCodeSuccess(null);
+        setIsResend(true);
+        setTimeLeft(180);
+        setShowResendButton(false);
+        setForceUpdate(!forceUpdate);
+      },
+      onError: (err) => {
+        err.response.data.map((error) => {
+          toast.error(error);
+        });
+      },
+    });
   };
 
   const borderWrapper = (key) => {
@@ -118,20 +123,20 @@ const ValidateUser = ({ isMobile, isTablet }) => {
       default:
         return `none`;
     }
-  }
+  };
 
   const handleBack = () => {
-    router.push("/cotiza-tu-ahorro/diligencia-tus-datos")
-  }
+    router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+  };
 
   const handleContinue = () => {
-    router.push("/cotiza-tu-ahorro/tu-credito")
-  }
+    router.push("/cotiza-tu-ahorro/tu-credito");
+  };
 
   return (
     <Container style={{ background: isMobile && theme.colors.green }}>
       <Header isMobile={isMobile} />
-      <WrapperQuote style={{ height:"calc(100vh - 66px)" }}>
+      <WrapperQuote style={{ height: "calc(100vh - 66px)" }}>
         <Div justify="center" width="100%">
           <Col align="center" width={isMobile ? "312px" : "549px"}>
             <Image alt="phone" src={phoneIcon} />
@@ -153,23 +158,28 @@ const ValidateUser = ({ isMobile, isTablet }) => {
             </Text>
             <Div gap={isMobile ? "18px" : "24px"} m="32px 0 0 0">
               {code.map((ele, indx) => (
-                <WrapperCodeNumber key={indx} style={{ border: borderWrapper(isCodeSuccess) }}>
+                <WrapperCodeNumber
+                  key={indx}
+                  style={{ border: borderWrapper(isCodeSuccess) }}
+                >
                   <InputCode
                     id={ele.id}
                     value={ele.value}
                     onChange={(event) => handleChange(event, indx)}
                     maxLength={1}
-                    style={{ color: isCodeSuccess === false ? theme.colors.error : theme.colors.black }}
+                    style={{
+                      color:
+                        isCodeSuccess === false
+                          ? theme.colors.error
+                          : theme.colors.black,
+                    }}
                   />
                 </WrapperCodeNumber>
               ))}
             </Div>
             {isCodeSuccess === false && (
               <WrapperError>
-                <Text
-                  color={theme.colors.error800}
-                  size={theme.fonts.size.xs}
-                >
+                <Text color={theme.colors.error800} size={theme.fonts.size.xs}>
                   Código incorrecto
                 </Text>
               </WrapperError>
@@ -178,20 +188,29 @@ const ValidateUser = ({ isMobile, isTablet }) => {
               <WrapperReSend>
                 <Text
                   color={theme.colors.green900}
-                  size={isMobile ? theme.fonts.size.xs : theme.fonts.size.default2}
+                  size={
+                    isMobile ? theme.fonts.size.xs : theme.fonts.size.default2
+                  }
                 >
                   Hemos reenviado el código a tu correo
                 </Text>
               </WrapperReSend>
             )}
-            <WrapperCounter style={{ background: showResendButton ? theme.colors.error : theme.colors.primary900 }}>
+            <WrapperCounter
+              style={{
+                background: showResendButton
+                  ? theme.colors.error
+                  : theme.colors.primary900,
+              }}
+            >
               <Image alt="clock" src={clock} />
               <Text
                 color={theme.colors.white}
                 size={theme.fonts.size.ft}
                 weight={theme.fonts.weight.bold}
               >
-                {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+                {Math.floor(timeLeft / 60)}:
+                {String(timeLeft % 60).padStart(2, "0")}
               </Text>
             </WrapperCounter>
 
@@ -225,7 +244,11 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                 height={"40px"}
                 onClick={handleBack}
               >
-                <Image alt="arrow" src={arrowBack} style={{ marginRight: "4px" }} />
+                <Image
+                  alt="arrow"
+                  src={arrowBack}
+                  style={{ marginRight: "4px" }}
+                />
                 {isMobile ? "" : "Atrás"}
               </Button>
               <Button
@@ -249,7 +272,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
         </Div>
       </WrapperQuote>
     </Container>
-  )
-}
+  );
+};
 
 export default ValidateUser;

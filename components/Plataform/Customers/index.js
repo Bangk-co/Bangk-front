@@ -194,6 +194,7 @@ const Customers = ({ isMobile, isTablet }) => {
         pages={paginationArray}
         onPageChange={handleChangeTable}
         handleRow={handleRow}
+        loading={isLoading}
       />
     </Div>
   );

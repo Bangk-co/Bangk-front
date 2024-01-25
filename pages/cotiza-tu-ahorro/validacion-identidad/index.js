@@ -26,9 +26,9 @@ import toast from "react-hot-toast";
 const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
   const router = useRouter();
-  const { val } = router.query || "";
+  const { val } = router.query;
   const [newCode, setNewCode] = useState(null);
-  const successCode = newCode ? decrypt(newCode) : decrypt(val);
+  const successCode = val ? (newCode ? decrypt(newCode) : decrypt(val)) : null;
   const { userInfo } = useSelector((state) => state)?.balance;
   const [code, setCode] = useState([
     { id: "first", value: "" },

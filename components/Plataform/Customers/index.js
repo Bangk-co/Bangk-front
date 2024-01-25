@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useMemo, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import Table from "@/components/Common/Table";
@@ -12,9 +13,11 @@ import {
   formattedPrice,
   renderStateDiv,
 } from "@/utilities/helpers";
+import { setSelectedClientInformation } from "@/store/customers";
 
 const Customers = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [forceUpdate, setForceUpdate] = useState(true);
   const [pages, setPages] = useState({ pageNumber: 1, pageSize: 8 });
@@ -53,6 +56,7 @@ const Customers = ({ isMobile, isTablet }) => {
       pageSize: pages.pageSize,
       searchBy: searchValue,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pages, searchValue]);
 
   const handleChangeTable = (newPage) => {
@@ -124,6 +128,8 @@ const Customers = ({ isMobile, isTablet }) => {
   );
 
   const handleRow = (row) => {
+    console.log("row", row);
+    dispatch(setSelectedClientInformation(row));
     router.push("/plataforma/clientes/cliente");
   };
 

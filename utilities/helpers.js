@@ -64,6 +64,12 @@ export const formattedPrice = (price) => {
   }
 };
 
+export const formattedPhone = (phone) => {
+  return `${String(phone).slice(0, 3)} ${String(phone).slice(3, 6)} ${String(
+    phone
+  ).slice(6)}`;
+};
+
 export const renderStateDiv = (stateName) => {
   let backgroundColor, borderColor, color;
 

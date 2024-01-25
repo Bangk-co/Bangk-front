@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import { Div, Row, Col } from "@/styles/Common";
@@ -10,14 +11,47 @@ import emailIcon from "../../../assets/icons/email.svg";
 import phoneIcon from "../../../assets/icons/phone.svg";
 import calendarIcon from "../../../assets/icons/date_range.svg";
 import profileIcon from "../../../assets/icons/person.svg";
-import { renderStateDiv } from "@/utilities/helpers";
+import {
+  formattedDate,
+  formattedPhone,
+  renderStateDiv,
+} from "@/utilities/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedClientInformation } from "@/store/customers";
+import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { clients } = useSelector((state) => state);
+  console.log("clients", clients?.selectedClient);
+
+  useEffect(() => {
+    //TODO change .name by .id
+    if (!clients?.selectedClient?.name) {
+      router.push("/plataforma/clientes");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clients?.selectedClient]);
+
+  const getClient = useGetClientInfo("00001"); //TODO: add clientId from clients
+  const { data, isLoading, isFetching } = getClient;
+  const [clientInfo, setClientInfo] = useState();
+  useEffect(() => {
+    setClientInfo(data?.data?.clientsInfo);
+  }, [data, isLoading]);
 
   const handleBack = () => {
+    dispatch(setSelectedClientInformation({}));
     router.push("/plataforma/clientes");
   };
+
+  //--TODO delete
+  const num = 1029341241;
+  const phone = 3101234567;
+  const id = "0001";
+  //--
 
   return (
     <Div direction="row" width="100%" gap="32px">
@@ -69,14 +103,14 @@ const Customer = ({ isMobile, isTablet }) => {
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
           >
-            C.C. 1.662.344
+            {`C.C. ${num.toLocaleString()}`}
           </Text>
           <Text
             weight={theme.fonts.weight.regular}
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
           >
-            ID: 1.662.344
+            {`ID: ${id}`}
           </Text>
         </Col>
         <Row gap="8px" align="center" justify="center">
@@ -123,7 +157,7 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              +57 300 456 9857
+              {`+57 ${formattedPhone(phone)}`}
             </Text>
           </Row>
           <Text
@@ -141,7 +175,7 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              24 / 06 / 2022
+              {formattedDate(new Date())}
             </Text>
           </Row>
           <Text

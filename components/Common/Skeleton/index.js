@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton as AntSkeleton } from "antd";
+import { Skeleton as MUISkeleton } from "@mui/material";
 
 import { SkeletonTable } from "./Table";
 
@@ -13,7 +13,7 @@ export const Skeleton = ({
   ...rest
 }) => {
   return (
-    <AntSkeleton
+    <MUISkeleton
       loading={loading}
       active={active}
       round={round}
@@ -22,15 +22,15 @@ export const Skeleton = ({
       {...rest}
     >
       {children}
-    </AntSkeleton>
+    </MUISkeleton>
   );
 };
 
-Skeleton.defaultProps = {
+MUISkeleton.defaultProps = {
   loading: false,
   active: true,
   round: false,
   title: true,
 };
 
-Skeleton.Table = SkeletonTable;
+MUISkeleton.Table = SkeletonTable;

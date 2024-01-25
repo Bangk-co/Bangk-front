@@ -1,7 +1,6 @@
 import React from "react";
-import { Skeleton } from "antd";
-import { Div } from "../../../../styles/Common";
-
+import { Skeleton } from "@mui/material";
+import { Div } from "@/styles/Common";
 export const SkeletonTable = ({ columns, rows }) => {
   return (
     <Div gap={16}>

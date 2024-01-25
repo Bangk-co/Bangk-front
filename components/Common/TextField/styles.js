@@ -13,7 +13,12 @@ export const CustomTextField = styled(TextField)`
     font-size: ${({ size }) => size || theme.fonts.size.sm};
     &.Mui-focused fieldset {
       border: 1px solid
-        ${(props) => (props.error ? theme.colors.red : props.notFocused ? props.border : theme.colors.orange)} !important;
+        ${(props) =>
+          props.error
+            ? theme.colors.red
+            : props.border
+            ? props.border
+            : theme.colors.orange} !important;
     }
     .MuiOutlinedInput-notchedOutline {
       border-color: ${({ border }) => border || theme.colors.gray500};

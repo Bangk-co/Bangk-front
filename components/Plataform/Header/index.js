@@ -40,11 +40,12 @@ const Header = ({ isMobile, isTablet }) => {
             labelColor={theme.colors.green900}
             borderHover={theme.colors.green900}
             border={theme.colors.green900}
-            borderHeigh={"3px"}
+            borderHeight={"3px solid"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.h6}
+            radius={"40px"}
             onClick={handleLogout}
             style={{ width: "30px" }}
           >
@@ -69,11 +70,12 @@ const Header = ({ isMobile, isTablet }) => {
             labelColor={theme.colors.green900}
             borderHover={theme.colors.green900}
             border={theme.colors.green900}
-            borderHeigh={"3px"}
+            borderHeight={"3px solid"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.h6}
+            radius={"40px"}
             onClick={handleLogout}
             startIcon={<Image alt="logo" src={logout} width={16} height={16} />}
             style={{ gap: "8px" }}

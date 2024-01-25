@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useMemo, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Image from "next/image";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import Table from "@/components/Common/Table";
@@ -14,6 +15,9 @@ import {
   renderStateDiv,
 } from "@/utilities/helpers";
 import { setSelectedClientInformation } from "@/store/customers";
+import filterIcon from "../../../assets/icons/filter.svg";
+import searchIcon from "../../../assets/icons/search.svg";
+import { TextField } from "@/components/Common/TextField";
 
 const Customers = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -31,6 +35,11 @@ const Customers = ({ isMobile, isTablet }) => {
     pageSize: pages.pageSize,
     searchBy: searchValue,
   });
+
+  const handleChangeSearch = (event) => {
+    const { value } = event.target;
+    setSearchText(value);
+  };
 
   function calculatePages(pageSize, totalItems) {
     const totalPages = Math.ceil(totalItems / pageSize);
@@ -135,10 +144,48 @@ const Customers = ({ isMobile, isTablet }) => {
 
   return (
     <Div direction="column" width="100%">
-      <Row m="0 0 37px 0">
+      <Row
+        m="0 0 37px 0"
+        gap="16px"
+        width="100%"
+        align="center"
+        justify="space-between"
+      >
         <Text weight={theme.fonts.weight.bold} size={theme.fonts.size.h2}>
           Clientes
         </Text>
+        <Row gap="8px" align="center">
+          <Image
+            alt="filter"
+            src={filterIcon}
+            width={16}
+            height={16}
+            onClick={() => {}}
+            style={{ cursor: "pointer" }}
+          />
+          <Text
+            weight={theme.fonts.weight.semibold}
+            size={theme.fonts.size.default2}
+            color={theme.colors.neutralGray900}
+          >
+            Filtros
+          </Text>
+          <Row m="0 0 0 34px">
+            <TextField
+              placeholder={"Buscar por palabra clave"}
+              id="search"
+              radius="4px"
+              width="236px"
+              height="40px"
+              border={theme.colors.neutralGray200}
+              font={theme.fonts.family.primary}
+              prefixIcon={
+                <Image alt="search" src={searchIcon} width={12} height={12} />
+              }
+              onChange={handleChangeSearch}
+            />
+          </Row>
+        </Row>
       </Row>
       <Table
         columns={tableColumns}

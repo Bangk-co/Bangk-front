@@ -76,10 +76,13 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   }, [code]);
 
   const hideEmailUsername = (email) => {
-    const [username, domain] = email.split("@");
-    const hiddenUsername =
-      username.slice(0, 1) + "*".repeat(username.length - 1);
-    return `${hiddenUsername}@${domain}`;
+    if (email) {
+      const [username, domain] = email.split("@");
+      const hiddenUsername =
+        username.slice(0, 1) + "*".repeat(username.length - 1);
+      return `${hiddenUsername}@${domain}`;
+    }
+    return "";
   };
 
   const email = hideEmailUsername(userInfo.email);

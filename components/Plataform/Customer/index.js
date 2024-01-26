@@ -6,6 +6,7 @@ import { Text } from "@/styles/Common";
 import { Div, Row, Col } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
+import DrawerEditClient from "./DrawerEditClient";
 import backIcon from "../../../assets/icons/arrow-back-green.svg";
 import emailIcon from "../../../assets/icons/email.svg";
 import phoneIcon from "../../../assets/icons/phone.svg";
@@ -23,12 +24,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedClientInformation } from "@/store/customers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useGetCountries from "@/hooks/Common/useGetIndicatives";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { clients } = useSelector((state) => state);
+
+  const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
     //TODO change .name by .id
@@ -47,13 +52,50 @@ const Customer = ({ isMobile, isTablet }) => {
     }
   }, [data, isLoading]);
 
+  const documentType = useGetDocumentType();
+  const { data: dataDocTypes, isSuccess: isSuccessDocTypes } = documentType;
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessDocTypes && dataDocTypes?.data?.groupSettings.length > 0)
+      setDocumentTypeOptions(
+        dataDocTypes?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [dataDocTypes, isSuccessDocTypes]);
+
+  const indicatives = useGetCountries();
+  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
+    indicatives;
+  const [indicativesOptions, setIndicativesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessIndicatives && dataIndicatives?.data?.groupSettings.length > 0)
+      setIndicativesOptions(
+        dataIndicatives?.data?.groupSettings.map((ele) => ({
+          label: `(${ele.code})`,
+          value: ele.id,
+        }))
+      );
+  }, [dataIndicatives, isSuccessIndicatives]);
+
   const handleBack = () => {
     dispatch(setSelectedClientInformation({}));
     router.push("/plataforma/clientes");
   };
 
+  const handleCloseDrawer = () => {
+    setShowDrawer(false);
+  };
+
   return (
     <Div direction="row" width="100%" gap="32px">
+      <DrawerEditClient
+        showDrawer={showDrawer}
+        closeDrawer={handleCloseDrawer}
+        documentTypeOptions={documentTypeOptions}
+        indicativesOptions={indicativesOptions}
+      />
       <Col gap="24px" width="275px">
         <Row gap="8px" align="center">
           <Button
@@ -221,7 +263,7 @@ const Customer = ({ isMobile, isTablet }) => {
           </Row>
         </Col>
         <Link
-          /* onClick={handleOpenDrawer} */
+          onClick={() => setShowDrawer(true)}
           hover={theme.colors.gray100}
           color={theme.colors.green900}
           font={theme.fonts.family.primary}

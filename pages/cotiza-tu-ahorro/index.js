@@ -7,19 +7,23 @@ import Image from "next/image";
 import femaleIcon from "@/assets/icons/female.svg"
 import maleIcon from "@/assets/icons/male.svg"
 import { useDispatch, useSelector } from "react-redux";
-import { setInitData } from "@/store/balance";
+import { resetInitData, setInitData } from "@/store/balance";
 import { useRouter } from "next/router";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
 import { wappLink } from "@/utilities/options";
 import { BackButton } from "@/components/Quote/BackButton.js";
 import { ImageCol } from "@/components/Quote/ImageCol";
 import { InitForm } from "@/components/Quote/InitForm";
+import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 
 
 const Quote = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const genders = useGetGenders()
+  const { data, isSuccess } = genders
   const { initData } = useSelector((state) => state)?.balance
+  const [genderOptions, setGenderOptions] = useState([])
   const [isHovered, setIsHovered] = useState(false);
   const [errorDate, setErrorDate] = useState(false)
   const [formInfo, setFormInfo] = useState({
@@ -32,10 +36,14 @@ const Quote = ({ isMobile, isTablet }) => {
     setFormInfo(initData)
   }, [initData])
 
-  const genderButtons = [
-    { icon: femaleIcon, label: "Femenino", value: "female" },
-    { icon: maleIcon, label: "Masculino", value: "male" }
-  ]
+  useEffect(() => {
+    if (isSuccess && data?.data?.groupSettings.length > 0)
+      setGenderOptions(data?.data?.groupSettings.map((ele) => ({
+        label: ele.name,
+        value: ele.id,
+        icon: ele.name === "Femenino" ? femaleIcon : maleIcon
+      })))
+  }, [data, isSuccess])
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -103,7 +111,7 @@ const Quote = ({ isMobile, isTablet }) => {
             handleNext={handleNext}
             handleWapp={handleWapp}
             errorDate={errorDate}
-            genderButtons={genderButtons}
+            genderButtons={genderOptions}
             emptyValidation={emptyValidation}
           />
         </Div>

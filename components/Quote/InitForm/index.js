@@ -141,6 +141,7 @@ export const InitForm = ({
 
       <Div m={isMobile ? "8px 0 0 0" : "52px 0 0 0"} justify="center">
         <Button
+          font={"Gilroy Bold"}
           mobileWidth={"100%"}
           width={"300px"}
           height={"40px"}

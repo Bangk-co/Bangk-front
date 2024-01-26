@@ -51,8 +51,8 @@ const Sale = ({ isMobile, isTablet }) => {
   };
 
   const gender = {
-    female: "Femenino",
-    male: "Masculino"
+    108: "Femenino",
+    107: "Masculino"
   }
 
   const info = [

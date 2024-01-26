@@ -17,6 +17,7 @@ export const Button = ({
   borderHeight,
   mobileWidth,
   onClick,
+  font,
   ...rest
 }) => {
   return (
@@ -35,6 +36,7 @@ export const Button = ({
       borderHeight={borderHeight}
       mobileWidth={mobileWidth}
       onClick={onClick}
+      font={font}
       {...rest}
     >
       {children}

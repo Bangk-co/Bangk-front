@@ -248,13 +248,13 @@ export const UserForm = ({
       )}
       <Div m="46px 0 0 0" justify="space-between">
         <Button
+          font={"Gilroy Bold"}
           background={theme.colors.green900}
           border={theme.colors.yellow500}
           hover={theme.colors.terciary50}
           borderHover={theme.colors.yellow500}
           colorHover={theme.colors.green900}
           labelColor={theme.colors.yellow500}
-          labelWeight={theme.fonts.weight.bold}
           size={theme.fonts.size.default2}
           borderHeight={"3px solid"}
           width={"113px"}
@@ -266,11 +266,11 @@ export const UserForm = ({
           {isMobile ? "" : "Atrás"}
         </Button>
         <Button
+          font={"Gilroy Bold"}
           background={theme.colors.yellow500}
           hover={theme.colors.yellow500}
           borderHover={theme.colors.yellow500}
           labelColor={theme.colors.green900}
-          labelWeight={theme.fonts.weight.bold}
           size={theme.fonts.size.default2}
           width={"300px"}
           mobileWidth={"224px"}

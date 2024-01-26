@@ -51,6 +51,7 @@ export const InitForm = ({
         Diligencia los siguientes datos
       </Text>
       <TextField
+        type="number"
         placeholder={"Ingresa el saldo del credito"}
         id="balance"
         radius="4px"
@@ -70,7 +71,11 @@ export const InitForm = ({
           <Image alt="pesos" src={pesosIcon} width={16} height={16} />
         }
         onChange={handleChange}
-        value={numberFormat(formInfo.balance)}
+        value={formInfo.balance}
+        inputProps={{
+          pattern: "\\d*",
+          inputMode: "numeric"
+        }}
       />
       <Text
         size={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}

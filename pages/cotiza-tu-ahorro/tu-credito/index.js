@@ -8,11 +8,14 @@ import { BackButton } from "@/components/Quote/BackButton.js";
 import { CreditForm } from "@/components/Quote/CreditForm";
 import useGetBanks from "@/hooks/Common/useGetBanks";
 import useGetCreditType from "@/hooks/Common/useGetCreditType";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import useCreateClient from "@/hooks/QuoteSavings/useCreateUser";
+import { resetInitData } from "@/store/balance";
+import toast from "react-hot-toast";
 
 const CreditData = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch()
   const router = useRouter()
   const create = useCreateClient()
   const { userInfo, initData, termsDate } = useSelector((state) => state)?.balance
@@ -23,6 +26,8 @@ const CreditData = ({ isMobile, isTablet }) => {
   const { data: dataCT, isSuccess: isSuccessCT} = creditTypeList
   const [banksOptions, setBanksOptions] = useState([])
   const [creditTypeOptions, setCreditTypeOptions] = useState([])
+  const [errorFile, setErrorFile] = useState({})
+  const [forceUpdate, setForceUpdate] = useState(false)
   const [creditInfo, setCreditInfo] = useState({
     bankId: null,
     loanTypeId: null,
@@ -59,22 +64,44 @@ const CreditData = ({ isMobile, isTablet }) => {
     const { id, value } = event.target;
     const newInfo = { ...creditInfo }
 
-    newInfo[id] = value.replace(/\D/g, '');
+    newInfo[id] = value
     setCreditInfo(newInfo)
   }
 
-  const handleFile = (event, id) => {
-    const { files } = event.target
-    const newInfo = { ...creditInfo }
+  const optionsTypeFile = [
+    "application/pdf",
+    "image/png",
+    "image/jpg"
+  ]
 
-    newInfo[id] = files[0]
+  const maxSize = 3000000
+
+  const handleFile = (file, id) => {
+    const newInfo = { ...creditInfo }
+    const newErrorFile = { ...errorFile };
+
+    if (file?.type && file?.size) {
+      if (optionsTypeFile.includes(file.type) && file.size < maxSize) {
+        newInfo[id] = file
+        newErrorFile[id] = false;
+      } else {
+        newInfo[id] = null
+        setErrorFile(true)
+        newErrorFile[id] = true;
+      }
+    } else {
+      newInfo[id] = null
+    }
+
     setCreditInfo(newInfo)
+    setErrorFile(newErrorFile);
   }
 
   const handleDelete = (id) => {
     const newInfo = { ...creditInfo }
-    newInfo[id] === null
+    newInfo[id] = null
     setCreditInfo(newInfo)
+    setForceUpdate(!forceUpdate)
   }
 
   const handleBack = () => {
@@ -87,7 +114,8 @@ const CreditData = ({ isMobile, isTablet }) => {
       { ...userInfo, ...creditInfo, ...initData, termsDate: termsDate },
       {
         onSuccess: (res) => {
-          console.log("Todu bem")
+          dispatch(resetInitData())
+          router.push("/cotiza-tu-ahorro/creacion-exitosa")
         },
         onError: (err) => {
           err.response.data.map((error) => {
@@ -119,6 +147,8 @@ const CreditData = ({ isMobile, isTablet }) => {
             handleFile={handleFile}
             handleDelete={handleDelete}
             handleCreate={handleCreate}
+            errorFile={errorFile}
+            loading={create.isLoading}
           />
         </Div>
       </WrapperQuote>

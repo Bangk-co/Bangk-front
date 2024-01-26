@@ -27,6 +27,7 @@ export const theme = {
     terciary50: "#FFFBEE",
     secondary: "#FD6700",
     error: "#DB3B21",
+    error100: "#F8D8D3",
     error300: "#ED9D90",
     error800: "#6D1D10"
   },

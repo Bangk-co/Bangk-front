@@ -48,7 +48,7 @@ const Quote = ({ isMobile, isTablet }) => {
   const handleChange = (event) => {
     const { id, value } = event.target;
 
-    const newValue = value.replace(/\D/g, '');
+    const newValue = value
     if (newValue === '' || parseInt(newValue, 10) <= 5000000000) {
       setFormInfo((prevFormInfo) => ({
         ...prevFormInfo,

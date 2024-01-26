@@ -155,6 +155,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
               {code.map((ele, indx) => (
                 <WrapperCodeNumber key={indx} style={{ border: borderWrapper(isCodeSuccess) }}>
                   <InputCode
+                    type="number"
+                    pattern= "\\d*"
+                    inputMode= "numeric"
                     id={ele.id}
                     value={ele.value}
                     onChange={(event) => handleChange(event, indx)}

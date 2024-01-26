@@ -2,7 +2,7 @@ import React from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Col, Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, LinearProgress, MenuItem } from "@mui/material";
 import Image from "next/image";
 import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
@@ -20,7 +20,9 @@ export const CreditForm = ({
     handleBack,
     handleFile,
     handleDelete,
-    handleCreate
+    handleCreate,
+    errorFile,
+    loading,
   }) => {
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "");
 
@@ -130,6 +132,7 @@ export const CreditForm = ({
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
+            type="number"
             label={"Número de tu crédito*"}
             width={"100%"}
             placeholder={"Escribe el número"}
@@ -147,7 +150,11 @@ export const CreditForm = ({
             id="loanNumber"
             value={creditInfo.loanNumber}
             onChange={handleChange}
-            inputProps={{ maxLength: 30 }}
+            inputProps={{
+              maxLength: 30,
+              pattern: "\\d*",
+              inputMode: "numeric"
+            }}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -166,15 +173,16 @@ export const CreditForm = ({
             labelColor={theme.colors.white}
             labelFont={"Gilroy"}
             labelWeight={theme.fonts.weight.medium}
-            helper={"Archivo en .PDF, .PNG, o .JPEG"}
+            helper={"Archivo en .PDF, .PNG, o .JPG"}
             helperColor={theme.colors.white}
             id={"bankStatementFile"}
             value={creditInfo.bankStatementFile}
             handleFile={handleFile}
             handleDelete={handleDelete}
+            errorFile={errorFile}
           />
         </Grid>
-        <Grid item md={12} xs={12}>
+        <Grid direction={"column"} item md={12} xs={12}>
           <UploadButton
             isMobile={isMobile}
             label={"Documento de identidad*"}
@@ -182,12 +190,13 @@ export const CreditForm = ({
             labelColor={theme.colors.white}
             labelFont={"Gilroy"}
             labelWeight={theme.fonts.weight.medium}
-            helper={"Archivo en .PDF, .PNG, o .JPEG"}
+            helper={"Archivo en .PDF, .PNG, o .JPG"}
             helperColor={theme.colors.white}
             id={"identificationFile"}
             value={creditInfo.identificationFile}
             handleFile={handleFile}
             handleDelete={handleDelete}
+            errorFile={errorFile}
           />
         </Grid>
       </Grid>
@@ -222,7 +231,7 @@ export const CreditForm = ({
           height={"40px"}
           radius={"40px"}
           onClick={handleCreate}
-          disabled={!isFormValid}
+          disabled={!isFormValid || loading}
         >
           Continuar
         </Button>

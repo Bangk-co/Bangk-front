@@ -84,6 +84,7 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
           <TextField
+            type={formInfo.documentType === 78 ? "text" : "number"}
             label={"Número de documento"}
             width={"100%"}
             placeholder={"Escribir"}
@@ -101,7 +102,11 @@ export const UserForm = ({
             id="identificationNumber"
             value={formInfo.identificationNumber}
             onChange={handleChange}
-            inputProps={{ maxLength: 15 }}
+            inputProps={{
+              maxLength: 15,
+              pattern: formInfo.documentType !== 78 && "\\d*",
+              inputMode: formInfo.documentType !== 78 && "numeric"
+            }}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -175,6 +180,7 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8}>
           <TextField
+            type="number"
             label={"Número de telefono*"}
             width={"100%"}
             placeholder={"Escribir"}
@@ -192,7 +198,11 @@ export const UserForm = ({
             id="phone"
             value={formInfo.phone}
             onChange={handleChange}
-            inputProps={{ maxLength: 10 }}
+            inputProps={{
+              maxLength: 10,
+              pattern: "\\d*",
+              inputMode: "numeric"
+            }}
           />
         </Grid>
         <Grid item md={12} xs={12}>

@@ -117,7 +117,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
 
       <Div m="46px 0 0 0" justify="space-between">
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           background={theme.colors.green900}
           border={theme.colors.yellow500}
           hover={theme.colors.terciary50}
@@ -135,7 +135,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
           {isMobile ? "" : "Atrás"}
         </Button>
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           background={theme.colors.yellow500}
           hover={theme.colors.yellow500}
           borderHover={theme.colors.yellow500}

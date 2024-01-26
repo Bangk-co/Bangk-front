@@ -13,7 +13,7 @@ import {
 } from "@/styles/Quote";
 import phoneIcon from "@/assets/icons/phone-code.svg";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { decrypt } from "@/utilities/helpers";
 import clock from "@/assets/icons/clock.svg";
@@ -22,14 +22,14 @@ import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import toast from "react-hot-toast";
+import { setValidCode } from "@/store/balance";
 
 const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
   const router = useRouter();
-  const { val } = router.query;
-  const [newCode, setNewCode] = useState(null);
-  const successCode = val ? (newCode ? decrypt(newCode) : decrypt(val)) : null;
-  const { userInfo } = useSelector((state) => state)?.balance;
+  const dispatch = useDispatch()
+  const { userInfo, validCode } = useSelector((state) => state)?.balance;
+  const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
     { id: "first", value: "" },
     { id: "second", value: "" },
@@ -91,7 +91,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     const { value } = event.target;
     const newCode = [...code];
 
-    newCode[indx].value = value;
+    newCode[indx].value = value.replace(/\D/g, '');
     setCode(newCode);
     setIsCodeSuccess(null);
     setIsResend(false);
@@ -102,7 +102,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     reSendCode.reset();
     reSendCode.mutate(userInfo.email, {
       onSuccess: (res) => {
-        setNewCode(res.data.code);
+        dispatch(setValidCode(res.data.code))
         setIsCodeSuccess(null);
         setIsResend(true);
         setTimeLeft(180);
@@ -166,9 +166,8 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                   style={{ border: borderWrapper(isCodeSuccess) }}
                 >
                   <InputCode
-                    type="number"
-                    pattern= "\\d*"
-                    inputMode= "numeric"
+                    pattern="\d"
+                    inputMode="numeric"
                     id={ele.id}
                     value={ele.value}
                     onChange={(event) => handleChange(event, indx)}

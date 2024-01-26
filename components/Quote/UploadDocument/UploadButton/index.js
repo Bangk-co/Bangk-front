@@ -22,7 +22,7 @@ export const UploadYellowButton = ({ handleFile, id }) => {
           onChange={(event) => handleFile(event, id)}
         />
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           background={theme.colors.yellow500}
           hover={theme.colors.yellow500}
           border={theme.colors.yellow500}

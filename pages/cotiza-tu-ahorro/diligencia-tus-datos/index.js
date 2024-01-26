@@ -12,7 +12,7 @@ import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { setTermsDate, setUserInfo } from "@/store/balance";
+import { setTermsDate, setUserInfo, setValidCode } from "@/store/balance";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import toast from "react-hot-toast";
 
@@ -73,17 +73,6 @@ const UserData = ({ isMobile, isTablet }) => {
     const { id, value } = event.target;
     const newInfo = { ...formInfo }
 
-    // if (id === "identificationNumber") {
-    //   if (formInfo.documentType === 76 || formInfo.documentType === 77) {
-    //     newInfo[id] = value.replace(/\D/g, '');
-    //   } else {
-    //     newInfo[id] = value;
-    //   }
-    // } else if (id === "phone") {
-    //   newInfo[id] = value.replace(/\D/g, '');
-    // } else {
-
-    // }
     newInfo[id] = value
     setFormInfo(newInfo)
   }
@@ -125,7 +114,8 @@ const UserData = ({ isMobile, isTablet }) => {
       { email: formInfo.email, identificationNumber: formInfo.identificationNumber },
       {
         onSuccess: (res) => {
-          router.push(`/cotiza-tu-ahorro/validacion-identidad?val=${res.data.code}`);
+          dispatch(setValidCode(res.data.code))
+          router.push(`/cotiza-tu-ahorro/validacion-identidad`);
         },
         onError: (err) => {
           err.response.data.map((error) => {

@@ -5,6 +5,7 @@ import { theme } from "../../../styles/theme";
 export const CustomButton = styled(Button)`
   && {
     width: ${({ width }) => width || "163px"};
+    min-width: ${({ width }) => width || "50px"};
     height: ${({ height }) => height || "48px"};
     background: ${({ background }) => background || theme.colors.gray300} 0% 0%
       no-repeat padding-box;
@@ -12,7 +13,8 @@ export const CustomButton = styled(Button)`
     color: ${({ labelColor }) => labelColor || theme.colors.white};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.md};
-    font-weight: ${({ labelWeight }) => labelWeight || theme.fonts.weight.semibold};
+    font-weight: ${({ labelWeight }) =>
+      labelWeight || theme.fonts.weight.semibold};
     border: ${({ borderHeight }) => borderHeight || "1px solid"};
     border-color: ${({ border }) => border || theme.colors.gray300};
     text-align: center;
@@ -21,7 +23,8 @@ export const CustomButton = styled(Button)`
     text-transform: none;
 
     &:hover {
-      background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat padding-box;
+      background: ${({ hover }) => hover || theme.colors.orange} 0% 0% no-repeat
+        padding-box;
       border-color: ${({ borderHover }) => borderHover || theme.colors.orange};
       color: ${({ colorHover }) => colorHover};
       cursor: pointer;

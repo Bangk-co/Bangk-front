@@ -12,10 +12,9 @@ import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from "@/store/balance";
+import { setTermsDate, setUserInfo } from "@/store/balance";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import toast from "react-hot-toast";
-
 
 const UserData = ({ isMobile, isTablet }) => {
   const router = useRouter()
@@ -74,24 +73,27 @@ const UserData = ({ isMobile, isTablet }) => {
     const { id, value } = event.target;
     const newInfo = { ...formInfo }
 
-    if (id === "identificationNumber") {
-      if (formInfo.documentType === 76 || formInfo.documentType === 77) {
-        newInfo[id] = value.replace(/\D/g, '');
-      } else {
-        newInfo[id] = value;
-      }
-    } else if (id === "phone") {
-      newInfo[id] = value.replace(/\D/g, '');
-    } else {
-      newInfo[id] = value
-    }
+    // if (id === "identificationNumber") {
+    //   if (formInfo.documentType === 76 || formInfo.documentType === 77) {
+    //     newInfo[id] = value.replace(/\D/g, '');
+    //   } else {
+    //     newInfo[id] = value;
+    //   }
+    // } else if (id === "phone") {
+    //   newInfo[id] = value.replace(/\D/g, '');
+    // } else {
 
+    // }
+    newInfo[id] = value
     setFormInfo(newInfo)
   }
 
   const handleTerms = (event) => {
     const { checked } = event.target
+    const currentDate = new Date()
+
     setTerms(checked)
+    dispatch(setTermsDate(currentDate))
   }
 
   const handleWapp = () => {

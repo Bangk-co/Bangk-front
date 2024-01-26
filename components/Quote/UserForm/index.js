@@ -84,6 +84,7 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
           <TextField
+            type={formInfo.documentType === 78 ? "text" : "number"}
             label={"Número de documento"}
             width={"100%"}
             placeholder={"Escribir"}
@@ -101,7 +102,11 @@ export const UserForm = ({
             id="identificationNumber"
             value={formInfo.identificationNumber}
             onChange={handleChange}
-            inputProps={{ maxLength: 15 }}
+            inputProps={{
+              maxLength: 15,
+              pattern: formInfo.documentType !== 78 && "\\d*",
+              inputMode: formInfo.documentType !== 78 && "numeric"
+            }}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -175,6 +180,7 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8}>
           <TextField
+            type="number"
             label={"Número de telefono*"}
             width={"100%"}
             placeholder={"Escribir"}
@@ -192,7 +198,11 @@ export const UserForm = ({
             id="phone"
             value={formInfo.phone}
             onChange={handleChange}
-            inputProps={{ maxLength: 10 }}
+            inputProps={{
+              maxLength: 10,
+              pattern: "\\d*",
+              inputMode: "numeric"
+            }}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -248,13 +258,13 @@ export const UserForm = ({
       )}
       <Div m="46px 0 0 0" justify="space-between">
         <Button
+          font={"Gilroy Bold"}
           background={theme.colors.green900}
           border={theme.colors.yellow500}
           hover={theme.colors.terciary50}
           borderHover={theme.colors.yellow500}
           colorHover={theme.colors.green900}
           labelColor={theme.colors.yellow500}
-          labelWeight={theme.fonts.weight.bold}
           size={theme.fonts.size.default2}
           borderHeight={"3px solid"}
           width={"113px"}
@@ -266,11 +276,11 @@ export const UserForm = ({
           {isMobile ? "" : "Atrás"}
         </Button>
         <Button
+          font={"Gilroy Bold"}
           background={theme.colors.yellow500}
           hover={theme.colors.yellow500}
           borderHover={theme.colors.yellow500}
           labelColor={theme.colors.green900}
-          labelWeight={theme.fonts.weight.bold}
           size={theme.fonts.size.default2}
           width={"300px"}
           mobileWidth={"224px"}

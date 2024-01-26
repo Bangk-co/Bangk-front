@@ -43,7 +43,7 @@ const CreationSuceess = ({ isMobile }) => {
               Pronto te notificaremos a tu correo para que conozcas tu cotización y los ahorros que puedes lograr con Bangk
             </Text>
             <Button
-              font={"Gilroy Bold"}
+              font={theme.fonts.family.primaryBold}
               background={theme.colors.yellow500}
               hover={theme.colors.yellow500}
               borderHover={theme.colors.yellow500}

@@ -202,7 +202,7 @@ export const CreditForm = ({
       </Grid>
       <Div m="46px 0 0 0" justify="space-between">
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           background={theme.colors.green900}
           border={theme.colors.yellow500}
           hover={theme.colors.terciary50}
@@ -220,7 +220,7 @@ export const CreditForm = ({
           {isMobile ? "" : "Atrás"}
         </Button>
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           background={theme.colors.yellow500}
           hover={theme.colors.yellow500}
           borderHover={theme.colors.yellow500}

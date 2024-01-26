@@ -40,11 +40,19 @@ export const decrypt = (encryptedMessage) => {
 };
 
 export const numberFormat = (value) => {
-  if (value !== "") {
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  if (value !== "" && typeof value === "number") {
+    const newValue = value.toString()
+    return newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
-  return null;
-};
+  return ""
+}
+
+export const numberFormatText = (value) => {
+  if (value !== "") {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  }
+  return null
+}
 
 export const formattedDate = (date) => {
   return new Date(date).toLocaleDateString("es-ES", {

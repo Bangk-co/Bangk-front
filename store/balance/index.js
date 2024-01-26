@@ -18,6 +18,7 @@ export const slice = createSlice({
       email: "",
     },
     termsDate: null,
+    validCode: null,
   },
   reducers: {
     resetInitData: (state) => {
@@ -38,6 +39,7 @@ export const slice = createSlice({
           email: "",
         },
         termsDate: null,
+        validCode: null,
       };
     },
     setInitData: (state, action) => {
@@ -58,6 +60,12 @@ export const slice = createSlice({
         termsDate: action.payload
       };
     },
+    setValidCode: (state, action) => {
+      return {
+        ...state,
+        validCode: action.payload
+      };
+    },
   },
 });
 
@@ -67,6 +75,7 @@ export const {
   resetInitData,
   setInitData,
   setUserInfo,
-  setTermsDate
+  setTermsDate,
+  setValidCode
 } = slice.actions;
 

@@ -2,13 +2,13 @@ import React from "react";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { TextField } from "@/components/Common/TextField";
 import { Col, Div, Row, Text } from "@/styles/Common";
-import { CardButton, WrapperFooter, WrapperWapp } from "@/styles/Quote";
+import { CardButton, WrapperWapp } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
-import { numberFormat } from "@/utilities/helpers";
 import Image from "next/image";
 import pesosIcon from "@/assets/icons/pesos.svg"
 import { Button } from "@/components/Common/Button";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
+import { numberFormat } from "@/utilities/helpers";
 
 export const InitForm = ({
     isMobile,
@@ -51,8 +51,7 @@ export const InitForm = ({
         Diligencia los siguientes datos
       </Text>
       <TextField
-        type="number"
-        placeholder={"Ingresa el saldo del credito"}
+        placeholder={"Ingresa el saldo del crédito"}
         id="balance"
         radius="4px"
         width="100%"
@@ -67,14 +66,12 @@ export const InitForm = ({
         border={theme.colors.primary25}
         notFocused={true}
         placeholderColor={theme.colors.neutralGray500}
-        prefixIcon={
-          <Image alt="pesos" src={pesosIcon} width={16} height={16} />
-        }
+        prefixIcon={<Image alt="pesos" src={pesosIcon} width={16} height={16} />}
         onChange={handleChange}
-        value={formInfo.balance}
+        value={formInfo.balance === "" ? "" : numberFormat(Number(formInfo.balance))}
         inputProps={{
           pattern: "\\d*",
-          inputMode: "numeric"
+          inputMode: "numeric",
         }}
       />
       <Text
@@ -146,7 +143,7 @@ export const InitForm = ({
 
       <Div m={isMobile ? "8px 0 0 0" : "52px 0 0 0"} justify="center">
         <Button
-          font={"Gilroy Bold"}
+          font={theme.fonts.family.primaryBold}
           mobileWidth={"100%"}
           width={"300px"}
           height={"40px"}

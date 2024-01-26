@@ -12,7 +12,7 @@ import { BackButton } from "@/components/Quote/BackButton.js";
 import { ImageCol } from "@/components/Quote/ImageCol";
 import { Calculator } from "@/components/Quote/Calculator";
 import { useSelector } from "react-redux";
-import { numberFormat } from "@/utilities/helpers";
+import { numberFormat, numberFormatText } from "@/utilities/helpers";
 import useGetInsuranceValues from "@/hooks/QuoteSavings/useGetInsuranceValues";
 
 const Sale = ({ isMobile, isTablet }) => {
@@ -56,7 +56,7 @@ const Sale = ({ isMobile, isTablet }) => {
   }
 
   const info = [
-    { label: "Saldo del crédito:", value: `$ ${numberFormat(formInfo?.balance)} COP` },
+    { label: "Saldo del crédito:", value: `$ ${numberFormatText(formInfo?.balance)} COP` },
     { label: "Fecha de nacimiento:", value: formatBirthdate(formInfo?.birthdate) },
     { label: "Genero", value: gender[formInfo?.gender] }
   ]
@@ -71,8 +71,8 @@ const Sale = ({ isMobile, isTablet }) => {
   const insuranceAnnualFinal = insuranceAnnual % 1 !== 0 ? insuranceAnnual.toFixed(2).toString() : insuranceAnnual.toString()
 
   const insurance = [
-    { key: 1, label: "Seguro Mensual", value: `$ ${numberFormat(insuranceMonthlyFinal)}` },
-    { key: 2, label: "Seguro Anual*", value: `$ ${numberFormat(insuranceAnnualFinal)}` }
+    { key: 1, label: "Seguro Mensual", value: `$ ${numberFormatText(insuranceMonthlyFinal)}` },
+    { key: 2, label: "Seguro Anual*", value: `$ ${numberFormatText(insuranceAnnualFinal)}` }
   ]
 
   const handleBack = () => {

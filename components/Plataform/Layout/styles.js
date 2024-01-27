@@ -4,21 +4,21 @@ import { theme } from "../../../styles/theme";
 export const WrapperLayout = styled.div`
   display: flex;
   width: 100%;
-  height: 952px;
-  overflow-y: hidden;
+  height: 100vh;
+  min-height: 952px;
   overflow-x: hidden;
   flex-direction: column;
 `;
 
 export const WrapperContent = styled.div`
   display: flex;
-  height: 100%;
+  flex: 1;
   width: 100%;
   background: ${theme.colors.white} 0% 0% no-repeat padding-box;
   opacity: 1;
   box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.06);
-  position: relative;
-  min-height: 100vh;
+  min-height: 952px;
+  height: 100%;
 `;
 
 export const Sider = styled.div`
@@ -31,9 +31,6 @@ export const Sider = styled.div`
   width: 150px;
   background: ${theme.colors.green900} 0% 0% no-repeat padding-box;
   border-radius: 0px 8px 8px 0px;
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
 `;
 
 export const Content = styled.div`
@@ -45,4 +42,9 @@ export const Content = styled.div`
   background: ${theme.colors.white} 0% 0% no-repeat padding-box;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   justify-content: center;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 `;

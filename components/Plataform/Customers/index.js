@@ -6,7 +6,6 @@ import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import Table from "@/components/Common/Table";
 import { Div, Row } from "@/styles/Common";
-import { Link } from "@/components/Common/Link";
 import useGetClients from "@/hooks/Customers/useGetClients";
 import useDebounce from "@/hooks/useDebounce";
 import {
@@ -137,7 +136,6 @@ const Customers = ({ isMobile, isTablet }) => {
   );
 
   const handleRow = (row) => {
-    console.log("row", row);
     dispatch(setSelectedClientInformation(row));
     router.push("/plataforma/clientes/cliente");
   };

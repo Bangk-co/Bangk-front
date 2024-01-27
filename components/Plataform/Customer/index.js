@@ -5,12 +5,17 @@ import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import { Div, Row, Col } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
+import { Link } from "@/components/Common/Link";
+import DrawerEditClient from "./DrawerEditClient";
 import backIcon from "../../../assets/icons/arrow-back-green.svg";
-import accountIcon from "../../../assets/icons/account.svg";
 import emailIcon from "../../../assets/icons/email.svg";
 import phoneIcon from "../../../assets/icons/phone.svg";
 import calendarIcon from "../../../assets/icons/date_range.svg";
 import profileIcon from "../../../assets/icons/person.svg";
+import editIcon from "../../../assets/icons/edit.svg";
+import maleProfile from "../../../assets/img/maleProfile.png";
+import femaleProfile from "../../../assets/img/femaleProfile.png";
+
 import {
   formattedDate,
   formattedPhone,
@@ -19,42 +24,150 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedClientInformation } from "@/store/customers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useGetCountries from "@/hooks/Common/useGetIndicatives";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { clients } = useSelector((state) => state);
-  console.log("clients", clients?.selectedClient);
+
+  const initialError = {
+    name: {
+      error: false,
+      message: "",
+    },
+    lastName: {
+      error: false,
+      message: "",
+    },
+    documentType: {
+      error: false,
+      message: "",
+    },
+    identificationNumber: {
+      error: false,
+      message: "",
+    },
+    countryCode: {
+      error: false,
+      message: "",
+    },
+    phoneNumber: {
+      error: false,
+      message: "",
+    },
+    birthDate: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorForm, setErrorForm] = useState(initialError);
+
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [actualInfo, setActualInfo] = useState(initialValues);
 
   useEffect(() => {
-    //TODO change .name by .id
-    if (!clients?.selectedClient?.name) {
+    if (!clients?.selectedClient?.idClient) {
       router.push("/plataforma/clientes");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clients?.selectedClient]);
 
-  const getClient = useGetClientInfo("00001"); //TODO: add clientId from clients
+  const getClient = useGetClientInfo(clients?.selectedClient?.idClient);
   const { data, isLoading, isFetching } = getClient;
   const [clientInfo, setClientInfo] = useState();
   useEffect(() => {
-    setClientInfo(data?.data?.clientsInfo);
+    if (data?.data?.clientsInfo.length > 0) {
+      setClientInfo(data?.data?.clientsInfo[0]);
+    }
   }, [data, isLoading]);
+
+  const documentType = useGetDocumentType();
+  const { data: dataDocTypes, isSuccess: isSuccessDocTypes } = documentType;
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessDocTypes && dataDocTypes?.data?.groupSettings.length > 0)
+      setDocumentTypeOptions(
+        dataDocTypes?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [dataDocTypes, isSuccessDocTypes]);
+
+  const indicatives = useGetCountries();
+  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
+    indicatives;
+  const [indicativesOptions, setIndicativesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessIndicatives && dataIndicatives?.data?.groupSettings.length > 0)
+      setIndicativesOptions(
+        dataIndicatives?.data?.groupSettings.map((ele) => ({
+          label: `(${ele.code})`,
+          value: ele.id,
+        }))
+      );
+  }, [dataIndicatives, isSuccessIndicatives]);
+
+  const getValueFromLabel = (label) => {
+    const selectedOption = documentTypeOptions.find(
+      (option) => option.label === label
+    );
+    return selectedOption ? selectedOption.value : null;
+  };
+
+  const initialValues = {
+    id: clientInfo?.idClient,
+    name: clientInfo?.name,
+    lastName: clientInfo?.lastName,
+    documentType: getValueFromLabel(clientInfo?.documentType),
+    identificationNumber: clientInfo?.identificationNumber,
+    countryCode: clientInfo?.countryCode,
+    phoneNumber: clientInfo?.phoneNumber,
+    birthDate: clientInfo?.birthDate,
+    genderName: clientInfo?.genderName,
+  };
+
+  useEffect(() => {
+    setActualInfo({
+      id: clientInfo?.idClient,
+      name: clientInfo?.name,
+      lastName: clientInfo?.lastName,
+      documentType: getValueFromLabel(clientInfo?.documentType),
+      identificationNumber: clientInfo?.identificationNumber,
+      countryCode: clientInfo?.countryCode,
+      phoneNumber: clientInfo?.phoneNumber,
+      birthDate: clientInfo?.birthDate,
+      genderName: clientInfo?.genderName,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clientInfo]);
 
   const handleBack = () => {
     dispatch(setSelectedClientInformation({}));
     router.push("/plataforma/clientes");
   };
 
-  //--TODO delete
-  const num = 1029341241;
-  const phone = 3101234567;
-  const id = "0001";
-  //--
+  const handleCloseDrawer = () => {
+    setErrorForm(initialError);
+    setActualInfo(initialValues);
+    setShowDrawer(false);
+  };
 
   return (
     <Div direction="row" width="100%" gap="32px">
+      <DrawerEditClient
+        showDrawer={showDrawer}
+        closeDrawer={handleCloseDrawer}
+        documentTypeOptions={documentTypeOptions}
+        indicativesOptions={indicativesOptions}
+        actualInfo={actualInfo}
+        setActualInfo={setActualInfo}
+        errorForm={errorForm}
+        setErrorForm={setErrorForm}
+      />
       <Col gap="24px" width="275px">
         <Row gap="8px" align="center">
           <Button
@@ -87,7 +200,16 @@ const Customer = ({ isMobile, isTablet }) => {
             align="center"
             justify="center"
           >
-            <Image alt="account" src={accountIcon} width={120} height={120} />
+            <Image
+              alt="profile"
+              src={
+                clientInfo?.genderName === "Masculino"
+                  ? maleProfile
+                  : femaleProfile
+              }
+              width={150}
+              height={150}
+            />
           </Div>
         </Row>
         <Col gap="8px" align="center" justify="center">
@@ -96,21 +218,23 @@ const Customer = ({ isMobile, isTablet }) => {
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.h5}
           >
-            Nombre del cliente
+            {clientInfo?.name} {clientInfo?.lastName}
           </Text>
           <Text
             weight={theme.fonts.weight.regular}
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
           >
-            {`C.C. ${num.toLocaleString()}`}
+            {`C.C. ${Number(
+              clientInfo?.identificationNumber
+            ).toLocaleString()}`}
           </Text>
           <Text
             weight={theme.fonts.weight.regular}
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
           >
-            {`ID: ${id}`}
+            {`ID: ${clientInfo?.idClient}`}
           </Text>
         </Col>
         <Row gap="8px" align="center" justify="center">
@@ -139,7 +263,7 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              correo@correo.com
+              {clientInfo?.email}
             </Text>
           </Row>
           <Text
@@ -157,7 +281,9 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              {`+57 ${formattedPhone(phone)}`}
+              {`+${clientInfo?.countryCode} ${formattedPhone(
+                clientInfo?.phoneNumber
+              )}`}
             </Text>
           </Row>
           <Text
@@ -175,7 +301,7 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              {formattedDate(new Date())}
+              {formattedDate(clientInfo?.birthDate)}
             </Text>
           </Row>
           <Text
@@ -193,7 +319,7 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              Másculino
+              {clientInfo?.genderName}
             </Text>
           </Row>
           <Text
@@ -205,9 +331,30 @@ const Customer = ({ isMobile, isTablet }) => {
             Estado del cliente
           </Text>
           <Row gap="8px" width="100%" justify="center">
-            {renderStateDiv("Potencial")}
+            {renderStateDiv(clientInfo?.stateName)}
           </Row>
         </Col>
+        <Link
+          onClick={() => setShowDrawer(true)}
+          hover={theme.colors.gray100}
+          color={theme.colors.green900}
+          font={theme.fonts.family.primary}
+          weight={theme.fonts.weight.semibold}
+          size={theme.fonts.size.default2}
+          width="100%"
+          radius="40px"
+        >
+          <Row
+            gap="8px"
+            align="center"
+            m="8px 0"
+            style={{
+              borderBottom: `2px solid ${theme.colors.green900}`,
+            }}
+          >
+            <Image alt="edit" src={editIcon} width={16} height={16} /> Editar
+          </Row>
+        </Link>
       </Col>
 
       <Row m="0 0 37px 0">

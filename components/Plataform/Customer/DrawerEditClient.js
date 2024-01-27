@@ -8,13 +8,28 @@ import { Button } from "@/components/Common/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MenuItem } from "@mui/material";
 import closeIcon from "../../../assets/icons/close.svg";
+import { Radio } from "@/components/Common/Radio";
+import { RadioGroup } from "@/components/Common/Radio/Group";
+import { formattedDate } from "@/utilities/helpers";
 
 const DrawerEditClient = ({
   showDrawer,
   closeDrawer,
   documentTypeOptions,
   indicativesOptions,
+  actualInfo,
+  setActualInfo,
 }) => {
+  console.log("actualInfo", actualInfo);
+  const handleRadio = (event) => {
+    const { value } = event.target;
+
+    setActualInfo((prevInfo) => ({
+      ...prevInfo,
+      genderName: value,
+    }));
+  };
+
   return (
     <Drawer
       closeIcon={<Image alt="close" src={closeIcon} width={20} height={20} />}
@@ -42,8 +57,8 @@ const DrawerEditClient = ({
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
           border={theme.colors.neutralGray500}
+          value={actualInfo?.name}
           /* onChange={handleChange}
-              value={loginForm.email}
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""} */
         />
@@ -60,18 +75,18 @@ const DrawerEditClient = ({
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
           border={theme.colors.neutralGray500}
+          value={actualInfo?.lastname} //TODO change to lastname
           /* onChange={handleChange}
-              value={loginForm.email}
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""} */
         />
-        <Row gap="16px">
+        <Row>
           <Select
             placeholder={"Selecciona tipo de documento"}
             label={"Tipo de documento*"}
             name="documentType"
             radius="4px"
-            width="100%"
+            width="150px"
             height="40px"
             size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
@@ -81,7 +96,8 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={formInfo.documentType}
+            value={actualInfo?.documentType}
+            /* 
             onChange={handleSelect} */
           >
             {documentTypeOptions.map((ele, indx) => (
@@ -103,19 +119,19 @@ const DrawerEditClient = ({
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
+            value={Number(actualInfo?.identificationNumber).toLocaleString()}
             /* onChange={handleChange}
-            value={loginForm.email}
             error={errorForm.email.error}
             helper={errorForm.email.error ? errorForm.email.message : ""} */
           />
         </Row>
-        <Row gap="16px">
+        <Row>
           <Select
             placeholder={"Selecciona código"}
             label={"Código de país*"}
             name="countryCode"
             radius="4px"
-            width="100%"
+            width="150px"
             height="40px"
             size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
@@ -147,8 +163,8 @@ const DrawerEditClient = ({
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
+            value={actualInfo?.phoneNumber}
             /* onChange={handleChange}
-            value={loginForm.email}
             error={errorForm.email.error}
             helper={errorForm.email.error ? errorForm.email.message : ""} */
           />
@@ -166,11 +182,33 @@ const DrawerEditClient = ({
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
           border={theme.colors.neutralGray500}
+          value={formattedDate(actualInfo?.birthDate)}
           /* onChange={handleChange}
-              value={loginForm.email}
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""} */
         />
+        <RadioGroup
+          gap="5px"
+          name="gender"
+          direction="row"
+          label="Género*"
+          labelFont={theme.fonts.family.primary}
+          labelWeight={theme.fonts.weight.medium}
+          labelSize={theme.fonts.size.sm}
+          value={actualInfo?.genderName}
+          onChange={handleRadio}
+        >
+          <Radio
+            label="Femenino"
+            value="Femenino"
+            checked={actualInfo?.genderName === "Femenino"}
+          />
+          <Radio
+            label="Másculino"
+            value="Masculino"
+            checked={actualInfo?.genderName === "Masculino"}
+          />
+        </RadioGroup>
       </Col>
       <Row style={{ marginTop: "auto" }}>
         <Button

@@ -33,17 +33,60 @@ const Customer = ({ isMobile, isTablet }) => {
 
   const { clients } = useSelector((state) => state);
 
+  const initialValues = {
+    id: null,
+    name: "",
+    lastname: "",
+    documentType: "",
+    identificationNumber: null,
+    countryCode: null,
+    phoneNumber: null,
+    birthDate: "",
+    genderName: "",
+  };
+
+  const [errorForm, setErrorForm] = useState({
+    name: {
+      error: false,
+      message: "",
+    },
+    lastname: {
+      error: false,
+      message: "",
+    },
+    documentType: {
+      error: false,
+      message: "",
+    },
+    identificationNumber: {
+      error: false,
+      message: "",
+    },
+    countryCode: {
+      error: false,
+      message: "",
+    },
+    phoneNumber: {
+      error: false,
+      message: "",
+    },
+    birthDate: {
+      error: false,
+      message: "",
+    },
+  });
+
   const [showDrawer, setShowDrawer] = useState(false);
+  const [actualInfo, setActualInfo] = useState(initialValues);
 
   useEffect(() => {
-    //TODO change .name by .id
-    if (!clients?.selectedClient?.name) {
+    if (!clients?.selectedClient?.idClient) {
       router.push("/plataforma/clientes");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clients?.selectedClient]);
 
-  const getClient = useGetClientInfo(8); //TODO: add clientId from clients
+  const getClient = useGetClientInfo(clients?.selectedClient?.idClient);
   const { data, isLoading, isFetching } = getClient;
   const [clientInfo, setClientInfo] = useState();
   useEffect(() => {
@@ -79,6 +122,20 @@ const Customer = ({ isMobile, isTablet }) => {
       );
   }, [dataIndicatives, isSuccessIndicatives]);
 
+  useEffect(() => {
+    setActualInfo({
+      id: clientInfo?.id,
+      name: clientInfo?.name,
+      lastname: clientInfo?.lastName,
+      documentType: clientInfo?.documentType,
+      identificationNumber: clientInfo?.identificationNumber,
+      countryCode: clientInfo?.countryCode,
+      phoneNumber: clientInfo?.phoneNumber,
+      birthDate: clientInfo?.birthDate,
+      genderName: clientInfo?.genderName,
+    });
+  }, [clientInfo]);
+
   const handleBack = () => {
     dispatch(setSelectedClientInformation({}));
     router.push("/plataforma/clientes");
@@ -95,6 +152,10 @@ const Customer = ({ isMobile, isTablet }) => {
         closeDrawer={handleCloseDrawer}
         documentTypeOptions={documentTypeOptions}
         indicativesOptions={indicativesOptions}
+        actualInfo={actualInfo}
+        setActualInfo={setActualInfo}
+        errorForm={errorForm}
+        setErrorForm={setErrorForm}
       />
       <Col gap="24px" width="275px">
         <Row gap="8px" align="center">
@@ -146,7 +207,7 @@ const Customer = ({ isMobile, isTablet }) => {
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.h5}
           >
-            {clientInfo?.name}
+            {clientInfo?.name} {clientInfo?.lastName}
           </Text>
           <Text
             weight={theme.fonts.weight.regular}
@@ -259,7 +320,7 @@ const Customer = ({ isMobile, isTablet }) => {
             Estado del cliente
           </Text>
           <Row gap="8px" width="100%" justify="center">
-            {renderStateDiv("Potencial")} {/* TODO clientInfo?.state */}
+            {renderStateDiv(clientInfo?.stateName)}
           </Row>
         </Col>
         <Link

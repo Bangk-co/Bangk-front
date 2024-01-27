@@ -136,7 +136,6 @@ const Customers = ({ isMobile, isTablet }) => {
   );
 
   const handleRow = (row) => {
-    console.log("row", row);
     dispatch(setSelectedClientInformation(row));
     router.push("/plataforma/clientes/cliente");
   };

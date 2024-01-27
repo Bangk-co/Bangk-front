@@ -1,5 +1,6 @@
 import Joi from "joi";
 import tlds from "@sideway/address";
+import dayjs from "dayjs";
 
 const validatePassword = Joi.string()
   .required()
@@ -32,4 +33,25 @@ export const validateRegisterForm = Joi.object({
   confirmPassword: Joi.string().required().valid(Joi.ref("password")).messages({
     "any.only": "Las contraseñas deben coincidir",
   }),
+});
+
+export const validateEditClientForm = Joi.object({
+  id: Joi.number().required(),
+  name: Joi.string().min(3).max(100).required(),
+  lastName: Joi.string().min(3).max(100).required(),
+  documentType: Joi.number().required(),
+  identificationNumber: Joi.number().required(),
+  countryCode: Joi.number().required(),
+  phoneNumber: Joi.number().required(),
+  birthDate: Joi.alternatives(
+    Joi.string().isoDate(),
+    Joi.custom((value, helpers) => {
+      const isDayjsInstance = dayjs.isDayjs(value);
+      if (!isDayjsInstance) {
+        return helpers.error("any.custom");
+      }
+      return value;
+    }, "Dayjs object")
+  ).required(),
+  genderName: Joi.string().required(),
 });

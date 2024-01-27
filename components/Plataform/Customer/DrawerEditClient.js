@@ -1,4 +1,5 @@
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { Drawer } from "../../../components/Common/Drawer";
 import { theme } from "../../../styles/theme";
@@ -12,6 +13,9 @@ import { Radio } from "@/components/Common/Radio";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { DatePicker } from "@/components/Common/DatePicker";
 import dayjs from "dayjs";
+import { validateEditClientForm } from "@/utilities/validations";
+import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
+import { useQueryClient } from "react-query";
 
 const DrawerEditClient = ({
   showDrawer,
@@ -23,6 +27,9 @@ const DrawerEditClient = ({
   errorForm,
   setErrorForm,
 }) => {
+  const updateClient = useUpdateClientInfo();
+  const queryClient = useQueryClient();
+
   const handleChange = (event) => {
     const { value, id } = event.target;
 
@@ -66,13 +73,6 @@ const DrawerEditClient = ({
     }
   };
 
-  const getValueFromLabel = (label) => {
-    const selectedOption = documentTypeOptions.find(
-      (option) => option.label === label
-    );
-    return selectedOption ? selectedOption.value : null;
-  };
-
   const handleSelect = (event) => {
     const { value, name } = event.target;
     const newErrorForm = { ...errorForm };
@@ -81,16 +81,55 @@ const DrawerEditClient = ({
     setErrorForm(newErrorForm);
 
     const newClientForm = { ...actualInfo };
-    if (name === "documentType") {
-      const selectedOption = documentTypeOptions.find(
-        (option) => option.value === value
-      );
-      newClientForm[name] = selectedOption ? selectedOption.label : "";
-    } else {
-      newClientForm[name] = value;
-    }
+
+    newClientForm[name] = value;
 
     setActualInfo(newClientForm);
+  };
+
+  const handleEditPatient = () => {
+    const validation = validateEditClientForm.validate(actualInfo, {
+      abortEarly: false,
+    });
+
+    if (validation.error) {
+      const newErrorForm = { ...errorForm };
+      validation.error.details.forEach((ele) => {
+        const label = ele.context.label;
+        newErrorForm[label].error = true;
+
+        newErrorForm[label].message = "Campo obligatorio";
+        setErrorForm(newErrorForm);
+      });
+    } else {
+      updateClient.reset();
+      updateClient.mutate(
+        {
+          clientId: actualInfo?.id,
+          formData: {
+            name: actualInfo?.name,
+            lastName: actualInfo?.lastName,
+            documentTypeId: actualInfo?.documentType,
+            identificationNumber: actualInfo?.identificationNumber,
+            countryCode: actualInfo?.countryCode,
+            phoneNumber: actualInfo?.phoneNumber,
+            birthDate: actualInfo?.birthDate,
+            genderName: actualInfo?.genderName,
+          },
+        },
+        {
+          onSuccess: () => {
+            closeDrawer();
+            queryClient.invalidateQueries(["clinicList", 0, 8]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -122,9 +161,8 @@ const DrawerEditClient = ({
           border={theme.colors.neutralGray500}
           value={actualInfo?.name}
           onChange={handleChange}
-          /* 
-              error={errorForm.email.error}
-              helper={errorForm.email.error ? errorForm.email.message : ""} */
+          error={errorForm.name.error}
+          helper={errorForm.name.error ? errorForm.name.message : ""}
         />
         <TextField
           placeholder={"Apellidos"}
@@ -141,9 +179,8 @@ const DrawerEditClient = ({
           border={theme.colors.neutralGray500}
           value={actualInfo?.lastName}
           onChange={handleChange}
-          /* 
-              error={errorForm.email.error}
-              helper={errorForm.email.error ? errorForm.email.message : ""} */
+          error={errorForm.lastName.error}
+          helper={errorForm.lastName.error ? errorForm.lastName.message : ""}
         />
         <Row>
           <Select
@@ -161,7 +198,7 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            value={getValueFromLabel(actualInfo?.documentType)}
+            value={actualInfo?.documentType}
             onChange={handleSelect}
           >
             {documentTypeOptions.map((ele, indx) => (
@@ -185,9 +222,12 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             value={actualInfo?.identificationNumber}
             onChange={handleChange}
-            /* 
-            error={errorForm.email.error}
-            helper={errorForm.email.error ? errorForm.email.message : ""} */
+            error={errorForm.identificationNumber.error}
+            helper={
+              errorForm.identificationNumber.error
+                ? errorForm.identificationNumber.message
+                : ""
+            }
           />
         </Row>
         <Row>
@@ -230,9 +270,10 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             value={actualInfo?.phoneNumber}
             onChange={handleChange}
-            /*
-            error={errorForm.email.error}
-            helper={errorForm.email.error ? errorForm.email.message : ""} */
+            error={errorForm.phoneNumber.error}
+            helper={
+              errorForm.phoneNumber.error ? errorForm.phoneNumber.message : ""
+            }
           />
         </Row>
         <DatePicker
@@ -253,9 +294,8 @@ const DrawerEditClient = ({
           border={theme.colors.gray500}
           onChange={handleChangeDate}
           value={dayjs(actualInfo?.birthDate)}
-          /* 
-        error={errorDate}
-        helper={errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""} */
+          error={errorForm.birthDate.error}
+          helper={errorForm.birthDate.error ? errorForm.birthDate.message : ""}
         />
         <RadioGroup
           gap="5px"
@@ -287,13 +327,16 @@ const DrawerEditClient = ({
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
           labelWeight={theme.fonts.weight.bold}
-          /* onClick={handleLogin}
-        disabled={isLoading} */
-          /* startIcon={
-          isLoading ? (
-            <CircularProgress size={20} style={{ color: theme.colors.white }} />
-          ) : null
-        } */
+          onClick={handleEditPatient}
+          disabled={updateClient.isLoading}
+          startIcon={
+            updateClient.isLoading ? (
+              <CircularProgress
+                size={20}
+                style={{ color: theme.colors.white }}
+              />
+            ) : null
+          }
         >
           Actualizar
         </Button>

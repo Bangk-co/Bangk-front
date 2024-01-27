@@ -33,7 +33,7 @@ const Customer = ({ isMobile, isTablet }) => {
 
   const { clients } = useSelector((state) => state);
 
-  const [errorForm, setErrorForm] = useState({
+  const initialError = {
     name: {
       error: false,
       message: "",
@@ -62,7 +62,8 @@ const Customer = ({ isMobile, isTablet }) => {
       error: false,
       message: "",
     },
-  });
+  };
+  const [errorForm, setErrorForm] = useState(initialError);
 
   const [showDrawer, setShowDrawer] = useState(false);
   const [actualInfo, setActualInfo] = useState(initialValues);
@@ -110,11 +111,18 @@ const Customer = ({ isMobile, isTablet }) => {
       );
   }, [dataIndicatives, isSuccessIndicatives]);
 
+  const getValueFromLabel = (label) => {
+    const selectedOption = documentTypeOptions.find(
+      (option) => option.label === label
+    );
+    return selectedOption ? selectedOption.value : null;
+  };
+
   const initialValues = {
     id: clientInfo?.idClient,
     name: clientInfo?.name,
     lastName: clientInfo?.lastName,
-    documentType: clientInfo?.documentType,
+    documentType: getValueFromLabel(clientInfo?.documentType),
     identificationNumber: clientInfo?.identificationNumber,
     countryCode: clientInfo?.countryCode,
     phoneNumber: clientInfo?.phoneNumber,
@@ -127,13 +135,14 @@ const Customer = ({ isMobile, isTablet }) => {
       id: clientInfo?.idClient,
       name: clientInfo?.name,
       lastName: clientInfo?.lastName,
-      documentType: clientInfo?.documentType,
+      documentType: getValueFromLabel(clientInfo?.documentType),
       identificationNumber: clientInfo?.identificationNumber,
       countryCode: clientInfo?.countryCode,
       phoneNumber: clientInfo?.phoneNumber,
       birthDate: clientInfo?.birthDate,
       genderName: clientInfo?.genderName,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientInfo]);
 
   const handleBack = () => {
@@ -142,8 +151,9 @@ const Customer = ({ isMobile, isTablet }) => {
   };
 
   const handleCloseDrawer = () => {
-    setShowDrawer(false);
+    setErrorForm(initialError);
     setActualInfo(initialValues);
+    setShowDrawer(false);
   };
 
   return (

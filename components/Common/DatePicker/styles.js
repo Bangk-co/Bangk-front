@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { theme } from "@/styles/theme";
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 
 export const CustomDatePicker = styled(DatePicker)`
   .MuiOutlinedInput-root {
@@ -14,16 +13,26 @@ export const CustomDatePicker = styled(DatePicker)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-weight: ${theme.fonts.weight.regular};
     font-size: ${({ size }) => size || theme.fonts.size.sm};
-    border-color: ${({ border }) => border || theme.colors.primary25} !important;
+    border-color: ${({ border }) =>
+      border || theme.colors.primary25} !important;
     &.Mui-focused fieldset {
       border: 1px solid
-        ${( props ) => props.error ? theme.colors.red : props.border || theme.colors.primary25} !important;
+        ${(props) =>
+          props.error
+            ? theme.colors.red
+            : props.border || theme.colors.primary25} !important;
     }
     .MuiOutlinedInput-notchedOutline {
-      border-color: ${( props ) => props.error ? theme.colors.red : props.border || theme.colors.primary25};
+      border-color: ${(props) =>
+        props.error
+          ? theme.colors.red
+          : props.border || theme.colors.primary25};
     }
     &.Mui-disabled fieldset {
-      border-color: ${( props ) => props.error ? theme.colors.red : props.border || theme.colors.primary25};
+      border-color: ${(props) =>
+        props.error
+          ? theme.colors.red
+          : props.border || theme.colors.primary25};
     }
   }
 
@@ -31,11 +40,12 @@ export const CustomDatePicker = styled(DatePicker)`
     color: ${({ placeholderColor }) => placeholderColor};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-size: ${({ size }) => size || theme.fonts.size.sm};
+    text-transform: lowercase;
   }
-`
+`;
 
 export const CustomCalendarIcon = styled(CalendarTodayOutlinedIcon)`
   color: ${theme.colors.neutralGray900};
   height: 16px;
   width: 16px;
-`
+`;

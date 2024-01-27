@@ -24,9 +24,8 @@ export const BackButton = ({ isHovered, setIsHovered }) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         color={theme.colors.yellow500}
-        font={theme.fonts.family.primary}
+        font={theme.fonts.family.primaryBold}
         size={theme.fonts.size.default2}
-        weight={theme.fonts.weight.bold}
         onClick={handleBack}
       >
         <Image alt="arrow-back" src={isHovered ? arrowGreen : arrow} style={{ marginRight: "10px" }} />

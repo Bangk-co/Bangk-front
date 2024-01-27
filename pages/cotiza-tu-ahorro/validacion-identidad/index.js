@@ -87,12 +87,23 @@ const ValidateUser = ({ isMobile, isTablet }) => {
 
   const email = hideEmailUsername(userInfo.email);
 
+  const focusInputs = (value, indx) => {
+    if (value !== "" && indx < (code.length - 1)) {
+      const nextInput = code[indx + 1]?.id
+      document.getElementById(nextInput).focus()
+    } else if (value === "" && indx !== 0) {
+      const nextInput = code[indx - 1]?.id
+      document.getElementById(nextInput).focus()
+    }
+  }
+
   const handleChange = (event, indx) => {
     const { value } = event.target;
     const newCode = [...code];
 
     newCode[indx].value = value.replace(/\D/g, '');
     setCode(newCode);
+    focusInputs(value, indx)
     setIsCodeSuccess(null);
     setIsResend(false);
     setForceUpdate(!forceUpdate);
@@ -146,6 +157,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
             <Text
               color={theme.colors.white}
               size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
+              font={theme.fonts.family.primaryBold}
               weight={theme.fonts.weight.bold}
               mt="20px"
             >
@@ -166,6 +178,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                   style={{ border: borderWrapper(isCodeSuccess) }}
                 >
                   <InputCode
+                    autoFocus={indx === 0 && true}
                     pattern="\d"
                     inputMode="numeric"
                     id={ele.id}
@@ -177,6 +190,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                         isCodeSuccess === false
                           ? theme.colors.error
                           : theme.colors.black,
+                      fontFamily: theme.fonts.family.primaryBold
                     }}
                   />
                 </WrapperCodeNumber>
@@ -212,6 +226,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
               <Text
                 color={theme.colors.white}
                 size={theme.fonts.size.ft}
+                font={theme.fonts.family.primaryBold}
                 weight={theme.fonts.weight.bold}
               >
                 {Math.floor(timeLeft / 60)}:
@@ -221,7 +236,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
 
             <LinkButton
               width={"254px"}
-              font={theme.fonts.family.primary}
+              font={theme.fonts.family.primaryBold}
               size={theme.fonts.size.default2}
               weight={theme.fonts.weight.bold}
               color={theme.colors.yellow500}
@@ -235,6 +250,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
             </LinkButton>
             <Div m="46px 0 0 0" justify="space-between" width="100%">
               <Button
+                font={theme.fonts.family.primaryBold}
                 background={theme.colors.green900}
                 border={theme.colors.yellow500}
                 hover={theme.colors.terciary50}
@@ -244,7 +260,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                 labelWeight={theme.fonts.weight.bold}
                 size={theme.fonts.size.default2}
                 borderHeight={"3px solid"}
-                width={"113px"}
+                width={isMobile ? "56px" : "113px"}
                 mobileWidth={"56px"}
                 height={"40px"}
                 onClick={handleBack}
@@ -257,13 +273,14 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                 {isMobile ? "" : "Atrás"}
               </Button>
               <Button
+                font={theme.fonts.family.primaryBold}
                 background={theme.colors.yellow500}
                 hover={theme.colors.yellow500}
                 borderHover={theme.colors.yellow500}
                 labelColor={theme.colors.green900}
                 labelWeight={theme.fonts.weight.bold}
                 size={theme.fonts.size.default2}
-                width={"300px"}
+                width={isMobile ? "224px" : "300px"}
                 mobileWidth={"224px"}
                 height={"40px"}
                 radius={"40px"}

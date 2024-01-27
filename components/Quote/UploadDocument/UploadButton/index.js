@@ -3,7 +3,7 @@ import { theme } from "@/styles/theme";
 import { Grid } from "@mui/material";
 import React from "react";
 
-export const UploadYellowButton = ({ handleFile, id }) => {
+export const UploadYellowButton = ({ handleChange, id }) => {
   const handleButtonClick = () => {
     const input = document.getElementById(`file-upload-${id}-yellow`);
     if (input) {
@@ -19,7 +19,7 @@ export const UploadYellowButton = ({ handleFile, id }) => {
           id={`file-upload-${id}-yellow`}
           type="file"
           multiple
-          onChange={(event) => handleFile(event, id)}
+          onChange={(event) => handleChange(event, id)}
         />
         <Button
           font={theme.fonts.family.primaryBold}

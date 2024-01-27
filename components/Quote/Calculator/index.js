@@ -17,6 +17,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
       <Text
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
         color={theme.colors.white}
+        font={theme.fonts.family.primaryBold}
         weight={theme.fonts.weight.bold}
       >
         Nuestra oferta
@@ -40,6 +41,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
             <Text
               size={isMobile ? theme.fonts.size.sm :theme.fonts.size.default2}
               color={theme.colors.white}
+              font={theme.fonts.family.primaryBold}
               weight={theme.fonts.weight.bold}
             >
               {ele.value}
@@ -58,6 +60,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
           <Text
             size={isMobile ? theme.fonts.size.sm :theme.fonts.size.default2}
             color={theme.colors.green900}
+            font={theme.fonts.family.primaryBold}
             weight={theme.fonts.weight.bold}
           >
             Póliza con nuestra aseguradora SBS
@@ -77,6 +80,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
               <Text
                 size={isMobile ? theme.fonts.size.sm :theme.fonts.size.default2}
                 color={theme.colors.green900}
+                font={theme.fonts.family.primaryBold}
                 weight={theme.fonts.weight.bold}
               >
                 {ele.label}
@@ -126,7 +130,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
           labelColor={theme.colors.yellow500}
           size={theme.fonts.size.default2}
           borderHeight={"3px solid"}
-          width={"113px"}
+          width={isMobile ? "56px" : "113px"}
           mobileWidth={"56px"}
           height={"40px"}
           onClick={handleBack}
@@ -141,7 +145,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
           borderHover={theme.colors.yellow500}
           labelColor={theme.colors.green900}
           size={theme.fonts.size.default2}
-          width={"300px"}
+          width={isMobile ? "224px" : "300px"}
           mobileWidth={"224px"}
           height={"40px"}
           radius={"40px"}

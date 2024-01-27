@@ -34,16 +34,18 @@ export const CreditForm = ({
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
+        font={theme.fonts.family.primaryBold}
         weight={theme.fonts.weight.bold}
         lineHeight={isMobile ? "32px" : "44px"}
       >
         {`¡Hola  ${username}!`}
         <br></br>
-        Cuéntanos sobre <span style={{ color: theme.colors.yellow500 }}>tu crédito</span>
+        Cuéntanos sobre <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>tu crédito</span>
       </Text>
       <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3  }} columnSpacing={{ xs: 1, sm: 1, md: 1 }} style={{ marginTop: "1px" }}>
         <Grid item md={12} xs={12}>
           <Select
+            font={theme.fonts.family.primary}
             label={"Banco con quién tienes tu crédito*"}
             width={"100%"}
             radius="4px"
@@ -66,6 +68,7 @@ export const CreditForm = ({
                   <Text
                     color={theme.colors.neutralGray500}
                     size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+                    mt="2px"
                   >
                     Selecciona la entidad
                   </Text>
@@ -82,12 +85,13 @@ export const CreditForm = ({
             }}
           >
             {banksOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>{ele.label}</MenuItem>
+              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
             ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
           <Select
+            font={theme.fonts.family.primary}
             label={"Tipo de credito*"}
             width={"100%"}
             radius="4px"
@@ -110,6 +114,7 @@ export const CreditForm = ({
                   <Text
                     color={theme.colors.neutralGray500}
                     size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+                    mt="2px"
                   >
                     Selecciona el tipo
                   </Text>
@@ -126,12 +131,13 @@ export const CreditForm = ({
             }}
           >
             {creditTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>{ele.label}</MenuItem>
+              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
             ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
+            font={theme.fonts.family.primary}
             type="number"
             label={"Número de tu crédito*"}
             width={"100%"}
@@ -162,7 +168,7 @@ export const CreditForm = ({
             color={theme.colors.white}
             size={theme.fonts.size.sm}
           >
-            Para poder brindarte información precisa carga <span style={{ color: theme.colors.yellow500, fontWeight: theme.fonts.weight.bold }}>el último extracto de tu crédito.</span>
+            Para poder brindarte información precisa carga <span style={{ color: theme.colors.yellow500, fontFamily: theme.fonts.family.primaryBold }}>el último extracto de tu crédito.</span>
           </Text>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -211,7 +217,7 @@ export const CreditForm = ({
           labelColor={theme.colors.yellow500}
           size={theme.fonts.size.default2}
           borderHeight={"3px solid"}
-          width={"113px"}
+          width={isMobile ? "56px" : "113px"}
           mobileWidth={"56px"}
           height={"40px"}
           onClick={handleBack}
@@ -226,14 +232,14 @@ export const CreditForm = ({
           borderHover={theme.colors.yellow500}
           labelColor={theme.colors.green900}
           size={theme.fonts.size.default2}
-          width={"300px"}
+          width={isMobile ? "224px" : "300px"}
           mobileWidth={"224px"}
           height={"40px"}
           radius={"40px"}
           onClick={handleCreate}
           disabled={!isFormValid || loading}
         >
-          Continuar
+          Cotizar
         </Button>
       </Div>
     </Col>

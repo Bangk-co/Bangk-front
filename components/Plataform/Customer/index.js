@@ -33,24 +33,12 @@ const Customer = ({ isMobile, isTablet }) => {
 
   const { clients } = useSelector((state) => state);
 
-  const initialValues = {
-    id: null,
-    name: "",
-    lastname: "",
-    documentType: "",
-    identificationNumber: null,
-    countryCode: null,
-    phoneNumber: null,
-    birthDate: "",
-    genderName: "",
-  };
-
   const [errorForm, setErrorForm] = useState({
     name: {
       error: false,
       message: "",
     },
-    lastname: {
+    lastName: {
       error: false,
       message: "",
     },
@@ -122,11 +110,23 @@ const Customer = ({ isMobile, isTablet }) => {
       );
   }, [dataIndicatives, isSuccessIndicatives]);
 
+  const initialValues = {
+    id: clientInfo?.idClient,
+    name: clientInfo?.name,
+    lastName: clientInfo?.lastName,
+    documentType: clientInfo?.documentType,
+    identificationNumber: clientInfo?.identificationNumber,
+    countryCode: clientInfo?.countryCode,
+    phoneNumber: clientInfo?.phoneNumber,
+    birthDate: clientInfo?.birthDate,
+    genderName: clientInfo?.genderName,
+  };
+
   useEffect(() => {
     setActualInfo({
-      id: clientInfo?.id,
+      id: clientInfo?.idClient,
       name: clientInfo?.name,
-      lastname: clientInfo?.lastName,
+      lastName: clientInfo?.lastName,
       documentType: clientInfo?.documentType,
       identificationNumber: clientInfo?.identificationNumber,
       countryCode: clientInfo?.countryCode,
@@ -143,6 +143,7 @@ const Customer = ({ isMobile, isTablet }) => {
 
   const handleCloseDrawer = () => {
     setShowDrawer(false);
+    setActualInfo(initialValues);
   };
 
   return (

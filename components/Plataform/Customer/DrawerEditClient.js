@@ -10,7 +10,8 @@ import { MenuItem } from "@mui/material";
 import closeIcon from "../../../assets/icons/close.svg";
 import { Radio } from "@/components/Common/Radio";
 import { RadioGroup } from "@/components/Common/Radio/Group";
-import { formattedDate } from "@/utilities/helpers";
+import { DatePicker } from "@/components/Common/DatePicker";
+import dayjs from "dayjs";
 
 const DrawerEditClient = ({
   showDrawer,
@@ -19,8 +20,22 @@ const DrawerEditClient = ({
   indicativesOptions,
   actualInfo,
   setActualInfo,
+  errorForm,
+  setErrorForm,
 }) => {
-  console.log("actualInfo", actualInfo);
+  const handleChange = (event) => {
+    const { value, id } = event.target;
+
+    const newErrorForm = { ...errorForm };
+    newErrorForm[id].error = false;
+    newErrorForm[id].message = "";
+    setErrorForm(newErrorForm);
+
+    const newClientForm = { ...actualInfo };
+    newClientForm[id] = value;
+    setActualInfo(newClientForm);
+  };
+
   const handleRadio = (event) => {
     const { value } = event.target;
 
@@ -28,6 +43,54 @@ const DrawerEditClient = ({
       ...prevInfo,
       genderName: value,
     }));
+  };
+
+  const handleChangeDate = (event) => {
+    const newErrorForm = { ...errorForm };
+
+    const today = new Date();
+    const birthDate = new Date(event);
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (age < 18) {
+      newErrorForm["birthDate"].error = true;
+      newErrorForm["birthDate"].message = "Fecha invalida";
+      setErrorForm(newErrorForm);
+    } else {
+      newErrorForm["birthDate"].error = false;
+      newErrorForm["birthDate"].message = "";
+      setErrorForm(newErrorForm);
+      const newClientForm = { ...actualInfo };
+      newClientForm["birthDate"] = event;
+      setActualInfo(newClientForm);
+    }
+  };
+
+  const getValueFromLabel = (label) => {
+    const selectedOption = documentTypeOptions.find(
+      (option) => option.label === label
+    );
+    return selectedOption ? selectedOption.value : null;
+  };
+
+  const handleSelect = (event) => {
+    const { value, name } = event.target;
+    const newErrorForm = { ...errorForm };
+    newErrorForm[name].error = false;
+    newErrorForm[name].message = "";
+    setErrorForm(newErrorForm);
+
+    const newClientForm = { ...actualInfo };
+    if (name === "documentType") {
+      const selectedOption = documentTypeOptions.find(
+        (option) => option.value === value
+      );
+      newClientForm[name] = selectedOption ? selectedOption.label : "";
+    } else {
+      newClientForm[name] = value;
+    }
+
+    setActualInfo(newClientForm);
   };
 
   return (
@@ -58,14 +121,15 @@ const DrawerEditClient = ({
           size={theme.fonts.size.default2}
           border={theme.colors.neutralGray500}
           value={actualInfo?.name}
-          /* onChange={handleChange}
+          onChange={handleChange}
+          /* 
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""} */
         />
         <TextField
           placeholder={"Apellidos"}
           label="Apellidos*"
-          id="lastname"
+          id="lastName"
           radius="4px"
           width="100%"
           height="40px"
@@ -75,8 +139,9 @@ const DrawerEditClient = ({
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
           border={theme.colors.neutralGray500}
-          value={actualInfo?.lastname} //TODO change to lastname
-          /* onChange={handleChange}
+          value={actualInfo?.lastName}
+          onChange={handleChange}
+          /* 
               error={errorForm.email.error}
               helper={errorForm.email.error ? errorForm.email.message : ""} */
         />
@@ -96,9 +161,8 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            value={actualInfo?.documentType}
-            /* 
-            onChange={handleSelect} */
+            value={getValueFromLabel(actualInfo?.documentType)}
+            onChange={handleSelect}
           >
             {documentTypeOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.value}>
@@ -109,7 +173,7 @@ const DrawerEditClient = ({
           <TextField
             placeholder={"Número de documento"}
             label="Número de documento*"
-            id="idNumber"
+            id="identificationNumber"
             radius="4px"
             width="100%"
             height="40px"
@@ -119,8 +183,9 @@ const DrawerEditClient = ({
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
-            value={Number(actualInfo?.identificationNumber).toLocaleString()}
-            /* onChange={handleChange}
+            value={actualInfo?.identificationNumber}
+            onChange={handleChange}
+            /* 
             error={errorForm.email.error}
             helper={errorForm.email.error ? errorForm.email.message : ""} */
           />
@@ -141,8 +206,8 @@ const DrawerEditClient = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={formInfo.documentType}
-            onChange={handleSelect} */
+            value={actualInfo?.countryCode}
+            onChange={handleSelect}
           >
             {indicativesOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.value}>
@@ -164,13 +229,14 @@ const DrawerEditClient = ({
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
             value={actualInfo?.phoneNumber}
-            /* onChange={handleChange}
+            onChange={handleChange}
+            /*
             error={errorForm.email.error}
             helper={errorForm.email.error ? errorForm.email.message : ""} */
           />
         </Row>
-        <TextField
-          placeholder={"Fecha de nacimiento"}
+        <DatePicker
+          placeholder={"dd/mm/aaaa"}
           label="Fecha de nacimiento*"
           id="birthDate"
           radius="4px"
@@ -181,15 +247,19 @@ const DrawerEditClient = ({
           labelSize={theme.fonts.size.sm}
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
-          border={theme.colors.neutralGray500}
-          value={formattedDate(actualInfo?.birthDate)}
-          /* onChange={handleChange}
-              error={errorForm.email.error}
-              helper={errorForm.email.error ? errorForm.email.message : ""} */
+          labelColor={theme.colors.neutralGray900}
+          notFocused={true}
+          placeholderColor={theme.colors.neutralGray500}
+          border={theme.colors.gray500}
+          onChange={handleChangeDate}
+          value={dayjs(actualInfo?.birthDate)}
+          /* 
+        error={errorDate}
+        helper={errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""} */
         />
         <RadioGroup
           gap="5px"
-          name="gender"
+          name="genderName"
           direction="row"
           label="Género*"
           labelFont={theme.fonts.family.primary}

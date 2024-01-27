@@ -28,11 +28,12 @@ const CreationSuceess = ({ isMobile }) => {
             <Text
               size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h3}
               color={theme.colors.white}
+              font={theme.fonts.family.primaryBold}
               weight={theme.fonts.weight.bold}
               mt="24px"
             >
               ¡Hemos recibido tu información!
-              Dentro de las próximas <span style={{ color: theme.colors.yellow500 }}>24 horas</span> estaremos analizando tu caso.
+              Dentro de las próximas <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>24 horas</span> estaremos analizando tu caso.
             </Text>
             <Text
               size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}

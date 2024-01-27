@@ -15,6 +15,7 @@ export const ModalTerms = ({ isMobile, handleClose, handleAccept }) => {
       <Text
         size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.ft}
         color={theme.colors.green900}
+        font={theme.fonts.family.primaryBold}
         weight={theme.fonts.weight.bold}
         style={{ textAlign: "-webkit-center", width: "100%" }}
       >
@@ -40,6 +41,7 @@ export const ModalTerms = ({ isMobile, handleClose, handleAccept }) => {
         labelColor={theme.colors.green900}
         labelWeight={theme.fonts.weight.bold}
         size={theme.fonts.size.default2}
+        font={theme.fonts.family.primaryBold}
         width={"100%"}
         mobileWidth={"100%"}
         height={"40px"}

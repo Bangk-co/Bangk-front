@@ -32,15 +32,15 @@ export const InitForm = ({
         color={theme.colors.white}
         size={isMobile ? theme.fonts.default2 : theme.fonts.size.ft}
       >
-        Con Bangk puedes lograr <strong>ahorros entre el 20% y hasta el 70%</strong> en los seguros de tus préstamos desde $30 millones en adelante
+        Con Bangk puedes lograr <span style={{ fontFamily:theme.fonts.family.primaryBold }}>ahorros entre el 20% y hasta el 70%</span> en los seguros de tus préstamos desde $30 millones en adelante
       </Text>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
-        weight={theme.fonts.weight.bold}
+        font={theme.fonts.family.primaryBold}
         mt="24px"
       >
-        Calculemos <span style={{ color: theme.colors.yellow }}>tu ahorro</span>
+        Calculemos <span style={{ fontFamily:theme.fonts.family.primaryBold, color: theme.colors.yellow }}>tu ahorro</span>
       </Text>
       <Text
         color={theme.colors.white}
@@ -57,6 +57,7 @@ export const InitForm = ({
         width="100%"
         height="40px"
         label="Saldo actual de tu crédito*"
+        font={theme.fonts.family.primary}
         size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
         labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
         labelColor={theme.colors.white}
@@ -90,6 +91,7 @@ export const InitForm = ({
         width="100%"
         height="40px"
         label="Fecha de nacimiento*"
+        font={theme.fonts.family.primary}
         error={errorDate}
         helper={errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""}
         size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
@@ -111,7 +113,7 @@ export const InitForm = ({
         mb="3px"
         align="left"
       >
-        Selecciona tu genero*
+        Selecciona tu género*
       </Text>
       <Row gap="5px">
         {genderButtons.map((ele, indx) => (

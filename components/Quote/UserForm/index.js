@@ -43,10 +43,12 @@ export const UserForm = ({
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
+        font={theme.fonts.family.primaryBold}
         weight={theme.fonts.weight.bold}
         lineHeight={isMobile ? "32px" : "44px"}
       >
-        Iniciemos conociendo al <span style={{ color: theme.colors.yellow500 }}>titular del crédito</span>
+        Iniciemos conociendo al <br></br>
+        <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>titular del crédito</span>
       </Text>
       <Text
         color={theme.colors.white}
@@ -64,6 +66,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -78,7 +81,7 @@ export const UserForm = ({
             onChange={handleSelect}
           >
             {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>{ele.label}</MenuItem>
+              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
             ))}
           </Select>
         </Grid>
@@ -90,6 +93,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -116,6 +120,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -138,6 +143,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -160,6 +166,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -174,7 +181,7 @@ export const UserForm = ({
             onChange={handleSelect}
           >
             {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>{ele.label}</MenuItem>
+              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
             ))}
           </Select>
         </Grid>
@@ -186,6 +193,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -212,6 +220,7 @@ export const UserForm = ({
             placeholder={"Escribir"}
             radius="4px"
             height="40px"
+            font={theme.fonts.family.primary}
             size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
             labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
             labelColor={theme.colors.white}
@@ -240,7 +249,7 @@ export const UserForm = ({
           Doy autorización para el&nbsp;
           <span
             style={{
-              fontWeight: theme.fonts.weight.bold,
+              fontFamily: theme.fonts.family.primaryBold,
               cursor: "pointer",
               textDecoration: "underline"
             }}
@@ -267,7 +276,7 @@ export const UserForm = ({
           labelColor={theme.colors.yellow500}
           size={theme.fonts.size.default2}
           borderHeight={"3px solid"}
-          width={"113px"}
+          width={isMobile ? "56px" : "113px"}
           mobileWidth={"56px"}
           height={"40px"}
           onClick={handleBack}
@@ -282,7 +291,7 @@ export const UserForm = ({
           borderHover={theme.colors.yellow500}
           labelColor={theme.colors.green900}
           size={theme.fonts.size.default2}
-          width={"300px"}
+          width={isMobile ? "224px" : "300px"}
           mobileWidth={"224px"}
           height={"40px"}
           radius={"40px"}

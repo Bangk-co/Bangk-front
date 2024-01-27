@@ -15,15 +15,14 @@ import text from "../../assets/icons/text.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { wappLink } from "@/utilities/options";
+import { useRouter } from "next/router";
 
 const Banner = ({ isMobile }) => {
-  const handleWapp = () => {
-    const a = document.createElement("a");
-    a.href = `${wappLink}`;
-    document.body.appendChild(a);
-    a.target = "_blank";
-    a.click();
-  };
+  const router = useRouter();
+
+  const handleQuote = () => {
+    router.push("/cotiza-tu-ahorro")
+  }
 
   return (
     <Wrapper>
@@ -44,7 +43,7 @@ const Banner = ({ isMobile }) => {
               height={isMobile ? 14 : 44}
             />
           </WrapperText>
-          <Button onClick={handleWapp}>Ahorra ya!</Button>
+          <Button onClick={handleQuote}>Ahorra ya!</Button>
         </Col>
         <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
           <WrapperStar>

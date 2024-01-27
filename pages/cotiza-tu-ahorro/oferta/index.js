@@ -58,7 +58,7 @@ const Sale = ({ isMobile, isTablet }) => {
   const info = [
     { label: "Saldo del crédito:", value: `$ ${numberFormatText(formInfo?.balance)} COP` },
     { label: "Fecha de nacimiento:", value: formatBirthdate(formInfo?.birthdate) },
-    { label: "Genero", value: gender[formInfo?.gender] }
+    { label: "Género", value: gender[formInfo?.gender] }
   ]
 
   const insuranceMonthlyPercentage = insuranceData.monthlyRatePercentage / 100;

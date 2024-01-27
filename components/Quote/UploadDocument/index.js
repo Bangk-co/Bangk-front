@@ -31,6 +31,7 @@ export const UploadButton = ({
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false)
 
   const handleChange = (event, id) => {
     const { files } = event.target;
@@ -38,6 +39,7 @@ export const UploadButton = ({
     if (files.length > 0) {
       setIsUploading(true);
       handleUpload(files[0], id);
+      setForceUpdate(!forceUpdate)
     }
   };
 
@@ -58,6 +60,7 @@ export const UploadButton = ({
     setIsUploading(false);
 
     handleFile(file, id);
+    setForceUpdate(!forceUpdate)
   };
 
   return (
@@ -142,11 +145,11 @@ export const UploadButton = ({
           )}
         </Grid>
         {(!uploaded && !hasError) && (
-          <UploadYellowButton handleFile={handleFile} id={id} />
+          <UploadYellowButton handleChange={handleChange} id={id} />
         )}
 
         {isUploading && (
-          <Col m="5px 0 0 0" width="100%">
+          <Col m="5px 0 0 10px" width="100%">
             <LinearProgress variant="determinate" value={uploadProgress} sx={{ width: '100%' }} />
             <Text
               color={theme.colors.white}

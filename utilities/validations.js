@@ -42,7 +42,7 @@ export const validateEditClientForm = Joi.object({
   documentType: Joi.number().required(),
   identificationNumber: Joi.number().required(),
   countryCode: Joi.number().required(),
-  phoneNumber: Joi.number().required(),
+  phoneNumber: Joi.string().required(),
   birthDate: Joi.alternatives(
     Joi.string().isoDate(),
     Joi.custom((value, helpers) => {
@@ -53,5 +53,6 @@ export const validateEditClientForm = Joi.object({
       return value;
     }, "Dayjs object")
   ).required(),
-  genderName: Joi.string().required(),
+  genderId: Joi.number().required(),
+  email: Joi.string().required(),
 });

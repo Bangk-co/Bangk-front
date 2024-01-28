@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
@@ -26,6 +27,7 @@ import { setSelectedClientInformation } from "@/store/customers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
+import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -59,6 +61,10 @@ const Customer = ({ isMobile, isTablet }) => {
       message: "",
     },
     birthDate: {
+      error: false,
+      message: "",
+    },
+    email: {
       error: false,
       message: "",
     },
@@ -111,23 +117,43 @@ const Customer = ({ isMobile, isTablet }) => {
       );
   }, [dataIndicatives, isSuccessIndicatives]);
 
-  const getValueFromLabel = (label) => {
-    const selectedOption = documentTypeOptions.find(
-      (option) => option.label === label
-    );
+  const genders = useGetGenders();
+  const { data: dataGender, isSuccess: isSuccessGenders } = genders;
+  const [genderOptions, setGenderOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessGenders && dataGender?.data?.groupSettings.length > 0)
+      setGenderOptions(
+        dataGender?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [dataGender, isSuccessGenders]);
+
+  const getValueFromLabel = (label, options) => {
+    const selectedOption = options.find((option) => option.label === label);
     return selectedOption ? selectedOption.value : null;
+  };
+
+  const getLabelFromValue = (value, options) => {
+    const selectedOption = options.find((option) => option.value === value);
+    return selectedOption ? selectedOption.label : null;
   };
 
   const initialValues = {
     id: clientInfo?.idClient,
     name: clientInfo?.name,
     lastName: clientInfo?.lastName,
-    documentType: getValueFromLabel(clientInfo?.documentType),
+    documentType: getValueFromLabel(
+      clientInfo?.documentType,
+      documentTypeOptions
+    ),
     identificationNumber: clientInfo?.identificationNumber,
     countryCode: clientInfo?.countryCode,
     phoneNumber: clientInfo?.phoneNumber,
     birthDate: clientInfo?.birthDate,
-    genderName: clientInfo?.genderName,
+    genderId: getValueFromLabel(clientInfo?.genderName, genderOptions),
+    email: clientInfo?.email,
   };
 
   useEffect(() => {
@@ -135,12 +161,16 @@ const Customer = ({ isMobile, isTablet }) => {
       id: clientInfo?.idClient,
       name: clientInfo?.name,
       lastName: clientInfo?.lastName,
-      documentType: getValueFromLabel(clientInfo?.documentType),
+      documentType: getValueFromLabel(
+        clientInfo?.documentType,
+        documentTypeOptions
+      ),
       identificationNumber: clientInfo?.identificationNumber,
       countryCode: clientInfo?.countryCode,
       phoneNumber: clientInfo?.phoneNumber,
       birthDate: clientInfo?.birthDate,
-      genderName: clientInfo?.genderName,
+      genderId: getValueFromLabel(clientInfo?.genderName, genderOptions),
+      email: clientInfo?.email,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientInfo]);
@@ -225,7 +255,7 @@ const Customer = ({ isMobile, isTablet }) => {
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
           >
-            {`C.C. ${Number(
+            {`${clientInfo?.documentType} ${Number(
               clientInfo?.identificationNumber
             ).toLocaleString()}`}
           </Text>
@@ -281,9 +311,10 @@ const Customer = ({ isMobile, isTablet }) => {
               color={theme.colors.neutralGray900}
               size={theme.fonts.size.default2}
             >
-              {`+${clientInfo?.countryCode} ${formattedPhone(
-                clientInfo?.phoneNumber
-              )}`}
+              {`${getLabelFromValue(
+                clientInfo?.countryCode,
+                indicativesOptions
+              )} ${formattedPhone(clientInfo?.phoneNumber)}`}
             </Text>
           </Row>
           <Text
@@ -335,7 +366,10 @@ const Customer = ({ isMobile, isTablet }) => {
           </Row>
         </Col>
         <Link
-          onClick={() => setShowDrawer(true)}
+          onClick={() => {
+            setShowDrawer(true);
+            toast.dismiss();
+          }}
           hover={theme.colors.gray100}
           color={theme.colors.green900}
           font={theme.fonts.family.primary}

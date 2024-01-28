@@ -7,7 +7,7 @@ const useGetClients = ({ page, pageSize, searchBy, sortDirection, sortBy }) => {
     urlString += `&searchValue=${searchBy}`;
   }
 
-  const data = useQuery(["clinicList", page, pageSize, searchBy], () =>
+  const data = useQuery(["clientList", page, pageSize, searchBy], () =>
     axiosClient.get(urlString)
   );
 

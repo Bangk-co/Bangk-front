@@ -48,7 +48,7 @@ const DrawerEditClient = ({
 
     setActualInfo((prevInfo) => ({
       ...prevInfo,
-      genderName: value,
+      genderId: Number(value),
     }));
   };
 
@@ -114,13 +114,15 @@ const DrawerEditClient = ({
             countryCode: actualInfo?.countryCode,
             phoneNumber: actualInfo?.phoneNumber,
             birthDate: actualInfo?.birthDate,
-            genderName: actualInfo?.genderName,
+            genderId: actualInfo?.genderId,
+            email: actualInfo?.email,
           },
         },
         {
           onSuccess: () => {
             closeDrawer();
-            queryClient.invalidateQueries(["clinicList", 0, 8]);
+            toast.success("Actualizado correctamente");
+            queryClient.invalidateQueries(["clientInfo", actualInfo?.id]);
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {
@@ -299,24 +301,24 @@ const DrawerEditClient = ({
         />
         <RadioGroup
           gap="5px"
-          name="genderName"
+          name="genderId"
           direction="row"
           label="Género*"
           labelFont={theme.fonts.family.primary}
           labelWeight={theme.fonts.weight.medium}
           labelSize={theme.fonts.size.sm}
-          value={actualInfo?.genderName}
+          value={actualInfo?.genderId}
           onChange={handleRadio}
         >
           <Radio
             label="Femenino"
-            value="Femenino"
-            checked={actualInfo?.genderName === "Femenino"}
+            value={108}
+            checked={actualInfo?.genderId === 108}
           />
           <Radio
             label="Másculino"
-            value="Masculino"
-            checked={actualInfo?.genderName === "Masculino"}
+            value={107}
+            checked={actualInfo?.genderId === 107}
           />
         </RadioGroup>
       </Col>

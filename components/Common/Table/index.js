@@ -22,6 +22,7 @@ const Table = ({
   page,
   pages,
   onPageChange,
+  handleSort,
   handleRow,
   loading,
   ...rest
@@ -47,7 +48,7 @@ const Table = ({
                       src={sortIcon}
                       width={14}
                       height={16}
-                      /* onClick={handleHome} */
+                      onClick={() => handleSort(column.dataIndex)}
                       style={{ cursor: "pointer" }}
                     />
                   </Row>

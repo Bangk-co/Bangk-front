@@ -28,15 +28,22 @@ const Customers = ({ isMobile, isTablet }) => {
   const [totalItems, setTotalItems] = useState(10);
   const [searchText, setSearchText] = useState(null);
   const searchValue = useDebounce(searchText, 600);
+  const [sortOptions, setSortOptions] = useState({
+    sortBy: null,
+    sortDirection: null,
+  });
 
   const [payloadOptions, setPayloadOptions] = useState({
     page: pages.pageNumber,
     pageSize: pages.pageSize,
     searchBy: searchValue,
+    sortDirection: sortOptions.sortDirection,
+    sortBy: sortOptions.sortBy,
   });
 
   const handleChangeSearch = (event) => {
     const { value } = event.target;
+    setSortOptions({ sortBy: null, sortDirection: null });
     setSearchText(value);
   };
 
@@ -63,9 +70,21 @@ const Customers = ({ isMobile, isTablet }) => {
       page: pages.pageNumber,
       pageSize: pages.pageSize,
       searchBy: searchValue,
+      sortDirection: sortOptions.sortDirection,
+      sortBy: sortOptions.sortBy,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pages, searchValue]);
+  }, [pages, searchValue, sortOptions]);
+
+  const handleSort = (sortBy) => {
+    setSortOptions((prevSort) => ({
+      sortBy,
+      sortDirection:
+        prevSort.sortBy === sortBy && prevSort.sortDirection === "ASC"
+          ? "DESC"
+          : "ASC",
+    }));
+  };
 
   const handleChangeTable = (newPage) => {
     setPages({
@@ -74,6 +93,7 @@ const Customers = ({ isMobile, isTablet }) => {
     });
 
     setForceUpdate(!forceUpdate);
+    handleSort(null);
   };
 
   const tableColumns = useMemo(
@@ -84,6 +104,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "name",
         width: 200,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
       },
       {
         title: "Fecha de creación",
@@ -91,6 +112,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "creationDate",
         width: 200,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedDate(value)}</span>,
       },
       {
@@ -99,6 +121,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "applications",
         width: 150,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
       },
       {
         title: "Monto Asegurado",
@@ -106,6 +129,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "loanBalance",
         width: 180,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
@@ -114,6 +138,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "sales",
         width: 150,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
@@ -122,6 +147,7 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "reviewerName",
         width: 150,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
       },
       {
         title: "Estado",
@@ -129,9 +155,11 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "stateName",
         width: 180,
         sorter: true,
+        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
         render: (value, record) => renderStateDiv(value),
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -191,6 +219,7 @@ const Customers = ({ isMobile, isTablet }) => {
         page={pages.pageNumber}
         pages={paginationArray}
         onPageChange={handleChangeTable}
+        handleSort={handleSort}
         handleRow={handleRow}
         loading={isLoading}
       />

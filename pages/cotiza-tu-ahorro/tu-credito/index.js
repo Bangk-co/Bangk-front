@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
-import { Container, Div } from "@/styles/Common";
+import { Div } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { WrapperQuote } from "@/styles/Quote";
+import { Container, WrapperQuote } from "@/styles/Quote";
 import { BackButton } from "@/components/Quote/BackButton.js";
 import { CreditForm } from "@/components/Quote/CreditForm";
 import useGetBanks from "@/hooks/Common/useGetBanks";
@@ -127,9 +127,9 @@ const CreditData = ({ isMobile, isTablet }) => {
   }
 
   return (
-    <Container style={{ background: isMobile && theme.colors.green }}>
+    <Container>
       <Header isMobile={isMobile} />
-      <WrapperQuote style={{ height: "100vh" }}>
+      <WrapperQuote>
         {!isMobile &&
           <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
         }

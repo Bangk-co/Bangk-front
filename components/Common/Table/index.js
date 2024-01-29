@@ -42,7 +42,13 @@ const Table = ({
               <TableCell key={column.key} width={column.width}>
                 {column.sorter ? (
                   <Row justify="space-between" align="center">
-                    {column.title}
+                    <Text
+                      weight={theme.fonts.weight.bold}
+                      size={theme.fonts.size.sm}
+                      font={theme.fonts.family.primary}
+                    >
+                      {column.title}
+                    </Text>
                     <Image
                       alt="sort"
                       src={sortIcon}
@@ -129,6 +135,7 @@ const Table = ({
               size={theme.fonts.size.sm}
               labelWeight={theme.fonts.weight.medium}
               onClick={() => onPageChange(pageNumber)}
+              font={theme.fonts.family.tertiary}
             >
               {pageNumber}
             </Button>

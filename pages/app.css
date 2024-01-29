@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
 @font-face {
   font-family: "Gilroy";
   src: local("Gilroy"), url(/fonts/Gilroy-Regular.woff) format("woff");
@@ -21,7 +23,7 @@
 }
 
 * {
-  font-family: "Gilroy", "Rubik";
+  font-family: "Gilroy", "Rubik", "Montserrat";
 
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

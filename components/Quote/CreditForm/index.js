@@ -1,13 +1,14 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Col, Div, Text } from "@/styles/Common";
+import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { Grid, LinearProgress, MenuItem } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import Image from "next/image";
 import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import { UploadButton } from "../UploadDocument";
+import { Col } from "@/styles/Quote";
 
 export const CreditForm = ({
     isMobile,
@@ -27,10 +28,7 @@ export const CreditForm = ({
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "");
 
   return (
-    <Col
-      width={isMobile ? "312px" : "549px"}
-      m={isMobile ? "0 0 0 0" : "12px 0 0 0"}
-    >
+    <Col m={"12px 0 0 0"}>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
@@ -138,7 +136,6 @@ export const CreditForm = ({
         <Grid item md={12} xs={12}>
           <TextField
             font={theme.fonts.family.primary}
-            type="number"
             label={"Número de tu crédito*"}
             width={"100%"}
             placeholder={"Escribe el número"}

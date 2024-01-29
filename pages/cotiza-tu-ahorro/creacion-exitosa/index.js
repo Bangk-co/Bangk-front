@@ -1,7 +1,7 @@
 import React from "react";
 import { Header } from "@/components/Common/Header";
-import { Col, Container, Div, Text } from "@/styles/Common";
-import { WrapperQuote } from "@/styles/Quote";
+import { Container, Div, Text } from "@/styles/Common";
+import { Col, WrapperQuote } from "@/styles/Quote";
 import Image from "next/image";
 import woman from "@/assets/img/woman-success.svg"
 import { theme } from "@/styles/theme";
@@ -20,10 +20,7 @@ const CreationSuceess = ({ isMobile }) => {
       <Header isMobile={isMobile} />
       <WrapperQuote style={{ height: "100vh" }}>
         <Div justify="center" width="100%">
-          <Col
-            width={isMobile ? "312px" : "549px"}
-            align="center"
-          >
+          <Col align="center">
             <Image alt="success" src={woman} />
             <Text
               size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h3}

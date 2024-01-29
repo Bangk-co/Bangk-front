@@ -9,8 +9,20 @@ export const WrapperQuote = styled.div`
   padding: 24px 0 0 36px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 24px;
+    padding: 24px 38px 24px 38px;
     height: 100vh;
+  }
+`
+
+export const Col = styled.div`
+  width: 549px;
+  margin: ${({ m }) => m || "0px 0px 0px 0px"};
+  align-items: ${({ align }) => align || null};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    margin: 0;
+    justify-content: ${({ justifyMobile }) => justifyMobile || null};
   }
 `
 

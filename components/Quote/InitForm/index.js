@@ -1,8 +1,8 @@
 import React from "react";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { TextField } from "@/components/Common/TextField";
-import { Col, Div, Row, Text } from "@/styles/Common";
-import { CardButton, WrapperWapp } from "@/styles/Quote";
+import { Div, Row, Text } from "@/styles/Common";
+import { CardButton, Col, WrapperWapp } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
 import Image from "next/image";
 import pesosIcon from "@/assets/icons/pesos.svg"
@@ -23,11 +23,7 @@ export const InitForm = ({
     emptyValidation
   }) => {
   return (
-    <Col
-      width={isMobile ? "312px" : "541px"}
-      m={isMobile ? "0 0 0 0" : "92px 0 0 0"}
-      justify={isMobile && "center"}
-    >
+    <Col m={"92px 0 0 0"} justifyMobile={"center"}>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.default2 : theme.fonts.size.ft}

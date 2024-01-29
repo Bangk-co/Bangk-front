@@ -73,7 +73,18 @@ const UserData = ({ isMobile, isTablet }) => {
     const { id, value } = event.target;
     const newInfo = { ...formInfo }
 
-    newInfo[id] = value
+    if (id === "identificationNumber") {
+      if (formInfo.documentType !== 78) {
+        newInfo[id] = value.replace(/\D/g, '');
+      } else {
+        newInfo[id] = value
+      }
+    } else if (id === "phone") {
+      newInfo[id] = value.replace(/\D/g, '');
+    } else {
+      newInfo[id] = value
+    }
+
     setFormInfo(newInfo)
   }
 

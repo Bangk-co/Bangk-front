@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Col, Div, Row, Text } from "@/styles/Common";
+import { Div, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem, Modal } from "@mui/material";
 import email from "@/assets/icons/email.svg"
@@ -10,7 +10,7 @@ import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import { Checkbox } from "@/components/Common/Checkbox";
 import { ModalTerms } from "@/components/Common/ModalTerms";
-import { WrapperWappCal } from "@/styles/Quote";
+import { Col, WrapperWappCal } from "@/styles/Quote";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
 
 export const UserForm = ({
@@ -33,10 +33,7 @@ export const UserForm = ({
   const isFormValid = Object.values(formInfo).every((value) => value !== "") && terms;
 
   return (
-    <Col
-      width={isMobile ? "312px" : "549px"}
-      m={isMobile ? "0 0 0 0" : "12px 0 0 0"}
-    >
+    <Col m={"12px 0 0 0"}>
       <Modal open={openModal}>
         <ModalTerms isMobile={isMobile} handleClose={handleClose} handleAccept={handleAccept} />
       </Modal>
@@ -87,7 +84,6 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
           <TextField
-            type={formInfo.documentType === 78 ? "text" : "number"}
             label={"Número de documento"}
             width={"100%"}
             placeholder={"Escribir"}
@@ -187,7 +183,6 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8}>
           <TextField
-            type="number"
             label={"Número de telefono*"}
             width={"100%"}
             placeholder={"Escribir"}

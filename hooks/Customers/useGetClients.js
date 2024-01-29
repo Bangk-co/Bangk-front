@@ -7,8 +7,16 @@ const useGetClients = ({ page, pageSize, searchBy, sortDirection, sortBy }) => {
     urlString += `&searchValue=${searchBy}`;
   }
 
-  const data = useQuery(["clientList", page, pageSize, searchBy], () =>
-    axiosClient.get(urlString)
+  if (sortDirection && sortDirection.length > 1) {
+    urlString += `&sortOrder=${sortDirection}`;
+  }
+  if (sortBy && sortBy.length > 1) {
+    urlString += `&sortField=${sortBy}`;
+  }
+
+  const data = useQuery(
+    ["clientList", page, pageSize, searchBy, sortDirection, sortBy],
+    () => axiosClient.get(urlString)
   );
 
   return data || {};

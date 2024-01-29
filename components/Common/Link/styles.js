@@ -25,7 +25,7 @@ export const CustomLink = styled(({ color, ...props }) => (
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {
-      width: 205px;
+      width: ${({ mobileWidth }) => mobileWidth || "205px"};
       padding: 12px 12px;
     }
 

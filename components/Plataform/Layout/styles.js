@@ -31,6 +31,9 @@ export const Sider = styled.div`
   width: 150px;
   background: ${theme.colors.green900} 0% 0% no-repeat padding-box;
   border-radius: 0px 8px 8px 0px;
+  @media (max-width: ${theme.breakpoints.md}) {
+    width: 120px;
+  }
 `;
 
 export const Content = styled.div`

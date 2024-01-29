@@ -203,7 +203,7 @@ export const CreditForm = ({
           />
         </Grid>
       </Grid>
-      <Div m="46px 0 0 0" justify="space-between">
+      <Div m="46px 0" justify="space-between">
         <Button
           font={theme.fonts.family.primaryBold}
           background={theme.colors.green900}

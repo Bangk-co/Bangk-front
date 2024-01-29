@@ -1,16 +1,22 @@
 import styled from "styled-components";
 import { theme } from "../theme";
 
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: ${theme.colors.green};
+`;
+
 export const WrapperQuote = styled.div`
   display: flex;
   flex-direction: column;
   background: ${theme.colors.green};
   height: max-content;
+  min-height: 100vh;
   padding: 24px 0 0 36px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 24px 38px 24px 38px;
-    height: 100vh;
   }
 `
 

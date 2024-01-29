@@ -67,8 +67,3 @@ export const Col = styled.div`
   gap: ${({ gap }) => gap || null};
   min-width: ${({ minWidth }) => minWidth || null};
 `;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

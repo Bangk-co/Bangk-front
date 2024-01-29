@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
-import { Col, Container, Div, Text } from "@/styles/Common";
+import { Col, Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import {
+  Container,
   InputCode,
   WrapperCodeNumber,
   WrapperCounter,
@@ -148,9 +149,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <Container style={{ background: isMobile && theme.colors.green }}>
+    <Container>
       <Header isMobile={isMobile} />
-      <WrapperQuote style={{ height: "calc(100vh - 66px)" }}>
+      <WrapperQuote style={{ minHeight: "calc(100vh - 66px)" }}>
         <Div justify="center" width="100%">
           <Col align="center" width={isMobile ? "312px" : "549px"}>
             <Image alt="phone" src={phoneIcon} />

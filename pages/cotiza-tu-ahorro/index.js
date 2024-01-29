@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
-import { Container, Div } from "@/styles/Common";
+import { Div } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { WrapperQuote, WrapperWapp } from "@/styles/Quote";
+import { Container, WrapperQuote, WrapperWapp } from "@/styles/Quote";
 import Image from "next/image";
 import femaleIcon from "@/assets/icons/female.svg"
 import maleIcon from "@/assets/icons/male.svg"
 import { useDispatch, useSelector } from "react-redux";
-import { resetInitData, setInitData } from "@/store/balance";
+import { setInitData } from "@/store/balance";
 import { useRouter } from "next/router";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
 import { wappLink } from "@/utilities/options";
@@ -91,7 +91,7 @@ const Quote = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <Container style={{ background: isMobile && theme.colors.green }}>
+    <Container>
       <Header isMobile={isMobile} />
       <WrapperQuote>
         {!isMobile &&

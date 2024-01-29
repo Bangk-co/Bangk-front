@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
-import { Col, Container, Div } from "@/styles/Common";
+import { Div } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { WrapperQuote, WrapperWapp } from "@/styles/Quote";
+import { Container, WrapperQuote, WrapperWapp } from "@/styles/Quote";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
@@ -92,7 +92,7 @@ const Sale = ({ isMobile, isTablet }) => {
   }
 
   return (
-    <Container style={{ background: isMobile && theme.colors.green }}>
+    <Container>
       <Header isMobile={isMobile} />
       <WrapperQuote>
         {!isMobile &&

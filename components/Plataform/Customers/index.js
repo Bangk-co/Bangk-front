@@ -112,7 +112,8 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "creationDate",
         width: 200,
         sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sortOrder:
+          sortOptions.sortBy === "creationDate" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedDate(value)}</span>,
       },
       {
@@ -121,7 +122,8 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "applications",
         width: 150,
         sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sortOrder:
+          sortOptions.sortBy === "applications" && sortOptions.sortDirection,
       },
       {
         title: "Monto Asegurado",
@@ -129,7 +131,8 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "loanBalance",
         width: 180,
         sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sortOrder:
+          sortOptions.sortBy === "loanBalance" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
@@ -137,8 +140,8 @@ const Customers = ({ isMobile, isTablet }) => {
         dataIndex: "sales",
         key: "sales",
         width: 150,
-        sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sorter: false,
+        sortOrder: sortOptions.sortBy === "sales" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },
       {
@@ -147,7 +150,8 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "reviewerName",
         width: 150,
         sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sortOrder:
+          sortOptions.sortBy === "reviewerName" && sortOptions.sortDirection,
       },
       {
         title: "Estado",
@@ -155,7 +159,8 @@ const Customers = ({ isMobile, isTablet }) => {
         key: "stateName",
         width: 180,
         sorter: true,
-        sortOrder: sortOptions.sortBy === "name" && sortOptions.sortDirection,
+        sortOrder:
+          sortOptions.sortBy === "stateName" && sortOptions.sortDirection,
         render: (value, record) => renderStateDiv(value),
       },
     ],

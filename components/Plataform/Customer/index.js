@@ -8,7 +8,7 @@ import { Div, Row, Col } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import DrawerEditClient from "./DrawerEditClient";
-import backIcon from "../../../assets/icons/arrow-back-green.svg";
+import backIcon from "../../../assets/icons/back.svg";
 import emailIcon from "../../../assets/icons/email.svg";
 import phoneIcon from "../../../assets/icons/phone.svg";
 import calendarIcon from "../../../assets/icons/date_range.svg";
@@ -206,7 +206,7 @@ const Customer = ({ isMobile, isTablet }) => {
             radius="4px"
             borderHover={theme.colors.green900}
             border={theme.colors.green900}
-            borderHeigh={"3px"}
+            borderHeight={"2px solid"}
             hover={"transparent"}
             background={theme.colors.white}
             onClick={handleBack}

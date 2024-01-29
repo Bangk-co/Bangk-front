@@ -8,10 +8,10 @@ const useGetClients = ({ page, pageSize, searchBy, sortDirection, sortBy }) => {
   }
 
   if (sortDirection && sortDirection.length > 1) {
-    urlString += `&orderType=${sortDirection}`;
+    urlString += `&sortOrder=${sortDirection}`;
   }
   if (sortBy && sortBy.length > 1) {
-    urlString += `&orderBy=${sortBy}`;
+    urlString += `&sortField=${sortBy}`;
   }
 
   const data = useQuery(

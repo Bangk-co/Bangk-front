@@ -44,7 +44,7 @@ const Header = ({ isMobile, isTablet }) => {
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
-            size={theme.fonts.size.h6}
+            size={theme.fonts.size.default2}
             radius={"40px"}
             onClick={handleLogout}
             style={{ width: "30px" }}
@@ -65,7 +65,7 @@ const Header = ({ isMobile, isTablet }) => {
             />
           </Div>
           <Button
-            width={"196px"}
+            width={"170px"}
             padding="12px 16px"
             labelColor={theme.colors.green900}
             borderHover={theme.colors.green900}
@@ -74,7 +74,7 @@ const Header = ({ isMobile, isTablet }) => {
             hover={theme.colors.gray100}
             background={theme.colors.white}
             font={theme.fonts.family.primary}
-            size={theme.fonts.size.h6}
+            size={theme.fonts.size.default2}
             radius={"40px"}
             onClick={handleLogout}
             startIcon={<Image alt="logo" src={logout} width={16} height={16} />}

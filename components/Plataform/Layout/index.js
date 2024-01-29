@@ -88,6 +88,7 @@ export const Layout = ({ children }) => {
                 <Link
                   height="93px"
                   width="134px"
+                  mobileWidth="100px"
                   padding="0px 0px 0px 16px"
                   m="0px 0px 16px 20px"
                   radius="0px 16px 16px 0px"

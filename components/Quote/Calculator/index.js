@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@/components/Common/Button";
-import { Col, Div, Row, Text } from "@/styles/Common";
-import { WrapperInsurance, WrapperWapp, WrapperWappCal } from "@/styles/Quote";
+import { Div, Row, Text } from "@/styles/Common";
+import { Col, WrapperInsurance, WrapperWappCal } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import Image from "next/image";
@@ -9,11 +9,7 @@ import wappIcon from "@/assets/icons/whatsapp-original.svg"
 
 export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, handleNext }) => {
   return (
-    <Col
-      width={isMobile ? "312px" : "549px"}
-      m={isMobile ? "0 0 0 0" : "36px 0 0 0"}
-      justify={isMobile && "center"}
-    >
+    <Col m={"36px 0 0 0"} justifyMobile={"center"}>
       <Text
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
         color={theme.colors.white}

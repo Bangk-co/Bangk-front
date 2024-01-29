@@ -64,7 +64,7 @@ const CreditData = ({ isMobile, isTablet }) => {
     const { id, value } = event.target;
     const newInfo = { ...creditInfo }
 
-    newInfo[id] = value
+    newInfo[id] = value.replace(/\D/g, '');
     setCreditInfo(newInfo)
   }
 

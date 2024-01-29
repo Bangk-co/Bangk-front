@@ -61,7 +61,7 @@ const DrawerEditClient = ({
 
     if (age < 18) {
       newErrorForm["birthDate"].error = true;
-      newErrorForm["birthDate"].message = "Fecha invalida";
+      newErrorForm["birthDate"].message = "Debe ser mayor de edad";
       setErrorForm(newErrorForm);
     } else {
       newErrorForm["birthDate"].error = false;
@@ -141,9 +141,9 @@ const DrawerEditClient = ({
       onClose={closeDrawer}
     >
       <Text
-        weight={theme.fonts.weight.semibold}
         size={theme.fonts.size.ft}
         color={theme.colors.neutralGray800}
+        font={theme.fonts.family.primaryBold}
       >
         Edita la información del cliente
       </Text>
@@ -326,9 +326,8 @@ const DrawerEditClient = ({
         <Button
           width="100%"
           height={"40px"}
-          font={theme.fonts.family.primary}
+          font={theme.fonts.family.primaryBold}
           size={theme.fonts.size.default2}
-          labelWeight={theme.fonts.weight.bold}
           onClick={handleEditPatient}
           disabled={updateClient.isLoading}
           startIcon={

@@ -48,6 +48,7 @@ export const theme = {
       primary: "Gilroy",
       primaryBold: "Gilroy Bold",
       secondary: "Rubik",
+      tertiary: "Montserrat",
     },
     size: {
       m: "5.625rem",

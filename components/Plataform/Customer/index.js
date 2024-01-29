@@ -244,9 +244,9 @@ const Customer = ({ isMobile, isTablet }) => {
         </Row>
         <Col gap="8px" align="center" justify="center">
           <Text
-            weight={theme.fonts.weight.bold}
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.h5}
+            font={theme.fonts.family.primaryBold}
           >
             {clientInfo?.name} {clientInfo?.lastName}
           </Text>
@@ -272,9 +272,9 @@ const Customer = ({ isMobile, isTablet }) => {
         </Row>
         <Col gap="8px" justify="center">
           <Text
-            weight={theme.fonts.weight.bold}
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.sm}
+            font={theme.fonts.family.primaryBold}
           >
             Datos Generales
           </Text>

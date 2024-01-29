@@ -65,7 +65,7 @@ const Header = ({ isMobile, isTablet }) => {
             />
           </Div>
           <Button
-            width={"170px"}
+            width={"173px"}
             padding="12px 16px"
             labelColor={theme.colors.green900}
             borderHover={theme.colors.green900}
@@ -73,7 +73,7 @@ const Header = ({ isMobile, isTablet }) => {
             borderHeight={"3px solid"}
             hover={theme.colors.gray100}
             background={theme.colors.white}
-            font={theme.fonts.family.primary}
+            font={theme.fonts.family.primaryBold}
             size={theme.fonts.size.default2}
             radius={"40px"}
             onClick={handleLogout}

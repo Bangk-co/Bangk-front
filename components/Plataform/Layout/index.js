@@ -112,6 +112,11 @@ export const Layout = ({ children }) => {
                           ? theme.colors.green900
                           : theme.colors.white
                       }
+                      font={
+                        pathname.includes(item.path)
+                          ? theme.fonts.family.primaryBold
+                          : theme.fonts.family.primary
+                      }
                     >
                       {item.name}
                     </Text>

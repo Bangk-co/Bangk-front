@@ -43,9 +43,8 @@ const Table = ({
                 {column.sorter ? (
                   <Row justify="space-between" align="center">
                     <Text
-                      weight={theme.fonts.weight.bold}
                       size={theme.fonts.size.sm}
-                      font={theme.fonts.family.primary}
+                      font={theme.fonts.family.primaryBold}
                     >
                       {column.title}
                     </Text>

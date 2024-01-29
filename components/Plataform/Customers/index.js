@@ -182,7 +182,7 @@ const Customers = ({ isMobile, isTablet }) => {
         align="center"
         justify="space-between"
       >
-        <Text weight={theme.fonts.weight.bold} size={theme.fonts.size.h2}>
+        <Text size={theme.fonts.size.h2} font={theme.fonts.family.primaryBold}>
           Clientes
         </Text>
         <Row gap="8px" align="center">

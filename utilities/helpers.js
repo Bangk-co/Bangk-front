@@ -41,18 +41,18 @@ export const decrypt = (encryptedMessage) => {
 
 export const numberFormat = (value) => {
   if (value !== "" && typeof value === "number") {
-    const newValue = value.toString()
-    return newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    const newValue = value.toString();
+    return newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
-  return ""
-}
+  return "";
+};
 
 export const numberFormatText = (value) => {
   if (value !== "") {
-    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
-  return null
-}
+  return null;
+};
 
 export const formattedDate = (date) => {
   return new Date(date).toLocaleDateString("es-ES", {
@@ -83,6 +83,11 @@ export const renderStateDiv = (stateName) => {
 
   switch (stateName) {
     case "Potencial":
+      backgroundColor = theme.colors.blue100;
+      borderColor = theme.colors.blue;
+      color = theme.colors.blue;
+      break;
+    case "Registrado":
       backgroundColor = theme.colors.blue100;
       borderColor = theme.colors.blue;
       color = theme.colors.blue;

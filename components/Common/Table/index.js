@@ -58,7 +58,12 @@ const Table = ({
                     />
                   </Row>
                 ) : (
-                  column.title
+                  <Text
+                    size={theme.fonts.size.sm}
+                    font={theme.fonts.family.primaryBold}
+                  >
+                    {column.title}
+                  </Text>
                 )}
               </TableCell>
             ))}

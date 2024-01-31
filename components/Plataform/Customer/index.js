@@ -72,7 +72,6 @@ const Customer = ({ isMobile, isTablet }) => {
   const [errorForm, setErrorForm] = useState(initialError);
 
   const [showDrawer, setShowDrawer] = useState(false);
-  const [actualInfo, setActualInfo] = useState(initialValues);
 
   useEffect(() => {
     if (!clients?.selectedClient?.idClient) {
@@ -156,6 +155,8 @@ const Customer = ({ isMobile, isTablet }) => {
     email: clientInfo?.email,
   };
 
+  const [actualInfo, setActualInfo] = useState(initialValues);
+
   useEffect(() => {
     setActualInfo({
       id: clientInfo?.idClient,
@@ -172,8 +173,7 @@ const Customer = ({ isMobile, isTablet }) => {
       genderId: getValueFromLabel(clientInfo?.genderName, genderOptions),
       email: clientInfo?.email,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientInfo]);
+  }, [clientInfo, documentTypeOptions, genderOptions]);
 
   const handleBack = () => {
     dispatch(setSelectedClientInformation({}));

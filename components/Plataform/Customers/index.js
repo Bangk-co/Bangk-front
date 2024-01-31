@@ -140,7 +140,7 @@ const Customers = ({ isMobile, isTablet }) => {
         dataIndex: "sales",
         key: "sales",
         width: 150,
-        sorter: false,
+        sorter: true,
         sortOrder: sortOptions.sortBy === "sales" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },

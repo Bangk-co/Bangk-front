@@ -139,3 +139,16 @@ export const renderStateDiv = (stateName) => {
     </Div>
   );
 };
+
+export const documentTypeAbbreviation = (documentType) => {
+  switch (documentType) {
+    case "Cédula de ciudadania":
+      return "C.C.";
+    case "Cédula de extranjeria":
+      return "C.E.";
+    case "Número de pasaporte":
+      return "PA";
+    default:
+      return "C.C.";
+  }
+};

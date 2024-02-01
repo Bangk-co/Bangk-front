@@ -5,7 +5,7 @@ export const WrapperLayout = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
-  min-height: 952px;
+  min-height: 696px;
   overflow-x: hidden;
   flex-direction: column;
 `;
@@ -17,7 +17,7 @@ export const WrapperContent = styled.div`
   background: ${theme.colors.white} 0% 0% no-repeat padding-box;
   opacity: 1;
   box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.06);
-  min-height: 952px;
+  min-height: 696px;
   height: 100%;
 `;
 

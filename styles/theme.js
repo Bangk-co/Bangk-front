@@ -46,6 +46,7 @@ export const theme = {
   fonts: {
     family: {
       primary: "Gilroy",
+      primaryMedium: "Gilroy Medium",
       primaryBold: "Gilroy Bold",
       secondary: "Rubik",
       tertiary: "Montserrat",

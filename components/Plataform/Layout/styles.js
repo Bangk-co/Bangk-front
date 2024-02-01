@@ -4,7 +4,7 @@ import { theme } from "../../../styles/theme";
 export const WrapperLayout = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 72px);
   min-height: 696px;
   overflow-x: hidden;
   flex-direction: column;

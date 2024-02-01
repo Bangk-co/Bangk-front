@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/Common/Button";
 import Image from "next/image";
 import uploadFile from "@/assets/icons/uploadFile.svg"
@@ -27,11 +28,20 @@ export const UploadButton = ({
   errorFile,
 }) => {
   const uploaded = value !== null
-  const hasError = errorFile[id];
+  const [hasError, setHasError] = useState(errorFile[id])
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false)
+
+  useEffect(() => {
+    setHasError(errorFile[id])
+    setForceUpdate(!forceUpdate)
+  }, [errorFile])
+
+  const handleDeleteError = (idButton) => {
+    setHasError(!errorFile[idButton])
+  }
 
   const handleChange = (event, id) => {
     const { files } = event.target;
@@ -112,6 +122,7 @@ export const UploadButton = ({
                     onClick={(event) => {
                       event.stopPropagation();
                       handleDelete(id);
+                      hasError && handleDeleteError(id)
                     }}
                     style={{ zIndex: 5 }}
                   >

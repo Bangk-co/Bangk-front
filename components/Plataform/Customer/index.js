@@ -16,6 +16,7 @@ import profileIcon from "../../../assets/icons/person.svg";
 import editIcon from "../../../assets/icons/edit.svg";
 import maleProfile from "../../../assets/img/maleProfile.png";
 import femaleProfile from "../../../assets/img/femaleProfile.png";
+import ClientInfoCard from "./ClientInfoCard";
 
 import {
   formattedDate,
@@ -198,7 +199,8 @@ const Customer = ({ isMobile, isTablet }) => {
         errorForm={errorForm}
         setErrorForm={setErrorForm}
       />
-      <Col gap="24px" width="275px">
+
+      <Col gap="12px" width="275px">
         <Row gap="8px" align="center">
           <Button
             width="32px"
@@ -221,174 +223,12 @@ const Customer = ({ isMobile, isTablet }) => {
             Volver a clientes
           </Text>
         </Row>
-        <Row gap="8px" align="center" justify="center">
-          <Div
-            background={theme.colors.orange}
-            radius="50%"
-            width="150px"
-            height="150px"
-            align="center"
-            justify="center"
-          >
-            <Image
-              alt="profile"
-              src={
-                clientInfo?.genderName === "Masculino"
-                  ? maleProfile
-                  : femaleProfile
-              }
-              width={150}
-              height={150}
-            />
-          </Div>
-        </Row>
-        <Col gap="8px" align="center" justify="center">
-          <Text
-            color={theme.colors.neutralGray800}
-            size={theme.fonts.size.h5}
-            font={theme.fonts.family.primaryBold}
-          >
-            {clientInfo?.name} {clientInfo?.lastName}
-          </Text>
-          <Text
-            weight={theme.fonts.weight.regular}
-            color={theme.colors.neutralGray800}
-            size={theme.fonts.size.sm}
-          >
-            {`${clientInfo?.documentType} ${Number(
-              clientInfo?.identificationNumber
-            ).toLocaleString()}`}
-          </Text>
-          <Text
-            weight={theme.fonts.weight.regular}
-            color={theme.colors.neutralGray800}
-            size={theme.fonts.size.sm}
-          >
-            {`ID: ${clientInfo?.idClient}`}
-          </Text>
-        </Col>
-        <Row gap="8px" align="center" justify="center">
-          <Div background={theme.colors.gray50} width="275px" height="1px" />
-        </Row>
-        <Col gap="8px" justify="center">
-          <Text
-            color={theme.colors.neutralGray800}
-            size={theme.fonts.size.sm}
-            font={theme.fonts.family.primaryBold}
-          >
-            Datos Generales
-          </Text>
-          <Text
-            weight={theme.fonts.weight.medium}
-            color={theme.colors.neutralGray900}
-            size={theme.fonts.size.sm}
-          >
-            Correo electrónico
-          </Text>
-          <Row gap="8px" m="2px 0 0 0" align="center">
-            <Image alt="email" src={emailIcon} width={16} height={16} />
-            <Text
-              mt="2px"
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.default2}
-            >
-              {clientInfo?.email}
-            </Text>
-          </Row>
-          <Text
-            mt="16px"
-            weight={theme.fonts.weight.medium}
-            color={theme.colors.neutralGray900}
-            size={theme.fonts.size.sm}
-          >
-            Número de celular
-          </Text>
-          <Row gap="8px" m="2px 0 0 0" align="center">
-            <Image alt="phone" src={phoneIcon} width={16} height={16} />
-            <Text
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.default2}
-            >
-              {`${getLabelFromValue(
-                clientInfo?.countryCode,
-                indicativesOptions
-              )} ${formattedPhone(clientInfo?.phoneNumber)}`}
-            </Text>
-          </Row>
-          <Text
-            mt="16px"
-            weight={theme.fonts.weight.medium}
-            color={theme.colors.neutralGray900}
-            size={theme.fonts.size.sm}
-          >
-            Fecha de nacimiento
-          </Text>
-          <Row gap="8px" m="2px 0 0 0" align="center">
-            <Image alt="calendar" src={calendarIcon} width={16} height={16} />
-            <Text
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.default2}
-            >
-              {formattedDate(clientInfo?.birthDate)}
-            </Text>
-          </Row>
-          <Text
-            mt="16px"
-            weight={theme.fonts.weight.medium}
-            color={theme.colors.neutralGray900}
-            size={theme.fonts.size.sm}
-          >
-            Género
-          </Text>
-          <Row gap="8px" m="2px 0 0 0" align="center">
-            <Image alt="profile" src={profileIcon} width={16} height={16} />
-            <Text
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.default2}
-            >
-              {clientInfo?.genderName}
-            </Text>
-          </Row>
-          <Text
-            mt="16px"
-            weight={theme.fonts.weight.medium}
-            color={theme.colors.neutralGray900}
-            size={theme.fonts.size.sm}
-          >
-            Estado del cliente
-          </Text>
-          <Row gap="8px" width="100%" justify="center">
-            {renderStateDiv(clientInfo?.stateName)}
-          </Row>
-        </Col>
-        <Link
-          onClick={() => {
-            setShowDrawer(true);
-            toast.dismiss();
-          }}
-          hover={theme.colors.gray100}
-          color={theme.colors.green900}
-          font={theme.fonts.family.primary}
-          weight={theme.fonts.weight.semibold}
-          size={theme.fonts.size.default2}
-          width="100%"
-          radius="40px"
-        >
-          <Row
-            gap="8px"
-            align="center"
-            m="8px 0"
-            style={{
-              borderBottom: `2px solid ${theme.colors.green900}`,
-            }}
-          >
-            <Image alt="edit" src={editIcon} width={16} height={16} /> Editar
-          </Row>
-        </Link>
+        <ClientInfoCard
+          indicativesOptions={indicativesOptions}
+          clientInfo={clientInfo}
+          getLabelFromValue={getLabelFromValue}
+          setShowDrawer={setShowDrawer}
+        />
       </Col>
 
       <Row m="0 0 37px 0">

@@ -195,6 +195,7 @@ const Customer = ({ isMobile, isTablet }) => {
         documentTypeOptions={documentTypeOptions}
         indicativesOptions={indicativesOptions}
         actualInfo={actualInfo}
+        initialValues={initialValues}
         setActualInfo={setActualInfo}
         errorForm={errorForm}
         setErrorForm={setErrorForm}

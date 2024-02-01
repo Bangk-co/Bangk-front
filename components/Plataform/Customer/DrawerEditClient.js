@@ -22,6 +22,7 @@ const DrawerEditClient = ({
   closeDrawer,
   documentTypeOptions,
   indicativesOptions,
+  initialValues,
   actualInfo,
   setActualInfo,
   errorForm,
@@ -155,8 +156,7 @@ const DrawerEditClient = ({
           radius="4px"
           width="100%"
           height="40px"
-          labelFont={theme.fonts.family.primary}
-          labelWeight={theme.fonts.weight.medium}
+          labelFont={theme.fonts.family.primaryMedium}
           labelSize={theme.fonts.size.sm}
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
@@ -173,8 +173,7 @@ const DrawerEditClient = ({
           radius="4px"
           width="100%"
           height="40px"
-          labelFont={theme.fonts.family.primary}
-          labelWeight={theme.fonts.weight.medium}
+          labelFont={theme.fonts.family.primaryMedium}
           labelSize={theme.fonts.size.sm}
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
@@ -195,8 +194,7 @@ const DrawerEditClient = ({
             size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.neutralGray900}
-            labelFont={theme.fonts.family.primary}
-            labelWeight={theme.fonts.weight.medium}
+            labelFont={theme.fonts.family.primaryMedium}
             font={theme.fonts.family.primary}
             border={theme.colors.neutralGray500}
             notFocused={true}
@@ -217,8 +215,7 @@ const DrawerEditClient = ({
             radius="4px"
             width="100%"
             height="40px"
-            labelFont={theme.fonts.family.primary}
-            labelWeight={theme.fonts.weight.medium}
+            labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
@@ -233,6 +230,27 @@ const DrawerEditClient = ({
             }
           />
         </Row>
+        <DatePicker
+          placeholder={"dd/mm/aaaa"}
+          label="Fecha de expedición de la cedula*"
+          id="expirationDate"
+          radius="4px"
+          width="100%"
+          height="40px"
+          labelFont={theme.fonts.family.primaryMedium}
+          labelSize={theme.fonts.size.sm}
+          font={theme.fonts.family.primary}
+          size={theme.fonts.size.default2}
+          labelColor={theme.colors.neutralGray900}
+          notFocused={true}
+          placeholderColor={theme.colors.neutralGray500}
+          border={theme.colors.neutralGray500}
+          /* TODO update de exp date
+          onChange={handleChangeDate}
+          value={dayjs(actualInfo?.birthDate)}
+          error={errorForm.birthDate.error}
+          helper={errorForm.birthDate.error ? errorForm.birthDate.message : ""} */
+        />
         <Row>
           <Select
             placeholder={"Selecciona código"}
@@ -244,8 +262,7 @@ const DrawerEditClient = ({
             size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.neutralGray900}
-            labelFont={theme.fonts.family.primary}
-            labelWeight={theme.fonts.weight.medium}
+            labelFont={theme.fonts.family.primaryMedium}
             font={theme.fonts.family.primary}
             border={theme.colors.neutralGray500}
             notFocused={true}
@@ -266,8 +283,7 @@ const DrawerEditClient = ({
             radius="4px"
             width="100%"
             height="40px"
-            labelFont={theme.fonts.family.primary}
-            labelWeight={theme.fonts.weight.medium}
+            labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
@@ -287,8 +303,7 @@ const DrawerEditClient = ({
           radius="4px"
           width="100%"
           height="40px"
-          labelFont={theme.fonts.family.primary}
-          labelWeight={theme.fonts.weight.medium}
+          labelFont={theme.fonts.family.primaryMedium}
           labelSize={theme.fonts.size.sm}
           font={theme.fonts.family.primary}
           size={theme.fonts.size.default2}
@@ -306,8 +321,7 @@ const DrawerEditClient = ({
           name="genderId"
           direction="row"
           label="Género*"
-          labelFont={theme.fonts.family.primary}
-          labelWeight={theme.fonts.weight.medium}
+          labelFont={theme.fonts.family.primaryMedium}
           labelSize={theme.fonts.size.sm}
           value={actualInfo?.genderId}
           onChange={handleRadio}
@@ -324,14 +338,19 @@ const DrawerEditClient = ({
           />
         </RadioGroup>
       </Col>
-      <Row style={{ marginTop: "auto" }}>
+      <Row m="24px 0 0 0">
         <Button
           width="100%"
           height={"40px"}
           font={theme.fonts.family.primaryBold}
           size={theme.fonts.size.default2}
           onClick={handleEditPatient}
-          disabled={updateClient.isLoading}
+          background={theme.colors.green900}
+          border={"transparent"}
+          disabled={
+            JSON.stringify(initialValues) === JSON.stringify(actualInfo) ||
+            updateClient.isLoading
+          }
           startIcon={
             updateClient.isLoading ? (
               <CircularProgress

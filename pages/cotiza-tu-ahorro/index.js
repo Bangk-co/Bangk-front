@@ -15,6 +15,7 @@ import { BackButton } from "@/components/Quote/BackButton.js";
 import { ImageCol } from "@/components/Quote/ImageCol";
 import { InitForm } from "@/components/Quote/InitForm";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
+import dayjs from "dayjs";
 
 
 const Quote = ({ isMobile, isTablet }) => {
@@ -33,7 +34,7 @@ const Quote = ({ isMobile, isTablet }) => {
   })
 
   useEffect(() => {
-    setFormInfo(initData)
+    setFormInfo({ ...initData, birthdate: dayjs(initData.birthdate) })
   }, [initData])
 
   useEffect(() => {

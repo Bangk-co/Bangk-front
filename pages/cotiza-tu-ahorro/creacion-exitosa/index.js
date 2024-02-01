@@ -21,7 +21,7 @@ const CreationSuceess = ({ isMobile }) => {
       <WrapperQuote>
         <Div justify="center" width="100%">
           <Col align="center">
-            <Image alt="success" src={woman} />
+            <Image alt="success" src={woman} width={isMobile ? 318.19 : 420} height={isMobile ? 318.68 : 420.64} />
             <Text
               size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h3}
               color={theme.colors.white}
@@ -53,7 +53,7 @@ const CreationSuceess = ({ isMobile }) => {
               radius={"40px"}
               onClick={handleBangk}
             >
-              Ir a Bangk.com
+              Volver a Bangk.com
             </Button>
           </Col>
         </Div>

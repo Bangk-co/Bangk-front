@@ -53,7 +53,7 @@ const CreationSuceess = ({ isMobile }) => {
               radius={"40px"}
               onClick={handleBangk}
             >
-              Volver a Bangk.com
+              Ir a Bangk
             </Button>
           </Col>
         </Div>

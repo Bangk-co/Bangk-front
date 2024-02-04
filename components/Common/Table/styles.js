@@ -1,5 +1,4 @@
 import styled from "styled-components";
-/* import { Table } from "antd"; */
 import { theme } from "../../../styles/theme";
 import { Table, TablePagination } from "@mui/material";
 

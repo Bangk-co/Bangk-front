@@ -6,29 +6,25 @@ import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
 import { Div, Row, Col } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
-import { Link } from "@/components/Common/Link";
+import { Tabs } from "@/components/Common/Tabs";
 import DrawerEditClient from "./DrawerEditClient";
 import backIcon from "../../../assets/icons/back.svg";
-import emailIcon from "../../../assets/icons/email.svg";
-import phoneIcon from "../../../assets/icons/phone.svg";
-import calendarIcon from "../../../assets/icons/date_range.svg";
-import profileIcon from "../../../assets/icons/person.svg";
-import editIcon from "../../../assets/icons/edit.svg";
-import maleProfile from "../../../assets/img/maleProfile.png";
-import femaleProfile from "../../../assets/img/femaleProfile.png";
+import dnsIconBold from "../../../assets/icons/dns-bold.svg";
+import dnsIcon from "../../../assets/icons/dns.svg";
+import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
+import folderIcon from "../../../assets/icons/folder_copy.svg";
 import ClientInfoCard from "./ClientInfoCard";
-
-import {
-  formattedDate,
-  formattedPhone,
-  renderStateDiv,
-} from "@/utilities/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedClientInformation } from "@/store/customers";
+import { setSelectedApplicationInformation } from "@/store/applications";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetApplications from "@/hooks/Customers/useGetApplications";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
+import { Tab } from "@/components/Common/Tabs/Tab";
+import { WrapperInfo, ApplicationCard } from "./styles";
+import ApplicationInfo from "./ApplicationInfo";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -73,6 +69,7 @@ const Customer = ({ isMobile, isTablet }) => {
   const [errorForm, setErrorForm] = useState(initialError);
 
   const [showDrawer, setShowDrawer] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   useEffect(() => {
     if (!clients?.selectedClient?.idClient) {
@@ -82,7 +79,7 @@ const Customer = ({ isMobile, isTablet }) => {
   }, [clients?.selectedClient]);
 
   const getClient = useGetClientInfo(clients?.selectedClient?.idClient);
-  const { data, isLoading, isFetching } = getClient;
+  const { data, isLoading } = getClient;
   const [clientInfo, setClientInfo] = useState();
   useEffect(() => {
     if (data?.data?.clientsInfo.length > 0) {
@@ -140,6 +137,16 @@ const Customer = ({ isMobile, isTablet }) => {
     return selectedOption ? selectedOption.label : null;
   };
 
+  const getApplications = useGetApplications(clients?.selectedClient?.idClient);
+  const { data: dataApplications, isLoading: isLoadingApplications } =
+    getApplications;
+  const [applicationsInfo, setApplicationsInfo] = useState([]);
+  useEffect(() => {
+    if (dataApplications?.data?.loanApplications.length > 0) {
+      setApplicationsInfo(dataApplications?.data?.loanApplications);
+    }
+  }, [dataApplications, isLoadingApplications]);
+
   const initialValues = {
     id: clientInfo?.idClient,
     name: clientInfo?.name,
@@ -187,6 +194,21 @@ const Customer = ({ isMobile, isTablet }) => {
     setShowDrawer(false);
   };
 
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
+  const handleApplication = (applicationInfo) => {
+    const updatedApplicationInfo = {
+      ...applicationInfo,
+      clientId: clientInfo?.idClient,
+      clientName: clientInfo?.name,
+      clientLastName: clientInfo?.lastName,
+    };
+    dispatch(setSelectedApplicationInformation(updatedApplicationInfo));
+    router.push("/plataforma/clientes/solicitud");
+  };
+
   return (
     <Div direction="row" width="100%" gap="32px">
       <DrawerEditClient
@@ -232,15 +254,52 @@ const Customer = ({ isMobile, isTablet }) => {
         />
       </Col>
 
-      <Row m="0 0 37px 0">
-        <Text
-          weight={theme.fonts.weight.bold}
-          size={theme.fonts.size.h6}
-          color={theme.colors.gray900}
-        >
-          Solicitudes
-        </Text>
-      </Row>
+      <Col width="100%">
+        <Row>
+          <Tabs
+            value={selectedTab}
+            background={theme.colors.orange}
+            onChange={handleTabChange}
+          >
+            <Tab
+              label="Solicitudes"
+              icon={
+                <Image
+                  alt="back"
+                  src={selectedTab === 0 ? dnsIconBold : dnsIcon}
+                  width={24}
+                  height={24}
+                />
+              }
+              iconPosition="start"
+            />
+            <Tab
+              label="Documentos"
+              icon={
+                <Image
+                  alt="back"
+                  src={selectedTab === 1 ? folderIconBold : folderIcon}
+                  width={24}
+                  height={24}
+                />
+              }
+              iconPosition="start"
+            />
+          </Tabs>
+        </Row>
+        <WrapperInfo>
+          {selectedTab === 0 &&
+            applicationsInfo.map((application, idx) => (
+              <ApplicationCard key={idx}>
+                <ApplicationInfo
+                  application={application}
+                  handleApplication={handleApplication}
+                />
+              </ApplicationCard>
+            ))}
+          {selectedTab === 1 && <Text>Documentos</Text>}
+        </WrapperInfo>
+      </Col>
     </Div>
   );
 };

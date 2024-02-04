@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import balance from "./balance";
 import clients from "./customers";
+import applications from "./applications";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
 };
 
@@ -15,6 +16,7 @@ const store = configureStore({
   reducer: {
     balance: persistedReducer,
     clients,
+    applications,
   },
 });
 

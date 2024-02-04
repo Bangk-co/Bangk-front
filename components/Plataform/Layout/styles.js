@@ -39,7 +39,7 @@ export const Sider = styled.div`
 export const Content = styled.div`
   position: relative;
   display: flex;
-  padding: 32px;
+  padding: ${({ p }) => p || "32px"};
   height: 100%;
   width: calc(100% - 150px);
   background: ${theme.colors.white} 0% 0% no-repeat padding-box;

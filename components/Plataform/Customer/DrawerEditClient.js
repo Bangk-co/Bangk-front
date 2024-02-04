@@ -351,6 +351,8 @@ const DrawerEditClient = ({
             JSON.stringify(initialValues) === JSON.stringify(actualInfo) ||
             updateClient.isLoading
           }
+          hover={theme.colors.green900}
+          borderHover={theme.colors.green900}
           startIcon={
             updateClient.isLoading ? (
               <CircularProgress

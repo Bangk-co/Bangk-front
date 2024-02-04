@@ -15,7 +15,7 @@ import calculatorIconWhite from "../../../assets/icons/calculatorWhite.svg";
 import settingIcon from "../../../assets/icons/settings.svg";
 import Customers from "../Customers";
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, padding }) => {
   const router = useRouter();
   const { pathname } = router;
 
@@ -168,7 +168,7 @@ export const Layout = ({ children }) => {
               </Link>
             </Div>
           </Sider>
-          <Content>{children}</Content>
+          <Content p={padding}>{children}</Content>
         </WrapperContent>
       </>
     </WrapperLayout>

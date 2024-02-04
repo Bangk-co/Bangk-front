@@ -9,7 +9,7 @@ export const theme = {
     green200: "#0B8A0026",
     green500: "#0B8A00",
     green900: "#074240",
-    orange: "#FF8400",
+    orange: "#FD6700",
     red: "#E94E4E",
     red100: "#F8D8D3",
     red500: "#DB3B21",
@@ -34,6 +34,7 @@ export const theme = {
     neutralGray200: "#D2D1D4",
     neutralGray400: "#A6A4A8",
     neutralGray500: "#8F8D93",
+    neutralGray600: "#656268",
     neutralGray800: "#3C3B3E",
     neutralGray900: "#28272A",
     terciary50: "#FFFBEE",
@@ -42,6 +43,7 @@ export const theme = {
     error100: "#F8D8D3",
     error300: "#ED9D90",
     error800: "#6D1D10",
+    teal: "#83A09F",
   },
   fonts: {
     family: {

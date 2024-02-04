@@ -17,11 +17,13 @@ import ClientInfoCard from "./ClientInfoCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedClientInformation } from "@/store/customers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetApplications from "@/hooks/Customers/useGetApplications";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import { Tab } from "@/components/Common/Tabs/Tab";
-import { WrapperInfo } from "./styles";
+import { WrapperInfo, ApplicationCard } from "./styles";
+import ApplicationInfo from "./ApplicationInfo";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -76,7 +78,7 @@ const Customer = ({ isMobile, isTablet }) => {
   }, [clients?.selectedClient]);
 
   const getClient = useGetClientInfo(clients?.selectedClient?.idClient);
-  const { data, isLoading, isFetching } = getClient;
+  const { data, isLoading } = getClient;
   const [clientInfo, setClientInfo] = useState();
   useEffect(() => {
     if (data?.data?.clientsInfo.length > 0) {
@@ -133,6 +135,16 @@ const Customer = ({ isMobile, isTablet }) => {
     const selectedOption = options.find((option) => option.value === value);
     return selectedOption ? selectedOption.label : null;
   };
+
+  const getApplications = useGetApplications(clients?.selectedClient?.idClient);
+  const { data: dataApplications, isLoading: isLoadingApplications } =
+    getApplications;
+  const [applicationsInfo, setApplicationsInfo] = useState([]);
+  useEffect(() => {
+    if (dataApplications?.data?.loanApplications.length > 0) {
+      setApplicationsInfo(dataApplications?.data?.loanApplications);
+    }
+  }, [dataApplications, isLoadingApplications]);
 
   const initialValues = {
     id: clientInfo?.idClient,
@@ -264,7 +276,12 @@ const Customer = ({ isMobile, isTablet }) => {
           </Tabs>
         </Row>
         <WrapperInfo>
-          {selectedTab === 0 && <Text>Solicitudes</Text>}
+          {selectedTab === 0 &&
+            applicationsInfo.map((application, idx) => (
+              <ApplicationCard key={idx}>
+                <ApplicationInfo application={application} />
+              </ApplicationCard>
+            ))}
           {selectedTab === 1 && <Text>Documentos</Text>}
         </WrapperInfo>
       </Col>

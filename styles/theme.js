@@ -42,6 +42,7 @@ export const theme = {
     error100: "#F8D8D3",
     error300: "#ED9D90",
     error800: "#6D1D10",
+    teal: "#83A09F",
   },
   fonts: {
     family: {

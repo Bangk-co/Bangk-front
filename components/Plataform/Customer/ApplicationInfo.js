@@ -3,12 +3,11 @@ import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
 import { formattedDate, formattedPrice } from "@/utilities/helpers";
 
-const ApplicationInfo = ({ application }) => {
-  console.log("application", application);
+const ApplicationInfo = ({ application, handleApplication }) => {
   return (
     <Link
       onClick={() => {
-        console.log("navigagte");
+        handleApplication(application);
       }}
       hover={theme.colors.white}
       color={theme.colors.white}

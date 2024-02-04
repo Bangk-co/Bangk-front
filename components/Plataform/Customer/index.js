@@ -16,6 +16,7 @@ import folderIcon from "../../../assets/icons/folder_copy.svg";
 import ClientInfoCard from "./ClientInfoCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedClientInformation } from "@/store/customers";
+import { setSelectedApplicationInformation } from "@/store/applications";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetApplications from "@/hooks/Customers/useGetApplications";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
@@ -197,6 +198,17 @@ const Customer = ({ isMobile, isTablet }) => {
     setSelectedTab(newValue);
   };
 
+  const handleApplication = (applicationInfo) => {
+    const updatedApplicationInfo = {
+      ...applicationInfo,
+      clientId: clientInfo?.idClient,
+      clientName: clientInfo?.name,
+      clientLastName: clientInfo?.lastName,
+    };
+    dispatch(setSelectedApplicationInformation(updatedApplicationInfo));
+    router.push("/plataforma/clientes/solicitud");
+  };
+
   return (
     <Div direction="row" width="100%" gap="32px">
       <DrawerEditClient
@@ -279,7 +291,10 @@ const Customer = ({ isMobile, isTablet }) => {
           {selectedTab === 0 &&
             applicationsInfo.map((application, idx) => (
               <ApplicationCard key={idx}>
-                <ApplicationInfo application={application} />
+                <ApplicationInfo
+                  application={application}
+                  handleApplication={handleApplication}
+                />
               </ApplicationCard>
             ))}
           {selectedTab === 1 && <Text>Documentos</Text>}

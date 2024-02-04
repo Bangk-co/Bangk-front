@@ -34,6 +34,7 @@ export const theme = {
     neutralGray200: "#D2D1D4",
     neutralGray400: "#A6A4A8",
     neutralGray500: "#8F8D93",
+    neutralGray600: "#656268",
     neutralGray800: "#3C3B3E",
     neutralGray900: "#28272A",
     terciary50: "#FFFBEE",

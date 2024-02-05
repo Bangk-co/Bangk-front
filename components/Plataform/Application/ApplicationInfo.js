@@ -8,13 +8,13 @@ const ApplicationInfo = ({ application }) => {
       <Row>
         <Text
           color={theme.colors.neutralGray900}
-          size={theme.fonts.size.h6}
+          size={theme.fonts.size.h5}
           font={theme.fonts.family.primaryBold}
         >
           {`${application.loanApplicationId} - Crédito ${application.loanTypeName}`}
         </Text>
       </Row>
-      <Row m="8px 0 0 0" gap="16px">
+      <Row m="24px 0 0 0" gap="16px">
         <Col width="400px" align="left" gap="8px">
           <Text
             color={theme.colors.neutralGray900}

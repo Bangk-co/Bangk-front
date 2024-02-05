@@ -147,7 +147,7 @@ const ApplicationInfo = ({ application, handleApplication }) => {
               mt="8px"
               mb="8px"
             >
-              Fecha de solicitud
+              ---
             </Text>
           </Col>
         </Row>

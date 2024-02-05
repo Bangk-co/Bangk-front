@@ -54,9 +54,7 @@ const DrawerEditClient = ({
   };
 
   const handleChangeDate = (event, id) => {
-    console.log("id", id);
     const newErrorForm = { ...errorForm };
-    console.log("newErrorForm", newErrorForm[id]);
 
     const today = new Date();
     const newDate = new Date(event);

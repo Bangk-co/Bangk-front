@@ -53,23 +53,23 @@ const DrawerEditClient = ({
     }));
   };
 
-  const handleChangeDate = (event) => {
+  const handleChangeDate = (event, id) => {
     const newErrorForm = { ...errorForm };
 
     const today = new Date();
-    const birthDate = new Date(event);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    const newDate = new Date(event);
+    const age = today.getFullYear() - newDate.getFullYear();
 
-    if (age < 18) {
-      newErrorForm["birthDate"].error = true;
-      newErrorForm["birthDate"].message = "Debe ser mayor de edad";
+    if (id === "birthDate" && age < 18) {
+      newErrorForm[id].error = true;
+      newErrorForm[id].message = "Debe ser mayor de edad";
       setErrorForm(newErrorForm);
     } else {
-      newErrorForm["birthDate"].error = false;
-      newErrorForm["birthDate"].message = "";
+      newErrorForm[id].error = false;
+      newErrorForm[id].message = "";
       setErrorForm(newErrorForm);
       const newClientForm = { ...actualInfo };
-      newClientForm["birthDate"] = event;
+      newClientForm[id] = event;
       setActualInfo(newClientForm);
     }
   };
@@ -112,6 +112,7 @@ const DrawerEditClient = ({
             lastName: actualInfo?.lastName,
             documentTypeId: actualInfo?.documentType,
             identificationNumber: actualInfo?.identificationNumber,
+            documentIssueDate: actualInfo?.documentIssueDate,
             countryCode: actualInfo?.countryCode,
             phoneNumber: actualInfo?.phoneNumber,
             birthDate: actualInfo?.birthDate,
@@ -232,8 +233,8 @@ const DrawerEditClient = ({
         </Row>
         <DatePicker
           placeholder={"dd/mm/aaaa"}
-          label="Fecha de expedición de la cedula*"
-          id="expirationDate"
+          label="Fecha de expedición del documento*"
+          id="documentIssueDate"
           radius="4px"
           width="100%"
           height="40px"
@@ -245,11 +246,14 @@ const DrawerEditClient = ({
           notFocused={true}
           placeholderColor={theme.colors.neutralGray500}
           border={theme.colors.neutralGray500}
-          /* TODO update de exp date
-          onChange={handleChangeDate}
-          value={dayjs(actualInfo?.birthDate)}
-          error={errorForm.birthDate.error}
-          helper={errorForm.birthDate.error ? errorForm.birthDate.message : ""} */
+          onChange={(e) => handleChangeDate(e, "documentIssueDate")}
+          value={dayjs(actualInfo?.documentIssueDate)}
+          error={errorForm.documentIssueDate.error}
+          helper={
+            errorForm.documentIssueDate.error
+              ? errorForm.documentIssueDate.message
+              : ""
+          }
         />
         <Row>
           <Select
@@ -311,7 +315,7 @@ const DrawerEditClient = ({
           notFocused={true}
           placeholderColor={theme.colors.neutralGray500}
           border={theme.colors.neutralGray500}
-          onChange={handleChangeDate}
+          onChange={(e) => handleChangeDate(e, "birthDate")}
           value={dayjs(actualInfo?.birthDate)}
           error={errorForm.birthDate.error}
           helper={errorForm.birthDate.error ? errorForm.birthDate.message : ""}

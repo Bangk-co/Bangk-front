@@ -49,6 +49,10 @@ const Customer = ({ isMobile, isTablet }) => {
       error: false,
       message: "",
     },
+    documentIssueDate: {
+      error: false,
+      message: "",
+    },
     countryCode: {
       error: false,
       message: "",
@@ -156,6 +160,7 @@ const Customer = ({ isMobile, isTablet }) => {
       documentTypeOptions
     ),
     identificationNumber: clientInfo?.identificationNumber,
+    documentIssueDate: clientInfo?.documentIssueDate,
     countryCode: clientInfo?.countryCode,
     phoneNumber: clientInfo?.phoneNumber,
     birthDate: clientInfo?.birthDate,
@@ -175,6 +180,7 @@ const Customer = ({ isMobile, isTablet }) => {
         documentTypeOptions
       ),
       identificationNumber: clientInfo?.identificationNumber,
+      documentIssueDate: clientInfo?.documentIssueDate,
       countryCode: clientInfo?.countryCode,
       phoneNumber: clientInfo?.phoneNumber,
       birthDate: clientInfo?.birthDate,

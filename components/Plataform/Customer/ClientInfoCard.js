@@ -76,8 +76,7 @@ const ClientInfoCard = ({
               color={theme.colors.neutralGray800}
               size={theme.fonts.size.sm}
             >
-              {`Exp: ${formattedDate(new Date())}`}{" "}
-              {/* TODO clientInfo Exp date */}
+              {`Exp: ${formattedDate(clientInfo?.documentIssueDate)}`}
             </Text>
             <Text
               weight={theme.fonts.weight.regular}

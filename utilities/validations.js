@@ -53,6 +53,16 @@ export const validateEditClientForm = Joi.object({
       return value;
     }, "Dayjs object")
   ).required(),
+  documentIssueDate: Joi.alternatives(
+    Joi.string().isoDate(),
+    Joi.custom((value, helpers) => {
+      const isDayjsInstance = dayjs.isDayjs(value);
+      if (!isDayjsInstance) {
+        return helpers.error("any.custom");
+      }
+      return value;
+    }, "Dayjs object")
+  ).required(),
   genderId: Joi.number().required(),
   email: Joi.string().required(),
 });

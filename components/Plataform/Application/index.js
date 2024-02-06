@@ -20,6 +20,9 @@ import formIcon from "../../../assets/icons/form.svg";
 import formIconBold from "../../../assets/icons/form-bold.svg";
 import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
+import { Record } from "../Record";
+import pending from "@/assets/icons/pendingStepper.svg"
+import success from "@/assets/icons/successStepper.svg"
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -35,6 +38,7 @@ const Application = ({ isMobile, isTablet }) => {
   }, [applications?.selectedApplication]);
 
   const [selectedTab, setSelectedTab] = useState(0);
+  const [historyInfo, setHistoryInfo] = useState([])
 
   const tabs = [
     {
@@ -82,6 +86,36 @@ const Application = ({ isMobile, isTablet }) => {
       label: "Documentos",
     },
   ];
+
+  const stepperIcon = (status) => {
+    switch (status) {
+      case "Revisión de extracto":
+        return pending;
+      case "Solicitud creada":
+        return success;
+      default:
+        return pending;
+    }
+  }
+
+  useEffect(() => {
+    setHistoryInfo(
+      [
+        {
+          status: "Revisión de extracto",
+          date: "Sep 04, 2023",
+          observations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer congue, mi ut dictum cursus, velit dui maximus enim, sed semper metus lectus non turpis. Integer id tellus molestie",
+          icon: stepperIcon("Revisión de extracto")
+        },
+        {
+          status: "Solicitud creada",
+          date: "Sep 04, 2023",
+          observations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer congue, mi ut dictum cursus, velit dui maximus enim, sed semper metus lectus non turpis. Integer id tellus molestie",
+          icon: stepperIcon("Solicitud creada")
+        },
+      ]
+    )
+  }, [])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -144,7 +178,9 @@ const Application = ({ isMobile, isTablet }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 && <Text>Historial</Text>}
+        {selectedTab === 0 &&
+          <Record historyInfo={historyInfo} />
+        }
         {selectedTab === 1 && <Text>Formularios</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}

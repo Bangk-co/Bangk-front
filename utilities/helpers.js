@@ -1,5 +1,5 @@
 import { theme } from "../styles/theme";
-import { Div } from "@/styles/Common";
+import { Div, Text } from "@/styles/Common";
 
 const CryptoJS = require("crypto-js");
 
@@ -136,6 +136,65 @@ export const renderStateDiv = (stateName) => {
       style={{ border: `1px solid ${borderColor}` }}
     >
       {stateName}
+    </Div>
+  );
+};
+
+export const renderDocumentStateDiv = (stateName) => {
+  let borderColor, color;
+
+  switch (stateName) {
+    case "Solicitud creada":
+    case "Revision de extracto":
+    case "Cotizacion enviada":
+    case "Cotizacion aceptada":
+    case "Formularios diligenciados":
+    case "Estudio Sarlaft":
+    case "Estudio lista restrictiva SBS":
+    case "Solicitud emision poliza":
+      borderColor = theme.colors.teal;
+      color = theme.colors.teal;
+      break;
+    case "Poliza emitida":
+    case "Poliza Pagada":
+    case "Carta de endoso realizada":
+    case "Endoso aceptado":
+    case "Renovado":
+      borderColor = theme.colors.green500;
+      color = theme.colors.green500;
+      break;
+    case "Proximo a renovar":
+      borderColor = theme.colors.yellow600;
+      color = theme.colors.yellow600;
+      break;
+    case "Rechazado":
+    case "Vencido":
+      borderColor = theme.colors.red500;
+      color = theme.colors.red500;
+      break;
+    default:
+      borderColor = theme.colors.neutralGray900;
+      color = theme.colors.neutralGray900;
+      break;
+  }
+  return (
+    <Div
+      background={theme.colors.white}
+      align="center"
+      justify="center"
+      radius="4px"
+      p="8px"
+      width="fit-content"
+      style={{ border: `2px solid ${borderColor}` }}
+    >
+      <Text
+        color={color}
+        size={theme.fonts.size.xs}
+        font={theme.fonts.family.primary}
+        weight={theme.fonts.weight.semibold}
+      >
+        {stateName}
+      </Text>
     </Div>
   );
 };

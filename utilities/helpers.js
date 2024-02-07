@@ -152,3 +152,23 @@ export const documentTypeAbbreviation = (documentType) => {
       return "C.C.";
   }
 };
+
+export const historyStatus = {
+  "SolicitudCreada": "Solicitud creada",
+  "RevisionDeExtracto": "Revisión de extracto",
+  "CotizacionEnviada": "Cotización enviada",
+  "CotizaciónAceptada": "Cotización aceptada",
+  "FormulariosDiligenciados": "Formularios diligenciados",
+  "EstufioSarlaft": "Estudio Sarlaft",
+  "EstudioListaRestrictivaSBS": "Estudio lista restrictiva SBS",
+  "PolizaEmitida": "Póliza emitida",
+  "PolizaPagada": "Póliza pagada",
+  "CartaDeEndosoRealizada": "Carta de endoso realizada",
+  "EndosoAceptada": "Endoso aceptada",
+  "ProximoARenovar": "Próximo a renovar",
+  "Renpvado": "Renovado",
+  "Vencido": "Vencido",
+  "RechazadoPorLaAseguradora": "Rechazado por la aseguradora",
+  "CotizaciónRechazada": "Cotización rechazada",
+  "CotizaciónNoRespondida": "Cotización no respondida",
+}

@@ -81,15 +81,19 @@ export const Record = ({ historyInfo }) => {
                 </Col>
               </Grid>
               <Grid item md={2.5}>
-                <Div height="100%" justify="end" align="center">
-                  <Button
-                    background={theme.colors.green900}
-                    width={"200px"}
-                    height={"40px"}
-                  >
-                    Ver extracto
-                  </Button>
-                </Div>
+                {ele.status === "Revisión de extracto" && (
+                  <Div height="100%" justify="end" align="center">
+                    <Button
+                      background={theme.colors.green900}
+                      hover={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      width={"200px"}
+                      height={"40px"}
+                    >
+                      Ver extracto
+                    </Button>
+                  </Div>
+                )}
               </Grid>
             </Grid>
           </Card>

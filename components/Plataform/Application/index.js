@@ -23,12 +23,17 @@ import folderIcon from "../../../assets/icons/folder-gray.svg";
 import { Record } from "../Record";
 import pending from "@/assets/icons/pendingStepper.svg"
 import success from "@/assets/icons/successStepper.svg"
+import useGetHistory from "@/hooks/Customers/useGetHistory";
+import { formattedDate, historyStatus } from "@/utilities/helpers";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { applications } = useSelector((state) => state);
+
+  const history = useGetHistory(applications?.selectedApplication?.loanApplicationId)
+  const { data, isSuccess } = history
 
   useEffect(() => {
     if (!applications?.selectedApplication?.loanApplicationId) {
@@ -87,35 +92,16 @@ const Application = ({ isMobile, isTablet }) => {
     },
   ];
 
-  const stepperIcon = (status) => {
-    switch (status) {
-      case "Revisión de extracto":
-        return pending;
-      case "Solicitud creada":
-        return success;
-      default:
-        return pending;
-    }
-  }
-
   useEffect(() => {
-    setHistoryInfo(
-      [
-        {
-          status: "Revisión de extracto",
-          date: "Sep 04, 2023",
-          observations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer congue, mi ut dictum cursus, velit dui maximus enim, sed semper metus lectus non turpis. Integer id tellus molestie",
-          icon: stepperIcon("Revisión de extracto")
-        },
-        {
-          status: "Solicitud creada",
-          date: "Sep 04, 2023",
-          observations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer congue, mi ut dictum cursus, velit dui maximus enim, sed semper metus lectus non turpis. Integer id tellus molestie",
-          icon: stepperIcon("Solicitud creada")
-        },
-      ]
-    )
-  }, [])
+    if (isSuccess) {
+      setHistoryInfo(data?.data.loanApplicationHistory.map((ele, indx) => ({
+        status: historyStatus[ele.stateName],
+        date: formattedDate(ele.creationDate),
+        observations: ele.observations,
+        icon: indx === 0 ? pending : success
+      })))
+    }
+  }, [isSuccess, data])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -134,6 +120,8 @@ const Application = ({ isMobile, isTablet }) => {
       align="flex-start"
       background={"#fafafa"}
       direction="column"
+      minheight="100vh"
+      style={{ overflowY: "auto" }}
     >
       <HeaderInfo>
         <Row gap="8px" align="center">

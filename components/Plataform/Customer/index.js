@@ -19,12 +19,14 @@ import { setSelectedClientInformation } from "@/store/customers";
 import { setSelectedApplicationInformation } from "@/store/applications";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetApplications from "@/hooks/Customers/useGetApplications";
+import useGetApplicationDocuments from "@/hooks/Customers/useGetApplicationDocuments";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetCountries from "@/hooks/Common/useGetIndicatives";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import { Tab } from "@/components/Common/Tabs/Tab";
 import { WrapperInfo, ApplicationCard } from "./styles";
 import ApplicationInfo from "./ApplicationInfo";
+import ApplicationDocuments from "./ApplicationDocuments";
 
 const Customer = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -150,6 +152,18 @@ const Customer = ({ isMobile, isTablet }) => {
       setApplicationsInfo(dataApplications?.data?.loanApplications);
     }
   }, [dataApplications, isLoadingApplications]);
+
+  const getApplicationDocuments = useGetApplicationDocuments(
+    clients?.selectedClient?.idClient
+  );
+  const { data: dataDocuments, isLoading: isLoadingDocuments } =
+    getApplicationDocuments;
+  const [applicationDocuments, setApplicationDocuments] = useState();
+  useEffect(() => {
+    if (dataDocuments?.data?.loanApplicationDocuments) {
+      setApplicationDocuments(dataDocuments?.data?.loanApplicationDocuments);
+    }
+  }, [dataDocuments, isLoadingDocuments]);
 
   const initialValues = {
     id: clientInfo?.idClient,
@@ -303,7 +317,9 @@ const Customer = ({ isMobile, isTablet }) => {
                 />
               </ApplicationCard>
             ))}
-          {selectedTab === 1 && <Text>Documentos</Text>}
+          {selectedTab === 1 && (
+            <ApplicationDocuments documents={applicationDocuments} />
+          )}
         </WrapperInfo>
       </Col>
     </Div>

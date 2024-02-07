@@ -1,7 +1,11 @@
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
-import { formattedDate, formattedPrice } from "@/utilities/helpers";
+import {
+  formattedDate,
+  formattedPrice,
+  renderDocumentStateDiv,
+} from "@/utilities/helpers";
 
 const ApplicationInfo = ({ application, handleApplication }) => {
   return (
@@ -32,25 +36,7 @@ const ApplicationInfo = ({ application, handleApplication }) => {
             >
               Estado de solicitud
             </Text>
-            <Div
-              background={theme.colors.white}
-              border={theme.colors.teal}
-              radius="4px"
-              p="8px"
-              width="fit-content"
-              style={{
-                border: `2px solid ${theme.colors.teal}`,
-              }}
-            >
-              <Text
-                color={theme.colors.teal}
-                size={theme.fonts.size.xs}
-                font={theme.fonts.family.primary}
-                weight={theme.fonts.weight.semibold}
-              >
-                {application.stateName}
-              </Text>
-            </Div>
+            {renderDocumentStateDiv(application.stateName)}
           </Col>
           <Col width="245px" align="left" gap="8px">
             <Text

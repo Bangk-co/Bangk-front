@@ -1,6 +1,10 @@
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { theme } from "../../../styles/theme";
-import { formattedDate, formattedPrice } from "@/utilities/helpers";
+import {
+  formattedDate,
+  formattedPrice,
+  renderDocumentStateDiv,
+} from "@/utilities/helpers";
 
 const ApplicationInfo = ({ application }) => {
   return (
@@ -61,25 +65,7 @@ const ApplicationInfo = ({ application }) => {
           >
             Estado de solicitud
           </Text>
-          <Div
-            background={theme.colors.white}
-            border={theme.colors.teal}
-            radius="4px"
-            p="8px"
-            width="fit-content"
-            style={{
-              border: `2px solid ${theme.colors.teal}`,
-            }}
-          >
-            <Text
-              color={theme.colors.teal}
-              size={theme.fonts.size.xs}
-              font={theme.fonts.family.primary}
-              weight={theme.fonts.weight.semibold}
-            >
-              {application.stateName}
-            </Text>
-          </Div>
+          {renderDocumentStateDiv(application.stateName)}
         </Col>
       </Row>
 

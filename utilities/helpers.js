@@ -1,5 +1,6 @@
 import { theme } from "../styles/theme";
 import { Div, Text } from "@/styles/Common";
+import axios from "axios";
 
 const CryptoJS = require("crypto-js");
 
@@ -212,22 +213,41 @@ export const documentTypeAbbreviation = (documentType) => {
   }
 };
 
+export const downloadFile = async (url, filename, instance, token) =>
+  instance
+    .get(url, {
+      responseType: "blob",
+      headers: { Authorization: token },
+    })
+    .then((response) => {
+      const documentUrl = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement("a");
+      a.href = documentUrl;
+      a.setAttribute("download", `${filename}`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+
 export const historyStatus = {
-  "SolicitudCreada": "Solicitud creada",
-  "RevisionDeExtracto": "Revisión de extracto",
-  "CotizacionEnviada": "Cotización enviada",
-  "CotizaciónAceptada": "Cotización aceptada",
-  "FormulariosDiligenciados": "Formularios diligenciados",
-  "EstufioSarlaft": "Estudio Sarlaft",
-  "EstudioListaRestrictivaSBS": "Estudio lista restrictiva SBS",
-  "PolizaEmitida": "Póliza emitida",
-  "PolizaPagada": "Póliza pagada",
-  "CartaDeEndosoRealizada": "Carta de endoso realizada",
-  "EndosoAceptada": "Endoso aceptada",
-  "ProximoARenovar": "Próximo a renovar",
-  "Renpvado": "Renovado",
-  "Vencido": "Vencido",
-  "RechazadoPorLaAseguradora": "Rechazado por la aseguradora",
-  "CotizaciónRechazada": "Cotización rechazada",
-  "CotizaciónNoRespondida": "Cotización no respondida",
-}
+  SolicitudCreada: "Solicitud creada",
+  RevisionDeExtracto: "Revisión de extracto",
+  CotizacionEnviada: "Cotización enviada",
+  CotizaciónAceptada: "Cotización aceptada",
+  FormulariosDiligenciados: "Formularios diligenciados",
+  EstufioSarlaft: "Estudio Sarlaft",
+  EstudioListaRestrictivaSBS: "Estudio lista restrictiva SBS",
+  PolizaEmitida: "Póliza emitida",
+  PolizaPagada: "Póliza pagada",
+  CartaDeEndosoRealizada: "Carta de endoso realizada",
+  EndosoAceptada: "Endoso aceptada",
+  ProximoARenovar: "Próximo a renovar",
+  Renpvado: "Renovado",
+  Vencido: "Vencido",
+  RechazadoPorLaAseguradora: "Rechazado por la aseguradora",
+  CotizaciónRechazada: "Cotización rechazada",
+  CotizaciónNoRespondida: "Cotización no respondida",
+};

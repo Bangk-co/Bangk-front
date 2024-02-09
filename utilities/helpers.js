@@ -1,5 +1,6 @@
 import { theme } from "../styles/theme";
 import { Div, Text } from "@/styles/Common";
+import axios from "axios";
 
 const CryptoJS = require("crypto-js");
 
@@ -211,3 +212,22 @@ export const documentTypeAbbreviation = (documentType) => {
       return "C.C.";
   }
 };
+
+export const downloadFile = async (url, filename, instance, token) =>
+  instance
+    .get(url, {
+      responseType: "blob",
+      headers: { Authorization: token },
+    })
+    .then((response) => {
+      const documentUrl = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement("a");
+      a.href = documentUrl;
+      a.setAttribute("download", `${filename}`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });

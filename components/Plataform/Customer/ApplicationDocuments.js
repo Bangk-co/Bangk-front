@@ -1,22 +1,41 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Image from "next/image";
 import { Grid } from "@mui/material";
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
-import { formattedDate, formattedPrice } from "@/utilities/helpers";
+import { formattedDate, downloadFile } from "@/utilities/helpers";
 import { DocumentCard } from "./styles";
 import downloadIcon from "../../../assets/icons/download.svg";
+import { axiosClient, getLocalUser } from "@/hooks/services/axiosInstance";
 
 const ApplicationDocuments = ({ documents }) => {
-  const [personalDocument, setPersonalDocuments] = useState({
+  const personalDocument = {
     createDocumentDate: documents.createIdentificationDate,
     documentName: documents.identificationName,
     documentUrl: documents.identificationUrl,
-  });
-  const [extractDocuments, setRxtractDocuments] = useState(
-    documents?.clientDocumentListDtos[0].documentByTypeDtos
-  );
+  };
+  const extractDocuments =
+    documents?.clientDocumentListDtos[0].documentByTypeDtos;
+
+  const handleDownload = async (document) => {
+    await toast.promise(
+      downloadFile(
+        document?.documentUrl,
+        `${document.documentName}-${formattedDate(
+          document.createDocumentDate
+        )}`,
+        axiosClient,
+        getLocalUser()
+      ),
+      {
+        loading: `Descargando.....`,
+        success: "Descarga completa",
+        error: "Fallo la descarga",
+      }
+    );
+  };
 
   const DocumentInfoCard = ({ document }) => {
     return (
@@ -46,12 +65,7 @@ const ApplicationDocuments = ({ documents }) => {
             {formattedDate(document?.createDocumentDate)}
           </Text>
         </Col>
-        <Link
-          onClick={() => {
-            console.log("download");
-          }}
-          color="transparent"
-        >
+        <Link onClick={() => handleDownload(document)} color="transparent">
           <Image alt="download" src={downloadIcon} width={24} height={24} />
         </Link>
       </DocumentCard>

@@ -20,12 +20,20 @@ import formIcon from "../../../assets/icons/form.svg";
 import formIconBold from "../../../assets/icons/form-bold.svg";
 import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
+import { Record } from "../Record";
+import pending from "@/assets/icons/pendingStepper.svg"
+import success from "@/assets/icons/successStepper.svg"
+import useGetHistory from "@/hooks/Customers/useGetHistory";
+import { formattedDate, historyStatus } from "@/utilities/helpers";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { applications } = useSelector((state) => state);
+
+  const history = useGetHistory(applications?.selectedApplication?.loanApplicationId)
+  const { data, isSuccess } = history
 
   useEffect(() => {
     if (!applications?.selectedApplication?.loanApplicationId) {
@@ -35,6 +43,7 @@ const Application = ({ isMobile, isTablet }) => {
   }, [applications?.selectedApplication]);
 
   const [selectedTab, setSelectedTab] = useState(0);
+  const [historyInfo, setHistoryInfo] = useState([])
 
   const tabs = [
     {
@@ -83,6 +92,17 @@ const Application = ({ isMobile, isTablet }) => {
     },
   ];
 
+  useEffect(() => {
+    if (isSuccess) {
+      setHistoryInfo(data?.data.loanApplicationHistory.map((ele, indx) => ({
+        status: historyStatus[ele.stateName],
+        date: formattedDate(ele.creationDate),
+        observations: ele.observations,
+        icon: indx === 0 ? pending : success
+      })))
+    }
+  }, [isSuccess, data])
+
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -100,6 +120,8 @@ const Application = ({ isMobile, isTablet }) => {
       align="flex-start"
       background={"#fafafa"}
       direction="column"
+      minheight="100vh"
+      style={{ overflowY: "auto" }}
     >
       <HeaderInfo>
         <Row gap="8px" align="center">
@@ -144,7 +166,9 @@ const Application = ({ isMobile, isTablet }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 && <Text>Historial</Text>}
+        {selectedTab === 0 &&
+          <Record historyInfo={historyInfo} />
+        }
         {selectedTab === 1 && <Text>Formularios</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}

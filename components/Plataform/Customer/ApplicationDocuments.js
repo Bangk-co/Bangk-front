@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
-import { formattedDate, downloadFile } from "@/utilities/helpers";
+import { formattedDate } from "@/utilities/helpers";
 import { DocumentCard } from "./styles";
 import downloadIcon from "../../../assets/icons/download.svg";
 import { axiosClient, getLocalUser } from "@/hooks/services/axiosInstance";
@@ -19,22 +19,38 @@ const ApplicationDocuments = ({ documents }) => {
   const extractDocuments =
     documents?.clientDocumentListDtos[0].documentByTypeDtos;
 
+  const downloadFile = (url, filename) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+
   const handleDownload = async (document) => {
-    await toast.promise(
-      downloadFile(
-        document?.documentUrl,
-        `${document.documentName}-${formattedDate(
-          document.createDocumentDate
-        )}`,
-        axiosClient,
-        getLocalUser()
-      ),
-      {
-        loading: `Descargando.....`,
-        success: "Descarga completa",
-        error: "Fallo la descarga",
-      }
+    downloadFile(
+      document?.documentUrl,
+      `${document.documentName}-${formattedDate(document.createDocumentDate)}`
     );
+
+    // TODO esto está hecho para llamar el endpoint del back
+    // await toast.promise(
+    //   downloadFile(
+    //     document?.documentUrl,
+    //     `${document.documentName}-${formattedDate(
+    //       document.createDocumentDate
+    //     )}`,
+    //     axiosClient,
+    //     getLocalUser()
+    //   ),
+    //   {
+    //     loading: `Descargando.....`,
+    //     success: "Descarga completa",
+    //     error: "Fallo la descarga",
+    //   }
+    // );
   };
 
   const DocumentInfoCard = ({ document }) => {

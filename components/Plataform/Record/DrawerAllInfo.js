@@ -181,6 +181,15 @@ export const DrawerAllInfo = ({
                 />
               </Grid>
               <Grid item md="12">
+                <DatePicker
+                  label={"Fecha de expedición del documento*"}
+                  { ...textFieldProps }
+                  border={theme.colors.gray500}
+                  value={userForm?.documentIssueDate}
+                  onChange={(event) => handleChangeDate(event, "documentIssueDate")}
+                />
+              </Grid>
+              <Grid item md="12">
                 <TextField
                   label={"Correo electrónico*"}
                   { ...textFieldProps }
@@ -222,7 +231,7 @@ export const DrawerAllInfo = ({
                   error={errorDate}
                   helper={errorDate ? "Debes ser mayor de edad" : ""}
                   value={userForm?.birthDate}
-                  onChange={handleChangeDate}
+                  onChange={(event) => handleChangeDate(event, "birthDate")}
                 />
               </Grid>
               <Grid item md="12">

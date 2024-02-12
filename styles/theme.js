@@ -31,6 +31,7 @@ export const theme = {
     primary25: "#E9EFEF",
     primary50: "#CDD9D9",
     primary100: "#ACC0BF",
+    primary300: "#5A8180",
     primary900: "#021615",
     neutralGray200: "#D2D1D4",
     neutralGray400: "#A6A4A8",

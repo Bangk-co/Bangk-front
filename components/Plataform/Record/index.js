@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Col, Div, Row, Text } from "@/styles/Common";
 import React, { useEffect, useState } from "react";
-import { Card, DashedLine } from "./styles";
+import { Card, DashedLine, SaveSuccess } from "./styles";
 import { Grid } from "@mui/material";
 import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
@@ -12,6 +12,7 @@ import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
+import success from "@/assets/icons/successStepper.svg"
 
 export const Record = ({
   historyInfo,
@@ -40,6 +41,7 @@ export const Record = ({
     phoneNumber: "",
     birthDate: null,
     genderId: "",
+    documentIssueDate: null
   })
   const [userForm, setUserForm] = useState({})
   const [loanForm, setLoanForm] = useState({
@@ -79,6 +81,7 @@ export const Record = ({
         phoneNumber: info?.phoneNumber,
         birthDate: dayjs(info?.birthDate),
         genderId: info?.genderId,
+        documentIssueDate: dayjs(info?.documentIssueDate),
       })
 
       setLoanForm({
@@ -133,16 +136,20 @@ export const Record = ({
     setUserForm(newUserForm)
   }
 
-  const handleChangeDate = (event) => {
+  const handleChangeDate = (event, id) => {
     const today = new Date();
     const birthDate = new Date(event);
     const age = today.getFullYear() - birthDate.getFullYear();
 
-    if (age < 18) {
-      setErrorDate(true)
+    if (id === "birthDate") {
+      if (age < 18) {
+        setErrorDate(true)
+      } else {
+        setErrorDate(false)
+        setUserForm({ ...userForm, birthDate: event })
+      }
     } else {
-      setErrorDate(false)
-      setUserForm({ ...userForm, birthdate: event })
+      setUserForm({ ...userForm, documentIssueDate: event })
     }
   }
 
@@ -212,7 +219,19 @@ export const Record = ({
       {
         onSuccess: () => {
           if (close) {
-            toast.success("Datos del cliente validados con éxito");
+            toast.custom(
+              <SaveSuccess>
+                <Image alt="success" src={success} width={16} height={16} />
+                <Text
+                  color={theme.colors.default}
+                  size={theme.fonts.size.sm}
+                  font={theme.fonts.family.tertiary}
+                >
+                  Datos del cliente validados con éxito
+                </Text>
+              </SaveSuccess>,
+              { duration: 2000 }
+            );
             setShowDrawer(false)
           }
         },

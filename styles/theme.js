@@ -31,6 +31,7 @@ export const theme = {
     whatsapp: "#25D366",
     primary25: "#E9EFEF",
     primary50: "#CDD9D9",
+    primary100: "#ACC0BF",
     primary900: "#021615",
     neutralGray200: "#D2D1D4",
     neutralGray400: "#A6A4A8",
@@ -45,6 +46,7 @@ export const theme = {
     error300: "#ED9D90",
     error800: "#6D1D10",
     teal: "#83A09F",
+    default: "#414447",
   },
   fonts: {
     family: {

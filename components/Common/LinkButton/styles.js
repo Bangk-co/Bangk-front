@@ -24,7 +24,7 @@ export const CustomLink = styled(({ color, ...props }) => (
 
     &:hover {
       color: ${theme.colors.green900};
-      background: ${theme.colors.terciary50};
+      background: ${({ backgroundHover }) => backgroundHover || theme.colors.terciary50};
       border-radius: 40px;
       height: 40px;
       padding: 16px;

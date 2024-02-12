@@ -4,7 +4,7 @@ import { axiosClient } from "../services/axiosInstance";
 const useGetHistory = (clientId) => {
   let urlString = `/LoanApplicationStateHistory/GetLoanApplicationStateHistoryService?loanApplicationId=${clientId}`;
 
-  const data = useQuery(["applicationsList", clientId], () =>
+  const data = useQuery(["historyList", clientId], () =>
     axiosClient.get(urlString)
   );
 

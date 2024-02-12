@@ -6,7 +6,7 @@ export const CustomDrawer = styled(Drawer)`
   .MuiDrawer-paper {
     width: ${({ width }) => width || "414px"};
     background: ${theme.colors.white};
-    padding: 64px 24px 40px 24px;
+    padding: ${({ padding }) => padding || "64px 24px 40px 24px"} !important;
 
     .MuiDrawer-close {
       position: absolute;

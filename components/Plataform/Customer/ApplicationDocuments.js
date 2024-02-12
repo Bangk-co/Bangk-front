@@ -16,8 +16,21 @@ const ApplicationDocuments = ({ documents }) => {
     documentName: documents.identificationName,
     documentUrl: documents.identificationUrl,
   };
-  const extractDocuments =
-    documents?.clientDocumentListDtos[0].documentByTypeDtos;
+
+  const bankStatements = documents?.clientDocumentListDtos
+    .filter((doc) => doc.documentType === 0)
+    .map((doc) => doc.documentByTypeDtos)
+    .flat();
+
+  const insurancePolicies = documents?.clientDocumentListDtos
+    .filter((doc) => doc.documentType === 1)
+    .map((doc) => doc.documentByTypeDtos)
+    .flat();
+
+  const endorsementLetters = documents?.clientDocumentListDtos
+    .filter((doc) => doc.documentType === 2)
+    .map((doc) => doc.documentByTypeDtos)
+    .flat();
 
   const downloadFile = (url, filename) => {
     const a = document.createElement("a");
@@ -112,7 +125,7 @@ const ApplicationDocuments = ({ documents }) => {
         </Text>
       </Row>
       <Grid container spacing={2}>
-        {extractDocuments.map((extract, index) => (
+        {bankStatements.map((extract, index) => (
           <Grid item xs={6} key={index}>
             <DocumentInfoCard document={extract} />
           </Grid>
@@ -128,7 +141,13 @@ const ApplicationDocuments = ({ documents }) => {
           Pólizas
         </Text>
       </Row>
-      <Grid container spacing={2}></Grid>
+      <Grid container spacing={2}>
+        {insurancePolicies.map((extract, index) => (
+          <Grid item xs={6} key={index}>
+            <DocumentInfoCard document={extract} />
+          </Grid>
+        ))}
+      </Grid>
 
       <Row>
         <Text
@@ -139,7 +158,13 @@ const ApplicationDocuments = ({ documents }) => {
           Cartas de endoso
         </Text>
       </Row>
-      <Row m="0 0 24px 0"></Row>
+      <Row m="0 0 24px 0">
+        {endorsementLetters.map((extract, index) => (
+          <Grid item xs={6} key={index}>
+            <DocumentInfoCard document={extract} />
+          </Grid>
+        ))}
+      </Row>
     </Col>
   );
 };

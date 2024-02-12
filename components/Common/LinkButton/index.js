@@ -12,6 +12,7 @@ export const LinkButton = ({
   onClick,
   weight,
   font,
+  backgroundHover,
   ...rest
 }) => {
   return (
@@ -25,6 +26,7 @@ export const LinkButton = ({
       onClick={onClick}
       weight={weight}
       font={font}
+      backgroundHover={backgroundHover}
       {...rest}
     >
       {children}

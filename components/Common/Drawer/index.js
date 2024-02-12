@@ -6,6 +6,7 @@ export const Drawer = ({
   closelabel,
   closeIcon,
   onClose,
+  padding,
   children,
   ...rest
 }) => {
@@ -16,6 +17,7 @@ export const Drawer = ({
       anchor="right"
       onClose={onClose}
       ModalProps={{ onBackdropClick: onClose }}
+      padding={padding}
       {...rest}
     >
       {closeIcon && (

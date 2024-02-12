@@ -25,15 +25,33 @@ import pending from "@/assets/icons/pendingStepper.svg"
 import success from "@/assets/icons/successStepper.svg"
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import { formattedDate, historyStatus } from "@/utilities/helpers";
+import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useGetCountries from "@/hooks/Common/useGetIndicatives";
+import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
+import useGetCreditType from "@/hooks/Common/useGetCreditType";
+import useGetBanks from "@/hooks/Common/useGetBanks";
+import useGetLoanInfo from "@/hooks/Customers/useGetLoanInfo";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const documentsType = useGetDocumentType()
+  const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType
+  const phoneCode = useGetCountries()
+  const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode
+  const gender = useGetGenders()
+  const { data: dataGender, isSuccess: isSuccessGender } = gender
+  const loanType = useGetCreditType()
+  const { data: dataLoan, isSuccess: isSuccessLoan } = loanType
+  const banks = useGetBanks()
+  const { data: dataBanks, isSuccess: isSuccessBanks } = banks
 
   const { applications } = useSelector((state) => state);
 
   const history = useGetHistory(applications?.selectedApplication?.loanApplicationId)
   const { data, isSuccess } = history
+  const loanInfo = useGetLoanInfo(applications?.selectedApplication?.loanApplicationId)
+  const { data: dataLoanInfo, isSuccess: isSuccessLoanInfo, isLoading: isLoadingLoanInfo } = loanInfo
 
   useEffect(() => {
     if (!applications?.selectedApplication?.loanApplicationId) {
@@ -44,6 +62,12 @@ const Application = ({ isMobile, isTablet }) => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [historyInfo, setHistoryInfo] = useState([])
+
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([])
+  const [phoneCodesOptions, setPhoneCodesOptions] = useState([])
+  const [gendersOptions, setGendersOptions] = useState([])
+  const [loanTypeOptions, setLoanTypeOptions] = useState([])
+  const [banksOptions, setBanksOptions] = useState([])
 
   const tabs = [
     {
@@ -102,6 +126,51 @@ const Application = ({ isMobile, isTablet }) => {
       })))
     }
   }, [isSuccess, data])
+
+  useEffect(() => {
+    if (isSuccessDocuments) {
+      setDocumentTypeOptions(dataDocuments?.data.groupSettings.map((ele) => ({
+        label: ele.name,
+        value: ele.id
+      })))
+    }
+  }, [isSuccessDocuments, dataDocuments])
+
+  useEffect(() => {
+    if (isSuccessPhone) {
+      setPhoneCodesOptions(dataPhone?.data.groupSettings.map((ele) => ({
+        label: `(${ele.code})`,
+        value: ele.id
+      })))
+    }
+  }, [isSuccessPhone, dataPhone])
+
+  useEffect(() => {
+    if (isSuccessGender) {
+      setGendersOptions(dataGender?.data.groupSettings.map((ele) => ({
+        label: ele.name,
+        value: ele.id
+      })))
+    }
+  }, [isSuccessGender, dataGender])
+
+  useEffect(() => {
+    if (isSuccessLoan) {
+      setLoanTypeOptions(dataLoan?.data.groupSettings.map((ele) => ({
+        label: ele.name,
+        value: ele.id
+      })))
+    }
+  }, [isSuccessLoan, dataLoan])
+
+  useEffect(() => {
+    if (isSuccessBanks) {
+      setBanksOptions(dataBanks?.data.groupSettings.map((ele) => ({
+        label: ele.name,
+        value: ele.id
+      })))
+    }
+  }, [isSuccessBanks, dataBanks])
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -167,7 +236,17 @@ const Application = ({ isMobile, isTablet }) => {
           </Tabs>
         </Row>
         {selectedTab === 0 &&
-          <Record historyInfo={historyInfo} />
+          <Record
+            historyInfo={historyInfo}
+            documentTypeOptions={documentTypeOptions}
+            phoneCodesOptions={phoneCodesOptions}
+            gendersOptions={gendersOptions}
+            loanTypeOptions={loanTypeOptions}
+            banksOptions={banksOptions}
+            data={dataLoanInfo}
+            isSuccess={isSuccessLoanInfo}
+            isLoading={isLoadingLoanInfo}
+          />
         }
         {selectedTab === 1 && <Text>Formularios</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}

@@ -13,7 +13,7 @@ import { Button } from "@/components/Common/Button";
 import { LinkButton } from "@/components/Common/LinkButton";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
-import { numberFormat } from "@/utilities/helpers";
+import { getFileType, numberFormat } from "@/utilities/helpers";
 import pesosIcon from "@/assets/icons/pesos.svg"
 import downloadIcon from "@/assets/icons/download-2.svg"
 import { pdfjs } from "react-pdf";
@@ -39,7 +39,8 @@ export const DrawerAllInfo = ({
   handleSave,
   disabledButtons,
   bankStatementInfo,
-  handleDownload
+  handleDownload,
+  isLoading
 }) => {
   const [numPages, setNumPages] = useState(null);
 
@@ -98,16 +99,26 @@ export const DrawerAllInfo = ({
             </Text>
             <Image alt="download" src={downloadIcon} onClick={handleDownload} style={{ cursor: "pointer" }} />
           </Div>
-          <StyledDocument
-            file={bankStatementInfo?.bankStatementUrl}
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <StyledPage
-              pageNumber={1}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
-            />
-          </StyledDocument>
+          {getFileType(bankStatementInfo?.bankStatementUrl) === "pdf" ? (
+            <StyledDocument
+              file={bankStatementInfo?.bankStatementUrl}
+              onLoadSuccess={onDocumentLoadSuccess}
+            >
+              <StyledPage
+                pageNumber={1}
+                renderTextLayer={false}
+                renderAnnotationLayer={false}
+              />
+            </StyledDocument>
+          ) : (
+            <Div m="16px 0 0 0" p="10px" width="100%" height="100%" justify="center">
+              <Image
+                alt="bankStatement"
+                src={bankStatementInfo?.bankStatementUrl}
+                width={682}
+                height={909} />
+            </Div>
+          )}
         </Div>
         <Div
           width="414px"
@@ -358,7 +369,7 @@ export const DrawerAllInfo = ({
               width={"100%"}
               height={"40px"}
               onClick={() => handleSave(false)}
-              disabled={disabledButtons}
+              disabled={disabledButtons || isLoading}
             >
               Guardar y crear cotización
             </Button>
@@ -369,7 +380,7 @@ export const DrawerAllInfo = ({
               backgroundHover={theme.colors.primary50}
               style={{ textDecoration: "underline" }}
               onClick={() => handleSave(true)}
-              disabled={disabledButtons}
+              disabled={disabledButtons || isLoading}
             >
               Solo guardar cambios
             </LinkButton>

@@ -40,13 +40,35 @@ export const decrypt = (encryptedMessage) => {
   return decryptedData.toString(CryptoJS.enc.Utf8);
 };
 
+export const parseNumber = (value) => {
+  const numericString = value.replace(/[^\d,]/g, '').replace(',', '.');
+
+  const numericValue = parseFloat(numericString).toString();
+
+  return numericValue;
+};
+
+
 export const numberFormat = (value) => {
   if (value !== "" && typeof value === "number") {
-    const newValue = value.toString();
-    return newValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const stringValue = value.toString();
+
+    const [integerPart, decimalPart] = stringValue.split('.');
+
+    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    const truncatedDecimalPart = decimalPart ? decimalPart.slice(0, 2) : "";
+
+    if (decimalPart) {
+      return `${formattedIntegerPart},${truncatedDecimalPart}`;
+    } else {
+      return formattedIntegerPart;
+    }
   }
   return "";
 };
+
+
 
 export const numberFormatText = (value) => {
   if (value !== "") {
@@ -250,4 +272,16 @@ export const historyStatus = {
   RechazadoPorLaAseguradora: "Rechazado por la aseguradora",
   CotizaciónRechazada: "Cotización rechazada",
   CotizaciónNoRespondida: "Cotización no respondida",
+};
+
+export const getFileType = (url) => {
+  const extension = url.split('.').pop().toLowerCase();
+
+  if (extension === 'png' || extension === 'jpg' || extension === 'jpeg') {
+    return 'image';
+  } else if (extension === 'pdf') {
+    return 'pdf';
+  } else {
+    return 'unknown';
+  }
 };

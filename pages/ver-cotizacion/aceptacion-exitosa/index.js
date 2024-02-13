@@ -8,7 +8,7 @@ import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
 import { useRouter } from "next/router";
 
-const SuccessfulAcceptance = ({ isMobile }) => {
+const CreationSuceess = ({ isMobile }) => {
   const router = useRouter();
 
   return (
@@ -62,4 +62,4 @@ const SuccessfulAcceptance = ({ isMobile }) => {
   );
 };
 
-export default SuccessfulAcceptance;
+export default CreationSuceess;

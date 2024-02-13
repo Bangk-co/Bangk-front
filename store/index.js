@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import balance from "./balance";
 import clients from "./customers";
 import applications from "./applications";
+import requests from "./requests";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const store = configureStore({
     balance: persistedReducer,
     clients,
     applications,
+    requests,
   },
 });
 

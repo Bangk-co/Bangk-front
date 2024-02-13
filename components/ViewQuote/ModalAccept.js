@@ -6,8 +6,14 @@ import handIcon from "@/assets/icons/handShake.svg";
 import Image from "next/image";
 import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
-export const ModalAccept = ({ isMobile, handleClose, handleAccept }) => {
+export const ModalAccept = ({
+  isMobile,
+  handleClose,
+  handleAccept,
+  isLoading,
+}) => {
   return (
     <WrapperModal isMobile={isMobile}>
       <Div justify="flex-end">
@@ -67,6 +73,15 @@ export const ModalAccept = ({ isMobile, handleClose, handleAccept }) => {
           radius={"40px"}
           onClick={handleAccept}
           style={{ order: isMobile ? -1 : 1 }}
+          disabled={isLoading}
+          startIcon={
+            isLoading ? (
+              <CircularProgress
+                size={20}
+                style={{ color: theme.colors.white }}
+              />
+            ) : null
+          }
         >
           Si, aceptar cotización
         </Button>

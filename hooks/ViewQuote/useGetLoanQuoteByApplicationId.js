@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { axiosClient } from "../services/axiosInstance";
 
-const useGetLoanQuoteById = (loanApplicationId) => {
+const useGetLoanQuoteByApplicationId = (loanApplicationId) => {
   let urlString = `/LoanQuote/GetLoanQuoteByApplicationId?loanApplicationId=${loanApplicationId}`;
 
   const data = useQuery(["loanQuote", loanApplicationId], () =>
@@ -10,4 +10,4 @@ const useGetLoanQuoteById = (loanApplicationId) => {
 
   return data || {};
 };
-export default useGetLoanQuoteById;
+export default useGetLoanQuoteByApplicationId;

@@ -15,14 +15,39 @@ import { Checkbox } from "@/components/Common/Checkbox";
 
 export const Calculation = ({
   isMobile,
-  info,
-  insurance,
   handleWapp,
   handleNext,
   setOpenModal,
   terms,
   handleTerms,
+  loanApplicationInfo,
 }) => {
+  const info = [
+    {
+      label: "Tipo de crédito:",
+      value: `${loanApplicationInfo?.loanTypeName}`,
+    },
+    {
+      label: "Saldo del crédito:",
+      value: `${formattedPrice(loanApplicationInfo?.loanBalance)} COP`,
+    },
+  ];
+
+  const BangkInsuranceMonthly = loanApplicationInfo?.yearlyFee / 12;
+  const BangkInsuranceAnnual = loanApplicationInfo?.yearlyFee;
+  const insuranceWithBangk = [
+    {
+      key: 1,
+      label: "Seguro Mensual",
+      value: BangkInsuranceMonthly,
+    },
+    {
+      key: 2,
+      label: "Seguro Anual",
+      value: BangkInsuranceAnnual,
+    },
+  ];
+
   return (
     <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">
       <Div width="100%" justify="center" p="24px 0">
@@ -56,7 +81,7 @@ export const Calculation = ({
       >
         Hemos analizado el estado actual de tu seguro y te ofrecemos{" "}
         <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
-          una nueva Póliza con SBS Seguros.
+          una nueva Póliza con {loanApplicationInfo?.insuraceCurrierName}.
         </span>
       </Text>
       <Col gap="12px" m="26px 0 0 0">
@@ -115,7 +140,8 @@ export const Calculation = ({
                 Actual
               </Text>
             </Div>
-            {insurance.map((ele, indx) => (
+            {/* TODO Actualinsurance */}
+            {insuranceWithBangk.map((ele, indx) => (
               <Div
                 key={indx}
                 direction="column"
@@ -168,7 +194,7 @@ export const Calculation = ({
                 Con Bangk
               </Text>
             </Div>
-            {insurance.map((ele, indx) => (
+            {insuranceWithBangk.map((ele, indx) => (
               <Div
                 key={indx}
                 direction="column"
@@ -227,6 +253,7 @@ export const Calculation = ({
             font={theme.fonts.family.primaryBold}
           >
             {formattedPrice(111111)}
+            {/* TODO savings */}
           </Text>
         </Div>
       </Row>

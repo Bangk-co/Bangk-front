@@ -29,6 +29,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
   const router = useRouter();
   const dispatch = useDispatch()
+  const { source } = router.query;
   const { userInfo, validCode } = useSelector((state) => state)?.balance;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
@@ -141,11 +142,19 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   };
 
   const handleBack = () => {
-    router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+    if (source === "quote") {
+      router.push("/ver-cotizacion");
+    } else {
+      router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+    }
   };
 
   const handleContinue = () => {
-    router.push("/cotiza-tu-ahorro/tu-credito");
+    if (source === "quote") {
+      router.push("/ver-cotizacion/informacion-cotizacion");
+    } else {
+      router.push("/cotiza-tu-ahorro/tu-credito");
+    }
   };
 
   return (

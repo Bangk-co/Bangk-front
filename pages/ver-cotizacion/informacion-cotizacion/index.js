@@ -113,7 +113,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleAccept = () => {
     setOpenModalAccept(false);
-    router.push("/ver-cotizacion/creacion-exitosa");
+    router.push("/ver-cotizacion/aceptacion-exitosa");
   };
 
   return (

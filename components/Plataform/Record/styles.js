@@ -38,6 +38,7 @@ export const StyledPage = styled(Page)`
   width: 100%;
   display: block;
   margin: 0 auto;
+  margin-bottom: 20px !important;
 
   canvas.react-pdf__Page__canvas {
     /* Estilos específicos para el canvas */
@@ -46,15 +47,3 @@ export const StyledPage = styled(Page)`
     height: auto !important;
   }
 `;
-
-export const SaveSuccess = styled.div`
-  display: flex;
-  align-items: center;
-  width: 331px;
-  height: 54px;
-  padding: 12px 16px 12px 16px;
-  border-radius: 10px;
-  border: 1px solid ${theme.colors.green900};
-  gap: 12px;
-  background: ${theme.colors.primary50};
-`

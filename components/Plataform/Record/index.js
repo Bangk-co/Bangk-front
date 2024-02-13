@@ -13,6 +13,13 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
 import success from "@/assets/icons/successStepper.svg"
+import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoanInfo } from "@/store/customers";
+import useSaveQuote from "@/hooks/Customers/useSaveQuote";
+import { ToastSuccess } from "@/components/Common/ToastSucces";
+import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
+import { numberFormat, numberFormatText, parseNumber } from "@/utilities/helpers";
 
 export const Record = ({
   historyInfo,
@@ -23,13 +30,20 @@ export const Record = ({
   banksOptions,
   data,
   isSuccess,
-  isLoading
+  insurersOptions,
+  quoteRate,
 }) => {
+  const dispatch = useDispatch()
+  const { loanInfo } = useSelector((state) => state)?.clients
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan()
+  const saveQuote = useSaveQuote()
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showDrawerQuote, setShowDrawerQuote] = useState(false);
+  const [showQuoteSuccess, setShowQuoteSuccess] = useState(false)
   const [errorDate, setErrorDate] = useState(false)
+  const [savedBankStatStatement, setSavedBankStatStatement] = useState(false)
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -59,6 +73,35 @@ export const Record = ({
     bankStatementUrl: ""
   })
   const [clientId, setClientId] = useState(null)
+  const [insurer, setInsurer] = useState(114)
+  const [yearlyFee, setYearlyFee] = useState("")
+
+  const currentInsuranceData = [
+    { label: "Seguro mensual", value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}` },
+    { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}` },
+  ]
+
+  const [bangkInsuranceData, setBangkInsuranceData] = useState([
+    { label: "Seguro mensual", value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}` },
+    { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}` }
+  ])
+  const [saveValue, setSaveValue] = useState(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - (loanInfo?.loanBalance * quoteRate))}`)
+
+  useEffect(() => {
+    if (insurer === 114) {
+      setBangkInsuranceData([
+        { label: "Seguro mensual", value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}` },
+        { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}` }
+      ])
+      setSaveValue(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - (loanInfo?.loanBalance * quoteRate))}`)
+    } else {
+      setBangkInsuranceData([
+        { label: "Seguro mensual", value: `$ ${numberFormat((yearlyFee) / 12)}` },
+        { label: "Seguro anual", value: `$ ${numberFormatText(yearlyFee)}` }
+      ])
+      setSaveValue(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - yearlyFee)}`)
+    }
+  }, [insurer, loanInfo, yearlyFee, quoteRate])
 
   useEffect(() => {
     if (prevUserForm) {
@@ -81,7 +124,7 @@ export const Record = ({
         phoneNumber: info?.phoneNumber,
         birthDate: dayjs(info?.birthDate),
         genderId: info?.genderId,
-        documentIssueDate: dayjs(info?.documentIssueDate),
+        documentIssueDate: info?.documentIssueDate === null ? null : dayjs(info?.documentIssueDate),
       })
 
       setLoanForm({
@@ -89,7 +132,7 @@ export const Record = ({
         loanTypeId: info.loanType,
         bankId: info.bankId,
         loanNumber: info.loanNumber,
-        monthlyCostInsurance: info.monthlyCostInsurance,
+        monthlyCostInsurance: info.monthlyCostInsurance === null ? "" : info.monthlyCostInsurance,
         observations: info.observations,
         loanApplicationId: info.loanApplicationId,
         isValidateLoanApplication: true
@@ -101,8 +144,23 @@ export const Record = ({
     }
   }, [isSuccess, data])
 
+  const handleCloseQuoteSuccess = () => {
+    setShowQuoteSuccess(false);
+    dispatch(setLoanInfo({}))
+    queryClient.refetchQueries("historyList")
+    toast.custom(
+      <ToastSuccess message={"Cotización enviada con éxito"} />,
+      { duration: 1000 }
+    );
+  };
+
+  const handleCloseDrawerQuote = () => {
+    setShowDrawerQuote(false);
+  };
+
   const handleCloseDrawer = () => {
     setShowDrawer(false);
+    setSavedBankStatStatement(false)
   };
 
   const handleOpen = () => {
@@ -220,19 +278,18 @@ export const Record = ({
         onSuccess: () => {
           if (close) {
             toast.custom(
-              <SaveSuccess>
-                <Image alt="success" src={success} width={16} height={16} />
-                <Text
-                  color={theme.colors.default}
-                  size={theme.fonts.size.sm}
-                  font={theme.fonts.family.tertiary}
-                >
-                  Datos del cliente validados con éxito
-                </Text>
-              </SaveSuccess>,
-              { duration: 2000 }
+              <ToastSuccess message={"Datos del cliente validados con éxito"} />,
+              { duration: 1000 }
             );
             setShowDrawer(false)
+          } else {
+            dispatch(setLoanInfo({
+              loanBalance: loanForm.loanBalance,
+              monthlyCostInsurance: loanForm.monthlyCostInsurance,
+              loanType: loanTypeOptions.find((ele) => ele.value === loanForm.loanTypeId)?.label
+            }))
+            setShowDrawer(false)
+            setShowDrawerQuote(true)
           }
         },
         onError: (err) => {
@@ -254,7 +311,57 @@ export const Record = ({
     a.remove();
   };
 
+  const handleSelectInsurer = (event) => {
+    const { value } = event.target;
+    setInsurer(value)
+    setYearlyFee("")
+  }
+
+  const handleChangeYearlyFee = (event) => {
+    const { value } = event.target;
+    setYearlyFee(value.replace(/\D/g, ''))
+  }
+
+  const handleSaveQuote = () => {
+    saveQuote.reset();
+    saveQuote.mutate(
+      { formData: {
+          insuranceId: insurer,
+          loanApplicationId: data?.data?.loanApplication.loanApplicationId,
+          yearlyFee: parseNumber(bangkInsuranceData.find((ele) => ele.label === "Seguro anual")?.value),
+        }
+      },
+      {
+        onSuccess: (data) => {
+          setShowDrawerQuote(false)
+          setShowQuoteSuccess(true)
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
+  }
+
   const disabledButtons = loanForm?.monthlyCostInsurance === "";
+
+  const optionsButtons = (status) => {
+    switch (status) {
+      case "Revisión de extracto":
+        return { label: "Ver extracto", onClick: handleOpen }
+      case "Cotización enviada":
+        return { label: "Revisar cotización", onClick: () => {} }
+      default:
+        break;
+    }
+  }
+
+  const handleOpenSaved = () => {
+    handleOpen()
+    setSavedBankStatStatement(true)
+  }
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -280,6 +387,33 @@ export const Record = ({
         disabledButtons={disabledButtons}
         bankStatementInfo={bankStatementInfo}
         handleDownload={handleDownload}
+        isLoading={updateLoan.isLoading}
+        savedBankStatStatement={savedBankStatStatement}
+      />
+      <DrawerQuote
+        showDrawer={showDrawerQuote}
+        closeDrawer={handleCloseDrawerQuote}
+        insurersOptions={insurersOptions}
+        quoteRate={quoteRate}
+        insurer={insurer}
+        yearlyFee={yearlyFee}
+        handleSelectInsurer={handleSelectInsurer}
+        loanInfo={loanInfo}
+        handleChange={handleChangeYearlyFee}
+        currentInsuranceData={currentInsuranceData}
+        bangkInsuranceData={bangkInsuranceData}
+        saveValue={saveValue}
+        handleSaveQuote={handleSaveQuote}
+        isLoading={saveQuote.isLoading}
+      />
+      <DrawerQuoteSuccess
+        showDrawer={showQuoteSuccess}
+        closeDrawer={handleCloseQuoteSuccess}
+        loanInfo={loanInfo}
+        insurer={insurersOptions.find((ele) => ele.value === insurer)?.label}
+        currentInsuranceData={currentInsuranceData}
+        bangkInsuranceData={bangkInsuranceData}
+        saveValue={saveValue}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (
@@ -353,7 +487,7 @@ export const Record = ({
                 </Col>
               </Grid>
               <Grid item md={2.5}>
-                {ele.status === "Revisión de extracto" && (
+                {historyInfo.length > 0 && indx === 0 && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       background={theme.colors.green900}
@@ -361,9 +495,27 @@ export const Record = ({
                       borderHover={theme.colors.green900}
                       width={"200px"}
                       height={"40px"}
-                      onClick={handleOpen}
+                      onClick={optionsButtons(ele.status)?.onClick}
                     >
-                      Ver extracto
+                      {optionsButtons(ele.status)?.label}
+                    </Button>
+                  </Div>
+                )}
+                {historyInfo.length > 2 && ele.status === "Revisión de extracto" && (
+                  <Div height="100%" justify="end" align="center">
+                    <Button
+                      font={theme.fonts.family.primaryBold}
+                      labelColor={theme.colors.green900}
+                      background={theme.colors.white}
+                      hover={theme.colors.white}
+                      border={theme.colors.green900}
+                      borderHeight={`3px solid ${theme.colors.green900}`}
+                      borderHover={theme.colors.green900}
+                      width={"200px"}
+                      height={"40px"}
+                      onClick={handleOpenSaved}
+                    >
+                      {optionsButtons(ele.status)?.label}
                     </Button>
                   </Div>
                 )}

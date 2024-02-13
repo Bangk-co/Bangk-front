@@ -43,6 +43,7 @@ export const Record = ({
   const [showDrawerQuote, setShowDrawerQuote] = useState(false);
   const [showQuoteSuccess, setShowQuoteSuccess] = useState(false)
   const [errorDate, setErrorDate] = useState(false)
+  const [savedBankStatStatement, setSavedBankStatStatement] = useState(false)
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -159,6 +160,7 @@ export const Record = ({
 
   const handleCloseDrawer = () => {
     setShowDrawer(false);
+    setSavedBankStatStatement(false)
   };
 
   const handleOpen = () => {
@@ -356,6 +358,11 @@ export const Record = ({
     }
   }
 
+  const handleOpenSaved = () => {
+    handleOpen()
+    setSavedBankStatStatement(true)
+  }
+
   return (
     <Row m="24px 0 0 0" gap="16px">
       <DrawerAllInfo
@@ -381,6 +388,7 @@ export const Record = ({
         bankStatementInfo={bankStatementInfo}
         handleDownload={handleDownload}
         isLoading={updateLoan.isLoading}
+        savedBankStatStatement={savedBankStatStatement}
       />
       <DrawerQuote
         showDrawer={showDrawerQuote}
@@ -488,6 +496,24 @@ export const Record = ({
                       width={"200px"}
                       height={"40px"}
                       onClick={optionsButtons(ele.status)?.onClick}
+                    >
+                      {optionsButtons(ele.status)?.label}
+                    </Button>
+                  </Div>
+                )}
+                {historyInfo.length > 2 && ele.status === "Revisión de extracto" && (
+                  <Div height="100%" justify="end" align="center">
+                    <Button
+                      font={theme.fonts.family.primaryBold}
+                      labelColor={theme.colors.green900}
+                      background={theme.colors.white}
+                      hover={theme.colors.white}
+                      border={theme.colors.green900}
+                      borderHeight={`3px solid ${theme.colors.green900}`}
+                      borderHover={theme.colors.green900}
+                      width={"200px"}
+                      height={"40px"}
+                      onClick={handleOpenSaved}
                     >
                       {optionsButtons(ele.status)?.label}
                     </Button>

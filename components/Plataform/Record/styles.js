@@ -38,6 +38,7 @@ export const StyledPage = styled(Page)`
   width: 100%;
   display: block;
   margin: 0 auto;
+  margin-bottom: 20px !important;
 
   canvas.react-pdf__Page__canvas {
     /* Estilos específicos para el canvas */

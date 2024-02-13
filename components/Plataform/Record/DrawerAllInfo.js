@@ -40,7 +40,8 @@ export const DrawerAllInfo = ({
   disabledButtons,
   bankStatementInfo,
   handleDownload,
-  isLoading
+  isLoading,
+  savedBankStatStatement
 }) => {
   const [numPages, setNumPages] = useState(null);
 
@@ -104,11 +105,14 @@ export const DrawerAllInfo = ({
               file={bankStatementInfo?.bankStatementUrl}
               onLoadSuccess={onDocumentLoadSuccess}
             >
-              <StyledPage
-                pageNumber={1}
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-              />
+              {Array.from(new Array(numPages), (el, index) => (
+                <StyledPage
+                  key={`page_${index + 1}`}
+                  pageNumber={index + 1}
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false}
+                />
+              ))}
             </StyledDocument>
           ) : (
             <Div m="16px 0 0 0" p="10px" width="100%" height="100%" justify="center">
@@ -155,6 +159,7 @@ export const DrawerAllInfo = ({
                   id={"name"}
                   value={userForm?.name}
                   onChange={handleChangeUser}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -164,6 +169,7 @@ export const DrawerAllInfo = ({
                   id={"lastName"}
                   value={userForm?.lastName}
                   onChange={handleChangeUser}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="5">
@@ -174,6 +180,7 @@ export const DrawerAllInfo = ({
                   name="documentType"
                   value={userForm?.documentTypeId}
                   onChange={handleSelectUser}
+                  disabled={savedBankStatStatement}
                 >
                   {documentTypeOptions.map((ele, indx) => (
                     <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
@@ -189,6 +196,7 @@ export const DrawerAllInfo = ({
                   id={"identificationNumber"}
                   value={userForm?.identificationNumber}
                   onChange={handleChangeUser}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -198,6 +206,7 @@ export const DrawerAllInfo = ({
                   border={theme.colors.gray500}
                   value={userForm?.documentIssueDate}
                   onChange={(event) => handleChangeDate(event, "documentIssueDate")}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -217,6 +226,7 @@ export const DrawerAllInfo = ({
                   name={"countryCode"}
                   value={userForm?.countryCode}
                   onChange={handleSelectUser}
+                  disabled={savedBankStatStatement}
                 >
                   {phoneCodesOptions.map((ele, indx) => (
                     <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
@@ -232,6 +242,7 @@ export const DrawerAllInfo = ({
                   id={"phoneNumber"}
                   value={userForm?.phoneNumber}
                   onChange={handleChangeUser}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -243,6 +254,7 @@ export const DrawerAllInfo = ({
                   helper={errorDate ? "Debes ser mayor de edad" : ""}
                   value={userForm?.birthDate}
                   onChange={(event) => handleChangeDate(event, "birthDate")}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -264,6 +276,7 @@ export const DrawerAllInfo = ({
                       label={ele.label}
                       value={ele.value}
                       checked={Number(userForm.genderId) === ele.value}
+                      disabled={savedBankStatStatement}
                     />
                   ))}
                 </RadioGroup>
@@ -290,6 +303,7 @@ export const DrawerAllInfo = ({
                     pattern: "\\d*",
                     inputMode: "numeric",
                   }}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -300,6 +314,7 @@ export const DrawerAllInfo = ({
                   name={"loanTypeId"}
                   value={loanForm?.loanTypeId}
                   onChange={handleSelectLoan}
+                  disabled={savedBankStatStatement}
                 >
                   {loanTypeOptions.map((ele, indx) => (
                     <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
@@ -316,6 +331,7 @@ export const DrawerAllInfo = ({
                   name={"bankId"}
                   value={loanForm?.bankId}
                   onChange={handleSelectLoan}
+                  disabled={savedBankStatStatement}
                 >
                   {banksOptions.map((ele, indx) => (
                     <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
@@ -331,6 +347,7 @@ export const DrawerAllInfo = ({
                   id={"loanNumber"}
                   value={loanForm?.loanNumber}
                   onChange={handleChange}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -346,6 +363,7 @@ export const DrawerAllInfo = ({
                     pattern: "\\d*",
                     inputMode: "numeric",
                   }}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
@@ -355,36 +373,39 @@ export const DrawerAllInfo = ({
                   id={"observations"}
                   value={loanForm?.observations}
                   onChange={handleChange}
+                  disabled={savedBankStatStatement}
                 />
               </Grid>
             </Grid>
           </Div>
-          <Div direction="column" m="36px 0 0 0" gap="16px">
-            <Button
-              background={theme.colors.green900}
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.default2}
-              hover={theme.colors.green900}
-              borderHover={theme.colors.green900}
-              width={"100%"}
-              height={"40px"}
-              onClick={() => handleSave(false)}
-              disabled={disabledButtons || isLoading}
-            >
-              Guardar y crear cotización
-            </Button>
-            <LinkButton
-              color={theme.colors.green900}
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.default2}
-              backgroundHover={theme.colors.primary50}
-              style={{ textDecoration: "underline" }}
-              onClick={() => handleSave(true)}
-              disabled={disabledButtons || isLoading}
-            >
-              Solo guardar cambios
-            </LinkButton>
-          </Div>
+          {!savedBankStatStatement && (
+            <Div direction="column" m="36px 0 0 0" gap="16px">
+              <Button
+                background={theme.colors.green900}
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.default2}
+                hover={theme.colors.green900}
+                borderHover={theme.colors.green900}
+                width={"100%"}
+                height={"40px"}
+                onClick={() => handleSave(false)}
+                disabled={disabledButtons || isLoading}
+              >
+                Guardar y crear cotización
+              </Button>
+              <LinkButton
+                color={theme.colors.green900}
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.default2}
+                backgroundHover={theme.colors.primary50}
+                style={{ textDecoration: "underline" }}
+                onClick={() => handleSave(true)}
+                disabled={disabledButtons || isLoading}
+              >
+                Solo guardar cambios
+              </LinkButton>
+            </Div>
+          )}
         </Div>
       </Div>
     </Drawer>

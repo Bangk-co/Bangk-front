@@ -19,6 +19,10 @@ export const WrapperImage = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 100vh;
+  }
 `;
 
 export const WrapperInfo = styled.div`
@@ -34,6 +38,7 @@ export const WrapperInfo = styled.div`
     margin: 0;
     justify-content: ${({ justifyMobile }) => justifyMobile || null};
     padding: 20px 20px 40px 20px;
+    height: 100vh;
   }
 `;
 

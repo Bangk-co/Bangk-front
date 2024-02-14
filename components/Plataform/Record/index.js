@@ -326,6 +326,7 @@ export const Record = ({
     saveQuote.reset();
     saveQuote.mutate(
       { formData: {
+          insuranceName: insurersOptions.find((ele) => ele.value === insurer)?.label,
           insuranceId: insurer,
           loanApplicationId: data?.data?.loanApplication.loanApplicationId,
           yearlyFee: parseNumber(bangkInsuranceData.find((ele) => ele.label === "Seguro anual")?.value),

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Row, Text, Div, Col } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
@@ -87,16 +88,35 @@ const ApplicationInfo = ({ application, handleApplication }) => {
             >
               Entidad financiera
             </Text>
-            <Text
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.sm}
-              font={theme.fonts.family.primary}
-              weight={theme.fonts.weight.regular}
-              mt="8px"
-              mb="8px"
-            >
-              {application.bankName}
-            </Text>
+            <Row align="center" gap="10px">
+              <Div
+                align="center"
+                justify="center"
+                width="24px"
+                height="24px"
+                radius="50%"
+                style={{
+                  overflow: "hidden",
+                }}
+              >
+                <Image
+                  src={application.iconsBanksUrl}
+                  alt="bankLogo"
+                  width={24}
+                  height={24}
+                />
+              </Div>
+              <Text
+                color={theme.colors.neutralGray900}
+                size={theme.fonts.size.sm}
+                font={theme.fonts.family.primary}
+                weight={theme.fonts.weight.regular}
+                mt="8px"
+                mb="8px"
+              >
+                {application.bankName}
+              </Text>
+            </Row>
           </Col>
           <Col width="245px" align="left" gap="8px">
             <Text

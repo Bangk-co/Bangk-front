@@ -4,7 +4,7 @@ import { axiosClient } from "../services/axiosInstance";
 const useSaveQuote = () => {
   const mutation = useMutation(({ formData }) => {
     return axiosClient.post(
-      `LoanQuote/CreateLoanQuote?insuranceId=${formData.insuranceId}&&loanApplicationId=${formData.loanApplicationId}&&yearlyFee=${formData.yearlyFee}`);
+      `LoanQuote/CreateLoanQuote?insuranceName=${formData.insuranceName}&&insuranceId=${formData.insuranceId}&&loanApplicationId=${formData.loanApplicationId}&&yearlyFee=${formData.yearlyFee}`);
   });
   return mutation;
 };

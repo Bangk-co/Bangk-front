@@ -29,7 +29,6 @@ const ViewQuote = ({ isMobile, isTablet }) => {
       setLoanApplicationInfo(dataLoanApplication?.data);
     }
   }, [dataLoanApplication, isLoading]);
-  console.log("loanApplicationInfo", loanApplicationInfo);
 
   const [terms, setTerms] = useState(false);
   const [openModalTerms, setOpenModalTerms] = useState(false);
@@ -65,7 +64,6 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate(requests?.selectedRequest, {
       onSuccess: () => {
-        console.log("succes");
         setOpenModalAccept(false);
         router.push("/ver-cotizacion/aceptacion-exitosa");
       },

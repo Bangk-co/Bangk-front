@@ -48,6 +48,23 @@ export const Calculation = ({
     },
   ];
 
+  const InsuranceMonthly = loanApplicationInfo?.monthlyCostInsurance;
+  const InsuranceAnnual = loanApplicationInfo?.monthlyCostInsurance * 12;
+  const insurance = [
+    {
+      key: 1,
+      label: "Seguro Mensual",
+      value: InsuranceMonthly,
+    },
+    {
+      key: 2,
+      label: "Seguro Anual",
+      value: InsuranceAnnual,
+    },
+  ];
+
+  const anualSaving = InsuranceAnnual - BangkInsuranceAnnual;
+
   return (
     <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">
       <Div width="100%" justify="center" p="24px 0">
@@ -140,8 +157,7 @@ export const Calculation = ({
                 Actual
               </Text>
             </Div>
-            {/* TODO Actualinsurance */}
-            {insuranceWithBangk.map((ele, indx) => (
+            {insurance.map((ele, indx) => (
               <Div
                 key={indx}
                 direction="column"
@@ -252,8 +268,7 @@ export const Calculation = ({
             color={theme.colors.green900}
             font={theme.fonts.family.primaryBold}
           >
-            {formattedPrice(111111)}
-            {/* TODO savings */}
+            {formattedPrice(anualSaving)}
           </Text>
         </Div>
       </Row>

@@ -6,8 +6,8 @@ export const HeaderInfo = styled.div`
   flex-direction: column;
   background: ${theme.colors.white};
   border-radius: 0px 0px 25px 25px;
-  width: 100%;
   min-width: 1290px;
+  width: 100%;
   padding: 32px;
   gap: 32px;
 `;

@@ -41,21 +41,23 @@ export const decrypt = (encryptedMessage) => {
 };
 
 export const parseNumber = (value) => {
-  const numericString = value.replace(/[^\d,]/g, '').replace(',', '.');
+  const numericString = value.replace(/[^\d,]/g, "").replace(",", ".");
 
   const numericValue = parseFloat(numericString).toString();
 
   return numericValue;
 };
 
-
 export const numberFormat = (value) => {
   if (value !== "" && typeof value === "number") {
     const stringValue = value.toString();
 
-    const [integerPart, decimalPart] = stringValue.split('.');
+    const [integerPart, decimalPart] = stringValue.split(".");
 
-    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const formattedIntegerPart = integerPart.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      "."
+    );
 
     const truncatedDecimalPart = decimalPart ? decimalPart.slice(0, 2) : "";
 
@@ -67,8 +69,6 @@ export const numberFormat = (value) => {
   }
   return "";
 };
-
-
 
 export const numberFormatText = (value) => {
   if (value !== "") {
@@ -91,6 +91,7 @@ export const formattedPrice = (price) => {
       style: "currency",
       currency: "COP",
       minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     });
   }
 };
@@ -275,13 +276,13 @@ export const historyStatus = {
 };
 
 export const getFileType = (url) => {
-  const extension = url.split('.').pop().toLowerCase();
+  const extension = url.split(".").pop().toLowerCase();
 
-  if (extension === 'png' || extension === 'jpg' || extension === 'jpeg') {
-    return 'image';
-  } else if (extension === 'pdf') {
-    return 'pdf';
+  if (extension === "png" || extension === "jpg" || extension === "jpeg") {
+    return "image";
+  } else if (extension === "pdf") {
+    return "pdf";
   } else {
-    return 'unknown';
+    return "unknown";
   }
 };

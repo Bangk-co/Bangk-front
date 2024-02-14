@@ -126,7 +126,7 @@ const UserData = ({ isMobile, isTablet }) => {
       {
         onSuccess: (res) => {
           dispatch(setValidCode(res.data.code))
-          router.push(`/cotiza-tu-ahorro/validacion-identidad`);
+          router.push(`/validacion-identidad`);
         },
         onError: (err) => {
           err.response.data.map((error) => {

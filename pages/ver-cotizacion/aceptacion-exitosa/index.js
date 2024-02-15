@@ -53,7 +53,7 @@ const CreationSuceess = ({ isMobile }) => {
               height={"40px"}
               radius={"40px"}
             >
-              Continuar mi solicitud
+              {isMobile ? "Continuar mi solicitud" : "Solicitar mi póliza"}
             </Button>
           </Col>
         </Div>

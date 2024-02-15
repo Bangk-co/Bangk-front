@@ -169,13 +169,13 @@ export const renderDocumentStateDiv = (stateName) => {
 
   switch (stateName) {
     case "Solicitud creada":
-    case "Revision de extracto":
-    case "Cotizacion enviada":
-    case "Cotizacion aceptada":
+    case "Revisión de extracto":
+    case "Cotización enviada":
+    case "Cotización aceptada":
     case "Formularios diligenciados":
     case "Estudio Sarlaft":
     case "Estudio lista restrictiva SBS":
-    case "Solicitud emision poliza":
+    case "Solicitud emisión de poliza":
       borderColor = theme.colors.teal;
       color = theme.colors.teal;
       break;
@@ -187,7 +187,7 @@ export const renderDocumentStateDiv = (stateName) => {
       borderColor = theme.colors.green500;
       color = theme.colors.green500;
       break;
-    case "Proximo a renovar":
+    case "Próximo a renovar":
       borderColor = theme.colors.yellow600;
       color = theme.colors.yellow600;
       break;

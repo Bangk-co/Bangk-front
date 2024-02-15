@@ -207,7 +207,14 @@ const ClientInfoCard = ({
             borderBottom: `2px solid ${theme.colors.green900}`,
           }}
         >
-          <Image alt="edit" src={editIcon} width={16} height={16} /> Editar
+          <Image alt="edit" src={editIcon} width={16} height={16} />
+          <Text
+            color={theme.colors.green900}
+            size={theme.fonts.size.default2}
+            font={theme.fonts.family.primaryBold}
+          >
+            Editar
+          </Text>
         </Row>
       </Link>
     </Div>

@@ -54,8 +54,11 @@ export const DrawerAllInfo = ({
     labelFont: theme.fonts.family.primaryMedium,
     labelWeight: theme.fonts.weight.medium,
     labelSize: theme.fonts.size.sm,
-    border: theme.colors.neutralGray900,
-    borderHover: theme.colors.neutralGray900,
+    font: theme.fonts.family.primary,
+    size: theme.fonts.size.default2,
+    border: theme.colors.neutralGray500,
+    borderHover: theme.colors.neutralGray500,
+    fontColor: theme.colors.neutralGray900,
     radius: "4px",
     width: "100%",
     height: "40px"
@@ -201,7 +204,7 @@ export const DrawerAllInfo = ({
               </Grid>
               <Grid item md="12">
                 <DatePicker
-                  label={"Fecha de expedición del documento*"}
+                  label={"Fecha de expedición del documento"}
                   { ...textFieldProps }
                   border={theme.colors.gray500}
                   value={userForm?.documentIssueDate}

@@ -47,6 +47,8 @@ export const ValidateInfo = ({ email, handleEmail, handleSend, reSendCode }) => 
               labelColor={theme.colors.white}
               labelSize={theme.fonts.size.sm}
               labelWeight={theme.fonts.weight.medium}
+              font={theme.fonts.family.primary}
+              size={theme.fonts.size.default2}
               width={"100%"}
               height={"40px"}
               radius={"4px"}
@@ -61,6 +63,7 @@ export const ValidateInfo = ({ email, handleEmail, handleSend, reSendCode }) => 
             <Div width="100%" justify="center">
               <Button
                 font={theme.fonts.family.primaryBold}
+                labelColor={theme.colors.green900}
                 size={theme.fonts.size.default2}
                 background={theme.colors.yellow500}
                 hover={theme.colors.yellow500}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { LifeInsuranceTable } from "./lifeInsuranceTable";
 import { TextField } from "@/components/Common/TextField";
 import Image from "next/image";
-import pesosIcon from "@/assets/icons/pesos.svg"
+import pesosIcon from "@/assets/icons/pesos.svg";
 import { numberFormat, numberFormatText } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
@@ -18,20 +18,20 @@ export const AllianzInsurer = ({
   subtitleProps,
   currentInsuranceData,
   bangkInsuranceData,
-  saveValue
+  saveValue,
 }) => {
-  const [viewQuote, setViewQuote] = useState(true)
+  const [viewQuote, setViewQuote] = useState(true);
 
   useEffect(() => {
     if (viewQuote) {
-      setSendButton(false)
+      setSendButton(false);
     }
-  }, [viewQuote])
+  }, [viewQuote]);
 
   const handleView = () => {
-    setViewQuote(false)
-    setSendButton(true)
-  }
+    setViewQuote(false);
+    setSendButton(true);
+  };
 
   return (
     <>
@@ -39,8 +39,10 @@ export const AllianzInsurer = ({
         <TextField
           label={"Prima anual*"}
           placeholder={"Ingresa la prima anual"}
-          { ...textFieldProps }
-          prefixIcon={<Image alt="pesos" src={pesosIcon} width={16} height={16} />}
+          {...textFieldProps}
+          prefixIcon={
+            <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+          }
           id={"yearlyFee"}
           value={yearlyFee === "" ? "" : numberFormat(Number(yearlyFee))}
           onChange={handleChange}
@@ -57,7 +59,7 @@ export const AllianzInsurer = ({
               background={theme.colors.green900}
               hover={theme.colors.green900}
               borderHover={theme.colors.green900}
-              font={theme.fonts.primaryBold}
+              font={theme.fonts.family.primaryBold}
               size={theme.fonts.size.default2}
               disabled={yearlyFee === ""}
               onClick={handleView}
@@ -76,5 +78,5 @@ export const AllianzInsurer = ({
         />
       )}
     </>
-  )
-}
+  );
+};

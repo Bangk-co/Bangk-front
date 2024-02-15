@@ -6,7 +6,7 @@ import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { useSelector } from "react-redux";
 import { numberFormat } from "@/utilities/helpers";
-import pesosIcon from "@/assets/icons/pesos.svg"
+import pesosIcon from "@/assets/icons/pesos.svg";
 import { Select } from "@/components/Common/Select";
 import { MenuItem } from "@mui/material";
 import { SbsInsurer } from "./sbsInsurer";
@@ -27,28 +27,28 @@ export const DrawerQuote = ({
   bangkInsuranceData,
   saveValue,
   handleSaveQuote,
-  isLoading
+  isLoading,
 }) => {
-  const [sendButton, setSendButton] = useState(false)
+  const [sendButton, setSendButton] = useState(false);
 
   const loanData = [
     { label: "Tipo de crédito", value: loanInfo?.loanType },
-    { label: "Saldo del crédito", value: loanInfo?.loanBalance }
-  ]
+    { label: "Saldo del crédito", value: loanInfo?.loanBalance },
+  ];
 
   const titleProps = {
     font: theme.fonts.family.primaryMedium,
     size: theme.fonts.size.sm,
     weight: theme.fonts.weight.medium,
     color: theme.colors.neutralGray900,
-    lineHeight: "20px"
-  }
+    lineHeight: "20px",
+  };
 
   const subtitleProps = {
     size: theme.fonts.size.default2,
     color: theme.colors.neutralGray900,
-    lineHeight: "20px"
-  }
+    lineHeight: "20px",
+  };
 
   const textFieldProps = {
     labelColor: theme.colors.neutralGray900,
@@ -59,8 +59,8 @@ export const DrawerQuote = ({
     borderHover: theme.colors.neutralGray900,
     radius: "4px",
     width: "100%",
-    height: "40px"
-  }
+    height: "40px",
+  };
 
   return (
     <Drawer
@@ -83,39 +83,39 @@ export const DrawerQuote = ({
       <Div direction="column">
         {loanData.map((ele, indx) => (
           <Div key={indx} direction="column" gap="8px" m=" 0 0 22px 0">
-            <Text
-              { ...titleProps }
-            >
-              {ele.label}
-            </Text>
-            <Text
-              { ...subtitleProps }
-            >
-              {ele.label === "Saldo del crédito" ?
+            <Text {...titleProps}>{ele.label}</Text>
+            <Text {...subtitleProps}>
+              {ele.label === "Saldo del crédito" ? (
                 <Div align="center" gap="6px">
-                  <Image alt="icon" src={pesosIcon} /> {numberFormat(ele.value) }
+                  <Image alt="icon" src={pesosIcon} /> {numberFormat(ele.value)}
                 </Div>
-                : ele.value}
+              ) : (
+                ele.value
+              )}
             </Text>
           </Div>
         ))}
       </Div>
       <Select
         label={"Aseguradora*"}
-        { ...textFieldProps }
+        {...textFieldProps}
         notFocused={true}
         name={"insurer"}
         value={insurer}
         onChange={handleSelectInsurer}
       >
         {insurersOptions.map((ele, indx) => (
-          <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
+          <MenuItem
+            key={indx}
+            value={ele.value}
+            style={{ fontFamily: theme.fonts.family.primary }}
+          >
             {ele.label}
           </MenuItem>
         ))}
       </Select>
       <Div m="16px 0 0 0" direction="column">
-        {insurer === 114 ?
+        {insurer === 114 ? (
           <>
             <SbsInsurer
               quoteRate={quoteRate}
@@ -133,7 +133,7 @@ export const DrawerQuote = ({
                 background={theme.colors.green900}
                 hover={theme.colors.green900}
                 borderHover={theme.colors.green900}
-                font={theme.fonts.primaryBold}
+                font={theme.fonts.family.primaryBold}
                 size={theme.fonts.size.default2}
                 onClick={handleSaveQuote}
                 disabled={isLoading}
@@ -141,7 +141,9 @@ export const DrawerQuote = ({
                 Enviar cotización
               </Button>
             </Div>
-          </> : <>
+          </>
+        ) : (
+          <>
             <AllianzInsurer
               loanInfo={loanInfo}
               setSendButton={setSendButton}
@@ -161,7 +163,7 @@ export const DrawerQuote = ({
                   background={theme.colors.green900}
                   hover={theme.colors.green900}
                   borderHover={theme.colors.green900}
-                  font={theme.fonts.primaryBold}
+                  font={theme.fonts.family.primaryBold}
                   size={theme.fonts.size.default2}
                   onClick={handleSaveQuote}
                   disabled={isLoading}
@@ -171,8 +173,8 @@ export const DrawerQuote = ({
               </Div>
             )}
           </>
-        }
+        )}
       </Div>
     </Drawer>
-  )
-}
+  );
+};

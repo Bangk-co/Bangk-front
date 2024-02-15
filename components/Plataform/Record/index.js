@@ -12,14 +12,18 @@ import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
-import success from "@/assets/icons/successStepper.svg"
+import success from "@/assets/icons/successStepper.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
 import useSaveQuote from "@/hooks/Customers/useSaveQuote";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
-import { numberFormat, numberFormatText, parseNumber } from "@/utilities/helpers";
+import {
+  numberFormat,
+  numberFormatText,
+  parseNumber,
+} from "@/utilities/helpers";
 
 export const Record = ({
   historyInfo,
@@ -33,17 +37,17 @@ export const Record = ({
   insurersOptions,
   quoteRate,
 }) => {
-  const dispatch = useDispatch()
-  const { loanInfo } = useSelector((state) => state)?.clients
+  const dispatch = useDispatch();
+  const { loanInfo } = useSelector((state) => state)?.clients;
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
-  const updateLoan = useUpdateLoan()
-  const saveQuote = useSaveQuote()
+  const updateLoan = useUpdateLoan();
+  const saveQuote = useSaveQuote();
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerQuote, setShowDrawerQuote] = useState(false);
-  const [showQuoteSuccess, setShowQuoteSuccess] = useState(false)
-  const [errorDate, setErrorDate] = useState(false)
-  const [savedBankStatStatement, setSavedBankStatStatement] = useState(false)
+  const [showQuoteSuccess, setShowQuoteSuccess] = useState(false);
+  const [errorDate, setErrorDate] = useState(false);
+  const [savedBankStatStatement, setSavedBankStatStatement] = useState(false);
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -55,9 +59,9 @@ export const Record = ({
     phoneNumber: "",
     birthDate: null,
     genderId: "",
-    documentIssueDate: null
-  })
-  const [userForm, setUserForm] = useState({})
+    documentIssueDate: null,
+  });
+  const [userForm, setUserForm] = useState({});
   const [loanForm, setLoanForm] = useState({
     loanBalance: "",
     loanTypeId: 0,
@@ -66,54 +70,83 @@ export const Record = ({
     monthlyCostInsurance: "",
     observations: "",
     loanApplicationId: null,
-    isValidateLoanApplication: true
-  })
+    isValidateLoanApplication: true,
+  });
   const [bankStatementInfo, setBankStatementInfo] = useState({
     bankStatementName: "",
-    bankStatementUrl: ""
-  })
-  const [clientId, setClientId] = useState(null)
-  const [insurer, setInsurer] = useState(114)
-  const [yearlyFee, setYearlyFee] = useState("")
+    bankStatementUrl: "",
+  });
+  const [clientId, setClientId] = useState(null);
+  const [insurer, setInsurer] = useState(114);
+  const [yearlyFee, setYearlyFee] = useState("");
 
   const currentInsuranceData = [
-    { label: "Seguro mensual", value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}` },
-    { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}` },
-  ]
+    {
+      label: "Seguro mensual",
+      value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}`,
+    },
+    {
+      label: "Seguro anual",
+      value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}`,
+    },
+  ];
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
-    { label: "Seguro mensual", value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}` },
-    { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}` }
-  ])
-  const [saveValue, setSaveValue] = useState(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - (loanInfo?.loanBalance * quoteRate))}`)
+    {
+      label: "Seguro mensual",
+      value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}`,
+    },
+    {
+      label: "Seguro anual",
+      value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+    },
+  ]);
+  const [saveValue, setSaveValue] = useState(
+    `$ ${numberFormat(
+      loanInfo?.monthlyCostInsurance * 12 - loanInfo?.loanBalance * quoteRate
+    )}`
+  );
 
   useEffect(() => {
     if (insurer === 114) {
       setBangkInsuranceData([
-        { label: "Seguro mensual", value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}` },
-        { label: "Seguro anual", value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}` }
-      ])
-      setSaveValue(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - (loanInfo?.loanBalance * quoteRate))}`)
+        {
+          label: "Seguro mensual",
+          value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}`,
+        },
+        {
+          label: "Seguro anual",
+          value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+        },
+      ]);
+      setSaveValue(
+        `$ ${numberFormat(
+          loanInfo?.monthlyCostInsurance * 12 -
+            loanInfo?.loanBalance * quoteRate
+        )}`
+      );
     } else {
       setBangkInsuranceData([
-        { label: "Seguro mensual", value: `$ ${numberFormat((yearlyFee) / 12)}` },
-        { label: "Seguro anual", value: `$ ${numberFormatText(yearlyFee)}` }
-      ])
-      setSaveValue(`$ ${numberFormat((loanInfo?.monthlyCostInsurance * 12) - yearlyFee)}`)
+        { label: "Seguro mensual", value: `$ ${numberFormat(yearlyFee / 12)}` },
+        { label: "Seguro anual", value: `$ ${numberFormatText(yearlyFee)}` },
+      ]);
+      setSaveValue(
+        `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12 - yearlyFee)}`
+      );
     }
-  }, [insurer, loanInfo, yearlyFee, quoteRate])
+  }, [insurer, loanInfo, yearlyFee, quoteRate]);
 
   useEffect(() => {
     if (prevUserForm) {
-      setUserForm(prevUserForm)
+      setUserForm(prevUserForm);
     }
-  }, [prevUserForm])
+  }, [prevUserForm]);
 
   useEffect(() => {
     if (isSuccess) {
-      const info = data?.data?.loanApplication
+      const info = data?.data?.loanApplication;
 
-      setClientId(info?.clientId)
+      setClientId(info?.clientId);
       setPrevUserForm({
         name: info?.clientName,
         lastName: info?.clientLastName,
@@ -124,34 +157,37 @@ export const Record = ({
         phoneNumber: info?.phoneNumber,
         birthDate: dayjs(info?.birthDate),
         genderId: info?.genderId,
-        documentIssueDate: info?.documentIssueDate === null ? null : dayjs(info?.documentIssueDate),
-      })
+        documentIssueDate:
+          info?.documentIssueDate === null
+            ? null
+            : dayjs(info?.documentIssueDate),
+      });
 
       setLoanForm({
         loanBalance: info.loanBalance,
         loanTypeId: info.loanType,
         bankId: info.bankId,
         loanNumber: info.loanNumber,
-        monthlyCostInsurance: info.monthlyCostInsurance === null ? "" : info.monthlyCostInsurance,
+        monthlyCostInsurance:
+          info.monthlyCostInsurance === null ? "" : info.monthlyCostInsurance,
         observations: info.observations,
         loanApplicationId: info.loanApplicationId,
-        isValidateLoanApplication: true
-      })
+        isValidateLoanApplication: true,
+      });
       setBankStatementInfo({
         bankStatementName: info.bankStatementName,
-        bankStatementUrl: info.bankStatementUrl
-      })
+        bankStatementUrl: info.bankStatementUrl,
+      });
     }
-  }, [isSuccess, data])
+  }, [isSuccess, data]);
 
   const handleCloseQuoteSuccess = () => {
     setShowQuoteSuccess(false);
-    dispatch(setLoanInfo({}))
-    queryClient.refetchQueries("historyList")
-    toast.custom(
-      <ToastSuccess message={"Cotización enviada con éxito"} />,
-      { duration: 1000 }
-    );
+    dispatch(setLoanInfo({}));
+    queryClient.refetchQueries("historyList");
+    toast.custom(<ToastSuccess message={"Cotización enviada con éxito"} />, {
+      duration: 1000,
+    });
   };
 
   const handleCloseDrawerQuote = () => {
@@ -160,39 +196,39 @@ export const Record = ({
 
   const handleCloseDrawer = () => {
     setShowDrawer(false);
-    setSavedBankStatStatement(false)
+    setSavedBankStatStatement(false);
   };
 
   const handleOpen = () => {
-    setShowDrawer(true)
-  }
+    setShowDrawer(true);
+  };
 
   const handleChangeUser = (event) => {
     const { id, value } = event.target;
-    const newUserForm = { ...userForm }
+    const newUserForm = { ...userForm };
 
     if (id === "identificationNumber") {
       if (userForm.documentTypeId !== 78) {
-        newUserForm[id] = value.replace(/\D/g, '');
+        newUserForm[id] = value.replace(/\D/g, "");
       } else {
-        newUserForm[id] = value
+        newUserForm[id] = value;
       }
     } else if (id === "phoneNumber") {
-      newUserForm[id] = value.replace(/\D/g, '');
+      newUserForm[id] = value.replace(/\D/g, "");
     } else {
-      newUserForm[id] = value
+      newUserForm[id] = value;
     }
 
-    setUserForm(newUserForm)
-  }
+    setUserForm(newUserForm);
+  };
 
   const handleSelectUser = (event) => {
     const { name, value } = event.target;
-    const newUserForm = { ...userForm }
+    const newUserForm = { ...userForm };
 
-    newUserForm[name] = value
-    setUserForm(newUserForm)
-  }
+    newUserForm[name] = value;
+    setUserForm(newUserForm);
+  };
 
   const handleChangeDate = (event, id) => {
     const today = new Date();
@@ -201,29 +237,29 @@ export const Record = ({
 
     if (id === "birthDate") {
       if (age < 18) {
-        setErrorDate(true)
+        setErrorDate(true);
       } else {
-        setErrorDate(false)
-        setUserForm({ ...userForm, birthDate: event })
+        setErrorDate(false);
+        setUserForm({ ...userForm, birthDate: event });
       }
     } else {
-      setUserForm({ ...userForm, documentIssueDate: event })
+      setUserForm({ ...userForm, documentIssueDate: event });
     }
-  }
+  };
 
   const handleSelectGender = (event) => {
-    const { defaultValue } = event.target
-    const newUserForm = { ...userForm }
+    const { defaultValue } = event.target;
+    const newUserForm = { ...userForm };
 
-    newUserForm["genderId"] = defaultValue
-    setUserForm(newUserForm)
-  }
+    newUserForm["genderId"] = defaultValue;
+    setUserForm(newUserForm);
+  };
 
   const handleChangeLoan = (event) => {
     const { id, value } = event.target;
 
-    const newValue = value === "" ? "" : value.replace(/\D/g, '');
-    if (newValue === "" || (parseInt(newValue, 10) <= 5000000000)) {
+    const newValue = value === "" ? "" : value.replace(/\D/g, "");
+    if (newValue === "" || parseInt(newValue, 10) <= 5000000000) {
       setLoanForm((prevLoanForm) => ({
         ...prevLoanForm,
         [id]: newValue,
@@ -233,23 +269,23 @@ export const Record = ({
 
   const handleSelectLoan = (event) => {
     const { name, value } = event.target;
-    const newLoanForm = { ...loanForm }
+    const newLoanForm = { ...loanForm };
 
-    newLoanForm[name] = value
-    setLoanForm(newLoanForm)
-  }
+    newLoanForm[name] = value;
+    setLoanForm(newLoanForm);
+  };
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    const newLoanForm = { ...loanForm }
+    const newLoanForm = { ...loanForm };
 
     if (id === "loanNumber") {
-      newLoanForm[id] = value.replace(/\D/g, '');
+      newLoanForm[id] = value.replace(/\D/g, "");
     } else {
       newLoanForm[id] = value;
     }
-    setLoanForm(newLoanForm)
-  }
+    setLoanForm(newLoanForm);
+  };
 
   const handleSave = (close) => {
     if (JSON.stringify(prevUserForm) !== JSON.stringify(userForm)) {
@@ -278,18 +314,24 @@ export const Record = ({
         onSuccess: () => {
           if (close) {
             toast.custom(
-              <ToastSuccess message={"Datos del cliente validados con éxito"} />,
+              <ToastSuccess
+                message={"Datos del cliente validados con éxito"}
+              />,
               { duration: 1000 }
             );
-            setShowDrawer(false)
+            setShowDrawer(false);
           } else {
-            dispatch(setLoanInfo({
-              loanBalance: loanForm.loanBalance,
-              monthlyCostInsurance: loanForm.monthlyCostInsurance,
-              loanType: loanTypeOptions.find((ele) => ele.value === loanForm.loanTypeId)?.label
-            }))
-            setShowDrawer(false)
-            setShowDrawerQuote(true)
+            dispatch(
+              setLoanInfo({
+                loanBalance: loanForm.loanBalance,
+                monthlyCostInsurance: loanForm.monthlyCostInsurance,
+                loanType: loanTypeOptions.find(
+                  (ele) => ele.value === loanForm.loanTypeId
+                )?.label,
+              })
+            );
+            setShowDrawer(false);
+            setShowDrawerQuote(true);
           }
         },
         onError: (err) => {
@@ -299,7 +341,7 @@ export const Record = ({
         },
       }
     );
-  }
+  };
 
   const handleDownload = () => {
     const a = document.createElement("a");
@@ -313,29 +355,34 @@ export const Record = ({
 
   const handleSelectInsurer = (event) => {
     const { value } = event.target;
-    setInsurer(value)
-    setYearlyFee("")
-  }
+    setInsurer(value);
+    setYearlyFee("");
+  };
 
   const handleChangeYearlyFee = (event) => {
     const { value } = event.target;
-    setYearlyFee(value.replace(/\D/g, ''))
-  }
+    setYearlyFee(value.replace(/\D/g, ""));
+  };
 
   const handleSaveQuote = () => {
     saveQuote.reset();
     saveQuote.mutate(
-      { formData: {
-          insuranceName: insurersOptions.find((ele) => ele.value === insurer)?.label,
+      {
+        formData: {
+          insuranceName: insurersOptions.find((ele) => ele.value === insurer)
+            ?.label,
           insuranceId: insurer,
           loanApplicationId: data?.data?.loanApplication.loanApplicationId,
-          yearlyFee: parseNumber(bangkInsuranceData.find((ele) => ele.label === "Seguro anual")?.value),
-        }
+          yearlyFee: parseNumber(
+            bangkInsuranceData.find((ele) => ele.label === "Seguro anual")
+              ?.value
+          ),
+        },
       },
       {
         onSuccess: (data) => {
-          setShowDrawerQuote(false)
-          setShowQuoteSuccess(true)
+          setShowDrawerQuote(false);
+          setShowQuoteSuccess(true);
         },
         onError: (err) => {
           err.response.data.errors.map((error) => {
@@ -344,46 +391,40 @@ export const Record = ({
         },
       }
     );
-  }
+  };
 
   const disabledButtons = loanForm?.monthlyCostInsurance === "";
 
   const handleOpenSaved = () => {
-    handleOpen()
-    setSavedBankStatStatement(true)
-  }
+    handleOpen();
+    setSavedBankStatStatement(true);
+  };
 
   const optionsButtons = (status) => {
     switch (status) {
       case "Revisión de extracto":
-        return { label: "Ver extracto", onClick: handleOpen }
+        return { label: "Ver extracto", onClick: handleOpen };
       case "Cotización enviada":
-        return { label: "Ver cotización", onClick: () => {} }
+        return { label: "Ver cotización", onClick: () => {} };
       default:
         break;
     }
-  }
+  };
 
   const optionsOtherButtons = (status) => {
     switch (status) {
       case "Revisión de extracto":
-        return { label: "Ver extracto", onClick: handleOpenSaved }
-    case "Cotización enviada":
-        return { label: "Ver cotización", onClick: () => {} }
+        return { label: "Ver extracto", onClick: handleOpenSaved };
+      case "Cotización enviada":
+        return { label: "Ver cotización", onClick: () => {} };
       default:
         break;
     }
-  }
+  };
 
-  const principalButtons = [
-    "Revisión de extracto",
-    "Cotización enviada"
-  ]
+  const principalButtons = ["Revisión de extracto", "Cotización enviada"];
 
-  const secondaryButtons = [
-    "Revisión de extracto",
-    "Cotización enviada"
-  ]
+  const secondaryButtons = ["Revisión de extracto", "Cotización enviada"];
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -441,9 +482,7 @@ export const Record = ({
         {historyInfo.map((ele, indx) => (
           <Div key={indx} direction="column" align="center">
             <Image alt="icon" src={ele.icon} />
-            {indx < historyInfo.length - 1 && (
-              <DashedLine />
-            )}
+            {indx < historyInfo.length - 1 && <DashedLine />}
           </Div>
         ))}
       </Div>
@@ -509,43 +548,48 @@ export const Record = ({
                 </Col>
               </Grid>
               <Grid item md={2.5}>
-                {historyInfo.length > 0 && indx === 0 && principalButtons.includes(ele.status) && (
-                  <Div height="100%" justify="end" align="center">
-                    <Button
-                      background={theme.colors.green900}
-                      hover={theme.colors.green900}
-                      borderHover={theme.colors.green900}
-                      width={"200px"}
-                      height={"40px"}
-                      onClick={optionsButtons(ele.status)?.onClick}
-                    >
-                      {optionsButtons(ele.status)?.label}
-                    </Button>
-                  </Div>
-                )}
-                {historyInfo.length > 2 && indx !== 0 && secondaryButtons.includes(ele.status) && (
-                  <Div height="100%" justify="end" align="center">
-                    <Button
-                      font={theme.fonts.family.primaryBold}
-                      labelColor={theme.colors.green900}
-                      background={theme.colors.white}
-                      hover={theme.colors.white}
-                      border={theme.colors.green900}
-                      borderHeight={`3px solid ${theme.colors.green900}`}
-                      borderHover={theme.colors.green900}
-                      width={"200px"}
-                      height={"40px"}
-                      onClick={optionsOtherButtons(ele.status)?.onClick}
-                    >
-                      {optionsOtherButtons(ele.status)?.label}
-                    </Button>
-                  </Div>
-                )}
+                {historyInfo.length > 0 &&
+                  indx === 0 &&
+                  principalButtons.includes(ele.status) && (
+                    <Div height="100%" justify="end" align="center">
+                      <Button
+                        background={theme.colors.green900}
+                        hover={theme.colors.green900}
+                        borderHover={theme.colors.green900}
+                        font={theme.fonts.family.primaryBold}
+                        width={"200px"}
+                        height={"40px"}
+                        onClick={optionsButtons(ele.status)?.onClick}
+                      >
+                        {optionsButtons(ele.status)?.label}
+                      </Button>
+                    </Div>
+                  )}
+                {historyInfo.length > 2 &&
+                  indx !== 0 &&
+                  secondaryButtons.includes(ele.status) && (
+                    <Div height="100%" justify="end" align="center">
+                      <Button
+                        font={theme.fonts.family.primaryBold}
+                        labelColor={theme.colors.green900}
+                        background={theme.colors.white}
+                        hover={theme.colors.white}
+                        border={theme.colors.green900}
+                        borderHeight={`3px solid ${theme.colors.green900}`}
+                        borderHover={theme.colors.green900}
+                        width={"200px"}
+                        height={"40px"}
+                        onClick={optionsOtherButtons(ele.status)?.onClick}
+                      >
+                        {optionsOtherButtons(ele.status)?.label}
+                      </Button>
+                    </Div>
+                  )}
               </Grid>
             </Grid>
           </Card>
         ))}
       </Col>
     </Row>
-  )
-}
+  );
+};

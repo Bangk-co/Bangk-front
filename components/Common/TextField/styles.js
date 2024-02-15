@@ -11,6 +11,7 @@ export const CustomTextField = styled(TextField)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-weight: ${theme.fonts.weight.regular};
     font-size: ${({ size }) => size || theme.fonts.size.sm};
+    color: ${({ fontColor }) => fontColor};
     &.Mui-focused fieldset {
       border: 1px solid
         ${(props) =>

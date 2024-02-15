@@ -24,6 +24,7 @@ export const TextField = ({
   labelColor,
   labelFont,
   labelWeight,
+  fontColor,
   notFocused,
   placeholderColor,
   ...rest
@@ -54,6 +55,7 @@ export const TextField = ({
         radius={radius}
         font={font}
         size={size}
+        fontColor={fontColor}
         border={border}
         notFocused={notFocused}
         placeholderColor={placeholderColor}

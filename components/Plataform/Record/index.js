@@ -348,21 +348,42 @@ export const Record = ({
 
   const disabledButtons = loanForm?.monthlyCostInsurance === "";
 
+  const handleOpenSaved = () => {
+    handleOpen()
+    setSavedBankStatStatement(true)
+  }
+
   const optionsButtons = (status) => {
     switch (status) {
       case "Revisión de extracto":
         return { label: "Ver extracto", onClick: handleOpen }
       case "Cotización enviada":
-        return { label: "Revisar cotización", onClick: () => {} }
+        return { label: "Ver cotización", onClick: () => {} }
       default:
         break;
     }
   }
 
-  const handleOpenSaved = () => {
-    handleOpen()
-    setSavedBankStatStatement(true)
+  const optionsOtherButtons = (status) => {
+    switch (status) {
+      case "Revisión de extracto":
+        return { label: "Ver extracto", onClick: handleOpenSaved }
+    case "Cotización enviada":
+        return { label: "Ver cotización", onClick: () => {} }
+      default:
+        break;
+    }
   }
+
+  const principalButtons = [
+    "Revisión de extracto",
+    "Cotización enviada"
+  ]
+
+  const secondaryButtons = [
+    "Revisión de extracto",
+    "Cotización enviada"
+  ]
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -488,7 +509,7 @@ export const Record = ({
                 </Col>
               </Grid>
               <Grid item md={2.5}>
-                {historyInfo.length > 0 && indx === 0 && (
+                {historyInfo.length > 0 && indx === 0 && principalButtons.includes(ele.status) && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       background={theme.colors.green900}
@@ -502,7 +523,7 @@ export const Record = ({
                     </Button>
                   </Div>
                 )}
-                {historyInfo.length > 2 && ele.status === "Revisión de extracto" && (
+                {historyInfo.length > 2 && indx !== 0 && secondaryButtons.includes(ele.status) && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       font={theme.fonts.family.primaryBold}
@@ -514,9 +535,9 @@ export const Record = ({
                       borderHover={theme.colors.green900}
                       width={"200px"}
                       height={"40px"}
-                      onClick={handleOpenSaved}
+                      onClick={optionsOtherButtons(ele.status)?.onClick}
                     >
-                      {optionsButtons(ele.status)?.label}
+                      {optionsOtherButtons(ele.status)?.label}
                     </Button>
                   </Div>
                 )}

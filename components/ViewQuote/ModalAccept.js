@@ -98,6 +98,7 @@ export const ModalAccept = ({
           height={"40px"}
           radius={"40px"}
           style={{ order: isMobile ? 1 : -1 }}
+          onClick={handleClose}
         >
           No, decidir más tarde
         </Button>

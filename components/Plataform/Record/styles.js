@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 export const Card = styled.div`
   display: flex;
-  align-items: center;
   width: 80vw;
   height: 193px;
   padding: 24px;
@@ -14,7 +13,7 @@ export const Card = styled.div`
 
 export const DashedLine = styled.div`
   border-left: 2px dashed ${theme.colors.green500};
-  height: 185px; /* Ajusta la altura de la línea según tus necesidades */
+  height: 185px;
 `
 
 export const WrapperClose = styled.div`

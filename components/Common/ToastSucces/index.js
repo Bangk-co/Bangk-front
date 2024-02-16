@@ -1,5 +1,4 @@
 import React from "react";
-import toast from "react-hot-toast";
 import { SaveSuccess } from "./styles";
 import Image from "next/image";
 import { Text } from "@/styles/Common";

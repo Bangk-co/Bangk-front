@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTermsDate, setUserInfo, setValidCode } from "@/store/balance";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import toast from "react-hot-toast";
+import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 
 const UserData = ({ isMobile, isTablet }) => {
   const router = useRouter()
@@ -130,7 +131,10 @@ const UserData = ({ isMobile, isTablet }) => {
         },
         onError: (err) => {
           err.response.data.map((error) => {
-            toast.error(error);
+            toast.custom(
+              <ToastErrorClient message={`${error}`} />,
+              { duration: 1000 }
+            );
           });
         },
       }

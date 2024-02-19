@@ -6,7 +6,7 @@ import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { useSelector } from "react-redux";
 import { numberFormat } from "@/utilities/helpers";
-import pesosIcon from "@/assets/icons/pesos.svg"
+import pesosIcon from "@/assets/icons/pesos.svg";
 import { Select } from "@/components/Common/Select";
 import { MenuItem } from "@mui/material";
 import { SbsInsurer } from "./sbsInsurer";
@@ -22,28 +22,31 @@ export const DrawerQuoteSuccess = ({
   insurer,
   currentInsuranceData,
   bangkInsuranceData,
-  saveValue
+  saveValue,
 }) => {
   const loanData = [
     { label: "Tipo de crédito", value: loanInfo?.loanType },
-    { label: "Saldo del crédito", value: `$ ${numberFormat(loanInfo?.loanBalance)}` },
-    { label: "Aseguradora", value: insurer }
-  ]
+    {
+      label: "Saldo del crédito",
+      value: `$ ${numberFormat(loanInfo?.loanBalance)}`,
+    },
+    { label: "Aseguradora", value: insurer },
+  ];
 
   const subtitleProps = {
     font: theme.fonts.family.primaryBold,
     weight: theme.fonts.weight.bold,
     size: theme.fonts.size.sm,
     color: theme.colors.neutralGray900,
-    lineHeight: "17.33px"
-  }
+    lineHeight: "17.33px",
+  };
 
   const textValueProps = {
     font: theme.fonts.family.primaryBold,
     weight: theme.fonts.weight.bold,
     size: theme.fonts.size.ft,
     lineHeight: "28px",
-  }
+  };
 
   return (
     <Drawer
@@ -52,9 +55,16 @@ export const DrawerQuoteSuccess = ({
       onClose={closeDrawer}
       width={"450px"}
     >
-      <Div width="100%" justify="center" align="center" m="16px 0 20px 0" direction="column" gap="20px">
+      <Div
+        width="100%"
+        justify="center"
+        align="center"
+        m="16px 0 20px 0"
+        direction="column"
+        gap="20px"
+      >
         <Image alt="logo" src={greenLogo} width={85} height={32.94} />
-        <Text { ...textValueProps } color={theme.colors.neutralGray800}>
+        <Text {...textValueProps} color={theme.colors.neutralGray800}>
           ¡Cotización enviada!
         </Text>
       </Div>
@@ -67,8 +77,8 @@ export const DrawerQuoteSuccess = ({
             align="center"
             style={{ borderBottom: `1px solid ${theme.colors.primary300}` }}
           >
-            <Text { ...subtitleProps }>{ele.label}</Text>
-            <Text { ...subtitleProps }>{ele.value}</Text>
+            <Text {...subtitleProps}>{ele.label}</Text>
+            <Text {...subtitleProps}>{ele.value}</Text>
           </Div>
         ))}
       </Div>
@@ -79,5 +89,5 @@ export const DrawerQuoteSuccess = ({
         saveValue={saveValue}
       />
     </Drawer>
-  )
-}
+  );
+};

@@ -10,7 +10,7 @@ import { Tab } from "@/components/Common/Tabs/Tab";
 import backIcon from "../../../assets/icons/back.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedApplicationInformation } from "@/store/applications";
-import { HeaderInfo } from "./styles";
+import { HeaderInfo, WrapperPage } from "./styles";
 import ApplicationInfo from "./ApplicationInfo";
 import flagIconBold from "../../../assets/icons/flag-bold.svg";
 import flagIcon from "../../../assets/icons/flag.svg";
@@ -21,8 +21,8 @@ import formIconBold from "../../../assets/icons/form-bold.svg";
 import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import { Record } from "../Record";
-import pending from "@/assets/icons/pendingStepper.svg"
-import success from "@/assets/icons/successStepper.svg"
+import pending from "@/assets/icons/pendingStepper.svg";
+import success from "@/assets/icons/successStepper.svg";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import { formattedDate, historyStatus } from "@/utilities/helpers";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
@@ -37,27 +37,35 @@ import useGetInsurers from "@/hooks/Common/useGetInsurers";
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const documentsType = useGetDocumentType()
-  const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType
-  const phoneCode = useGetCountries()
-  const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode
-  const gender = useGetGenders()
-  const { data: dataGender, isSuccess: isSuccessGender } = gender
-  const loanType = useGetCreditType()
-  const { data: dataLoan, isSuccess: isSuccessLoan } = loanType
-  const banks = useGetBanks()
-  const { data: dataBanks, isSuccess: isSuccessBanks } = banks
-  const insurers = useGetInsurers()
-  const { data: dataInsurers, isSuccess: isSuccessInsurers } = insurers
-  const quoteRateData = useGetQuoteRate()
-  const { data: dataQuoteRate, isSuccess: isSuccessQuoteRate } = quoteRateData
+  const documentsType = useGetDocumentType();
+  const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
+  const phoneCode = useGetCountries();
+  const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode;
+  const gender = useGetGenders();
+  const { data: dataGender, isSuccess: isSuccessGender } = gender;
+  const loanType = useGetCreditType();
+  const { data: dataLoan, isSuccess: isSuccessLoan } = loanType;
+  const banks = useGetBanks();
+  const { data: dataBanks, isSuccess: isSuccessBanks } = banks;
+  const insurers = useGetInsurers();
+  const { data: dataInsurers, isSuccess: isSuccessInsurers } = insurers;
+  const quoteRateData = useGetQuoteRate();
+  const { data: dataQuoteRate, isSuccess: isSuccessQuoteRate } = quoteRateData;
 
   const { applications } = useSelector((state) => state);
 
-  const history = useGetHistory(applications?.selectedApplication?.loanApplicationId)
-  const { data, isSuccess } = history
-  const loanInfo = useGetLoanInfo(applications?.selectedApplication?.loanApplicationId)
-  const { data: dataLoanInfo, isSuccess: isSuccessLoanInfo, isLoading: isLoadingLoanInfo } = loanInfo
+  const history = useGetHistory(
+    applications?.selectedApplication?.loanApplicationId
+  );
+  const { data, isSuccess } = history;
+  const loanInfo = useGetLoanInfo(
+    applications?.selectedApplication?.loanApplicationId
+  );
+  const {
+    data: dataLoanInfo,
+    isSuccess: isSuccessLoanInfo,
+    isLoading: isLoadingLoanInfo,
+  } = loanInfo;
 
   useEffect(() => {
     if (!applications?.selectedApplication?.loanApplicationId) {
@@ -67,15 +75,15 @@ const Application = ({ isMobile, isTablet }) => {
   }, [applications?.selectedApplication]);
 
   const [selectedTab, setSelectedTab] = useState(0);
-  const [historyInfo, setHistoryInfo] = useState([])
+  const [historyInfo, setHistoryInfo] = useState([]);
 
-  const [documentTypeOptions, setDocumentTypeOptions] = useState([])
-  const [phoneCodesOptions, setPhoneCodesOptions] = useState([])
-  const [gendersOptions, setGendersOptions] = useState([])
-  const [loanTypeOptions, setLoanTypeOptions] = useState([])
-  const [banksOptions, setBanksOptions] = useState([])
-  const [insurersOptions, setInsurersOptions] = useState([])
-  const [quoteRate, setQuoteRate] = useState(null)
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  const [phoneCodesOptions, setPhoneCodesOptions] = useState([]);
+  const [gendersOptions, setGendersOptions] = useState([]);
+  const [loanTypeOptions, setLoanTypeOptions] = useState([]);
+  const [banksOptions, setBanksOptions] = useState([]);
+  const [insurersOptions, setInsurersOptions] = useState([]);
+  const [quoteRate, setQuoteRate] = useState(null);
 
   const tabs = [
     {
@@ -126,7 +134,7 @@ const Application = ({ isMobile, isTablet }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      const info = data?.data.loanApplicationHistory
+      const info = data?.data.loanApplicationHistory;
 
       if (info.length === 1) {
         setHistoryInfo([
@@ -134,103 +142,123 @@ const Application = ({ isMobile, isTablet }) => {
             status: "Revisión de extracto",
             date: "-",
             observations: "",
-            icon: pending
+            icon: pending,
           },
           {
             status: historyStatus[info[0].stateName],
             date: formattedDate(info[0].creationDate),
             observations: info[0].observations,
-            icon: success
-          }
-        ])
+            icon: success,
+          },
+        ]);
       } else {
-        setHistoryInfo(info.map((ele, indx) => ({
-          status: historyStatus[ele.stateName],
-          date: formattedDate(ele.creationDate),
-          observations: ele.observations,
-          icon: indx === 0 ? pending : success
-        })))
+        setHistoryInfo(
+          info.map((ele, indx) => ({
+            status: historyStatus[ele.stateName],
+            date: formattedDate(ele.creationDate),
+            observations: ele.observations,
+            icon: indx === 0 ? pending : success,
+          }))
+        );
       }
     }
-  }, [isSuccess, data])
+  }, [isSuccess, data]);
 
   useEffect(() => {
     if (isSuccessDocuments) {
-      setDocumentTypeOptions(dataDocuments?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setDocumentTypeOptions(
+        dataDocuments?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessDocuments, dataDocuments])
+  }, [isSuccessDocuments, dataDocuments]);
 
   useEffect(() => {
     if (isSuccessPhone) {
-      setPhoneCodesOptions(dataPhone?.data.groupSettings.map((ele) => ({
-        label: `(${ele.code})`,
-        value: ele.id
-      })))
+      setPhoneCodesOptions(
+        dataPhone?.data.groupSettings.map((ele) => ({
+          label: `(${ele.code})`,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessPhone, dataPhone])
+  }, [isSuccessPhone, dataPhone]);
 
   useEffect(() => {
     if (isSuccessGender) {
-      setGendersOptions(dataGender?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setGendersOptions(
+        dataGender?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessGender, dataGender])
+  }, [isSuccessGender, dataGender]);
 
   useEffect(() => {
     if (isSuccessLoan) {
-      setLoanTypeOptions(dataLoan?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setLoanTypeOptions(
+        dataLoan?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessLoan, dataLoan])
+  }, [isSuccessLoan, dataLoan]);
 
   useEffect(() => {
     if (isSuccessBanks) {
-      setBanksOptions(dataBanks?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setBanksOptions(
+        dataBanks?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessBanks, dataBanks])
+  }, [isSuccessBanks, dataBanks]);
 
   useEffect(() => {
     if (isSuccessBanks) {
-      setBanksOptions(dataBanks?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setBanksOptions(
+        dataBanks?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessBanks, dataBanks])
+  }, [isSuccessBanks, dataBanks]);
 
   useEffect(() => {
     if (isSuccessBanks) {
-      setBanksOptions(dataBanks?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setBanksOptions(
+        dataBanks?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessBanks, dataBanks])
+  }, [isSuccessBanks, dataBanks]);
 
   useEffect(() => {
     if (isSuccessInsurers) {
-      setInsurersOptions(dataInsurers?.data.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
+      setInsurersOptions(
+        dataInsurers?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
     }
-  }, [isSuccessInsurers, dataInsurers])
+  }, [isSuccessInsurers, dataInsurers]);
 
   useEffect(() => {
     if (isSuccessQuoteRate) {
-      setQuoteRate(dataQuoteRate?.data.groupSettings.find((ele) => ele.id === 122)?.code)
+      setQuoteRate(
+        dataQuoteRate?.data.groupSettings.find((ele) => ele.id === 122)?.code
+      );
     }
-  }, [isSuccessQuoteRate, dataQuoteRate])
+  }, [isSuccessQuoteRate, dataQuoteRate]);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -242,16 +270,7 @@ const Application = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <Div
-      width="100%"
-      gap="32px"
-      justify="start"
-      align="flex-start"
-      background={"#fafafa"}
-      direction="column"
-      minheight="100vh"
-      style={{ overflowY: "auto" }}
-    >
+    <WrapperPage>
       <HeaderInfo>
         <Row gap="8px" align="center">
           <Button
@@ -295,7 +314,7 @@ const Application = ({ isMobile, isTablet }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 &&
+        {selectedTab === 0 && (
           <Record
             historyInfo={historyInfo}
             documentTypeOptions={documentTypeOptions}
@@ -308,12 +327,12 @@ const Application = ({ isMobile, isTablet }) => {
             insurersOptions={insurersOptions}
             quoteRate={quoteRate}
           />
-        }
+        )}
         {selectedTab === 1 && <Text>Formularios</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}
       </Col>
-    </Div>
+    </WrapperPage>
   );
 };
 

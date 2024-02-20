@@ -320,6 +320,7 @@ export const Record = ({
               { duration: 1000 }
             );
             setShowDrawer(false);
+            queryClient.invalidateQueries(["historyList"]);
           } else {
             dispatch(
               setLoanInfo({

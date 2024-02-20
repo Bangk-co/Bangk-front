@@ -5,30 +5,35 @@ import { Div, Row, Text } from "@/styles/Common";
 import { CardButton, Col, WrapperWapp } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
 import Image from "next/image";
-import pesosIcon from "@/assets/icons/pesos.svg"
+import pesosIcon from "@/assets/icons/pesos.svg";
 import { Button } from "@/components/Common/Button";
-import wappIcon from "@/assets/icons/whatsapp-original.svg"
+import wappIcon from "@/assets/icons/whatsapp-original.svg";
 import { numberFormat } from "@/utilities/helpers";
 
 export const InitForm = ({
-    isMobile,
-    formInfo,
-    handleChange,
-    handleChangeDate,
-    handleSelect,
-    handleNext,
-    handleWapp,
-    errorDate,
-    genderButtons,
-    emptyValidation
-  }) => {
+  isMobile,
+  formInfo,
+  handleChange,
+  handleChangeDate,
+  handleSelect,
+  handleNext,
+  handleWapp,
+  errorDate,
+  errorBalance,
+  genderButtons,
+  emptyValidation,
+}) => {
   return (
     <Col m={"92px 0 0 0"} justifyMobile={"center"}>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.default2 : theme.fonts.size.ft}
       >
-        Con Bangk puedes lograr <span style={{ fontFamily:theme.fonts.family.primaryBold }}>ahorros entre el 20% y hasta el 70%</span> en los seguros de tus préstamos desde $30 millones en adelante
+        Con Bangk puedes lograr{" "}
+        <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
+          ahorros entre el 20% y hasta el 70%
+        </span>{" "}
+        en los seguros de tus préstamos desde $30 millones en adelante
       </Text>
       <Text
         color={theme.colors.white}
@@ -36,7 +41,15 @@ export const InitForm = ({
         font={theme.fonts.family.primaryBold}
         mt="24px"
       >
-        Calculemos <span style={{ fontFamily:theme.fonts.family.primaryBold, color: theme.colors.yellow }}>tu ahorro</span>
+        Calculemos{" "}
+        <span
+          style={{
+            fontFamily: theme.fonts.family.primaryBold,
+            color: theme.colors.yellow,
+          }}
+        >
+          tu ahorro
+        </span>
       </Text>
       <Text
         color={theme.colors.white}
@@ -63,13 +76,23 @@ export const InitForm = ({
         border={theme.colors.primary25}
         notFocused={true}
         placeholderColor={theme.colors.neutralGray500}
-        prefixIcon={<Image alt="pesos" src={pesosIcon} width={16} height={16} />}
+        prefixIcon={
+          <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+        }
         onChange={handleChange}
-        value={formInfo.balance === "" ? "" : numberFormat(Number(formInfo.balance))}
+        value={
+          formInfo.balance === "" ? "" : numberFormat(Number(formInfo.balance))
+        }
         inputProps={{
           pattern: "\\d*",
           inputMode: "numeric",
         }}
+        error={errorBalance}
+        helper={
+          errorBalance
+            ? "El saldo mínimo de tu crédito debe ser de $30.000.000"
+            : ""
+        }
       />
       <Text
         size={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
@@ -89,7 +112,9 @@ export const InitForm = ({
         label="Fecha de nacimiento*"
         font={theme.fonts.family.primary}
         error={errorDate}
-        helper={errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""}
+        helper={
+          errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""
+        }
         size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
         labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
         labelColor={theme.colors.white}
@@ -117,8 +142,14 @@ export const InitForm = ({
             key={indx}
             onClick={() => handleSelect(ele.value)}
             style={{
-              border: formInfo.gender === ele.value ? `3px solid ${theme.colors.yellow500}` : `3px solid ${theme.colors.primary25}`,
-              background: formInfo.gender === ele.value ? theme.colors.terciary50 : theme.colors.primary25,
+              border:
+                formInfo.gender === ele.value
+                  ? `3px solid ${theme.colors.yellow500}`
+                  : `3px solid ${theme.colors.primary25}`,
+              background:
+                formInfo.gender === ele.value
+                  ? theme.colors.terciary50
+                  : theme.colors.primary25,
             }}
           >
             <Image alt="genderIcon" src={ele.icon} />
@@ -135,7 +166,12 @@ export const InitForm = ({
 
       {isMobile && (
         <WrapperWapp>
-          <Image alt="wapp-icon" src={wappIcon} onClick={handleWapp} style={{ cursor: "pointer" }} />
+          <Image
+            alt="wapp-icon"
+            src={wappIcon}
+            onClick={handleWapp}
+            style={{ cursor: "pointer" }}
+          />
         </WrapperWapp>
       )}
 
@@ -157,5 +193,5 @@ export const InitForm = ({
         </Button>
       </Div>
     </Col>
-  )
-}
+  );
+};

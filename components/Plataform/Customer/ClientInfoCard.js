@@ -58,6 +58,7 @@ const ClientInfoCard = ({
             color={theme.colors.neutralGray800}
             size={theme.fonts.size.ft}
             font={theme.fonts.family.primaryBold}
+            align="left"
           >
             {clientInfo?.name} {clientInfo?.lastName}
           </Text>

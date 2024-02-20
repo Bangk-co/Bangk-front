@@ -24,6 +24,7 @@ import {
   numberFormatText,
   parseNumber,
 } from "@/utilities/helpers";
+import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByApplicationId";
 
 export const Record = ({
   historyInfo,
@@ -39,6 +40,7 @@ export const Record = ({
 }) => {
   const dispatch = useDispatch();
   const { loanInfo } = useSelector((state) => state)?.clients;
+  const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan();
@@ -80,16 +82,21 @@ export const Record = ({
   const [insurer, setInsurer] = useState(114);
   const [yearlyFee, setYearlyFee] = useState("");
 
-  const currentInsuranceData = [
-    {
-      label: "Seguro mensual",
-      value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}`,
-    },
-    {
-      label: "Seguro anual",
-      value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}`,
-    },
-  ];
+  const loanApplications = useGetLoanQuoteByApplicationId(
+    applications?.selectedApplication?.loanApplicationId
+  );
+  const { data: dataLoanApplication, isLoading } = loanApplications;
+  const [loanApplicationInfo, setLoanApplicationInfo] = useState();
+  useEffect(() => {
+    if (dataLoanApplication && dataLoanApplication.data) {
+      setLoanApplicationInfo({
+        loanType: dataLoanApplication?.data?.loanTypeName,
+        loanBalance: dataLoanApplication?.data?.loanBalance,
+      });
+    }
+  }, [dataLoanApplication, isLoading]);
+
+  const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {
@@ -108,30 +115,96 @@ export const Record = ({
   );
 
   useEffect(() => {
+    setCurrentInsuranceData([
+      Object.keys(loanInfo).length === 0
+        ? {
+            label: "Seguro mensual",
+            value: `$ ${numberFormat(
+              Number(dataLoanApplication?.data?.monthlyCostInsurance)
+            )}`,
+          }
+        : {
+            label: "Seguro mensual",
+            value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}`,
+          },
+      Object.keys(loanInfo).length === 0
+        ? {
+            label: "Seguro anual",
+            value: `$ ${numberFormat(
+              dataLoanApplication?.data?.monthlyCostInsurance * 12
+            )}`,
+          }
+        : {
+            label: "Seguro anual",
+            value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}`,
+          },
+    ]);
     if (insurer === 114) {
       setBangkInsuranceData([
-        {
-          label: "Seguro mensual",
-          value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}`,
-        },
-        {
-          label: "Seguro anual",
-          value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
-        },
+        Object.keys(loanInfo).length === 0
+          ? {
+              label: "Seguro mensual",
+              value: `$ ${numberFormat(
+                dataLoanApplication?.data?.yearlyFee / 12
+              )}`,
+            }
+          : {
+              label: "Seguro mensual",
+              value: `$ ${numberFormat(
+                (loanInfo?.loanBalance * quoteRate) / 12
+              )}`,
+            },
+        Object.keys(loanInfo).length === 0
+          ? {
+              label: "Seguro anual",
+              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+            }
+          : {
+              label: "Seguro anual",
+              value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+            },
       ]);
       setSaveValue(
-        `$ ${numberFormat(
-          loanInfo?.monthlyCostInsurance * 12 -
-            loanInfo?.loanBalance * quoteRate
-        )}`
+        Object.keys(loanInfo).length === 0
+          ? `$ ${numberFormat(
+              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
+                dataLoanApplication?.data?.yearlyFee
+            )}`
+          : `$ ${numberFormat(
+              loanInfo?.monthlyCostInsurance * 12 -
+                loanInfo?.loanBalance * quoteRate
+            )}`
       );
     } else {
       setBangkInsuranceData([
-        { label: "Seguro mensual", value: `$ ${numberFormat(yearlyFee / 12)}` },
-        { label: "Seguro anual", value: `$ ${numberFormatText(yearlyFee)}` },
+        Object.keys(loanInfo).length === 0
+          ? {
+              label: "Seguro mensual",
+              value: `$ ${numberFormat(
+                dataLoanApplication?.data?.yearlyFee / 12
+              )}`,
+            }
+          : {
+              label: "Seguro mensual",
+              value: `$ ${numberFormat(yearlyFee / 12)}`,
+            },
+        Object.keys(loanInfo).length === 0
+          ? {
+              label: "Seguro anual",
+              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+            }
+          : {
+              label: "Seguro anual",
+              value: `$ ${numberFormatText(yearlyFee)}`,
+            },
       ]);
       setSaveValue(
-        `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12 - yearlyFee)}`
+        Object.keys(loanInfo).length === 0
+          ? `$ ${numberFormat(
+              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
+                dataLoanApplication?.data?.yearlyFee
+            )}`
+          : `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12 - yearlyFee)}`
       );
     }
   }, [insurer, loanInfo, yearlyFee, quoteRate]);
@@ -185,9 +258,11 @@ export const Record = ({
     setShowQuoteSuccess(false);
     dispatch(setLoanInfo({}));
     queryClient.refetchQueries("historyList");
-    toast.custom(<ToastSuccess message={"Cotización enviada con éxito"} />, {
-      duration: 1000,
-    });
+    if (Object.keys(loanInfo).length > 0) {
+      toast.custom(<ToastSuccess message={"Cotización enviada con éxito"} />, {
+        duration: 1000,
+      });
+    }
   };
 
   const handleCloseDrawerQuote = () => {
@@ -320,6 +395,7 @@ export const Record = ({
               { duration: 1000 }
             );
             setShowDrawer(false);
+            queryClient.invalidateQueries(["historyList"]);
           } else {
             dispatch(
               setLoanInfo({
@@ -405,7 +481,10 @@ export const Record = ({
       case "Revisión de extracto":
         return { label: "Ver extracto", onClick: handleOpen };
       case "Cotización enviada":
-        return { label: "Ver cotización", onClick: () => {} };
+        return {
+          label: "Ver cotización",
+          onClick: () => setShowQuoteSuccess(true),
+        };
       default:
         break;
     }
@@ -416,7 +495,10 @@ export const Record = ({
       case "Revisión de extracto":
         return { label: "Ver extracto", onClick: handleOpenSaved };
       case "Cotización enviada":
-        return { label: "Ver cotización", onClick: () => {} };
+        return {
+          label: "Ver cotización",
+          onClick: () => setShowQuoteSuccess(true),
+        };
       default:
         break;
     }
@@ -472,8 +554,14 @@ export const Record = ({
       <DrawerQuoteSuccess
         showDrawer={showQuoteSuccess}
         closeDrawer={handleCloseQuoteSuccess}
-        loanInfo={loanInfo}
-        insurer={insurersOptions.find((ele) => ele.value === insurer)?.label}
+        loanInfo={
+          Object.keys(loanInfo).length === 0 ? loanApplicationInfo : loanInfo
+        }
+        insurer={
+          Object.keys(loanInfo).length === 0
+            ? dataLoanApplication?.data?.insuraceCurrierName
+            : insurersOptions.find((ele) => ele.value === insurer)?.label
+        }
         currentInsuranceData={currentInsuranceData}
         bangkInsuranceData={bangkInsuranceData}
         saveValue={saveValue}

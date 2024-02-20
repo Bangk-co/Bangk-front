@@ -82,7 +82,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate(requests?.selectedRequest, {
       onSuccess: () => {
-        setOpenModalAccept(false);
+        handleClose();
         router.push("/ver-cotizacion/aceptacion-exitosa");
       },
       onError: (err) => {
@@ -102,7 +102,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
       },
       {
         onSuccess: () => {
-          setOpenModalDecline(false);
+          handleClose();
           router.push("/ver-cotizacion/cotizacion-rechazada");
         },
         onError: (err) => {

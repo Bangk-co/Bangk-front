@@ -20,6 +20,7 @@ export const Calculation = ({
   setOpenModal,
   terms,
   handleTerms,
+  handleDecline,
   loanApplicationInfo,
 }) => {
   const info = [
@@ -323,6 +324,7 @@ export const Calculation = ({
           mobileWidth={"148px"}
           height={"40px"}
           radius={"40px"}
+          onClick={handleDecline}
         >
           Rechazar
         </Button>

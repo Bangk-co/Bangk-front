@@ -90,6 +90,7 @@ export const ModalAccept = ({
           border={theme.colors.green900}
           hover={theme.colors.white}
           borderHover={theme.colors.green900}
+          borderHeight={"3px solid"}
           labelColor={theme.colors.green900}
           size={theme.fonts.size.default2}
           font={theme.fonts.family.primaryBold}

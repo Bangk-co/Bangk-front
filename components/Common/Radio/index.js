@@ -15,6 +15,7 @@ export const Radio = ({
   error,
   disabled,
   onChange,
+  radioColor,
   ...rest
 }) => {
   return (
@@ -26,6 +27,7 @@ export const Radio = ({
             error={error ? 1 : 0}
             disabled={disabled}
             onChange={onChange}
+            radioColor={radioColor}
             {...rest}
           />
         }

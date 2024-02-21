@@ -70,6 +70,7 @@ export const theme = {
       h4: "1.875rem",
       h4s: "1.75rem",
       h5: "1.563rem",
+      h5s: "1.5rem",
       ft: "1.375rem",
       h6: "1.25rem",
       default: "1.125rem",

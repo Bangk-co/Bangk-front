@@ -8,13 +8,14 @@ import { theme } from "../../../styles/theme";
 import { formattedDate } from "@/utilities/helpers";
 import { DocumentCard } from "./styles";
 import downloadIcon from "../../../assets/icons/download.svg";
-import { axiosClient, getLocalUser } from "@/hooks/services/axiosInstance";
+import useGetDownloadDocument from "@/hooks/Customers/useGetDownloadDocument";
+import { downloadFile } from "@/utilities/helpers";
 
 const ApplicationDocuments = ({ documents }) => {
   const personalDocument = {
-    createDocumentDate: documents.createIdentificationDate,
-    documentName: documents.identificationName,
-    documentUrl: documents.identificationUrl,
+    createDocumentDate: documents?.createIdentificationDate,
+    documentName: documents?.identificationName,
+    documentId: documents?.documentIdentificationId,
   };
 
   const bankStatements = documents?.clientDocumentListDtos
@@ -32,41 +33,18 @@ const ApplicationDocuments = ({ documents }) => {
     .map((doc) => doc.documentByTypeDtos)
     .flat();
 
-  const downloadFile = (url, filename) => {
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.target = "_blank";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  };
-
-  const handleDownload = async (document) => {
+  const handleDownload = async (documentInfo, downloadDocument) => {
     downloadFile(
-      document?.documentUrl,
-      `${document.documentName}-${formattedDate(document.createDocumentDate)}`
+      downloadDocument?.data?.request?.responseURL,
+      `${documentInfo.documentName}-${formattedDate(
+        documentInfo.createDocumentDate
+      )}`
     );
-
-    // TODO esto está hecho para llamar el endpoint del back
-    // await toast.promise(
-    //   downloadFile(
-    //     document?.documentUrl,
-    //     `${document.documentName}-${formattedDate(
-    //       document.createDocumentDate
-    //     )}`,
-    //     axiosClient,
-    //     getLocalUser()
-    //   ),
-    //   {
-    //     loading: `Descargando.....`,
-    //     success: "Descarga completa",
-    //     error: "Fallo la descarga",
-    //   }
-    // );
   };
 
   const DocumentInfoCard = ({ document }) => {
+    const downloadDocument = useGetDownloadDocument(document.documentId);
+
     return (
       <DocumentCard>
         <Col width="100%">
@@ -94,7 +72,10 @@ const ApplicationDocuments = ({ documents }) => {
             {formattedDate(document?.createDocumentDate)}
           </Text>
         </Col>
-        <Link onClick={() => handleDownload(document)} color="transparent">
+        <Link
+          onClick={() => handleDownload(document, downloadDocument)}
+          color="transparent"
+        >
           <Image alt="download" src={downloadIcon} width={24} height={24} />
         </Link>
       </DocumentCard>
@@ -112,9 +93,11 @@ const ApplicationDocuments = ({ documents }) => {
           Información personal
         </Text>
       </Row>
-      <Row>
-        <DocumentInfoCard document={personalDocument} />
-      </Row>
+      {personalDocument?.documentId && (
+        <Row>
+          <DocumentInfoCard document={personalDocument} />
+        </Row>
+      )}
       <Row>
         <Text
           color={theme.colors.neutralGray900}
@@ -125,7 +108,7 @@ const ApplicationDocuments = ({ documents }) => {
         </Text>
       </Row>
       <Grid container spacing={2}>
-        {bankStatements.map((extract, index) => (
+        {bankStatements?.map((extract, index) => (
           <Grid item xs={6} key={index}>
             <DocumentInfoCard document={extract} />
           </Grid>
@@ -142,7 +125,7 @@ const ApplicationDocuments = ({ documents }) => {
         </Text>
       </Row>
       <Grid container spacing={2}>
-        {insurancePolicies.map((extract, index) => (
+        {insurancePolicies?.map((extract, index) => (
           <Grid item xs={6} key={index}>
             <DocumentInfoCard document={extract} />
           </Grid>
@@ -159,7 +142,7 @@ const ApplicationDocuments = ({ documents }) => {
         </Text>
       </Row>
       <Row m="0 0 24px 0">
-        {endorsementLetters.map((extract, index) => (
+        {endorsementLetters?.map((extract, index) => (
           <Grid item xs={6} key={index}>
             <DocumentInfoCard document={extract} />
           </Grid>

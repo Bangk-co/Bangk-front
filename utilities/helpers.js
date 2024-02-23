@@ -236,24 +236,15 @@ export const documentTypeAbbreviation = (documentType) => {
   }
 };
 
-export const downloadFile = async (url, filename, instance, token) =>
-  instance
-    .get(url, {
-      responseType: "blob",
-      headers: { Authorization: token },
-    })
-    .then((response) => {
-      const documentUrl = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement("a");
-      a.href = documentUrl;
-      a.setAttribute("download", `${filename}`);
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+export const downloadFile = async (url, filename) => {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.target = "_blank";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+};
 
 export const historyStatus = {
   SolicitudCreada: "Solicitud creada",

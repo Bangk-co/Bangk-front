@@ -7,6 +7,10 @@ export const CustomDrawer = styled(Drawer)`
     width: ${({ width }) => width || "414px"};
     background: ${theme.colors.white};
     padding: ${({ padding }) => padding || "64px 24px 40px 24px"} !important;
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
 
     .MuiDrawer-close {
       position: absolute;

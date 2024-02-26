@@ -25,6 +25,7 @@ import {
   parseNumber,
 } from "@/utilities/helpers";
 import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByApplicationId";
+import { DrawerValidateInfo } from "./DrawerValidateInfo";
 
 export const Record = ({
   historyInfo,
@@ -97,6 +98,8 @@ export const Record = ({
   }, [dataLoanApplication, isLoading]);
 
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
+
+  const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(true); //TODO change
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {
@@ -565,6 +568,10 @@ export const Record = ({
         currentInsuranceData={currentInsuranceData}
         bangkInsuranceData={bangkInsuranceData}
         saveValue={saveValue}
+      />
+      <DrawerValidateInfo
+        showDrawer={showDrawerValidateInfo}
+        closeDrawer={() => setShowDrawerValidateInfo(false)}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (

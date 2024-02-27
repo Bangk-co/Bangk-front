@@ -1,17 +1,9 @@
-import React, { useState } from "react";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { useSelector } from "react-redux";
 import { numberFormat } from "@/utilities/helpers";
-import pesosIcon from "@/assets/icons/pesos.svg";
-import { Select } from "@/components/Common/Select";
-import { MenuItem } from "@mui/material";
-import { SbsInsurer } from "./sbsInsurer";
-import { AllianzInsurer } from "./allianzInsurer";
-import { Button } from "@/components/Common/Button";
 import greenLogo from "@/assets/icons/green-logo.svg";
 import { LifeInsuranceTable } from "./lifeInsuranceTable";
 

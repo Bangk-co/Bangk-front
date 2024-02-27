@@ -25,6 +25,7 @@ import {
   parseNumber,
 } from "@/utilities/helpers";
 import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByApplicationId";
+import { DrawerValidateInfo } from "./DrawerValidateInfo";
 
 export const Record = ({
   historyInfo,
@@ -97,6 +98,8 @@ export const Record = ({
   }, [dataLoanApplication, isLoading]);
 
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
+
+  const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {
@@ -485,6 +488,11 @@ export const Record = ({
           label: "Ver cotización",
           onClick: () => setShowQuoteSuccess(true),
         };
+      case "Formularios diligenciados":
+        return {
+          label: "Revisar formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
@@ -499,14 +507,27 @@ export const Record = ({
           label: "Ver cotización",
           onClick: () => setShowQuoteSuccess(true),
         };
+      case "Formularios diligenciados":
+        return {
+          label: "Revisar formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
   };
 
-  const principalButtons = ["Revisión de extracto", "Cotización enviada"];
+  const principalButtons = [
+    "Revisión de extracto",
+    "Cotización enviada",
+    "Formularios diligenciados",
+  ];
 
-  const secondaryButtons = ["Revisión de extracto", "Cotización enviada"];
+  const secondaryButtons = [
+    "Revisión de extracto",
+    "Cotización enviada",
+    "Formularios diligenciados",
+  ];
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -565,6 +586,10 @@ export const Record = ({
         currentInsuranceData={currentInsuranceData}
         bangkInsuranceData={bangkInsuranceData}
         saveValue={saveValue}
+      />
+      <DrawerValidateInfo
+        showDrawer={showDrawerValidateInfo}
+        setShowDrawerValidateInfo={setShowDrawerValidateInfo}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (

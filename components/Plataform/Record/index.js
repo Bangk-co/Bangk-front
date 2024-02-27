@@ -99,7 +99,7 @@ export const Record = ({
 
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
 
-  const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(true); //TODO change
+  const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {

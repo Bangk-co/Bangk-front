@@ -19,11 +19,13 @@ export const DrawerValidateInfo = ({
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [assessorConcept, setAssessorConcept] = useState("");
   const [assessorComments, setAssessorComments] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   const closeDrawer = () => {
     setAssessorConcept("");
     setAssessorComments("");
     setExpandedCardIndex(null);
+    setIsEditing(false);
     setShowDrawerValidateInfo(false);
   };
 
@@ -74,6 +76,18 @@ export const DrawerValidateInfo = ({
     },
   ];
 
+  const expandedCardData = [
+    <PersonalData
+      key="personalData"
+      handleRadio={handleRadio}
+      assessorConcept={assessorConcept}
+      handleChange={handleChange}
+      assessorComments={assessorComments}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+    />,
+  ];
+
   const handleRadio = (event) => {
     const { value } = event.target;
 
@@ -85,16 +99,6 @@ export const DrawerValidateInfo = ({
 
     setAssessorComments(value);
   };
-
-  const expandedCardData = [
-    <PersonalData
-      key="personalData"
-      handleRadio={handleRadio}
-      assessorConcept={assessorConcept}
-      handleChange={handleChange}
-      assessorComments={assessorComments}
-    />,
-  ];
 
   return (
     <Drawer

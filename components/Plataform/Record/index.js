@@ -488,6 +488,11 @@ export const Record = ({
           label: "Ver cotización",
           onClick: () => setShowQuoteSuccess(true),
         };
+      case "Formularios diligenciados":
+        return {
+          label: "Revisar formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
@@ -502,14 +507,27 @@ export const Record = ({
           label: "Ver cotización",
           onClick: () => setShowQuoteSuccess(true),
         };
+      case "Formularios diligenciados":
+        return {
+          label: "Revisar formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
   };
 
-  const principalButtons = ["Revisión de extracto", "Cotización enviada"];
+  const principalButtons = [
+    "Revisión de extracto",
+    "Cotización enviada",
+    "Formularios diligenciados",
+  ];
 
-  const secondaryButtons = ["Revisión de extracto", "Cotización enviada"];
+  const secondaryButtons = [
+    "Revisión de extracto",
+    "Cotización enviada",
+    "Formularios diligenciados",
+  ];
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -571,7 +589,7 @@ export const Record = ({
       />
       <DrawerValidateInfo
         showDrawer={showDrawerValidateInfo}
-        closeDrawer={() => setShowDrawerValidateInfo(false)}
+        setShowDrawerValidateInfo={setShowDrawerValidateInfo}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (

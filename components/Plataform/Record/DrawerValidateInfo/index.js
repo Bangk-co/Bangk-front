@@ -9,30 +9,66 @@ import arrowDownIcon from "@/assets/icons/arrow-down.svg";
 import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
 import { Button } from "@/components/Common/Button";
+import checkIcon from "@/assets/icons/check_circle.svg";
+import alertIcon from "@/assets/icons/alert-yellow.svg";
 
-export const DrawerValidateInfo = ({ showDrawer, closeDrawer }) => {
+export const DrawerValidateInfo = ({
+  showDrawer,
+  setShowDrawerValidateInfo,
+}) => {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [assessorConcept, setAssessorConcept] = useState("");
   const [assessorComments, setAssessorComments] = useState("");
 
+  const closeDrawer = () => {
+    setAssessorConcept("");
+    setAssessorComments("");
+    setExpandedCardIndex(null);
+    setShowDrawerValidateInfo(false);
+  };
+
+  const iconCondition = {
+    "": null,
+    "La información es correcta": (
+      <Image alt="check" src={checkIcon} width={32} height={32} />
+    ),
+    "Presenta novedades": (
+      <Image alt="check" src={alertIcon} width={32} height={32} />
+    ),
+  };
+
+  const descriptionCondition = {
+    "": null,
+    "La información es correcta": "Esta información ya se encuentra validada",
+    "Presenta novedades": "Esta información presenta una novedad",
+  };
+
   const infoCards = [
     {
+      icon: iconCondition[assessorConcept],
       title: "Datos personales",
-      description: "Verifica que los datos personales sean correctos",
+      description:
+        descriptionCondition[assessorConcept] !== null
+          ? descriptionCondition[assessorConcept]
+          : "Verifica que los datos personales sean correctos",
     },
     {
+      icon: null,
       title: "Datos financieros",
       description: "Verifica que los datos financieros sean correctos",
     },
     {
+      icon: null,
       title: "Datos del inmueble",
       description: "Verifica que los datos del inmueble sean correctos",
     },
     {
+      icon: null,
       title: "Datos de salud",
       description: "Verifica que los datos de salud sean correctos",
     },
     {
+      icon: null,
       title: "Datos adicionales",
       description: "Verifica que los datos adicionales sean correctos",
     },
@@ -64,10 +100,7 @@ export const DrawerValidateInfo = ({ showDrawer, closeDrawer }) => {
     <Drawer
       closeIcon={<Image alt="close" src={closeIcon} width={20} height={20} />}
       open={showDrawer}
-      onClose={() => {
-        setAssessorConcept("");
-        closeDrawer();
-      }}
+      onClose={closeDrawer}
       width={"723px"}
     >
       <Div direction="column" justify="space-between" height="100%">
@@ -95,13 +128,16 @@ export const DrawerValidateInfo = ({ showDrawer, closeDrawer }) => {
                 }}
               >
                 <Row justify="space-between">
-                  <Text
-                    font={theme.fonts.family.primaryBold}
-                    size={theme.fonts.size.ft}
-                    color={theme.colors.black}
-                  >
-                    {card.title}
-                  </Text>
+                  <Row gap="16px" align="center">
+                    {card.icon}
+                    <Text
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.ft}
+                      color={theme.colors.black}
+                    >
+                      {card.title}
+                    </Text>
+                  </Row>
                   <Image
                     alt="arrow"
                     src={

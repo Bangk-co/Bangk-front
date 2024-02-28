@@ -7,8 +7,6 @@ import email from "@/assets/icons/email.svg"
 import Image from "next/image";
 import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
-import { Col } from "@/styles/Quote";
 import { ColForm } from "@/styles/Policy";
 import { DatePicker } from "../Common/DatePicker";
 
@@ -17,6 +15,10 @@ export const UserForm = ({
   documentTypeOptions,
   indicativesOptions,
   formInfo,
+  handleContinue,
+  handleChange,
+  handleSelect,
+  handleChangeDate,
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -33,6 +35,8 @@ export const UserForm = ({
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
   }
+
+  const isFormValid = Object.values(formInfo).some(value => value === "");
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -61,8 +65,9 @@ export const UserForm = ({
             label={"Tipo de documento*"}
             width={"100%"}
             placeholder={"Escribir"}
-            name="documentTypeId"
-            value={formInfo.documentTypeId}
+            name="documentIdentificationTypeId"
+            value={formInfo.documentIdentificationTypeId}
+            onChange={handleSelect}
           >
             {documentTypeOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
@@ -82,6 +87,7 @@ export const UserForm = ({
               pattern: formInfo.documentType !== 78 && "\\d*",
               inputMode: formInfo.documentType !== 78 && "numeric"
             }}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item md="12" xs={12}>
@@ -90,6 +96,7 @@ export const UserForm = ({
             width={"100%"}
             label={"Fecha de expedición de la cédula*"}
             value={formInfo.documentIssueDate}
+            onChange={handleChangeDate}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -103,6 +110,7 @@ export const UserForm = ({
             id="name"
             value={formInfo.name}
             inputProps={{ maxLength: 50 }}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -116,6 +124,7 @@ export const UserForm = ({
             id="lastName"
             value={formInfo.lastName}
             inputProps={{ maxLength: 50 }}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item md={4} xs={4}>
@@ -124,8 +133,9 @@ export const UserForm = ({
             label={"Código de país*"}
             width={"100%"}
             placeholder={"Escribir"}
-            name="countryCode"
-            value={formInfo.countryCode}
+            name="countryCodePhoneId"
+            value={formInfo.countryCodePhoneId}
+            onChange={handleSelect}
           >
             {indicativesOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
@@ -145,6 +155,7 @@ export const UserForm = ({
               pattern: "\\d*",
               inputMode: "numeric"
             }}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -158,6 +169,7 @@ export const UserForm = ({
             }
             id="email"
             value={formInfo.email}
+            disabled={true}
           />
         </Grid>
       </Grid>
@@ -174,8 +186,8 @@ export const UserForm = ({
           mobileWidth={"224px"}
           height={"40px"}
           radius={"40px"}
-          // onClick={handleContinue}
-          // disabled={!isFormValid}
+          onClick={handleContinue}
+          disabled={isFormValid}
         >
           Confirmar
         </Button>

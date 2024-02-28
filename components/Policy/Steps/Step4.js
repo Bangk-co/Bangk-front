@@ -1,28 +1,19 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Div, Text } from "@/styles/Common";
+import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { Grid } from "@mui/material";
-import Image from "next/image";
-import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
-import { CardButton, ColForm } from "@/styles/Policy";
-import pesosIcon from "@/assets/icons/pesos.svg";
-import area from "@/assets/icons/area.svg";
-import address from "@/assets/icons/address.svg";
-import house from "@/assets/icons/house.svg";
-import building from "@/assets/icons/building.svg";
-import condominium from "@/assets/icons/condominium.svg";
-import { numberFormat } from "@/utilities/helpers";
-import { DatePicker } from "@/components/Common/DatePicker";
+import { Grid, MenuItem } from "@mui/material";
+import { ColForm } from "@/styles/Policy";
 import { Select } from "@/components/Common/Select";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
 
 export const Step4 = ({
   isMobile,
-  healthDataForm,
-  nextStep
+  formInfo,
+  diseasesOptions,
+  handleChangeNumber,
+  handleChangeRadio
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -41,12 +32,6 @@ export const Step4 = ({
     placeholderColor: theme.colors.neutralGray500,
   }
 
-  const housingOptions = [
-    { label: "Casa", value:"house", icon: house },
-    { label: "Apartamento", value:"apartment", icon: building },
-    { label: "Condominio", value:"condominium", icon: condominium },
-  ]
-
   return (
     <ColForm m={"12px 0 0 0"}>
       <Text
@@ -64,28 +49,30 @@ export const Step4 = ({
           <TextField
             {...inputsProps}
             label={"¿Cuál es tu peso en kilos? (kg)*"}
-            placeholder={"0"}
+            placeholder={"Peso (kilos)"}
             id="weight"
             notFocused={true}
-            value={healthDataForm.weight}
+            value={formInfo.weight}
             inputProps={{
               pattern: "\\d*",
               inputMode: "numeric",
             }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={6} xs={6}>
           <TextField
             {...inputsProps}
             label={"¿Cuál es tu estatura en centímetros? (cm)*"}
-            placeholder={"0"}
+            placeholder={"Estatura (centímetros)"}
             id="height"
             notFocused={true}
-            value={healthDataForm.height}
+            value={formInfo.height}
             inputProps={{
               pattern: "\\d*",
               inputMode: "numeric",
             }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -93,35 +80,46 @@ export const Step4 = ({
             {...inputsProps}
             label={"¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?*"}
             width={"100%"}
-            name="diseaseId"
-            value={healthDataForm.diseaseId}
+            name="diseases"
+            value={formInfo.diseases}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona opciones</Placeholder>
+              } else {
+                return diseasesOptions.find((ele) => ele.id === selected)
+                  ? diseasesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {diseasesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
           <RadioGroup
             gap="5px"
-            name="vih"
+            name="hivActive"
             direction="row"
             label="¿Te han detectado la presencia de anticuerpos contra el virus V.I.H. productor del SIDA?"
             labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.white}
             color={theme.colors.white}
-            value={healthDataForm.vih}
+            value={formInfo.hivActive}
+            onChange={(event) => handleChangeRadio(event, "hivActive")}
           >
             <Radio
               label="Si"
-              value={"Si"}
+              value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
             <Radio
               label="No"
-              value={"No"}
+              value={false}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
@@ -130,24 +128,25 @@ export const Step4 = ({
         <Grid item md={12} xs={12}>
           <RadioGroup
             gap="5px"
-            name="examsOrSurgeries"
+            name="plannedMedicalProcidure"
             direction="row"
             label="¿Te encuentras actualmente en exámenes, estudios, investigación o te han indicado la necesidad de alguna cirugía o tratamiento que no te hayas realizado aún?"
             labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.white}
             color={theme.colors.white}
-            value={healthDataForm.examsOrSurgeries}
+            value={formInfo.plannedMedicalProcidure}
+            onChange={(event) => handleChangeRadio(event, "plannedMedicalProcidure")}
           >
             <Radio
               label="Si"
-              value={"Si"}
+              value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
             <Radio
               label="No"
-              value={"No"}
+              value={false}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
@@ -163,60 +162,24 @@ export const Step4 = ({
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.white}
             color={theme.colors.white}
-            value={healthDataForm.disability}
+            value={formInfo.disability}
+            onChange={(event) => handleChangeRadio(event, "disability")}
           >
             <Radio
               label="Si"
-              value={"Si"}
+              value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
             <Radio
               label="No"
-              value={"No"}
+              value={false}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
           </RadioGroup>
         </Grid>
       </Grid>
-
-      <Div m="46px 0 24px 0" justify="space-between">
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.green900}
-          border={theme.colors.yellow500}
-          hover={theme.colors.terciary50}
-          borderHover={theme.colors.yellow500}
-          colorHover={theme.colors.green900}
-          labelColor={theme.colors.yellow500}
-          size={theme.fonts.size.default2}
-          borderHeight={"3px solid"}
-          width={isMobile ? "56px" : "113px"}
-          mobileWidth={"56px"}
-          height={"40px"}
-          // onClick={handleBack}
-        >
-          <Image alt="arrow" src={arrowBack} style={{ marginRight: "4px" }} />
-          {isMobile ? "" : "Atrás"}
-        </Button>
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.yellow500}
-          hover={theme.colors.yellow500}
-          borderHover={theme.colors.yellow500}
-          labelColor={theme.colors.green900}
-          size={theme.fonts.size.default2}
-          width={isMobile ? "224px" : "300px"}
-          mobileWidth={"224px"}
-          height={"40px"}
-          radius={"40px"}
-          onClick={nextStep}
-          // disabled={!isFormValid}
-        >
-          Siguiente
-        </Button>
-      </Div>
     </ColForm>
   )
 }

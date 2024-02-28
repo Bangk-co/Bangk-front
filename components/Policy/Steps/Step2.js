@@ -1,19 +1,17 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Div, Text } from "@/styles/Common";
+import { Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid } from "@mui/material";
 import Image from "next/image";
-import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import { ColForm } from "@/styles/Policy";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import { numberFormat } from "@/utilities/helpers";
 
 export const Step2 = ({
   isMobile,
-  financialDataForm,
-  nextStep
+  formInfo,
+  handleChangeNumber
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -56,113 +54,80 @@ export const Step2 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              financialDataForm.monthlyIncome === "" ? "" : numberFormat(Number(financialDataForm.monthlyIncome))
+              formInfo.monthlyIncome === "" ? "" : numberFormat(Number(formInfo.monthlyIncome))
             }
             inputProps={{
               pattern: "\\d*",
               inputMode: "numeric",
             }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
-              {...inputsProps}
-              label={"Gastos mensuales*"}
-              placeholder={"0"}
-              id="monthlyExpenses"
-              notFocused={true}
-              prefixIcon={
-                <Image alt="pesos" src={pesosIcon} width={16} height={16} />
-              }
-              value={
-                financialDataForm.monthlyExpenses === "" ? "" : numberFormat(Number(financialDataForm.monthlyExpenses))
-              }
-              inputProps={{
-                pattern: "\\d*",
-                inputMode: "numeric",
-              }}
+            {...inputsProps}
+            label={"Gastos mensuales*"}
+            placeholder={"0"}
+            id="monthlyExpenses"
+            notFocused={true}
+            prefixIcon={
+              <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+            }
+            value={
+              formInfo.monthlyExpenses === "" ? "" : numberFormat(Number(formInfo.monthlyExpenses))
+            }
+            inputProps={{
+              pattern: "\\d*",
+              inputMode: "numeric",
+            }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
-              {...inputsProps}
-              label={"Valor de tus activos*"}
-              helper={"Suma de tus propiedades, vehículos y/o inversiones"}
-              helperColor={theme.colors.white}
-              placeholder={"0"}
-              id="assetsValues"
-              notFocused={true}
-              prefixIcon={
-                <Image alt="pesos" src={pesosIcon} width={16} height={16} />
-              }
-              value={
-                financialDataForm.assetsValues === "" ? "" : numberFormat(Number(financialDataForm.assetsValues))
-              }
-              inputProps={{
-                pattern: "\\d*",
-                inputMode: "numeric",
-              }}
+            {...inputsProps}
+            label={"Valor de tus activos*"}
+            helper={"Suma de tus propiedades, vehículos y/o inversiones"}
+            helperColor={theme.colors.white}
+            placeholder={"0"}
+            id="assetValue"
+            notFocused={true}
+            prefixIcon={
+              <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+            }
+            value={
+              formInfo.assetValue === "" ? "" : numberFormat(Number(formInfo.assetValue))
+            }
+            inputProps={{
+              pattern: "\\d*",
+              inputMode: "numeric",
+            }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
-              {...inputsProps}
-              label={"Valor de tus pasivos*"}
-              helper={"Suma de tus deudas en tarjetas de crédito, créditos, etc."}
-              helperColor={theme.colors.white}
-              placeholder={"0"}
-              id="passivesValues"
-              notFocused={true}
-              prefixIcon={
-                <Image alt="pesos" src={pesosIcon} width={16} height={16} />
-              }
-              value={
-                financialDataForm.passivesValues === "" ? "" : numberFormat(Number(financialDataForm.passivesValues))
-              }
-              inputProps={{
-                pattern: "\\d*",
-                inputMode: "numeric",
-              }}
+            {...inputsProps}
+            label={"Valor de tus pasivos*"}
+            helper={"Suma de tus deudas en tarjetas de crédito, créditos, etc."}
+            helperColor={theme.colors.white}
+            placeholder={"0"}
+            id="liabilitiesValue"
+            notFocused={true}
+            prefixIcon={
+              <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+            }
+            value={
+              formInfo.liabilitiesValue === "" ? "" : numberFormat(Number(formInfo.liabilitiesValue))
+            }
+            inputProps={{
+              pattern: "\\d*",
+              inputMode: "numeric",
+            }}
+            onChange={handleChangeNumber}
           />
         </Grid>
       </Grid>
-
-      <Div m="46px 0 24px 0" justify="space-between">
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.green900}
-          border={theme.colors.yellow500}
-          hover={theme.colors.terciary50}
-          borderHover={theme.colors.yellow500}
-          colorHover={theme.colors.green900}
-          labelColor={theme.colors.yellow500}
-          size={theme.fonts.size.default2}
-          borderHeight={"3px solid"}
-          width={isMobile ? "56px" : "113px"}
-          mobileWidth={"56px"}
-          height={"40px"}
-          // onClick={handleBack}
-        >
-          <Image alt="arrow" src={arrowBack} style={{ marginRight: "4px" }} />
-          {isMobile ? "" : "Atrás"}
-        </Button>
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.yellow500}
-          hover={theme.colors.yellow500}
-          borderHover={theme.colors.yellow500}
-          labelColor={theme.colors.green900}
-          size={theme.fonts.size.default2}
-          width={isMobile ? "224px" : "300px"}
-          mobileWidth={"224px"}
-          height={"40px"}
-          radius={"40px"}
-          onClick={nextStep}
-          // disabled={!isFormValid}
-        >
-          Siguiente
-        </Button>
-      </Div>
     </ColForm>
   )
 }

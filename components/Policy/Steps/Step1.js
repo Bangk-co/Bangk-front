@@ -1,20 +1,26 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Div, Text } from "@/styles/Common";
+import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem } from "@mui/material";
-import Image from "next/image";
 import { Select } from "@/components/Common/Select";
-import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import { ColForm } from "@/styles/Policy";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
 
 export const Step1 = ({
   isMobile,
-  perdonalDataForm,
-  nextStep
+  formInfo,
+  countriesOptions,
+  nationalityOptions,
+  civilStatusOptions,
+  statesOptions,
+  citiesOptions,
+  economicActivityOptions,
+  handleSelect,
+  handleChangeNumber,
+  handleChangeText,
+  handleChangeRadio,
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -51,12 +57,23 @@ export const Step1 = ({
             {...inputsProps}
             label={"País de nacimiento*"}
             width={"100%"}
-            name="countryOfBirthId"
-            value={perdonalDataForm.countryOfBirthId}
+            name="birthCountryId"
+            value={formInfo.birthCountryId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona un país</Placeholder>
+              } else {
+                return countriesOptions.find((ele) => ele.id === selected)
+                  ? countriesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {countriesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -64,12 +81,24 @@ export const Step1 = ({
             {...inputsProps}
             label={"Departamento/Estado de nacimiento*"}
             width={"100%"}
-            name="departmentOfBirthId"
-            value={perdonalDataForm.departmentOfBirthId}
+            name="birthStateId"
+            value={formInfo.birthStateId}
+            disabled={formInfo.birthCountryId === null}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona un departamento/estado</Placeholder>
+              } else {
+                return statesOptions.find((ele) => ele.id === selected)
+                  ? statesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {statesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -77,12 +106,24 @@ export const Step1 = ({
             {...inputsProps}
             label={"Ciudad de nacimiento*"}
             width={"100%"}
-            name="cityOfBirthId"
-            value={perdonalDataForm.cityOfBirthId}
+            name="birthCityId"
+            value={formInfo.birthCityId}
+            disabled={formInfo.birthStateId === null}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona una ciudad</Placeholder>
+              } else {
+                return citiesOptions.find((ele) => ele.id === selected)
+                  ? citiesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {citiesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -90,12 +131,23 @@ export const Step1 = ({
             {...inputsProps}
             label={"Nacionalidad*"}
             width={"100%"}
-            name="nationality"
-            value={perdonalDataForm.nationality}
+            name="countryNationalityId"
+            value={formInfo.countryNationalityId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona tu nacionalidad</Placeholder>
+              } else {
+                return nationalityOptions.find((ele) => ele.id === selected)
+                  ? nationalityOptions.find((ele) => ele.id === selected).nationality
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {nationalityOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.nationality}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -103,12 +155,23 @@ export const Step1 = ({
             {...inputsProps}
             label={"Estado civil*"}
             width={"100%"}
-            name="civilStatus"
-            value={perdonalDataForm.civilStatus}
+            name="civilStatusId"
+            value={formInfo.civilStatusId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona tu estado</Placeholder>
+              } else {
+                return civilStatusOptions.find((ele) => ele.id === selected)
+                  ? civilStatusOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {civilStatusOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -116,12 +179,13 @@ export const Step1 = ({
             {...inputsProps}
             label={"Número de hijos*"}
             width={"100%"}
-            id="numberOfChildren"
-            value={perdonalDataForm.numberOfChildren}
+            id="numberChildren"
+            value={formInfo.numberChildren}
             inputProps={{
               pattern: "\\d*",
               inputMode: "numeric"
             }}
+            onChange={handleChangeNumber}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -129,8 +193,9 @@ export const Step1 = ({
             {...inputsProps}
             label={"Profesión*"}
             width={"100%"}
-            id="profession"
-            value={perdonalDataForm.profession}
+            id="occupation"
+            value={formInfo.occupation}
+            onChange={handleChangeText}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -138,35 +203,37 @@ export const Step1 = ({
             {...inputsProps}
             label={"Actividad económica*"}
             width={"100%"}
-            name="economicActivity"
-            value={perdonalDataForm.economicActivity}
+            name="occupationActivityId"
+            value={formInfo.occupationActivityId}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {economicActivityOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12} style={{ borderBottom: `1px solid ${theme.colors.primary25}` }}>
           <RadioGroup
             gap="5px"
-            name="publicFamily"
+            name="isPublicPerson"
             direction="row"
             label="¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?"
             labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.white}
             color={theme.colors.white}
-            value={perdonalDataForm.publicFamily}
+            value={formInfo.isPublicPerson}
+            onChange={(event) => handleChangeRadio(event, "isPublicPerson")}
           >
             <Radio
               label="Yes"
-              value={"Yes"}
+              value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
             <Radio
               label="No"
-              value={"No"}
+              value={false}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
@@ -190,12 +257,23 @@ export const Step1 = ({
             {...inputsProps}
             label={"País de residencia*"}
             width={"100%"}
-            name="countryOfResidenceId"
-            value={perdonalDataForm.countryOfResidenceId}
+            name="residenceCountryId"
+            value={formInfo.residenceCountryId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona un país</Placeholder>
+              } else {
+                return countriesOptions.find((ele) => ele.id === selected)
+                  ? countriesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {countriesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -203,12 +281,24 @@ export const Step1 = ({
             {...inputsProps}
             label={"Departamento de residencia*"}
             width={"100%"}
-            name="departmentOfResidenceId"
-            value={perdonalDataForm.departmentOfResidenceId}
+            name="residenceStateId"
+            value={formInfo.residenceStateId}
+            disabled={formInfo.residenceCountryId === null}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona un departamento</Placeholder>
+              } else {
+                return statesOptions.find((ele) => ele.id === selected)
+                  ? statesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {statesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -216,52 +306,27 @@ export const Step1 = ({
             {...inputsProps}
             label={"Ciudad de residencia*"}
             width={"100%"}
-            name="cityOfResidenceId"
-            value={perdonalDataForm.cityOfResidenceId}
+            name="residenceCityId"
+            value={formInfo.residenceCityId}
+            disabled={formInfo.residenceStateId === null}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona una ciudad</Placeholder>
+              } else {
+                return citiesOptions.find((ele) => ele.id === selected)
+                  ? citiesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {citiesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
       </Grid>
-
-      <Div m="46px 0 24px 0" justify="space-between">
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.green900}
-          border={theme.colors.yellow500}
-          hover={theme.colors.terciary50}
-          borderHover={theme.colors.yellow500}
-          colorHover={theme.colors.green900}
-          labelColor={theme.colors.yellow500}
-          size={theme.fonts.size.default2}
-          borderHeight={"3px solid"}
-          width={isMobile ? "56px" : "113px"}
-          mobileWidth={"56px"}
-          height={"40px"}
-          // onClick={handleBack}
-        >
-          <Image alt="arrow" src={arrowBack} style={{ marginRight: "4px" }} />
-          {isMobile ? "" : "Atrás"}
-        </Button>
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.yellow500}
-          hover={theme.colors.yellow500}
-          borderHover={theme.colors.yellow500}
-          labelColor={theme.colors.green900}
-          size={theme.fonts.size.default2}
-          width={isMobile ? "224px" : "300px"}
-          mobileWidth={"224px"}
-          height={"40px"}
-          radius={"40px"}
-          onClick={nextStep}
-          // disabled={!isFormValid}
-        >
-          Siguiente
-        </Button>
-      </Div>
     </ColForm>
   )
 }

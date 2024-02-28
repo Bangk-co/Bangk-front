@@ -11,17 +11,19 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, balance);
+const persistedBalanceReducer = persistReducer(persistConfig, balance);
+const persistedRequestsReducer = persistReducer(persistConfig, requests);
 
 const store = configureStore({
   reducer: {
-    balance: persistedReducer,
+    balance: persistedBalanceReducer,
     clients,
     applications,
-    requests,
+    requests: persistedRequestsReducer,
   },
 });
 
 const persistor = persistStore(store);
 
 export { store, persistor };
+

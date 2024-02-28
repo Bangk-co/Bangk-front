@@ -1,26 +1,28 @@
 import React from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Div, Text } from "@/styles/Common";
+import { Div, Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import Image from "next/image";
-import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
 import { CardButton, ColForm } from "@/styles/Policy";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import area from "@/assets/icons/area.svg";
 import address from "@/assets/icons/address.svg";
-import house from "@/assets/icons/house.svg";
-import building from "@/assets/icons/building.svg";
-import condominium from "@/assets/icons/condominium.svg";
 import { numberFormat } from "@/utilities/helpers";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { Select } from "@/components/Common/Select";
 
 export const Step3 = ({
   isMobile,
-  propertyDataForm,
-  nextStep
+  formInfo,
+  housingTypeOptions,
+  statesOptions,
+  citiesOptions,
+  handleSelect,
+  handleChangeNumber,
+  handleChangeYear,
+  handleSelectHousingType,
+  handleChangeText
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -39,11 +41,8 @@ export const Step3 = ({
     placeholderColor: theme.colors.neutralGray500,
   }
 
-  const housingOptions = [
-    { label: "Casa", value:"house", icon: house },
-    { label: "Apartamento", value:"apartment", icon: building },
-    { label: "Condominio", value:"condominium", icon: condominium },
-  ]
+  const currentYear = new Date().getFullYear();
+  const builtYear = new Date(formInfo.builtgDate).getFullYear()
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -70,8 +69,12 @@ export const Step3 = ({
             Tipo de vivienda*
           </Text>
           <Div justify="space-between">
-            {housingOptions.map((ele, indx) => (
-              <CardButton key={indx}>
+            {housingTypeOptions.map((ele, indx) => (
+              <CardButton
+                key={indx}
+                onClick={() => handleSelectHousingType(ele.id)}
+                style={{ border: formInfo.housingTypeId === ele.id ? `3px solid ${theme.colors.yellow500}` : `3px solid ${theme.colors.primary25}` }}
+              >
                 <Image alt="icon" src={ele.icon} />
                 <Text
                   font={theme.fonts.family.primaryBold}
@@ -80,7 +83,7 @@ export const Step3 = ({
                   size={theme.fonts.size.sm}
                   lineHeight={"20px"}
                 >
-                  {ele.label}
+                  {ele.name}
                 </Text>
               </CardButton>
             ))}
@@ -91,28 +94,92 @@ export const Step3 = ({
             {...inputsProps}
             label={"Valor comercial*"}
             placeholder={"0"}
-            id="commercialValue"
+            id="housingValue"
             notFocused={true}
             prefixIcon={
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              propertyDataForm.commercialValue === "" ? "" : numberFormat(Number(propertyDataForm.commercialValue))
+              formInfo.housingValue === "" ? "" : numberFormat(Number(formInfo.housingValue))
             }
             inputProps={{
               pattern: "\\d*",
               inputMode: "numeric",
             }}
+            onChange={handleChangeNumber}
           />
         </Grid>
+        {formInfo.housingTypeId === 147 &&
+          <>
+            <Grid item md={6} xs={6}>
+              <TextField
+                {...inputsProps}
+                label={"Área de construcción*"}
+                placeholder={"metros cuadrados"}
+                id="builtArea"
+                notFocused={true}
+                prefixIcon={<Image alt="area" src={area} />}
+                value={formInfo.builtArea}
+                inputProps={{
+                  pattern: "\\d*",
+                  inputMode: "numeric",
+                }}
+                onChange={handleChangeNumber}
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                {...inputsProps}
+                label={"Número de piso del apartamento*"}
+                id="apartmentNumber"
+                notFocused={true}
+                value={formInfo.apartmentNumber}
+                inputProps={{
+                  pattern: "\\d*",
+                  inputMode: "numeric",
+                }}
+                onChange={handleChangeNumber}
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                {...inputsProps}
+                label={"Cantidad de pisos del edificio*"}
+                id="buildingFloorsNumber"
+                notFocused={true}
+                value={formInfo.buildingFloorsNumber}
+                inputProps={{
+                  pattern: "\\d*",
+                  inputMode: "numeric",
+                }}
+                onChange={handleChangeNumber}
+              />
+            </Grid>
+            <Grid item md={6} xs={6}>
+              <TextField
+                {...inputsProps}
+                label={"Cantidad de sótanos del edificio*"}
+                id="basementNumber"
+                notFocused={true}
+                value={formInfo.basementNumber}
+                inputProps={{
+                  pattern: "\\d*",
+                  inputMode: "numeric",
+                }}
+                onChange={handleChangeNumber}
+              />
+            </Grid>
+          </>
+        }
         <Grid item md={6} xs={6}>
           <DatePicker
             {...inputsProps}
             width={"100%"}
             label={"Año de construcción*"}
-            value={propertyDataForm.constructionYear}
+            value={formInfo.builtgDate}
             views={['year']}
             format={"YYYY"}
+            onChange={handleChangeYear}
           />
         </Grid>
         <Grid item md={6} xs={6}>
@@ -135,38 +202,42 @@ export const Step3 = ({
                 align="left"
                 font={theme.fonts.family.primary}
               >
-                _ años
+                {formInfo.builtgDate ? `${currentYear - builtYear} años` : "_ años"}
               </Text>
             </Div>
           </Div>
         </Grid>
-        <Grid item md={12} xs={12}>
-          <TextField
-            {...inputsProps}
-            label={"Área de construcción*"}
-            placeholder={"metros cuadrados"}
-            id="constructionArea"
-            notFocused={true}
-            prefixIcon={
-              <Image alt="area" src={area} />
-            }
-            value={propertyDataForm.constructionArea}
-            inputProps={{
-              pattern: "\\d*",
-              inputMode: "numeric",
-            }}
-          />
-        </Grid>
+        {formInfo.housingTypeId !== 147 &&
+          <Grid item md={12} xs={12}>
+            <TextField
+              {...inputsProps}
+              label={"Área de construcción*"}
+              placeholder={"metros cuadrados"}
+              id="builtArea"
+              notFocused={true}
+              prefixIcon={
+                <Image alt="area" src={area} />
+              }
+              value={formInfo.builtArea}
+              inputProps={{
+                pattern: "\\d*",
+                inputMode: "numeric",
+              }}
+              onChange={handleChangeNumber}
+            />
+          </Grid>
+        }
         <Grid item md={12} xs={12}>
           <TextField
             {...inputsProps}
             label={"Dirección del inmueble*"}
-            id="housingAddress"
+            id="address"
             notFocused={true}
             prefixIcon={
               <Image alt="address" src={address} />
             }
-            value={propertyDataForm.housingAddress}
+            value={formInfo.address}
+            onChange={handleChangeText}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -174,12 +245,23 @@ export const Step3 = ({
             {...inputsProps}
             label={"Departamento*"}
             width={"100%"}
-            name="housingDepartmentId"
-            value={propertyDataForm.housingDepartmentId}
+            name="departmentId"
+            value={formInfo.departmentId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona un departamento</Placeholder>
+              } else {
+                return statesOptions.find((ele) => ele.id === selected)
+                  ? statesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {statesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
         <Grid item md={12} xs={12}>
@@ -187,52 +269,26 @@ export const Step3 = ({
             {...inputsProps}
             label={"Ciudad*"}
             width={"100%"}
-            name="housingCityId"
-            value={propertyDataForm.housingCityId}
+            name="cityId"
+            value={formInfo.cityId}
+            displayEmpty
+            renderValue={(selected) => {
+              if (selected === null) {
+                return <Placeholder>Selecciona una ciudad</Placeholder>
+              } else {
+                return citiesOptions.find((ele) => ele.id === selected)
+                  ? citiesOptions.find((ele) => ele.id === selected).name
+                  : null
+              }
+            }}
+            onChange={handleSelect}
           >
-            {/* {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
-            ))} */}
+            {citiesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+            ))}
           </Select>
         </Grid>
       </Grid>
-
-      <Div m="46px 0 24px 0" justify="space-between">
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.green900}
-          border={theme.colors.yellow500}
-          hover={theme.colors.terciary50}
-          borderHover={theme.colors.yellow500}
-          colorHover={theme.colors.green900}
-          labelColor={theme.colors.yellow500}
-          size={theme.fonts.size.default2}
-          borderHeight={"3px solid"}
-          width={isMobile ? "56px" : "113px"}
-          mobileWidth={"56px"}
-          height={"40px"}
-          // onClick={handleBack}
-        >
-          <Image alt="arrow" src={arrowBack} style={{ marginRight: "4px" }} />
-          {isMobile ? "" : "Atrás"}
-        </Button>
-        <Button
-          font={theme.fonts.family.primaryBold}
-          background={theme.colors.yellow500}
-          hover={theme.colors.yellow500}
-          borderHover={theme.colors.yellow500}
-          labelColor={theme.colors.green900}
-          size={theme.fonts.size.default2}
-          width={isMobile ? "224px" : "300px"}
-          mobileWidth={"224px"}
-          height={"40px"}
-          radius={"40px"}
-          onClick={nextStep}
-          // disabled={!isFormValid}
-        >
-          Siguiente
-        </Button>
-      </Div>
     </ColForm>
   )
 }

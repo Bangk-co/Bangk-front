@@ -63,7 +63,6 @@ export const CardButton = styled.div`
   height: 89px;
   padding: 16px;
   border-radius: 8px;
-  border: 3px;
   gap: 5px;
   background: ${theme.colors.primary25};
   border: 3px solid ${theme.colors.primary25};

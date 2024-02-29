@@ -11,6 +11,10 @@ import { useRouter } from "next/router";
 const CreationSuceess = ({ isMobile }) => {
   const router = useRouter();
 
+  const handleGo = () => {
+    router.push("/solicitar-poliza/confirma-tus-datos")
+  }
+
   return (
     <Container>
       <Header isMobile={isMobile} />
@@ -52,6 +56,7 @@ const CreationSuceess = ({ isMobile }) => {
               mobileWidth={"100%"}
               height={"40px"}
               radius={"40px"}
+              onClick={handleGo}
             >
               {isMobile ? "Continuar mi solicitud" : "Solicitar mi póliza"}
             </Button>

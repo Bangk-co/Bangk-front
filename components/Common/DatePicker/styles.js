@@ -17,16 +17,12 @@ export const CustomDatePicker = styled(DatePicker)`
       border || theme.colors.primary25} !important;
     &.Mui-focused fieldset {
       border: 1px solid
-        ${(props) =>
-          props.error
-            ? theme.colors.red
-            : props.border || theme.colors.primary25} !important;
+      ${({ border }) =>
+      border || theme.colors.primary25} !important;
     }
     .MuiOutlinedInput-notchedOutline {
-      border-color: ${(props) =>
-        props.error
-          ? theme.colors.red
-          : props.border || theme.colors.primary25};
+      border-color: ${({ border }) =>
+      border || theme.colors.primary25} !important;
     }
     &.Mui-disabled fieldset {
       border-color: ${(props) =>

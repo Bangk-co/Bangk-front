@@ -67,3 +67,11 @@ export const Col = styled.div`
   gap: ${({ gap }) => gap || null};
   min-width: ${({ minWidth }) => minWidth || null};
 `;
+
+export const Placeholder = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: ${({ font }) => font};
+  font-size: ${({ size }) => size};
+  color: ${theme.colors.neutralGray500};
+`

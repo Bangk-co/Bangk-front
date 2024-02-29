@@ -27,6 +27,7 @@ export const TextField = ({
   fontColor,
   notFocused,
   placeholderColor,
+  helperColor,
   ...rest
 }) => {
   return (
@@ -69,7 +70,7 @@ export const TextField = ({
       {helper && (
         <Text
           size={theme.fonts.size.sm}
-          color={theme.colors.red}
+          color={helperColor || theme.colors.red}
           mt="2px"
           align="left"
         >

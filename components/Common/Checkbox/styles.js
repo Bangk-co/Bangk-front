@@ -2,9 +2,9 @@ import Checkbox from '@mui/material/Checkbox';
 import styled from 'styled-components';
 import { theme } from '@/styles/theme';
 
-export const CustomCheckbox = styled(Checkbox)(({ checkedColor, hoverColor }) => ({
+export const CustomCheckbox = styled(Checkbox)(({ checkedColor, borderColor }) => ({
   '& .MuiSvgIcon-root': {
-    color: theme.colors.white,
+    color: borderColor || theme.colors.white,
     width: "18px",
   },
   '&.MuiCheckbox-root': {
@@ -14,7 +14,7 @@ export const CustomCheckbox = styled(Checkbox)(({ checkedColor, hoverColor }) =>
     '&:hover': {
       background: theme.colors.terciary50,
       '& .MuiSvgIcon-root': {
-        color: theme.colors.green900,
+        color: borderColor || theme.colors.green900,
       },
       '&.Mui-checked': {
         '& .MuiSvgIcon-root': {

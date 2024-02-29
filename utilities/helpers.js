@@ -286,3 +286,78 @@ export const getFileType = (url) => {
     return "unknown";
   }
 };
+
+export const getDiseasesIds = (selectedDiseases, allDiseases) => {
+  if (selectedDiseases.length === 0) {
+    return null;
+  } else {
+    const diseasesIds = allDiseases
+    .filter(disease => selectedDiseases.includes(disease.name))
+    .map(disease => disease.id)
+    .join(',');
+
+    return diseasesIds
+  }
+};
+
+export const getDiseasesNames = (selectedDiseaseIds, allDiseases) => {
+  if (!selectedDiseaseIds) {
+      return [];
+  }
+
+  const selectedIds = selectedDiseaseIds.split(',').map(id => parseInt(id, 10));
+  const selectedDiseases = allDiseases.filter(disease => selectedIds.includes(disease.id));
+  return selectedDiseases.map(disease => disease.name);
+}
+
+export const initDataLoanInsurancePolicy = {
+  loanApplicationId: null,
+  housingTypeId: null,
+  housingValue: null,
+  builtgDate: null,
+  builtArea: null,
+  address: null,
+  cityId: null,
+  birthCityId: null,
+  countryNationalityId: null,
+  numberChildren: null,
+  civilStatusId: null,
+  occupation: null,
+  occupationActivityId: null,
+  isPublicPerson: null,
+  residenceCityId: null,
+  monthlyIncome: null,
+  monthlyExpenses: null,
+  assetValue: null,
+  liabilitiesValue: null,
+  incomeOrigin: null,
+  weight: null,
+  height: null,
+  hivActive: null,
+  plannedMedicalProcidure: null,
+  disability: null,
+  lifeEnsure: null,
+  convicted: null,
+  beneficiaries: null,
+  incomeOrigin: null,
+  basementNumber: null,
+  apartmentNumber: null,
+  buildingFloorsNumber: null,
+  documentIdentificationTypeId: null,
+  identificationNumber: null,
+  documentIssueDate: null,
+  name: null,
+  lastName: null,
+  countryCodePhoneId: null,
+  phoneNumber: null,
+  email: null,
+  diseases: null,
+  diseasesMoreInfo: null,
+  plannedMedicalProcidureMoreInfo: null,
+  disabilityMoreInfo: null,
+  beneficiaryName: null,
+  beneficiaryIdentificationTypeId: null,
+  beneficiaryIdentificationNumber: null,
+  loanBalance: null,
+  monthlyCostInsurance: null
+}

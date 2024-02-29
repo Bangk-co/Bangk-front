@@ -101,7 +101,7 @@ const UserInfoConfirmation = ({ isMobile }) => {
     updateClient.reset();
     updateClient.mutate(
       {
-        clientId: info.clientId,
+        clientId: info.clienId,
         formData: {
           name: formInfo?.name,
           lastName: formInfo?.lastName,
@@ -118,7 +118,7 @@ const UserInfoConfirmation = ({ isMobile }) => {
       {
         onSuccess: () => {
           router.push("/solicitar-poliza")
-          queryClient.invalidateQueries(["clientInfo", info.clientId]);
+          queryClient.invalidateQueries(["clientInfo", info.clienId]);
         },
         onError: (err) => {
           err.response.data.errors.map((error) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -7,21 +7,39 @@ import { Select } from "@/components/Common/Select";
 import { ColForm } from "@/styles/Policy";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
+import useGetStates from "@/hooks/Common/useGetStates";
+import useGetCities from "@/hooks/Common/useGetCities";
 
 export const Step1 = ({
   isMobile,
   formInfo,
+  setFormInfo,
   countriesOptions,
   nationalityOptions,
   civilStatusOptions,
   statesOptions,
   citiesOptions,
   economicActivityOptions,
-  handleSelect,
-  handleChangeNumber,
-  handleChangeText,
-  handleChangeRadio,
 }) => {
+  const residenceStatesList = useGetStates(formInfo.residenceCountryId)
+  const { data: dataResidenceStates, isSuccess: isSuccessResidenceStates } = residenceStatesList
+  const [residenceStatesOptions, setResidenceStatesOptions] = useState([])
+  const residenceCitiesList = useGetCities(formInfo.residenceStateId)
+  const { data: dataResidenceCities, isSuccess: isSuccessResidenceCities } = residenceCitiesList
+  const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([])
+
+  useEffect(() => {
+    if (isSuccessResidenceStates) {
+      setResidenceStatesOptions(dataResidenceStates?.data.states)
+    }
+  }, [isSuccessResidenceStates, dataResidenceStates])
+
+  useEffect(() => {
+    if (isSuccessResidenceCities) {
+      setResidenceCitiesOptions(dataResidenceCities?.data.cities)
+    }
+  }, [isSuccessResidenceCities, dataResidenceCities])
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -36,7 +54,40 @@ export const Step1 = ({
     border: theme.colors.primary25,
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
+    width:"100%"
   }
+
+  const handleSelect = (event) => {
+    const { name, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[name] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeText = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value.replace(/\D/g, "");
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeRadio = (event, id) => {
+    const { defaultValue } = event.target;
+    const newInfo = { ...formInfo };
+
+    newInfo[id] = JSON.parse(defaultValue);
+    setFormInfo(newInfo);
+  };
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -183,7 +234,8 @@ export const Step1 = ({
             value={formInfo.numberChildren}
             inputProps={{
               pattern: "\\d*",
-              inputMode: "numeric"
+              inputMode: "numeric",
+              maxLength: 2,
             }}
             onChange={handleChangeNumber}
           />
@@ -289,14 +341,14 @@ export const Step1 = ({
               if (selected === null) {
                 return <Placeholder>Selecciona un departamento</Placeholder>
               } else {
-                return statesOptions.find((ele) => ele.id === selected)
-                  ? statesOptions.find((ele) => ele.id === selected).name
+                return residenceStatesOptions.find((ele) => ele.id === selected)
+                  ? residenceStatesOptions.find((ele) => ele.id === selected).name
                   : null
               }
             }}
             onChange={handleSelect}
           >
-            {statesOptions.map((ele, indx) => (
+            {residenceStatesOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
             ))}
           </Select>
@@ -314,14 +366,14 @@ export const Step1 = ({
               if (selected === null) {
                 return <Placeholder>Selecciona una ciudad</Placeholder>
               } else {
-                return citiesOptions.find((ele) => ele.id === selected)
-                  ? citiesOptions.find((ele) => ele.id === selected).name
+                return residenceCitiesOptions.find((ele) => ele.id === selected)
+                  ? residenceCitiesOptions.find((ele) => ele.id === selected).name
                   : null
               }
             }}
             onChange={handleSelect}
           >
-            {citiesOptions.map((ele, indx) => (
+            {residenceCitiesOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
             ))}
           </Select>

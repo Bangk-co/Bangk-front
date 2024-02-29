@@ -1,18 +1,26 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { TextField } from "@/components/Common/TextField";
-import { Text } from "@/styles/Common";
+import { Col, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid } from "@mui/material";
 import Image from "next/image";
 import { ColForm } from "@/styles/Policy";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import { numberFormat } from "@/utilities/helpers";
+import { Checkbox } from "@/components/Common/Checkbox";
 
 export const Step2 = ({
   isMobile,
   formInfo,
-  handleChangeNumber
+  setFormInfo,
+  checks,
+  setChecks,
+  loanBalance,
+  monthlyCostInsurance,
 }) => {
+  const [openChecks, setOpenChecks] = useState(false)
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -29,6 +37,42 @@ export const Step2 = ({
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
   }
+
+  useEffect(() => {
+    if (loanBalance > 137227300 || monthlyCostInsurance > 6089880) {
+      setOpenChecks(true)
+    }
+  }, [])
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value.replace(/\D/g, "");
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeText = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleCheck = (event, id) => {
+    const { checked } = event.target
+    const newChecks = { ...checks }
+
+    newChecks[id] = checked
+    setChecks(newChecks)
+  }
+
+  const checkboxOptions = [
+    { id: "check1", text: "Tanto mi actividad, profesión u oficio es lícita y la ejerzo dentro del marco legal y los recursos que poseo no provienen de actividades ilícitas de las contempladas en el código penal colombiano.", value: checks.check1 },
+    { id: "check2", text: "La información que he suministrado en la solicitud y en este documento es veraz y verificable y me comprometo a actualizarla.", value: checks.check2 },
+    { id: "check3", text: "Los recursos que se deriven del desarrollo de este contrato no se destinaran a la financiación del terrorismo, grupos terroristas o actividades terroristas.", value: checks.check3 }
+  ]
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -54,7 +98,7 @@ export const Step2 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              formInfo.monthlyIncome === "" ? "" : numberFormat(Number(formInfo.monthlyIncome))
+              formInfo.monthlyIncome === null ? "" : numberFormat(Number(formInfo.monthlyIncome))
             }
             inputProps={{
               pattern: "\\d*",
@@ -74,7 +118,7 @@ export const Step2 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              formInfo.monthlyExpenses === "" ? "" : numberFormat(Number(formInfo.monthlyExpenses))
+              formInfo.monthlyExpenses === null ? "" : numberFormat(Number(formInfo.monthlyExpenses))
             }
             inputProps={{
               pattern: "\\d*",
@@ -96,7 +140,7 @@ export const Step2 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              formInfo.assetValue === "" ? "" : numberFormat(Number(formInfo.assetValue))
+              formInfo.assetValue === null ? "" : numberFormat(Number(formInfo.assetValue))
             }
             inputProps={{
               pattern: "\\d*",
@@ -118,7 +162,7 @@ export const Step2 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              formInfo.liabilitiesValue === "" ? "" : numberFormat(Number(formInfo.liabilitiesValue))
+              formInfo.liabilitiesValue === null ? "" : numberFormat(Number(formInfo.liabilitiesValue))
             }
             inputProps={{
               pattern: "\\d*",
@@ -127,6 +171,50 @@ export const Step2 = ({
             onChange={handleChangeNumber}
           />
         </Grid>
+        {openChecks &&
+          <>
+            <Grid item md={12} xs={12}>
+              <hr style={{ width: "100%", height: "1px", background: theme.colors.primary25, margin: 0 }} />
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <Col gap="8px">
+                <Text
+                  color={theme.colors.white}
+                  font={theme.fonts.family.primaryBold}
+                  weight={theme.fonts.weight.bold}
+                  size={theme.fonts.size.sm}
+                  mb="4px"
+                >
+                  Declaro expresamente que:
+                </Text>
+                {checkboxOptions.map((ele, indx) => (
+                  <Row key={indx}>
+                    <Checkbox onChange={(event) => handleCheck(event, ele.id)} checked={ele.value} />
+                    <Text
+                      color={theme.colors.white}
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.sm}
+                      lineHeight={"20px"}
+                      mt="7px"
+                    >
+                      {ele.text}
+                    </Text>
+                  </Row>
+                ))}
+              </Col>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <TextField
+                {...inputsProps}
+                label={"Origen de mis fondos*"}
+                placeholder={"Cuéntanos de donde provienen tus ingresos"}
+                id="incomeOrigin"
+                notFocused={true}
+                value={formInfo.incomeOrigin}
+                onChange={handleChangeText} />
+            </Grid>
+          </>
+        }
       </Grid>
     </ColForm>
   )

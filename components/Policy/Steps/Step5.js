@@ -11,11 +11,8 @@ import { Select } from "@/components/Common/Select";
 export const Step5 = ({
   isMobile,
   formInfo,
+  setFormInfo,
   documentTypeOptions,
-  handleSelect,
-  handleChangeNumber,
-  handleChangeRadio,
-  handleChangeText
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -33,6 +30,38 @@ export const Step5 = ({
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
   }
+
+  const handleChangeText = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value.replace(/\D/g, "");
+    setFormInfo(newInfo)
+  }
+
+  const handleSelect = (event) => {
+    const { name, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[name] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeRadio = (event, id) => {
+    const { defaultValue } = event.target;
+    const newInfo = { ...formInfo };
+
+    newInfo[id] = JSON.parse(defaultValue);
+    setFormInfo(newInfo);
+  };
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -128,7 +157,7 @@ export const Step5 = ({
             />
           </RadioGroup>
         </Grid>
-        {!formInfo.beneficiaries && (
+        {formInfo.beneficiaries === false && (
           <>
             <Grid item md={12} xs={12}>
               <TextField
@@ -169,6 +198,7 @@ export const Step5 = ({
                   pattern: formInfo.beneficiaryIdentificationTypeId !== 78 && "\\d*",
                   inputMode: formInfo.beneficiaryIdentificationTypeId !== 78 && "numeric"
                 }}
+                onChange={handleChangeNumber}
               />
             </Grid>
           </>

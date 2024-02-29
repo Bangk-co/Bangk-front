@@ -2,18 +2,22 @@ import React from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { Grid, MenuItem } from "@mui/material";
-import { ColForm } from "@/styles/Policy";
+import { Box, Chip, Grid, MenuItem } from "@mui/material";
+import { ColForm, WrapperDisease } from "@/styles/Policy";
 import { Select } from "@/components/Common/Select";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
+import { Checkbox } from "@/components/Common/Checkbox";
+import close from "@/assets/icons/close-2.svg"
+import Image from "next/image";
 
 export const Step4 = ({
   isMobile,
   formInfo,
+  setFormInfo,
   diseasesOptions,
-  handleChangeNumber,
-  handleChangeRadio
+  diseases,
+  setDiseases
 }) => {
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -31,6 +35,51 @@ export const Step4 = ({
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
   }
+  const handleChangeText = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value.replace(/\D/g, "");
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeRadio = (event, id) => {
+    const { defaultValue } = event.target;
+    const newInfo = { ...formInfo };
+
+    newInfo[id] = JSON.parse(defaultValue);
+    setFormInfo(newInfo);
+  };
+
+  const handleChangeDiseases = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setDiseases(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const handleDelete = (indx) => {
+    const newDiseases = diseases.filter((ele, index) => index !== indx)
+    setDiseases(newDiseases)
+  }
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        background: "#E4E4E5"
+      },
+    },
+  };
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -80,24 +129,68 @@ export const Step4 = ({
             {...inputsProps}
             label={"¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?*"}
             width={"100%"}
+            height={diseases.length === 0 ? "40px" : "max-content"}
             name="diseases"
-            value={formInfo.diseases}
+            multiple
+            value={diseases}
+            onChange={handleChangeDiseases}
             displayEmpty
             renderValue={(selected) => {
-              if (selected === null) {
+              if (selected.length === 0) {
                 return <Placeholder>Selecciona opciones</Placeholder>
               } else {
-                return diseasesOptions.find((ele) => ele.id === selected)
-                  ? diseasesOptions.find((ele) => ele.id === selected).name
-                  : null
+                return (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value, indx) => (
+                      <WrapperDisease key={indx}>
+                        <Text
+                          color={theme.colors.white}
+                          font={theme.fonts.primaryMedium}
+                          size={theme.fonts.size.sm}
+                        >
+                          {value}
+                        </Text>
+                        <span
+                          onMouseDown={(event) => {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            handleDelete(indx);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Image
+                            alt="delete"
+                            src={close}
+                          />
+                        </span>
+                      </WrapperDisease>
+                    ))}
+                  </Box>
+                )
               }
             }}
+            MenuProps={MenuProps}
           >
             {diseasesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem key={indx} value={ele.name} style={{ fontFamily: theme.fonts.family.primary }}>
+                <Checkbox borderColor={theme.colors.neutralGray500} checked={diseases.indexOf(ele.name) > -1} />
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
+        {diseases.length > 0 && (
+          <Grid item md={12} xs={12}>
+            <TextField
+              {...inputsProps}
+              label={"Amplia información de tu diagnóstico, tratamiento y estado actual*"}
+              id="diseasesMoreInfo"
+              notFocused={true}
+              value={formInfo.diseasesMoreInfo}
+              onChange={handleChangeText}
+            />
+          </Grid>
+        )}
         <Grid item md={12} xs={12}>
           <RadioGroup
             gap="5px"
@@ -152,6 +245,18 @@ export const Step4 = ({
             />
           </RadioGroup>
         </Grid>
+        {formInfo.plannedMedicalProcidure && (
+          <Grid item md={12} xs={12}>
+            <TextField
+              {...inputsProps}
+              label={"Amplia información de tu diagnóstico, tratamiento y estado actual*"}
+              id="plannedMedicalProcidureMoreInfo"
+              notFocused={true}
+              value={formInfo.plannedMedicalProcidureMoreInfo}
+              onChange={handleChangeText}
+            />
+          </Grid>
+        )}
         <Grid item md={12} xs={12}>
           <RadioGroup
             gap="5px"
@@ -179,6 +284,18 @@ export const Step4 = ({
             />
           </RadioGroup>
         </Grid>
+        {formInfo.disability && (
+          <Grid item md={12} xs={12}>
+            <TextField
+              {...inputsProps}
+              label={"Amplia información de tu diagnóstico, tratamiento y estado actual*"}
+              id="disabilityMoreInfo"
+              notFocused={true}
+              value={formInfo.disabilityMoreInfo}
+              onChange={handleChangeText}
+            />
+          </Grid>
+        )}
       </Grid>
     </ColForm>
   )

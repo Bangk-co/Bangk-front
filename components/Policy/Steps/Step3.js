@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Div, Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -11,19 +11,34 @@ import address from "@/assets/icons/address.svg";
 import { numberFormat } from "@/utilities/helpers";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { Select } from "@/components/Common/Select";
+import useGetStates from "@/hooks/Common/useGetStates";
+import useGetCities from "@/hooks/Common/useGetCities";
 
 export const Step3 = ({
   isMobile,
   formInfo,
+  setFormInfo,
   housingTypeOptions,
-  statesOptions,
-  citiesOptions,
-  handleSelect,
-  handleChangeNumber,
-  handleChangeYear,
-  handleSelectHousingType,
-  handleChangeText
 }) => {
+  const statesList = useGetStates(15)
+  const { data: dataStates, isSuccess: isSuccessStates } = statesList
+  const [statesOptions, setStatesOptions] = useState([])
+  const citiesList = useGetCities(formInfo.stateId)
+  const { data: dataCities, isSuccess: isSuccessCities } = citiesList
+  const [citiesOptions, setCitiesOptions] = useState([])
+
+  useEffect(() => {
+    if (isSuccessStates) {
+      setStatesOptions(dataStates?.data.states)
+    }
+  }, [isSuccessStates, dataStates])
+
+  useEffect(() => {
+    if (isSuccessCities) {
+      setCitiesOptions(dataCities?.data.cities)
+    }
+  }, [isSuccessCities, dataCities])
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -43,6 +58,44 @@ export const Step3 = ({
 
   const currentYear = new Date().getFullYear();
   const builtYear = new Date(formInfo.builtgDate).getFullYear()
+
+  const handleChangeText = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[id] = value.replace(/\D/g, "");
+    setFormInfo(newInfo)
+  }
+
+  const handleSelect = (event) => {
+    const { name, value } = event.target
+    const newInfo = { ...formInfo }
+
+    newInfo[name] = value
+    setFormInfo(newInfo)
+  }
+
+  const handleChangeYear = (event) => {
+    const newInfo = { ...formInfo }
+
+    newInfo["builtgDate"] = event
+    setFormInfo(newInfo)
+  }
+
+  const handleSelectHousingType = (id) => {
+    const newInfo = { ...formInfo }
+
+    newInfo["housingTypeId"] = id
+    setFormInfo(newInfo)
+  }
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -100,7 +153,7 @@ export const Step3 = ({
               <Image alt="pesos" src={pesosIcon} width={16} height={16} />
             }
             value={
-              formInfo.housingValue === "" ? "" : numberFormat(Number(formInfo.housingValue))
+              formInfo.housingValue === null ? "" : numberFormat(Number(formInfo.housingValue))
             }
             inputProps={{
               pattern: "\\d*",
@@ -111,7 +164,7 @@ export const Step3 = ({
         </Grid>
         {formInfo.housingTypeId === 147 &&
           <>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 {...inputsProps}
                 label={"Área de construcción*"}
@@ -127,7 +180,7 @@ export const Step3 = ({
                 onChange={handleChangeNumber}
               />
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 {...inputsProps}
                 label={"Número de piso del apartamento*"}
@@ -141,7 +194,7 @@ export const Step3 = ({
                 onChange={handleChangeNumber}
               />
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 {...inputsProps}
                 label={"Cantidad de pisos del edificio*"}
@@ -155,7 +208,7 @@ export const Step3 = ({
                 onChange={handleChangeNumber}
               />
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12}>
               <TextField
                 {...inputsProps}
                 label={"Cantidad de sótanos del edificio*"}
@@ -245,8 +298,8 @@ export const Step3 = ({
             {...inputsProps}
             label={"Departamento*"}
             width={"100%"}
-            name="departmentId"
-            value={formInfo.departmentId}
+            name="stateId"
+            value={formInfo.stateId}
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StepperPolicy } from "@/components/Policy/StepperPolicy";
 import { Container, WrapperPolicy } from "@/styles/Policy";
 import { Header } from "@/components/Common/Header";
@@ -16,7 +16,7 @@ import useGetNationality from "@/hooks/Common/useGetNationality";
 import useGetCivilStatus from "@/hooks/Common/useGetCivilStatus";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Button } from "@/components/Common/Button";
 import Image from "next/image";
@@ -29,9 +29,17 @@ import house from "@/assets/icons/house.svg";
 import building from "@/assets/icons/building.svg";
 import condominium from "@/assets/icons/condominium.svg";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
+import toast from "react-hot-toast";
+import { getDiseasesIds, getDiseasesNames, initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import { setRequestInfo } from "@/store/requests";
+import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
 
 const RequestPolicy = ({ isMobile }) => {
+  const dispatch = useDispatch()
   const router = useRouter()
+  const save = useSaveLoanInsurancePolicy()
+  const updateStatus = useUpdateStatusPolicy()
   const { requestInfo } = useSelector((state) => state)?.requests;
   const countriesList = useGetCountries()
   const { data, isSuccess } = countriesList
@@ -55,54 +63,69 @@ const RequestPolicy = ({ isMobile }) => {
   const { data: dataDocument, isSuccess: isSuccessDocument } = documentType
   const [documentTypeOptions, setDocumentTypeOptions] = useState([])
   const [activeStep, setActiveStep] = useState(0);
-  const [formInfo, setFormInfo] = useState({
+  const [checks, setChecks] = useState({
+    check1: false,
+    check2: false,
+    check3: false
+  })
+  const [userInfo, setUserInfo] = useState({
     birthCountryId: null,
     birthStateId: null,
     birthCityId: null,
     countryNationalityId: null,
     civilStatusId: null,
-    numberChildren: "",
-    occupation: "",
+    numberChildren: null,
+    occupation: null,
     occupationActivityId: null,
     isPublicPerson: null,
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
-    monthlyIncome: "",
-    monthlyExpenses: "",
-    assetValue: "",
-    liabilitiesValue: "",
+  })
+  const [financialInfo, setFinancialInfo] = useState({
+    monthlyIncome: null,
+    monthlyExpenses: null,
+    assetValue: null,
+    liabilitiesValue: null,
+    incomeOrigin: null,
+  })
+  const [propertyInfo, setPropertyInfo] = useState({
     housingTypeId: null,
-    housingValue: "",
+    housingValue: null,
     builtgDate: null,
-    builtArea: "",
-    address: "",
-    departmentId: null,
-    cityId: null,
-    weight: "",
-    height: "",
-    hivActive: false,
-    plannedMedicalProcidure: false,
-    disability: false,
-    lifeEnsure: false,
-    convicted: false,
-    beneficiaries: false,
+    builtArea: null,
     basementNumber: null,
     apartmentNumber: null,
     buildingFloorsNumber: null,
+    address: null,
+    stateId: null,
+    cityId: null,
+  })
+  const [healthInfo, setHealthInfo] = useState({
+    weight: null,
+    height: null,
     diseases: null,
+    hivActive: null,
+    plannedMedicalProcidure: null,
+    disability: null,
     diseasesMoreInfo: null,
     plannedMedicalProcidureMoreInfo: null,
     disabilityMoreInfo: null,
+  })
+  const [additionalInfo, setAdditionalInfo] = useState({
+    convicted: null,
+    lifeEnsure: null,
+    beneficiaries: null,
     beneficiaryName: null,
     beneficiaryIdentificationTypeId: 76,
     beneficiaryIdentificationNumber: null
   })
+  const [diseases, setDiseases] = useState(getDiseasesNames(healthInfo.diseases, diseasesOptions))
 
-  const statesList = useGetStates(formInfo.birthCountryId)
+  const statesList = useGetStates(userInfo.birthCountryId)
   const { data: dataStates, isSuccess: isSuccessStates } = statesList
   const [statesOptions, setStatesOptions] = useState([])
-  const citiesList = useGetCities(formInfo.birthStateId)
+  const citiesList = useGetCities(userInfo.birthStateId)
   const { data: dataCities, isSuccess: isSuccessCities } = citiesList
   const [citiesOptions, setCitiesOptions] = useState([])
 
@@ -115,7 +138,7 @@ const RequestPolicy = ({ isMobile }) => {
   ]
 
   useEffect(() => {
-    setFormInfo({
+    setUserInfo({
       birthCountryId: null,
       birthStateId: null,
       birthCityId: requestInfo.birthCityId,
@@ -128,37 +151,46 @@ const RequestPolicy = ({ isMobile }) => {
       residenceCountryId: null,
       residenceStateId: null,
       residenceCityId: requestInfo.residenceCityId,
+    })
+    setFinancialInfo({
       monthlyIncome: requestInfo.monthlyIncome,
       monthlyExpenses: requestInfo.monthlyExpenses,
       assetValue: requestInfo.assetValue,
       liabilitiesValue: requestInfo.liabilitiesValue,
+      incomeOrigin: requestInfo.incomeOrigin
+    })
+    setPropertyInfo({
       housingTypeId: requestInfo.housingTypeId,
       housingValue: requestInfo.housingValue,
-      builtgDate: dayjs(requestInfo.builtgDate),
+      builtgDate: requestInfo.builtgDate === null ? null : dayjs(requestInfo.builtgDate),
       builtArea: requestInfo.builtArea,
-      address: requestInfo.address,
-      departmentId: null,
-      cityId: requestInfo.cityId,
-      weight: requestInfo.weight,
-      height: requestInfo.height,
-      hivActive: requestInfo.hivActive,
-      plannedMedicalProcidure: requestInfo.plannedMedicalProcidure,
-      disability: requestInfo.disability,
-      lifeEnsure: requestInfo.lifeEnsure,
-      convicted: requestInfo.convicted,
-      beneficiaries: requestInfo.beneficiaries,
       basementNumber: requestInfo.basementNumber,
       apartmentNumber: requestInfo.apartmentNumber,
       buildingFloorsNumber: requestInfo.buildingFloorsNumber,
+      address: requestInfo.address,
+      stateId: null,
+      cityId: requestInfo.cityId,
+    })
+    setHealthInfo({
+      weight: requestInfo.weight,
+      height: requestInfo.height,
       diseases: requestInfo.diseases,
+      hivActive: requestInfo.hivActive,
+      plannedMedicalProcidure: requestInfo.plannedMedicalProcidure,
+      disability: requestInfo.disability,
       diseasesMoreInfo: requestInfo.diseasesMoreInfo,
       plannedMedicalProcidureMoreInfo: requestInfo.plannedMedicalProcidureMoreInfo,
       disabilityMoreInfo: requestInfo.disabilityMoreInfo,
+    })
+    setAdditionalInfo({
+      convicted: requestInfo.convicted,
+      lifeEnsure: requestInfo.lifeEnsure,
+      beneficiaries: requestInfo.beneficiaries,
       beneficiaryName: requestInfo.beneficiaryName,
       beneficiaryIdentificationTypeId: 76,
-      beneficiaryIdentificationNumber: requestInfo.beneficiaryIdentificationNumber
+      beneficiaryIdentificationNumber: requestInfo.beneficiaryIdentificationNumber,
     })
-  }, [])
+  }, [requestInfo])
 
   useEffect(() => {
     if (isSuccess) {
@@ -246,54 +278,50 @@ const RequestPolicy = ({ isMobile }) => {
     }
   }, [isSuccessCities, dataCities])
 
-  const handleChangeText = (event) => {
-    const { id, value } = event.target
-    const newInfo = { ...formInfo }
-
-    newInfo[id] = value
-    setFormInfo(newInfo)
-  }
-
-  const handleChangeNumber = (event) => {
-    const { id, value } = event.target
-    const newInfo = { ...formInfo }
-
-    newInfo[id] = value.replace(/\D/g, "");
-    setFormInfo(newInfo)
-  }
-
-  const handleSelect = (event) => {
-    const { name, value } = event.target
-    const newInfo = { ...formInfo }
-
-    newInfo[name] = value
-    setFormInfo(newInfo)
-  }
-
-  const handleChangeYear = (event) => {
-    const newInfo = { ...formInfo }
-
-    newInfo["builtgDate"] = event
-    setFormInfo(newInfo)
-  }
-
-  const handleSelectHousingType = (id) => {
-    const newInfo = { ...formInfo }
-
-    newInfo["housingTypeId"] = id
-    setFormInfo(newInfo)
-  }
-
-  const handleChangeRadio = (event, id) => {
-    const { defaultValue } = event.target;
-    const newInfo = { ...formInfo };
-
-    newInfo[id] = defaultValue;
-    setFormInfo(newInfo);
-  };
-
   const nextStep = () => {
-    setActiveStep(activeStep + 1)
+    const newHealthInfo = {...healthInfo, diseases: getDiseasesIds(diseases, diseasesOptions)}
+    save.reset();
+    save.mutate(
+      {
+        formData: {
+          loanApplicationId: requestInfo.loanApplicationId,
+          ...userInfo,
+          ...financialInfo,
+          ...propertyInfo,
+          ...newHealthInfo,
+          ...additionalInfo
+        },
+      },
+      {
+        onSuccess: (data) => {
+          if (activeStep !== 4) {
+            dispatch(setRequestInfo(data?.data.result))
+            setActiveStep(activeStep + 1)
+          }
+          if (activeStep === 4) {
+            updateStatus.reset();
+            updateStatus.mutate(
+              { loanApplicationId: requestInfo.loanApplicationId },
+              {
+                onSuccess: () => {
+                  dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+                },
+                onError: (err) => {
+                  err.response.data.errors.map((error) => {
+                    toast.error(error);
+                  });
+                },
+              }
+            );
+          }
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   }
 
   const backStep = () => {
@@ -301,6 +329,43 @@ const RequestPolicy = ({ isMobile }) => {
       router.push("/solicitar-poliza/confirma-tus-datos")
     } else {
       setActiveStep(activeStep - 1)
+    }
+  }
+
+  const validForm = (currentStep) => {
+    switch (currentStep) {
+      case 0:
+        const isFormValid = Object.values(userInfo).some(value => value === null);
+        return isFormValid
+      case 1:
+        const obj = {
+          monthlyIncome: financialInfo.monthlyIncome,
+          monthlyExpenses: financialInfo.monthlyExpenses,
+          assetValue: financialInfo.assetValue,
+          liabilitiesValue: financialInfo.liabilitiesValue,
+        }
+        if (requestInfo.loanBalance > 137227300 || requestInfo.monthlyCostInsurance > 6089880) {
+          return Object.values(financialInfo).some(value => value === null) && Object.values(checks).every(check => check === true)
+        } else {
+          return Object.values(obj).some(value => value === null);
+        }
+      case 2:
+        const obj2 = {
+          housingTypeId: propertyInfo.housingTypeId,
+          housingValue: propertyInfo.housingValue,
+          builtgDate: propertyInfo.builtgDate === null ? null : dayjs(propertyInfo.builtgDate),
+          builtArea: propertyInfo.builtArea,
+          address: propertyInfo.address,
+          stateId: propertyInfo.stateId,
+          cityId: propertyInfo.cityId,
+        }
+        if (propertyInfo.housingTypeId !== 147) {
+          return Object.values(obj2).some(value => value === null);
+        } else {
+          return Object.values(propertyInfo).some(value => value === null);
+        }
+      default:
+        break;
     }
   }
 
@@ -330,62 +395,54 @@ const RequestPolicy = ({ isMobile }) => {
         {activeStep === 0 && (
           <Step1
             isMobile={isMobile}
-            formInfo={formInfo}
+            formInfo={userInfo}
+            setFormInfo={setUserInfo}
             countriesOptions={countriesOptions}
             nationalityOptions={nationalityOptions}
             civilStatusOptions={civilStatusOptions}
             statesOptions={statesOptions}
             citiesOptions={citiesOptions}
             economicActivityOptions={economicActivityOptions}
-            handleSelect={handleSelect}
-            handleChangeNumber={handleChangeNumber}
-            handleChangeText={handleChangeText}
-            handleChangeRadio={handleChangeRadio}
           />
         )}
         {activeStep === 1 && (
           <Step2
             isMobile={isMobile}
-            formInfo={formInfo}
-            handleChangeNumber={handleChangeNumber}
+            formInfo={financialInfo}
+            setFormInfo={setFinancialInfo}
+            checks={checks}
+            setChecks={setChecks}
+            loanBalance={requestInfo.loanBalance}
+            monthlyCostInsurance={requestInfo.monthlyCostInsurance}
           />
         )}
         {activeStep === 2 && (
           <Step3
             isMobile={isMobile}
-            formInfo={formInfo}
+            formInfo={propertyInfo}
+            setFormInfo={setPropertyInfo}
             housingTypeOptions={housingTypeOptions}
-            statesOptions={statesOptions}
-            citiesOptions={citiesOptions}
-            handleSelect={handleSelect}
-            handleChangeNumber={handleChangeNumber}
-            handleChangeYear={handleChangeYear}
-            handleSelectHousingType={handleSelectHousingType}
-            handleChangeText={handleChangeText}
           />
         )}
         {activeStep === 3 && (
           <Step4
             isMobile={isMobile}
-            formInfo={formInfo}
+            formInfo={healthInfo}
+            setFormInfo={setHealthInfo}
             diseasesOptions={diseasesOptions}
-            handleChangeNumber={handleChangeNumber}
-            handleChangeRadio={handleChangeRadio}
+            diseases={diseases}
+            setDiseases={setDiseases}
           />
         )}
         {activeStep === 4 && (
           <Step5
             isMobile={isMobile}
-            formInfo={formInfo}
+            formInfo={additionalInfo}
+            setFormInfo={setAdditionalInfo}
             documentTypeOptions={documentTypeOptions}
-            handleSelect={handleSelect}
-            handleChangeNumber={handleChangeNumber}
-            handleChangeRadio={handleChangeRadio}
-            handleChangeText={handleChangeText}
           />
         )}
-
-        <Div width="549px" m="46px 0 24px 0" justify="space-between">
+        <Div width={isMobile ? "312px" : "668px"} m="46px 0 24px 0" justify="space-between">
           <Button
             font={theme.fonts.family.primaryBold}
             background={theme.colors.green900}
@@ -416,7 +473,7 @@ const RequestPolicy = ({ isMobile }) => {
             height={"40px"}
             radius={"40px"}
             onClick={nextStep}
-            // disabled={!isFormValid}
+            disabled={validForm(activeStep)}
           >
             Siguiente
           </Button>

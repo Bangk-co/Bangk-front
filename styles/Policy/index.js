@@ -21,7 +21,7 @@ export const WrapperPolicy = styled.div`
 `
 
 export const ColForm = styled.div`
-  width: 549px;
+  width: 668px;
   margin: ${({ m }) => m || "0px 0px 0px 0px"};
   align-items: ${({ align }) => align || null};
 
@@ -67,4 +67,25 @@ export const CardButton = styled.div`
   background: ${theme.colors.primary25};
   border: 3px solid ${theme.colors.primary25};
   cursor: pointer;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 98.67px;
+    height: 81px;
+  }
+`
+
+export const WrapperDisease = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  padding: 8px;
+  border-radius: 16px;
+  gap: 4px;
+  background: ${theme.colors.green900};
+
+  // @media (max-width: ${theme.breakpoints.sm}) {
+  //   width: 98.67px;
+  //   height: 81px;
+  // }
 `

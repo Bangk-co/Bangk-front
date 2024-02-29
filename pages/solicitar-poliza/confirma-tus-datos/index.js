@@ -4,7 +4,7 @@ import { Container, WrapperPolicy } from "@/styles/Policy";
 import { Header } from "@/components/Common/Header";
 import { Div } from "@/styles/Common";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
-import useGetCountries from "@/hooks/Common/useGetIndicatives";
+import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import { BackButton } from "@/components/Quote/BackButton.js";
 import { UserForm } from "@/components/Policy/UserForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,18 +17,20 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 const UserInfoConfirmation = ({ isMobile }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const updateClient = useUpdateClientInfo();
-  const router = useRouter()
+  const router = useRouter();
   const { selectedRequest } = useSelector((state) => state)?.requests;
-  const loanInsurancePolicyData = useGetLoanInsurancePolicyInfo(selectedRequest)
-  const { data, isSuccess } = loanInsurancePolicyData
-  const documentType = useGetDocumentType()
-  const indicatives = useGetCountries()
-  const { data: dataDocument, isSuccess: isSuccessDocument } = documentType
-  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } = indicatives
-  const [documentTypeOptions, setDocumentTypeOptions] = useState([])
-  const [indicativesOptions, setIndicativesOptions] = useState([])
+  const loanInsurancePolicyData =
+    useGetLoanInsurancePolicyInfo(selectedRequest);
+  const { data, isSuccess } = loanInsurancePolicyData;
+  const documentType = useGetDocumentType();
+  const indicatives = useGetIndicatives();
+  const { data: dataDocument, isSuccess: isSuccessDocument } = documentType;
+  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
+    indicatives;
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  const [indicativesOptions, setIndicativesOptions] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
   const [formInfo, setFormInfo] = useState({
     documentIdentificationTypeId: "",
@@ -39,14 +41,14 @@ const UserInfoConfirmation = ({ isMobile }) => {
     phoneNumber: "",
     email: "",
     documentIssueDate: "",
-  })
+  });
 
   const queryClient = useQueryClient();
 
   useEffect(() => {
     if (isSuccess) {
-      const info = data?.data.loanInsurancePolicies
-      dispatch(setRequestInfo(info))
+      const info = data?.data.loanInsurancePolicies;
+      dispatch(setRequestInfo(info));
       setFormInfo({
         documentIdentificationTypeId: info.documentIdentificationTypeId,
         identificationNumber: info.identificationNumber,
@@ -56,48 +58,52 @@ const UserInfoConfirmation = ({ isMobile }) => {
         phoneNumber: info.phoneNumber,
         email: info.email,
         documentIssueDate: dayjs(info.documentIssueDate),
-      })
+      });
     }
-  }, [isSuccess, data])
+  }, [isSuccess, data]);
 
   useEffect(() => {
     if (isSuccessDocument && dataDocument?.data?.groupSettings.length > 0)
-      setDocumentTypeOptions(dataDocument?.data?.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
-  }, [dataDocument, isSuccessDocument])
+      setDocumentTypeOptions(
+        dataDocument?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [dataDocument, isSuccessDocument]);
 
   useEffect(() => {
     if (isSuccessIndicatives && dataIndicatives?.data?.groupSettings.length > 0)
-      setIndicativesOptions(dataIndicatives?.data?.groupSettings.map((ele) => ({
-        label: `(${ele.code})`,
-        value: ele.id
-      })))
-  }, [dataIndicatives, isSuccessIndicatives])
+      setIndicativesOptions(
+        dataIndicatives?.data?.groupSettings.map((ele) => ({
+          label: `(${ele.code})`,
+          value: ele.id,
+        }))
+      );
+  }, [dataIndicatives, isSuccessIndicatives]);
 
   const handleChange = (event) => {
-    const { id, value} = event.target
-    const newInfo = { ...formInfo }
+    const { id, value } = event.target;
+    const newInfo = { ...formInfo };
 
-    newInfo[id] = value
-    setFormInfo(newInfo)
-  }
+    newInfo[id] = value;
+    setFormInfo(newInfo);
+  };
 
   const handleSelect = (event) => {
-    const { name, value} = event.target
-    const newInfo = { ...formInfo }
+    const { name, value } = event.target;
+    const newInfo = { ...formInfo };
 
-    newInfo[name] = value
-    setFormInfo(newInfo)
-  }
+    newInfo[name] = value;
+    setFormInfo(newInfo);
+  };
 
   const handleChangeDate = (event) => {
     setFormInfo({ ...formInfo, documentIssueDate: event });
   };
 
   const handleContinue = () => {
-    const info = data?.data.loanInsurancePolicies
+    const info = data?.data.loanInsurancePolicies;
     updateClient.reset();
     updateClient.mutate(
       {
@@ -117,7 +123,7 @@ const UserInfoConfirmation = ({ isMobile }) => {
       },
       {
         onSuccess: () => {
-          router.push("/solicitar-poliza")
+          router.push("/solicitar-poliza");
           queryClient.invalidateQueries(["clientInfo", info.clienId]);
         },
         onError: (err) => {
@@ -127,15 +133,15 @@ const UserInfoConfirmation = ({ isMobile }) => {
         },
       }
     );
-  }
+  };
 
   return (
     <Container>
       <Header isMobile={isMobile} />
       <WrapperPolicy>
-        {!isMobile &&
+        {!isMobile && (
           <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
-        }
+        )}
         <Div justify="center" width="100%">
           <UserForm
             isMobile={isMobile}
@@ -150,7 +156,7 @@ const UserInfoConfirmation = ({ isMobile }) => {
         </Div>
       </WrapperPolicy>
     </Container>
-  )
-}
+  );
+};
 
-export default UserInfoConfirmation
+export default UserInfoConfirmation;

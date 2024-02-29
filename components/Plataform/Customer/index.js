@@ -21,7 +21,7 @@ import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetApplications from "@/hooks/Customers/useGetApplications";
 import useGetApplicationDocuments from "@/hooks/Customers/useGetApplicationDocuments";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
-import useGetCountries from "@/hooks/Common/useGetIndicatives";
+import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import { Tab } from "@/components/Common/Tabs/Tab";
 import { WrapperInfo, ApplicationCard } from "./styles";
@@ -106,7 +106,7 @@ const Customer = ({ isMobile, isTablet }) => {
       );
   }, [dataDocTypes, isSuccessDocTypes]);
 
-  const indicatives = useGetCountries();
+  const indicatives = useGetIndicatives();
   const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
     indicatives;
   const [indicativesOptions, setIndicativesOptions] = useState([]);

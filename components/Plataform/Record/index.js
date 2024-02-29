@@ -590,6 +590,7 @@ export const Record = ({
       <DrawerValidateInfo
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
+        loanApplicationId={applications?.selectedApplication?.loanApplicationId}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (

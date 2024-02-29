@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Div, Text, Row, Col } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { TextField } from "@/components/Common/TextField";
@@ -6,39 +7,150 @@ import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Button } from "@/components/Common/Button";
 import { MenuItem } from "@mui/material";
 import { Select } from "@/components/Common/Select";
+import useGetStates from "@/hooks/Common/useGetStates";
+import useGetCities from "@/hooks/Common/useGetCities";
+import useGetNationality from "@/hooks/Common/useGetNationality";
+import useGetCivilStatus from "@/hooks/Common/useGetCivilStatus";
+import useGetEconomicActivity from "@/hooks/Common/useGetEconomicActivity";
+import { validateEditPersonalInfo } from "@/utilities/validations";
 
 export const PersonalData = ({
   handleRadio,
   assessorConcept,
+  setAssessorConcept,
   handleChange,
   assessorComments,
   isEditing,
   setIsEditing,
+  personalInfo,
+  countriesOptions,
+  residenceStatesOptions,
+  residenceCitiesOptions,
+  handleCancel,
+  handleSelect,
+  errorsPersonalInfo,
+  setErrorsPersonalInfo,
+  handleContinue,
 }) => {
+  const statesList = useGetStates(personalInfo.birthCountryId);
+  const { data: dataStates, isSuccess: isSuccessStates } = statesList;
+  const [statesOptions, setStatesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessStates) {
+      setStatesOptions(dataStates?.data.states || []);
+    } else {
+      setStatesOptions([]);
+    }
+  }, [isSuccessStates, dataStates]);
+
+  const citiesList = useGetCities(personalInfo.birthStateId);
+  const { data: dataCities, isSuccess: isSuccessCities } = citiesList;
+  const [citiesOptions, setCitiesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessCities) {
+      setCitiesOptions(dataCities?.data.cities);
+    } else {
+      setCitiesOptions([]);
+    }
+  }, [isSuccessCities, dataCities]);
+
+  const nationalityList = useGetNationality();
+  const { data: dataNationality, isSuccess: isSuccessNationality } =
+    nationalityList;
+  const [nationalityOptions, setNationalityOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessNationality) {
+      setNationalityOptions(dataNationality?.data.countries);
+    }
+  }, [isSuccessNationality, dataNationality]);
+
+  const civilStatusList = useGetCivilStatus();
+  const { data: dataCivilStatus, isSuccess: isSuccessCivilStatus } =
+    civilStatusList;
+  const [civilStatusOptions, setCivilStatusOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessCivilStatus)
+      setCivilStatusOptions(
+        dataCivilStatus?.data?.groupSettings.map((ele) => ({
+          name: ele.name,
+          id: ele.id,
+        }))
+      );
+  }, [dataCivilStatus, isSuccessCivilStatus]);
+
+  const economicActivityList = useGetEconomicActivity();
+  const { data: dataEconomicActivity, isSuccess: isSuccessEconomicActivity } =
+    economicActivityList;
+  const [economicActivityOptions, setEconomicActivityOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessEconomicActivity)
+      setEconomicActivityOptions(
+        dataEconomicActivity?.data?.groupSettings.map((ele) => ({
+          name: ele.name,
+          id: ele.id,
+        }))
+      );
+  }, [dataEconomicActivity, isSuccessEconomicActivity]);
+
+  const getLabelFromValue = (value, options, id, name) => {
+    const selectedOption = options.find((option) => option[id] === value);
+    return selectedOption ? selectedOption[name] : null;
+  };
+
   const dataInfo = [
     {
       titleL: "País de nacimiento",
-      descriptionL: "colombia",
+      descriptionL: getLabelFromValue(
+        personalInfo.birthCountryId,
+        countriesOptions,
+        "id",
+        "name"
+      ),
       titleR: "Nacionalidad",
-      descriptionR: "nacionalidad",
+      descriptionR: getLabelFromValue(
+        personalInfo.countryNationalityId,
+        nationalityOptions,
+        "id",
+        "nationality"
+      ),
     },
     {
       titleL: "Departamento/Estado de nacimiento",
-      descriptionL: "departamento",
+      descriptionL: getLabelFromValue(
+        personalInfo.birthStateId,
+        statesOptions,
+        "id",
+        "name"
+      ),
       titleR: "Cuidad de nacimiento",
-      descriptionR: "cuidad",
+      descriptionR: getLabelFromValue(
+        personalInfo.birthCityId,
+        citiesOptions,
+        "id",
+        "name"
+      ),
     },
     {
       titleL: "Estado civil",
-      descriptionL: "estadoCivil",
+      descriptionL: getLabelFromValue(
+        personalInfo.civilStatusId,
+        civilStatusOptions,
+        "id",
+        "name"
+      ),
       titleR: "Número de hijos",
-      descriptionR: "numeroDeHijos",
+      descriptionR: personalInfo.numberChildren,
     },
     {
       titleL: "Profesión",
-      descriptionL: "profesion",
+      descriptionL: personalInfo.occupation,
       titleR: "Actividad económica",
-      descriptionR: "actividadEconomica",
+      descriptionR: getLabelFromValue(
+        personalInfo.occupationActivityId,
+        economicActivityOptions,
+        "id",
+        "name"
+      ),
     },
   ];
 
@@ -99,7 +211,7 @@ export const PersonalData = ({
               weight={theme.fonts.weight.regular}
               color={theme.colors.neutralGray900}
             >
-              respuesta
+              {personalInfo.isPublicPerson ? "Si" : "No"}
             </Text>
           </Col>
           <Div
@@ -129,7 +241,12 @@ export const PersonalData = ({
                 weight={theme.fonts.weight.regular}
                 color={theme.colors.neutralGray900}
               >
-                paisDeResidencia
+                {getLabelFromValue(
+                  personalInfo.residenceCountryId,
+                  countriesOptions,
+                  "id",
+                  "name"
+                )}
               </Text>
             </Col>
             <Col gap="10px" width="313.5px">
@@ -146,7 +263,12 @@ export const PersonalData = ({
                 weight={theme.fonts.weight.regular}
                 color={theme.colors.neutralGray900}
               >
-                departamentoDeResidencia
+                {getLabelFromValue(
+                  personalInfo.residenceStateId,
+                  residenceStatesOptions,
+                  "id",
+                  "name"
+                )}
               </Text>
             </Col>
           </Row>
@@ -164,7 +286,12 @@ export const PersonalData = ({
               weight={theme.fonts.weight.regular}
               color={theme.colors.neutralGray900}
             >
-              ciudadDeResidencia
+              {getLabelFromValue(
+                personalInfo.residenceCityId,
+                residenceCitiesOptions,
+                "id",
+                "name"
+              )}
             </Text>
           </Col>
           <Div
@@ -199,7 +326,7 @@ export const PersonalData = ({
                 name="correctInfo"
                 direction="row"
                 value={assessorConcept}
-                onChange={handleRadio}
+                onChange={(e) => handleRadio(e, "correctInfo")}
               >
                 <Radio
                   label="La información es correcta"
@@ -239,7 +366,10 @@ export const PersonalData = ({
                 borderHeight={"3px solid"}
                 width={"78px"}
                 height={"40px"}
-                onClick={() => setIsEditing(true)}
+                onClick={() => {
+                  setIsEditing(true);
+                  setAssessorConcept("");
+                }}
               >
                 Editar
               </Button>
@@ -262,7 +392,7 @@ export const PersonalData = ({
         <Col gap="16px">
           <Select
             label={"País de nacimiento*"}
-            name="birthCountry"
+            name="birthCountryId"
             radius="4px"
             width="100%"
             height="40px"
@@ -274,18 +404,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.birthCountryId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.birthCountryId.error}
+            helper={
+              errorsPersonalInfo.birthCountryId.error
+                ? errorsPersonalInfo.birthCountryId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {countriesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Nacionalidad*"}
-            name="nationality"
+            name="countryNationalityId"
             radius="4px"
             width="100%"
             height="40px"
@@ -297,18 +433,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.countryNationalityId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.countryNationalityId.error}
+            helper={
+              errorsPersonalInfo.countryNationalityId.error
+                ? errorsPersonalInfo.countryNationalityId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {nationalityOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.nationality}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Departamento/Estado de nacimiento*"}
-            name="department"
+            name="birthStateId"
             radius="4px"
             width="100%"
             height="40px"
@@ -320,18 +462,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.birthStateId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.birthStateId.error}
+            helper={
+              errorsPersonalInfo.birthStateId.error
+                ? errorsPersonalInfo.birthStateId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {statesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Cuidad de nacimiento*"}
-            name="city"
+            name="birthCityId"
             radius="4px"
             width="100%"
             height="40px"
@@ -343,18 +491,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.birthCityId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.birthCityId.error}
+            helper={
+              errorsPersonalInfo.birthCityId.error
+                ? errorsPersonalInfo.birthCityId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {citiesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Estado civil*"}
-            name="civilStatus"
+            name="civilStatusId"
             radius="4px"
             width="100%"
             height="40px"
@@ -366,19 +520,26 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.civilStatusId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.civilStatusId.error}
+            helper={
+              errorsPersonalInfo.civilStatusId.error
+                ? errorsPersonalInfo.civilStatusId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {civilStatusOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <TextField
             label={"Número de hijos*"}
             placeholder={"Número de hijos"}
-            id="children"
+            id="numberChildren"
+            type="number"
             radius="4px"
             width="100%"
             height="40px"
@@ -387,13 +548,19 @@ export const PersonalData = ({
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
-            /* value={assessorComments}
-                onChange={handleChange} */
+            value={personalInfo.numberChildren}
+            onChange={handleChange}
+            error={errorsPersonalInfo.numberChildren.error}
+            helper={
+              errorsPersonalInfo.numberChildren.error
+                ? errorsPersonalInfo.numberChildren.message
+                : ""
+            }
           />
           <TextField
             label={"Profesión*"}
             placeholder={"Profesión"}
-            id="profession"
+            id="occupation"
             radius="4px"
             width="100%"
             height="40px"
@@ -402,43 +569,63 @@ export const PersonalData = ({
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
-            /* value={assessorComments}
-                onChange={handleChange} */
+            value={personalInfo.occupation}
+            onChange={handleChange}
+            error={errorsPersonalInfo.occupation.error}
+            helper={
+              errorsPersonalInfo.occupation.error
+                ? errorsPersonalInfo.occupation.message
+                : ""
+            }
           />
-          <TextField
-            label="Actividad económica*"
-            placeholder={"Actividad económica"}
-            id="activity"
+          <Select
+            label={"Actividad económica*"}
+            name="occupationActivityId"
             radius="4px"
             width="100%"
             height="40px"
-            labelFont={theme.fonts.family.primaryMedium}
+            size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
+            labelColor={theme.colors.neutralGray900}
+            labelFont={theme.fonts.family.primaryMedium}
             font={theme.fonts.family.primary}
-            size={theme.fonts.size.default2}
             border={theme.colors.neutralGray500}
-            /* value={assessorComments}
-                onChange={handleChange} */
-          />
+            notFocused={true}
+            placeholderColor={theme.colors.neutralGray500}
+            value={personalInfo?.occupationActivityId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.occupationActivityId.error}
+            helper={
+              errorsPersonalInfo.occupationActivityId.error
+                ? errorsPersonalInfo.occupationActivityId.message
+                : ""
+            }
+          >
+            {economicActivityOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
+              </MenuItem>
+            ))}
+          </Select>
           <RadioGroup
             gap="5px"
-            name="publiclyExposed"
+            name="isPublicPerson"
             direction="row"
             label={
               "¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?"
             }
-            /* value={assessorConcept}
-                onChange={handleRadio} */
+            value={personalInfo.isPublicPerson}
+            onChange={(e) => handleRadio(e, "isPublicPerson")}
           >
             <Radio
               label="Si"
-              value={"Si"}
-              /* checked={assessorConcept === "La información es correcta"} */
+              value={true}
+              checked={personalInfo.isPublicPerson}
             />
             <Radio
               label="No"
-              value={"No"}
-              /* checked={assessorConcept === "Presenta novedades"} */
+              value={false}
+              checked={!personalInfo.isPublicPerson}
             />
           </RadioGroup>
           <Div
@@ -455,7 +642,7 @@ export const PersonalData = ({
           </Text>
           <Select
             label={"País de residencia*"}
-            name="residenceCountry"
+            name="residenceCountryId"
             radius="4px"
             width="100%"
             height="40px"
@@ -467,18 +654,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.residenceCountryId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.residenceCountryId.error}
+            helper={
+              errorsPersonalInfo.residenceCountryId.error
+                ? errorsPersonalInfo.residenceCountryId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {countriesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Departamento de residencia*"}
-            name="residenceDepartment"
+            name="residenceStateId"
             radius="4px"
             width="100%"
             height="40px"
@@ -490,18 +683,24 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.residenceStateId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.residenceStateId.error}
+            helper={
+              errorsPersonalInfo.residenceStateId.error
+                ? errorsPersonalInfo.residenceStateId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {residenceStatesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Select
             label={"Cuidad de Residencia*"}
-            name="residenceCity"
+            name="residenceCityId"
             radius="4px"
             width="100%"
             height="40px"
@@ -513,14 +712,20 @@ export const PersonalData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            /* value={actualInfo?.countryCode}
-            onChange={handleSelect} */
+            value={personalInfo?.residenceCityId}
+            onChange={handleSelect}
+            error={errorsPersonalInfo.residenceCityId.error}
+            helper={
+              errorsPersonalInfo.residenceCityId.error
+                ? errorsPersonalInfo.residenceCityId.message
+                : ""
+            }
           >
-            {/* {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value}>
-                {ele.label}
+            {residenceCitiesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
           <Row width="100%" justify="right" m="8px 0 0 0" gap="16px">
             <Button
@@ -533,7 +738,7 @@ export const PersonalData = ({
               borderHeight={"3px solid"}
               width={"102px"}
               height={"40px"}
-              onClick={() => setIsEditing(false)}
+              onClick={handleCancel}
             >
               Cancelar
             </Button>
@@ -545,6 +750,14 @@ export const PersonalData = ({
               font={theme.fonts.family.primaryBold}
               width={"166px"}
               height={"40px"}
+              onClick={() =>
+                handleContinue(
+                  validateEditPersonalInfo,
+                  personalInfo,
+                  errorsPersonalInfo,
+                  setErrorsPersonalInfo
+                )
+              }
             >
               Guardar cambios
             </Button>

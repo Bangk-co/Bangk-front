@@ -14,8 +14,8 @@ import { LinkButton } from "@/components/Common/LinkButton";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
 import { getFileType, numberFormat } from "@/utilities/helpers";
-import pesosIcon from "@/assets/icons/pesos.svg"
-import downloadIcon from "@/assets/icons/download-2.svg"
+import pesosIcon from "@/assets/icons/pesos.svg";
+import downloadIcon from "@/assets/icons/download-2.svg";
 import { pdfjs } from "react-pdf";
 
 export const DrawerAllInfo = ({
@@ -41,7 +41,7 @@ export const DrawerAllInfo = ({
   bankStatementInfo,
   handleDownload,
   isLoading,
-  savedBankStatStatement
+  savedBankStatStatement,
 }) => {
   const [numPages, setNumPages] = useState(null);
 
@@ -61,8 +61,8 @@ export const DrawerAllInfo = ({
     fontColor: theme.colors.neutralGray900,
     radius: "4px",
     width: "100%",
-    height: "40px"
-  }
+    height: "40px",
+  };
 
   const subTitleProps = {
     font: theme.fonts.family.primaryBold,
@@ -70,7 +70,7 @@ export const DrawerAllInfo = ({
     size: "16px",
     lineHeight: "24px",
     color: theme.colors.neutralGray800,
-  }
+  };
 
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
@@ -101,7 +101,12 @@ export const DrawerAllInfo = ({
             >
               {bankStatementInfo?.bankStatementName}
             </Text>
-            <Image alt="download" src={downloadIcon} onClick={handleDownload} style={{ cursor: "pointer" }} />
+            <Image
+              alt="download"
+              src={downloadIcon}
+              onClick={handleDownload}
+              style={{ cursor: "pointer" }}
+            />
           </Div>
           {getFileType(bankStatementInfo?.bankStatementUrl) === "pdf" ? (
             <StyledDocument
@@ -118,12 +123,19 @@ export const DrawerAllInfo = ({
               ))}
             </StyledDocument>
           ) : (
-            <Div m="16px 0 0 0" p="10px" width="100%" height="100%" justify="center">
+            <Div
+              m="16px 0 0 0"
+              p="10px"
+              width="100%"
+              height="100%"
+              justify="center"
+            >
               <Image
                 alt="bankStatement"
                 src={bankStatementInfo?.bankStatementUrl}
                 width={682}
-                height={909} />
+                height={909}
+              />
             </Div>
           )}
         </Div>
@@ -135,9 +147,20 @@ export const DrawerAllInfo = ({
           minheight="100vh"
         >
           <WrapperClose>
-            <Image alt="close" src={closeIcon} width={20} height={20} onClick={closeDrawer} style={{ cursor: "pointer" }} />
+            <Image
+              alt="close"
+              src={closeIcon}
+              width={20}
+              height={20}
+              onClick={closeDrawer}
+              style={{ cursor: "pointer" }}
+            />
           </WrapperClose>
-          <Div direction="column" p="0 0 18px 0" style={{ borderBottom: `1px solid ${theme.colors.neutralGray400}` }}>
+          <Div
+            direction="column"
+            p="0 0 18px 0"
+            style={{ borderBottom: `1px solid ${theme.colors.neutralGray400}` }}
+          >
             <Text
               font={theme.fonts.family.primaryBold}
               weight={theme.fonts.weight.bold}
@@ -147,18 +170,18 @@ export const DrawerAllInfo = ({
             >
               Valida la información
             </Text>
-            <Text
-              { ...subTitleProps }
-              mt="26px"
-              mb="22px"
-            >
+            <Text {...subTitleProps} mt="26px" mb="22px">
               Información del titular
             </Text>
-            <Grid container rowSpacing={{ md: "18px" }} columnSpacing={{ md: "18px" }}>
+            <Grid
+              container
+              rowSpacing={{ md: "18px" }}
+              columnSpacing={{ md: "18px" }}
+            >
               <Grid item md="12">
                 <TextField
                   label={"Nombres*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"name"}
                   value={userForm?.name}
                   onChange={handleChangeUser}
@@ -168,7 +191,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <TextField
                   label={"Apellidos*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"lastName"}
                   value={userForm?.lastName}
                   onChange={handleChangeUser}
@@ -178,7 +201,7 @@ export const DrawerAllInfo = ({
               <Grid item md="5">
                 <Select
                   label={"Tipo de documento*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   notFocused={true}
                   name="documentType"
                   value={userForm?.documentTypeId}
@@ -186,16 +209,20 @@ export const DrawerAllInfo = ({
                   disabled={savedBankStatStatement}
                 >
                   {documentTypeOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
+                    <MenuItem
+                      key={indx}
+                      value={ele.value}
+                      style={{ fontFamily: theme.fonts.family.primary }}
+                    >
                       {ele.label}
                     </MenuItem>
                   ))}
-                 </Select>
+                </Select>
               </Grid>
               <Grid item md="7">
                 <TextField
                   label={"Número de documento*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"identificationNumber"}
                   value={userForm?.identificationNumber}
                   onChange={handleChangeUser}
@@ -205,17 +232,19 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <DatePicker
                   label={"Fecha de expedición del documento"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   border={theme.colors.gray500}
                   value={userForm?.documentIssueDate}
-                  onChange={(event) => handleChangeDate(event, "documentIssueDate")}
+                  onChange={(event) =>
+                    handleChangeDate(event, "documentIssueDate")
+                  }
                   disabled={savedBankStatStatement}
                 />
               </Grid>
               <Grid item md="12">
                 <TextField
                   label={"Correo electrónico*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"email"}
                   value={userForm?.email}
                   disabled={true}
@@ -224,15 +253,19 @@ export const DrawerAllInfo = ({
               <Grid item md="5">
                 <Select
                   label={"Código de país*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   notFocused={true}
                   name={"countryCode"}
                   value={userForm?.countryCode}
                   onChange={handleSelectUser}
                   disabled={savedBankStatStatement}
                 >
-                  {phoneCodesOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
+                  {phoneCodesOptions?.map((ele, indx) => (
+                    <MenuItem
+                      key={indx}
+                      value={ele.value}
+                      style={{ fontFamily: theme.fonts.family.primary }}
+                    >
                       {ele.label}
                     </MenuItem>
                   ))}
@@ -241,7 +274,7 @@ export const DrawerAllInfo = ({
               <Grid item md="7">
                 <TextField
                   label={"Número de celular*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"phoneNumber"}
                   value={userForm?.phoneNumber}
                   onChange={handleChangeUser}
@@ -251,7 +284,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <DatePicker
                   label={"Fecha de nacimiento*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   border={theme.colors.gray500}
                   error={errorDate}
                   helper={errorDate ? "Debes ser mayor de edad" : ""}
@@ -266,10 +299,10 @@ export const DrawerAllInfo = ({
                   name="genderId"
                   direction="row"
                   label="Género*"
-                  color= {theme.colors.neutralGray900}
+                  color={theme.colors.neutralGray900}
                   labelFont={theme.fonts.family.primaryMedium}
                   labelSize={theme.fonts.size.sm}
-                  weight= {theme.fonts.weight.medium}
+                  weight={theme.fonts.weight.medium}
                   value={Number(userForm?.genderId)}
                   onChange={handleSelectGender}
                 >
@@ -287,20 +320,23 @@ export const DrawerAllInfo = ({
             </Grid>
           </Div>
           <Div direction="column" m="18px 0 0 0">
-            <Text
-              { ...subTitleProps }
-              mb="22px"
-            >
+            <Text {...subTitleProps} mb="22px">
               Información del credito
             </Text>
             <Grid container rowSpacing={{ md: "18px" }}>
               <Grid item md="12">
                 <TextField
                   label={"Saldo del crédito*"}
-                  { ...textFieldProps }
-                  prefixIcon={<Image alt="pesos" src={pesosIcon} width={16} height={16} />}
+                  {...textFieldProps}
+                  prefixIcon={
+                    <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+                  }
                   id={"loanBalance"}
-                  value={loanForm?.loanBalance === "" ? "" : numberFormat(Number(loanForm?.loanBalance))}
+                  value={
+                    loanForm?.loanBalance === ""
+                      ? ""
+                      : numberFormat(Number(loanForm?.loanBalance))
+                  }
                   onChange={handleChangeLoan}
                   inputProps={{
                     pattern: "\\d*",
@@ -312,7 +348,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <Select
                   label={"Tipo de crédito*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   notFocused={true}
                   name={"loanTypeId"}
                   value={loanForm?.loanTypeId}
@@ -320,7 +356,11 @@ export const DrawerAllInfo = ({
                   disabled={savedBankStatStatement}
                 >
                   {loanTypeOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
+                    <MenuItem
+                      key={indx}
+                      value={ele.value}
+                      style={{ fontFamily: theme.fonts.family.primary }}
+                    >
                       {ele.label}
                     </MenuItem>
                   ))}
@@ -329,7 +369,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <Select
                   label={"Banco donde se radica el crédito*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   notFocused={true}
                   name={"bankId"}
                   value={loanForm?.bankId}
@@ -337,7 +377,11 @@ export const DrawerAllInfo = ({
                   disabled={savedBankStatStatement}
                 >
                   {banksOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>
+                    <MenuItem
+                      key={indx}
+                      value={ele.value}
+                      style={{ fontFamily: theme.fonts.family.primary }}
+                    >
                       {ele.label}
                     </MenuItem>
                   ))}
@@ -346,7 +390,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <TextField
                   label={"Número del crédito*"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"loanNumber"}
                   value={loanForm?.loanNumber}
                   onChange={handleChange}
@@ -357,10 +401,16 @@ export const DrawerAllInfo = ({
                 <TextField
                   label={"Costo mensual del seguro*"}
                   placeholder={"Ingresa costo actual"}
-                  { ...textFieldProps }
-                  prefixIcon={<Image alt="pesos" src={pesosIcon} width={16} height={16} />}
+                  {...textFieldProps}
+                  prefixIcon={
+                    <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+                  }
                   id={"monthlyCostInsurance"}
-                  value={loanForm?.monthlyCostInsurance === "" ? "" : numberFormat(Number(loanForm?.monthlyCostInsurance))}
+                  value={
+                    loanForm?.monthlyCostInsurance === ""
+                      ? ""
+                      : numberFormat(Number(loanForm?.monthlyCostInsurance))
+                  }
                   onChange={handleChangeLoan}
                   inputProps={{
                     pattern: "\\d*",
@@ -372,7 +422,7 @@ export const DrawerAllInfo = ({
               <Grid item md="12">
                 <TextField
                   label={"Observaciones"}
-                  { ...textFieldProps }
+                  {...textFieldProps}
                   id={"observations"}
                   value={loanForm?.observations}
                   onChange={handleChange}
@@ -412,5 +462,5 @@ export const DrawerAllInfo = ({
         </Div>
       </Div>
     </Drawer>
-  )
-}
+  );
+};

@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -11,15 +13,152 @@ import { PersonalData } from "./PersonalData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
+import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";
+import useGetCountries from "@/hooks/Common/useGetCountries";
+import useGetStates from "@/hooks/Common/useGetStates";
+import useGetCities from "@/hooks/Common/useGetCities";
+import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
 
 export const DrawerValidateInfo = ({
   showDrawer,
   setShowDrawerValidateInfo,
+  loanApplicationId,
 }) => {
+  const save = useSaveLoanInsurancePolicy();
+
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [assessorConcept, setAssessorConcept] = useState("");
   const [assessorComments, setAssessorComments] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [cancelEdit, setCancelEdit] = useState(false);
+  const [personalInfo, setPersonalInfo] = useState({
+    birthCountryId: null,
+    countryNationalityId: null,
+    birthStateId: null,
+    birthCityId: null,
+    civilStatusId: null,
+    numberChildren: "",
+    occupation: "",
+    occupationActivityId: null,
+    isPublicPerson: null,
+    residenceCountryId: null,
+    residenceStateId: null,
+    residenceCityId: null,
+  });
+
+  const initialErrorPersonalInfo = {
+    name: {
+      error: false,
+      message: "",
+    },
+    birthCountryId: {
+      error: false,
+      message: "",
+    },
+    countryNationalityId: {
+      error: false,
+      message: "",
+    },
+    birthStateId: {
+      error: false,
+      message: "",
+    },
+    birthCityId: {
+      error: false,
+      message: "",
+    },
+    civilStatusId: {
+      error: false,
+      message: "",
+    },
+    numberChildren: {
+      error: false,
+      message: "",
+    },
+    occupation: {
+      error: false,
+      message: "",
+    },
+    occupationActivityId: {
+      error: false,
+      message: "",
+    },
+    isPublicPerson: {
+      error: false,
+      message: "",
+    },
+    residenceCountryId: {
+      error: false,
+      message: "",
+    },
+    residenceStateId: {
+      error: false,
+      message: "",
+    },
+    residenceCityId: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsPersonalInfo, setErrorsPersonalInfo] = useState(
+    initialErrorPersonalInfo
+  );
+
+  const loanInsurancePolicyData =
+    useGetLoanInsurancePolicyInfo(loanApplicationId);
+  const { data, isLoading } = loanInsurancePolicyData;
+  useEffect(() => {
+    if (data?.data?.loanInsurancePolicies) {
+      setPersonalInfo({
+        birthCountryId: data?.data?.loanInsurancePolicies.birthCountryId,
+        countryNationalityId:
+          data?.data?.loanInsurancePolicies.countryNationalityId,
+        birthStateId: data?.data?.loanInsurancePolicies.birthStateId,
+        birthCityId: data?.data?.loanInsurancePolicies.birthCityId,
+        civilStatusId: data?.data?.loanInsurancePolicies.civilStatusId,
+        numberChildren: data?.data?.loanInsurancePolicies.numberChildren,
+        occupation: data?.data?.loanInsurancePolicies.occupation,
+        occupationActivityId:
+          data?.data?.loanInsurancePolicies.occupationActivityId,
+        isPublicPerson: data?.data?.loanInsurancePolicies.isPublicPerson,
+        residenceCountryId:
+          data?.data?.loanInsurancePolicies.residenceCountryId,
+        residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
+        residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
+      });
+    }
+  }, [data, isLoading, cancelEdit]);
+
+  const countriesList = useGetCountries();
+  const { data: dataCountries, isSuccess: isSuccessCountries } = countriesList;
+  const [countriesOptions, setCountriesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessCountries) {
+      setCountriesOptions(dataCountries?.data?.countries);
+    }
+  }, [isSuccessCountries, dataCountries]);
+
+  const statesList = useGetStates(personalInfo.residenceCountryId);
+  const { data: dataStates, isSuccess: isSuccessStates } = statesList;
+  const [residenceStatesOptions, setResidenceStatesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessStates) {
+      setResidenceStatesOptions(dataStates?.data.states);
+    } else {
+      setResidenceStatesOptions([]);
+    }
+  }, [isSuccessStates, dataStates, personalInfo.residenceCountryId]);
+
+  const citiesList = useGetCities(personalInfo.residenceStateId);
+  const { data: dataCities, isSuccess: isSuccessCities } = citiesList;
+  const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessCities) {
+      setResidenceCitiesOptions(dataCities?.data.cities);
+    } else {
+      setResidenceCitiesOptions([]);
+    }
+  }, [isSuccessCities, dataCities]);
 
   const closeDrawer = () => {
     setAssessorConcept("");
@@ -76,29 +215,130 @@ export const DrawerValidateInfo = ({
     },
   ];
 
+  const handleSelect = (event) => {
+    const { value, name } = event.target;
+    const newErrorForm = { ...errorsPersonalInfo };
+    newErrorForm[name].error = false;
+    newErrorForm[name].message = "";
+    setErrorsPersonalInfo(newErrorForm);
+
+    const newPersonalInfo = { ...personalInfo };
+    newPersonalInfo[name] = value;
+    if (name === "birthCountryId") {
+      newPersonalInfo.birthStateId = null;
+      newPersonalInfo.birthCityId = null;
+    } else if (name === "residenceCountryId") {
+      newPersonalInfo.residenceStateId = null;
+      newPersonalInfo.residenceCityId = null;
+    }
+    setPersonalInfo(newPersonalInfo);
+  };
+
+  const handleRadio = (event, name) => {
+    const { value } = event.target;
+    switch (name) {
+      case "correctInfo":
+        setAssessorConcept(value);
+        break;
+      case "isPublicPerson":
+        const newErrorForm = { ...errorsPersonalInfo };
+        newErrorForm[name].error = false;
+        newErrorForm[name].message = "";
+        setErrorsPersonalInfo(newErrorForm);
+
+        setPersonalInfo((prevInfo) => ({
+          ...prevInfo,
+          isPublicPerson: value === "true",
+        }));
+      default:
+        break;
+    }
+  };
+
+  const handleChange = (event) => {
+    const { value, id } = event.target;
+    if (id === "comments") {
+      setAssessorComments(value);
+    } else {
+      const newErrorForm = { ...errorsPersonalInfo };
+      newErrorForm[id].error = false;
+      newErrorForm[id].message = "";
+      setErrorsPersonalInfo(newErrorForm);
+
+      const newPersonalInfo = { ...personalInfo };
+      newPersonalInfo[id] = value;
+      setPersonalInfo(newPersonalInfo);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setCancelEdit(!cancelEdit);
+  };
+
+  const handleContinue = (validate, form, errors, setError) => {
+    const validation = validate.validate(form, {
+      abortEarly: false,
+    });
+    if (validation.error) {
+      const newErrorForm = { ...errors };
+      validation.error.details.forEach((ele) => {
+        const label = ele.context.label;
+        newErrorForm[label].error = true;
+
+        newErrorForm[label].message = "Campo obligatorio";
+        setError(newErrorForm);
+      });
+    } else {
+      setExpandedCardIndex(expandedCardIndex + 1);
+      /*  const newHealthInfo = {...healthInfo, diseases: getDiseasesIds(diseases, diseasesOptions)}
+    save.reset();
+    save.mutate(
+      {
+        formData: {
+          loanApplicationId: requestInfo.loanApplicationId,
+          ...userInfo,
+          ...financialInfo,
+          ...propertyInfo,
+          ...newHealthInfo,
+          ...additionalInfo
+        },
+      },
+      {
+        onSuccess: (data) => {
+
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    ); */
+    }
+  };
+
   const expandedCardData = [
     <PersonalData
       key="personalData"
       handleRadio={handleRadio}
       assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
       handleChange={handleChange}
       assessorComments={assessorComments}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
+      personalInfo={personalInfo}
+      countriesOptions={countriesOptions}
+      residenceStatesOptions={residenceStatesOptions}
+      residenceCitiesOptions={residenceCitiesOptions}
+      handleCancel={handleCancel}
+      handleSelect={handleSelect}
+      errorsPersonalInfo={errorsPersonalInfo}
+      setErrorsPersonalInfo={setErrorsPersonalInfo}
+      handleContinue={handleContinue}
     />,
   ];
-
-  const handleRadio = (event) => {
-    const { value } = event.target;
-
-    setAssessorConcept(value);
-  };
-
-  const handleChange = (event) => {
-    const { value } = event.target;
-
-    setAssessorComments(value);
-  };
 
   return (
     <Drawer

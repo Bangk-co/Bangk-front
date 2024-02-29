@@ -55,7 +55,7 @@ const UserInfoConfirmation = ({ isMobile }) => {
         countryCodePhoneId: info.countryCodePhoneId,
         phoneNumber: info.phoneNumber,
         email: info.email,
-        documentIssueDate: dayjs(info.documentIssueDate),
+        documentIssueDate: info.documentIssueDate === null ? "" : dayjs(info.documentIssueDate),
       })
     }
   }, [isSuccess, data])

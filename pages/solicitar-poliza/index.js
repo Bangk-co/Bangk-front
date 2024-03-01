@@ -372,9 +372,9 @@ const RequestPolicy = ({ isMobile }) => {
           beneficiaries: additionalInfo.beneficiaries,
         }
         if (additionalInfo.beneficiaries === false) {
-          return Object.values(obj3).some(value => value === null);
-        } else {
           return Object.values(additionalInfo).some(value => value === null);
+        } else {
+          return Object.values(obj3).some(value => value === null);
         }
       default:
         break;

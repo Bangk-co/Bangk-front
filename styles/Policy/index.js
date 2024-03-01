@@ -83,9 +83,4 @@ export const WrapperDisease = styled.div`
   border-radius: 16px;
   gap: 4px;
   background: ${theme.colors.green900};
-
-  // @media (max-width: ${theme.breakpoints.sm}) {
-  //   width: 98.67px;
-  //   height: 81px;
-  // }
 `

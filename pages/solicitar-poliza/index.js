@@ -139,8 +139,8 @@ const RequestPolicy = ({ isMobile }) => {
 
   useEffect(() => {
     setUserInfo({
-      birthCountryId: null,
-      birthStateId: null,
+      birthCountryId: requestInfo.birthCountryId,
+      birthStateId: requestInfo.birthStateId,
       birthCityId: requestInfo.birthCityId,
       countryNationalityId: requestInfo.countryNationalityId,
       civilStatusId: requestInfo.civilStatusId,
@@ -148,8 +148,8 @@ const RequestPolicy = ({ isMobile }) => {
       occupation: requestInfo.occupation,
       occupationActivityId: requestInfo.occupationActivityId,
       isPublicPerson: requestInfo.isPublicPerson,
-      residenceCountryId: null,
-      residenceStateId: null,
+      residenceCountryId: requestInfo.residenceCountryId,
+      residenceStateId: requestInfo.residenceStateId,
       residenceCityId: requestInfo.residenceCityId,
     })
     setFinancialInfo({
@@ -168,7 +168,7 @@ const RequestPolicy = ({ isMobile }) => {
       apartmentNumber: requestInfo.apartmentNumber,
       buildingFloorsNumber: requestInfo.buildingFloorsNumber,
       address: requestInfo.address,
-      stateId: null,
+      stateId: requestInfo.stateId || null,
       cityId: requestInfo.cityId,
     })
     setHealthInfo({
@@ -305,6 +305,7 @@ const RequestPolicy = ({ isMobile }) => {
               {
                 onSuccess: () => {
                   dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+                  router.push("/solicitar-poliza/solicitud-exitosa")
                 },
                 onError: (err) => {
                   err.response.data.errors.map((error) => {
@@ -345,7 +346,7 @@ const RequestPolicy = ({ isMobile }) => {
           liabilitiesValue: financialInfo.liabilitiesValue,
         }
         if (requestInfo.loanBalance > 137227300 || requestInfo.monthlyCostInsurance > 6089880) {
-          return Object.values(financialInfo).some(value => value === null) && Object.values(checks).every(check => check === true)
+          return Object.values(financialInfo).some(value => value === null) || Object.values(checks).every(check => check === false)
         } else {
           return Object.values(obj).some(value => value === null);
         }
@@ -363,6 +364,17 @@ const RequestPolicy = ({ isMobile }) => {
           return Object.values(obj2).some(value => value === null);
         } else {
           return Object.values(propertyInfo).some(value => value === null);
+        }
+      case 4:
+        const obj3 = {
+          convicted: additionalInfo.convicted,
+          lifeEnsure: additionalInfo.lifeEnsure,
+          beneficiaries: additionalInfo.beneficiaries,
+        }
+        if (additionalInfo.beneficiaries === false) {
+          return Object.values(additionalInfo).some(value => value === null);
+        } else {
+          return Object.values(obj3).some(value => value === null);
         }
       default:
         break;

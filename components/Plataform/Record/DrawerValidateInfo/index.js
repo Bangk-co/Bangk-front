@@ -18,12 +18,16 @@ import useGetCountries from "@/hooks/Common/useGetCountries";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
+import { getDiseasesNames, getDiseasesIds } from "@/utilities/helpers";
+import useGetDiseases from "@/hooks/Common/useGetDiseases";
+import { useQueryClient } from "react-query";
 
 export const DrawerValidateInfo = ({
   showDrawer,
   setShowDrawerValidateInfo,
   loanApplicationId,
 }) => {
+  const queryClient = useQueryClient();
   const save = useSaveLoanInsurancePolicy();
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
@@ -104,6 +108,45 @@ export const DrawerValidateInfo = ({
     initialErrorPersonalInfo
   );
 
+  const [financialInfo, setFinancialInfo] = useState({
+    monthlyIncome: null,
+    monthlyExpenses: null,
+    assetValue: null,
+    liabilitiesValue: null,
+    incomeOrigin: null,
+  });
+  const [propertyInfo, setPropertyInfo] = useState({
+    housingTypeId: null,
+    housingValue: null,
+    builtgDate: null,
+    builtArea: null,
+    basementNumber: null,
+    apartmentNumber: null,
+    buildingFloorsNumber: null,
+    address: null,
+    stateId: null,
+    cityId: null,
+  });
+  const [healthInfo, setHealthInfo] = useState({
+    weight: null,
+    height: null,
+    diseases: null,
+    hivActive: null,
+    plannedMedicalProcidure: null,
+    disability: null,
+    diseasesMoreInfo: null,
+    plannedMedicalProcidureMoreInfo: null,
+    disabilityMoreInfo: null,
+  });
+  const [additionalInfo, setAdditionalInfo] = useState({
+    convicted: null,
+    lifeEnsure: null,
+    beneficiaries: null,
+    beneficiaryName: null,
+    beneficiaryIdentificationTypeId: 76,
+    beneficiaryIdentificationNumber: null,
+  });
+
   const loanInsurancePolicyData =
     useGetLoanInsurancePolicyInfo(loanApplicationId);
   const { data, isLoading } = loanInsurancePolicyData;
@@ -116,7 +159,9 @@ export const DrawerValidateInfo = ({
         birthStateId: data?.data?.loanInsurancePolicies.birthStateId,
         birthCityId: data?.data?.loanInsurancePolicies.birthCityId,
         civilStatusId: data?.data?.loanInsurancePolicies.civilStatusId,
-        numberChildren: data?.data?.loanInsurancePolicies.numberChildren,
+        numberChildren: Number(
+          data?.data?.loanInsurancePolicies.numberChildren
+        ),
         occupation: data?.data?.loanInsurancePolicies.occupation,
         occupationActivityId:
           data?.data?.loanInsurancePolicies.occupationActivityId,
@@ -125,6 +170,53 @@ export const DrawerValidateInfo = ({
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
         residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
+      });
+
+      setFinancialInfo({
+        monthlyIncome: data?.data?.loanInsurancePolicies.monthlyIncome,
+        monthlyExpenses: data?.data?.loanInsurancePolicies.monthlyExpenses,
+        assetValue: data?.data?.loanInsurancePolicies.assetValue,
+        liabilitiesValue: data?.data?.loanInsurancePolicies.liabilitiesValue,
+        incomeOrigin: data?.data?.loanInsurancePolicies.incomeOrigin,
+      });
+      setPropertyInfo({
+        housingTypeId: data?.data?.loanInsurancePolicies.housingTypeId,
+        housingValue: data?.data?.loanInsurancePolicies.housingValue,
+        builtgDate:
+          data?.data?.loanInsurancePolicies.builtgDate === null
+            ? null
+            : dayjs(data?.data?.loanInsurancePolicies.builtgDate),
+        builtArea: data?.data?.loanInsurancePolicies.builtArea,
+        basementNumber: data?.data?.loanInsurancePolicies.basementNumber,
+        apartmentNumber: data?.data?.loanInsurancePolicies.apartmentNumber,
+        buildingFloorsNumber:
+          data?.data?.loanInsurancePolicies.buildingFloorsNumber,
+        address: data?.data?.loanInsurancePolicies.address,
+        stateId: null,
+        cityId: data?.data?.loanInsurancePolicies.cityId,
+      });
+      setHealthInfo({
+        weight: data?.data?.loanInsurancePolicies.weight,
+        height: data?.data?.loanInsurancePolicies.height,
+        diseases: data?.data?.loanInsurancePolicies.diseases,
+        hivActive: data?.data?.loanInsurancePolicies.hivActive,
+        plannedMedicalProcidure:
+          data?.data?.loanInsurancePolicies.plannedMedicalProcidure,
+        disability: data?.data?.loanInsurancePolicies.disability,
+        diseasesMoreInfo: data?.data?.loanInsurancePolicies.diseasesMoreInfo,
+        plannedMedicalProcidureMoreInfo:
+          data?.data?.loanInsurancePolicies.plannedMedicalProcidureMoreInfo,
+        disabilityMoreInfo:
+          data?.data?.loanInsurancePolicies.disabilityMoreInfo,
+      });
+      setAdditionalInfo({
+        convicted: data?.data?.loanInsurancePolicies.convicted,
+        lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
+        beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
+        beneficiaryName: data?.data?.loanInsurancePolicies.beneficiaryName,
+        beneficiaryIdentificationTypeId: 76,
+        beneficiaryIdentificationNumber:
+          data?.data?.loanInsurancePolicies.beneficiaryIdentificationNumber,
       });
     }
   }, [data, isLoading, cancelEdit]);
@@ -159,6 +251,19 @@ export const DrawerValidateInfo = ({
       setResidenceCitiesOptions([]);
     }
   }, [isSuccessCities, dataCities]);
+
+  const diseasesList = useGetDiseases();
+  const { data: dataDiseases, isSuccess: isSuccessDiseases } = diseasesList;
+  const [diseasesOptions, setDiseasesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessDiseases)
+      setDiseasesOptions(
+        dataDiseases?.data?.groupSettings.map((ele) => ({
+          name: ele.name,
+          id: ele.id,
+        }))
+      );
+  }, [dataDiseases, isSuccessDiseases]);
 
   const closeDrawer = () => {
     setAssessorConcept("");
@@ -290,31 +395,34 @@ export const DrawerValidateInfo = ({
         setError(newErrorForm);
       });
     } else {
-      setExpandedCardIndex(expandedCardIndex + 1);
-      /*  const newHealthInfo = {...healthInfo, diseases: getDiseasesIds(diseases, diseasesOptions)}
-    save.reset();
-    save.mutate(
-      {
-        formData: {
-          loanApplicationId: requestInfo.loanApplicationId,
-          ...userInfo,
-          ...financialInfo,
-          ...propertyInfo,
-          ...newHealthInfo,
-          ...additionalInfo
+      save.reset();
+      save.mutate(
+        {
+          formData: {
+            loanApplicationId: loanApplicationId,
+            ...personalInfo,
+            ...financialInfo,
+            ...propertyInfo,
+            ...healthInfo,
+            ...additionalInfo,
+          },
         },
-      },
-      {
-        onSuccess: (data) => {
-
-        },
-        onError: (err) => {
-          err.response.data.errors.map((error) => {
-            toast.error(error);
-          });
-        },
-      }
-    ); */
+        {
+          onSuccess: () => {
+            setIsEditing(false);
+            setExpandedCardIndex(expandedCardIndex + 1);
+            queryClient.invalidateQueries([
+              "LoanInsurancePolicyInfo",
+              loanApplicationId,
+            ]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
     }
   };
 
@@ -337,6 +445,7 @@ export const DrawerValidateInfo = ({
       errorsPersonalInfo={errorsPersonalInfo}
       setErrorsPersonalInfo={setErrorsPersonalInfo}
       handleContinue={handleContinue}
+      isLoadingSave={save.isLoading}
     />,
   ];
 

@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { axiosClient } from "../services/axiosInstance";
 
-const useGetLoanInsurancePolicyInfo = (clientId) => {
-  let urlString = `/LoanInsurancePolicy/GetAllLoanInsurancePolicyByLoanApplication?loanApplicationId=${clientId}`;
+const useGetLoanInsurancePolicyInfo = (loanApplicationId) => {
+  let urlString = `/LoanInsurancePolicy/GetAllLoanInsurancePolicyByLoanApplication?loanApplicationId=${loanApplicationId}`;
 
-  const data = useQuery(["LoanInsurancePolicyInfo", clientId], () =>
+  const data = useQuery(["LoanInsurancePolicyInfo", loanApplicationId], () =>
     axiosClient.get(urlString)
   );
 

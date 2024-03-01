@@ -13,6 +13,7 @@ import useGetNationality from "@/hooks/Common/useGetNationality";
 import useGetCivilStatus from "@/hooks/Common/useGetCivilStatus";
 import useGetEconomicActivity from "@/hooks/Common/useGetEconomicActivity";
 import { validateEditPersonalInfo } from "@/utilities/validations";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const PersonalData = ({
   handleRadio,
@@ -31,6 +32,7 @@ export const PersonalData = ({
   errorsPersonalInfo,
   setErrorsPersonalInfo,
   handleContinue,
+  isLoadingSave,
 }) => {
   const statesList = useGetStates(personalInfo.birthCountryId);
   const { data: dataStates, isSuccess: isSuccessStates } = statesList;
@@ -757,6 +759,14 @@ export const PersonalData = ({
                   errorsPersonalInfo,
                   setErrorsPersonalInfo
                 )
+              }
+              startIcon={
+                isLoadingSave ? (
+                  <CircularProgress
+                    size={20}
+                    style={{ color: theme.colors.white }}
+                  />
+                ) : null
               }
             >
               Guardar cambios

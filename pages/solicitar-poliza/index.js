@@ -168,7 +168,7 @@ const RequestPolicy = ({ isMobile }) => {
       apartmentNumber: requestInfo.apartmentNumber,
       buildingFloorsNumber: requestInfo.buildingFloorsNumber,
       address: requestInfo.address,
-      stateId: requestInfo.stateId || null,
+      stateId: requestInfo.stateId,
       cityId: requestInfo.cityId,
     })
     setHealthInfo({

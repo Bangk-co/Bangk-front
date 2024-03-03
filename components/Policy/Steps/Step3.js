@@ -245,7 +245,7 @@ export const Step3 = ({
               font={theme.fonts.family.primaryMedium}
               weight={theme.fonts.weight.medium}
             >
-              Antiguedad
+              Antigüedad
             </Text>
             <Div height="40px" align="center">
               <Text

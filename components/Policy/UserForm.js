@@ -9,6 +9,7 @@ import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
 import { ColForm } from "@/styles/Policy";
 import { DatePicker } from "../Common/DatePicker";
+import { useMediaQuery } from "react-responsive";
 
 export const UserForm = ({
   isMobile,
@@ -20,6 +21,12 @@ export const UserForm = ({
   handleSelect,
   handleChangeDate,
 }) => {
+
+  const isMiniMobile =
+  useMediaQuery({
+    query: `(max-width: ${theme.breakpoints.mini})`,
+  })
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -142,7 +149,7 @@ export const UserForm = ({
             ))}
           </Select>
         </Grid>
-        <Grid item md={8} xs={8}>
+        <Grid item md={8} xs={8} style={{ marginTop: isMiniMobile ? "14px" : "0px" }}>
           <TextField
             {...inputsProps}
             label={"Número de telefono*"}

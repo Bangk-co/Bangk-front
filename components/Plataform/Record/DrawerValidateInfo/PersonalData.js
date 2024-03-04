@@ -384,6 +384,22 @@ export const PersonalData = ({
                 width={"109px"}
                 height={"40px"}
                 disabled={assessorConcept === "" || assessorComments === ""}
+                onClick={() =>
+                  handleContinue(
+                    validateEditPersonalInfo,
+                    personalInfo,
+                    errorsPersonalInfo,
+                    setErrorsPersonalInfo
+                  )
+                }
+                startIcon={
+                  isLoadingSave ? (
+                    <CircularProgress
+                      size={10}
+                      style={{ color: theme.colors.white }}
+                    />
+                  ) : null
+                }
               >
                 Continuar
               </Button>

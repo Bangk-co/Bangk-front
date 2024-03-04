@@ -283,23 +283,27 @@ export const getDiseasesIds = (selectedDiseases, allDiseases) => {
     return null;
   } else {
     const diseasesIds = allDiseases
-    .filter(disease => selectedDiseases.includes(disease.name))
-    .map(disease => disease.id)
-    .join(',');
+      .filter((disease) => selectedDiseases.includes(disease.name))
+      .map((disease) => disease.id)
+      .join(",");
 
-    return diseasesIds
+    return diseasesIds;
   }
 };
 
 export const getDiseasesNames = (selectedDiseaseIds, allDiseases) => {
   if (!selectedDiseaseIds) {
-      return [];
+    return [];
   }
 
-  const selectedIds = selectedDiseaseIds.split(',').map(id => parseInt(id, 10));
-  const selectedDiseases = allDiseases.filter(disease => selectedIds.includes(disease.id));
-  return selectedDiseases.map(disease => disease.name);
-}
+  const selectedIds = selectedDiseaseIds
+    .split(",")
+    .map((id) => parseInt(id, 10));
+  const selectedDiseases = allDiseases.filter((disease) =>
+    selectedIds.includes(disease.id)
+  );
+  return selectedDiseases.map((disease) => disease.name);
+};
 
 export const initDataLoanInsurancePolicy = {
   loanApplicationId: null,
@@ -350,5 +354,5 @@ export const initDataLoanInsurancePolicy = {
   beneficiaryIdentificationTypeId: null,
   beneficiaryIdentificationNumber: null,
   loanBalance: null,
-  monthlyCostInsurance: null
-}
+  monthlyCostInsurance: null,
+};

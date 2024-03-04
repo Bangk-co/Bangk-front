@@ -66,3 +66,18 @@ export const validateEditClientForm = Joi.object({
   genderId: Joi.number().required(),
   email: Joi.string().required(),
 });
+
+export const validateEditPersonalInfo = Joi.object({
+  birthCountryId: Joi.number().required(),
+  countryNationalityId: Joi.number().required(),
+  birthStateId: Joi.number().required(),
+  birthCityId: Joi.number().required(),
+  civilStatusId: Joi.number().required(),
+  numberChildren: Joi.string().required(),
+  occupation: Joi.string().required(),
+  occupationActivityId: Joi.number().required(),
+  isPublicPerson: Joi.bool().required(),
+  residenceCountryId: Joi.number().required(),
+  residenceStateId: Joi.number().required(),
+  residenceCityId: Joi.number().required(),
+});

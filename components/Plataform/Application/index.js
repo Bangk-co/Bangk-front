@@ -26,7 +26,7 @@ import success from "@/assets/icons/successStepper.svg";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import { formattedDate, historyStatus } from "@/utilities/helpers";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
-import useGetCountries from "@/hooks/Common/useGetIndicatives";
+import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import useGetCreditType from "@/hooks/Common/useGetCreditType";
 import useGetBanks from "@/hooks/Common/useGetBanks";
@@ -39,7 +39,7 @@ const Application = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   const documentsType = useGetDocumentType();
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
-  const phoneCode = useGetCountries();
+  const phoneCode = useGetIndicatives();
   const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode;
   const gender = useGetGenders();
   const { data: dataGender, isSuccess: isSuccessGender } = gender;
@@ -178,7 +178,7 @@ const Application = ({ isMobile, isTablet }) => {
   useEffect(() => {
     if (isSuccessPhone) {
       setPhoneCodesOptions(
-        dataPhone?.data.groupSettings.map((ele) => ({
+        dataPhone?.data?.groupSettings?.map((ele) => ({
           label: `(${ele.code})`,
           value: ele.id,
         }))

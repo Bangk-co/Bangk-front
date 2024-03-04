@@ -256,15 +256,19 @@ const RequestPolicy = ({ isMobile }) => {
   }
 
   useEffect(() => {
-    if (isSuccessHousingType)
-      setHousingTypeOptions(
-        dataHousingType?.data?.groupSettings.map((ele) => ({
-          name: ele.name,
-          id: ele.id,
-          icon: iconHousingType(ele.name)
-        }))
-      );
-  }, [dataHousingType, isSuccessHousingType]);
+  if (isSuccessHousingType) {
+    const sortedHousingType = dataHousingType?.data?.groupSettings
+      .map((ele) => ({
+        name: ele.name,
+        id: ele.id,
+        icon: iconHousingType(ele.name)
+      }))
+      .sort((a, b) => a.id - b.id);
+
+    setHousingTypeOptions(sortedHousingType);
+  }
+}, [dataHousingType, isSuccessHousingType]);
+
 
   useEffect(() => {
     if (isSuccessStates) {

@@ -73,6 +73,7 @@ export const ValidateInfoMobile = ({ isMobile, email, handleEmail, handleSend, r
               <Div width="100%" justify="center" m="46px 0 0 0">
                 <Button
                   font={theme.fonts.family.primaryBold}
+                  labelColor={theme.colors.green900}
                   size={theme.fonts.size.default2}
                   background={theme.colors.yellow500}
                   hover={theme.colors.yellow500}

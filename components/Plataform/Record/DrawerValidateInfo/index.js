@@ -385,7 +385,6 @@ export const DrawerValidateInfo = ({
     const validation = validate.validate(form, {
       abortEarly: false,
     });
-    console.log("validation", validation);
     if (validation.error) {
       const newErrorForm = { ...errors };
       validation.error.details.forEach((ele) => {

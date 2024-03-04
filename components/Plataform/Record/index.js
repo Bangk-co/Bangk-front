@@ -657,14 +657,17 @@ export const Record = ({
                     font={theme.fonts.family.primary}
                     size={theme.fonts.size.md}
                   >
-                    {ele.observations}
+                    {ele.status === "Cotización rechazada"
+                      ? `Motivo de rechazo: ${ele.observations}`
+                      : ele.observations}
                   </Text>
                 </Col>
               </Grid>
               <Grid item md={2.5}>
                 {historyInfo.length > 0 &&
                   indx === 0 &&
-                  principalButtons.includes(ele.status) && (
+                  principalButtons.includes(ele.status) &&
+                  ele.status !== "Cotización enviada" && (
                     <Div height="100%" justify="end" align="center">
                       <Button
                         background={theme.colors.green900}
@@ -676,6 +679,26 @@ export const Record = ({
                         onClick={optionsButtons(ele.status)?.onClick}
                       >
                         {optionsButtons(ele.status)?.label}
+                      </Button>
+                    </Div>
+                  )}
+                {historyInfo.length > 2 &&
+                  indx === 0 &&
+                  ele.status === "Cotización enviada" && (
+                    <Div height="100%" justify="end" align="center">
+                      <Button
+                        font={theme.fonts.family.primaryBold}
+                        labelColor={theme.colors.green900}
+                        background={theme.colors.white}
+                        hover={theme.colors.white}
+                        border={theme.colors.green900}
+                        borderHeight={`3px solid ${theme.colors.green900}`}
+                        borderHover={theme.colors.green900}
+                        width={"200px"}
+                        height={"40px"}
+                        onClick={optionsOtherButtons(ele.status)?.onClick}
+                      >
+                        {optionsOtherButtons(ele.status)?.label}
                       </Button>
                     </Div>
                   )}

@@ -20,6 +20,7 @@ export const Step1 = ({
   statesOptions,
   citiesOptions,
   economicActivityOptions,
+  userName
 }) => {
   const residenceStatesList = useGetStates(formInfo.residenceCountryId)
   const { data: dataResidenceStates, isSuccess: isSuccessResidenceStates } = residenceStatesList
@@ -100,7 +101,7 @@ export const Step1 = ({
         mt={isMobile ? "24px" : "12px"}
       >
         Cuentanos más de ti, <br></br>
-        <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>Maria del Pilar</span>
+        <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>{userName}</span>
       </Text>
       <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3  }} columnSpacing={{ xs: 2, sm: 2, md: 2 }} style={{ marginTop: "8px" }}>
         <Grid item md={12} xs={12}>

@@ -419,6 +419,7 @@ const RequestPolicy = ({ isMobile }) => {
             statesOptions={statesOptions}
             citiesOptions={citiesOptions}
             economicActivityOptions={economicActivityOptions}
+            userName={requestInfo.name}
           />
         )}
         {activeStep === 1 && (

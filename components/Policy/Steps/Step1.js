@@ -279,7 +279,7 @@ export const Step1 = ({
             onChange={(event) => handleChangeRadio(event, "isPublicPerson")}
           >
             <Radio
-              label="Yes"
+              label="Si"
               value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}

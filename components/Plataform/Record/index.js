@@ -261,6 +261,9 @@ export const Record = ({
     setShowQuoteSuccess(false);
     dispatch(setLoanInfo({}));
     queryClient.refetchQueries("historyList");
+    queryClient.invalidateQueries[
+      ("loanQuote", applications?.selectedApplication?.loanApplicationId)
+    ];
     if (Object.keys(loanInfo).length > 0) {
       toast.custom(<ToastSuccess message={"Cotización enviada con éxito"} />, {
         duration: 1000,

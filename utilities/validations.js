@@ -84,3 +84,11 @@ export const validateEditPersonalInfo = Joi.object({
   residenceStateId: Joi.number().required(),
   residenceCityId: Joi.number().required(),
 });
+
+export const validateEditFinancialInfo = Joi.object({
+  monthlyIncome: Joi.number().required(),
+  monthlyExpenses: Joi.number().required(),
+  assetValue: Joi.number().required(),
+  liabilitiesValue: Joi.number().required(),
+  incomeOrigin: Joi.string().required(),
+});

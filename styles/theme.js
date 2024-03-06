@@ -27,6 +27,7 @@ export const theme = {
     gray200: "#A8A8A8",
     gray300: "#929292",
     gray500: "#676767",
+    gray700: "#514F53",
     gray900: "#191919",
     whatsapp: "#25D366",
     primary25: "#E9EFEF",

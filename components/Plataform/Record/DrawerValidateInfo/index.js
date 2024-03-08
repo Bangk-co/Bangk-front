@@ -10,6 +10,7 @@ import { InfoCard } from "./styles";
 import arrowDownIcon from "@/assets/icons/arrow-down.svg";
 import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
+import { FinancialData } from "./FinancialData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -31,8 +32,16 @@ export const DrawerValidateInfo = ({
   const save = useSaveLoanInsurancePolicy();
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
-  const [assessorConcept, setAssessorConcept] = useState("");
-  const [assessorComments, setAssessorComments] = useState("");
+  const [assessorConcept, setAssessorConcept] = useState({
+    personalInfo: {
+      concept: "",
+      comments: "",
+    },
+    financialInfo: {
+      concept: "",
+      comments: "",
+    },
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [cancelEdit, setCancelEdit] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({
@@ -49,7 +58,6 @@ export const DrawerValidateInfo = ({
     residenceStateId: null,
     residenceCityId: null,
   });
-
   const initialErrorPersonalInfo = {
     name: {
       error: false,
@@ -115,6 +123,28 @@ export const DrawerValidateInfo = ({
     liabilitiesValue: null,
     incomeOrigin: null,
   });
+  const initialErrorFinancialInfo = {
+    monthlyIncome: {
+      error: false,
+      message: "",
+    },
+    monthlyExpenses: {
+      error: false,
+      message: "",
+    },
+    assetValue: {
+      error: false,
+      message: "",
+    },
+    liabilitiesValue: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsFinancialInfo, setErrorsFinancialInfo] = useState(
+    initialErrorFinancialInfo
+  );
+
   const [propertyInfo, setPropertyInfo] = useState({
     housingTypeId: null,
     housingValue: null,
@@ -266,8 +296,6 @@ export const DrawerValidateInfo = ({
   }, [dataDiseases, isSuccessDiseases]);
 
   const closeDrawer = () => {
-    setAssessorConcept("");
-    setAssessorComments("");
     setExpandedCardIndex(null);
     setIsEditing(false);
     setShowDrawerValidateInfo(false);
@@ -291,17 +319,20 @@ export const DrawerValidateInfo = ({
 
   const infoCards = [
     {
-      icon: iconCondition[assessorConcept],
+      icon: iconCondition[assessorConcept?.personalInfo?.concept],
       title: "Datos personales",
       description:
-        descriptionCondition[assessorConcept] !== null
-          ? descriptionCondition[assessorConcept]
+        descriptionCondition[assessorConcept?.personalInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.personalInfo?.concept]
           : "Verifica que los datos personales sean correctos",
     },
     {
-      icon: null,
+      icon: iconCondition[assessorConcept?.financialInfo?.concept],
       title: "Datos financieros",
-      description: "Verifica que los datos financieros sean correctos",
+      description:
+        descriptionCondition[assessorConcept?.financialInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.financialInfo?.concept]
+          : "Verifica que los datos personales sean correctos",
     },
     {
       icon: null,
@@ -320,65 +351,14 @@ export const DrawerValidateInfo = ({
     },
   ];
 
-  const handleSelect = (event) => {
-    const { value, name } = event.target;
-    const newErrorForm = { ...errorsPersonalInfo };
-    newErrorForm[name].error = false;
-    newErrorForm[name].message = "";
-    setErrorsPersonalInfo(newErrorForm);
-
-    const newPersonalInfo = { ...personalInfo };
-    newPersonalInfo[name] = value;
-    if (name === "birthCountryId") {
-      newPersonalInfo.birthStateId = null;
-      newPersonalInfo.birthCityId = null;
-    } else if (name === "residenceCountryId") {
-      newPersonalInfo.residenceStateId = null;
-      newPersonalInfo.residenceCityId = null;
-    }
-    setPersonalInfo(newPersonalInfo);
-  };
-
-  const handleRadio = (event, name) => {
-    const { value } = event.target;
-    switch (name) {
-      case "correctInfo":
-        setAssessorConcept(value);
-        break;
-      case "isPublicPerson":
-        const newErrorForm = { ...errorsPersonalInfo };
-        newErrorForm[name].error = false;
-        newErrorForm[name].message = "";
-        setErrorsPersonalInfo(newErrorForm);
-
-        setPersonalInfo((prevInfo) => ({
-          ...prevInfo,
-          isPublicPerson: value === "true",
-        }));
-      default:
-        break;
-    }
-  };
-
-  const handleChange = (event) => {
-    const { value, id } = event.target;
-    if (id === "comments") {
-      setAssessorComments(value);
-    } else {
-      const newErrorForm = { ...errorsPersonalInfo };
-      newErrorForm[id].error = false;
-      newErrorForm[id].message = "";
-      setErrorsPersonalInfo(newErrorForm);
-
-      const newPersonalInfo = { ...personalInfo };
-      newPersonalInfo[id] = value;
-      setPersonalInfo(newPersonalInfo);
-    }
-  };
-
   const handleCancel = () => {
     setIsEditing(false);
     setCancelEdit(!cancelEdit);
+  };
+
+  const handleExpandedCard = (indx, expandedCardIndex) => {
+    setIsEditing(false);
+    setExpandedCardIndex(indx === expandedCardIndex ? null : indx);
   };
 
   const handleContinue = (validate, form, errors, setError) => {
@@ -429,21 +409,32 @@ export const DrawerValidateInfo = ({
   const expandedCardData = [
     <PersonalData
       key="personalData"
-      handleRadio={handleRadio}
       assessorConcept={assessorConcept}
       setAssessorConcept={setAssessorConcept}
-      handleChange={handleChange}
-      assessorComments={assessorComments}
       isEditing={isEditing}
       setIsEditing={setIsEditing}
       personalInfo={personalInfo}
+      setPersonalInfo={setPersonalInfo}
       countriesOptions={countriesOptions}
       residenceStatesOptions={residenceStatesOptions}
       residenceCitiesOptions={residenceCitiesOptions}
       handleCancel={handleCancel}
-      handleSelect={handleSelect}
       errorsPersonalInfo={errorsPersonalInfo}
       setErrorsPersonalInfo={setErrorsPersonalInfo}
+      handleContinue={handleContinue}
+      isLoadingSave={save.isLoading}
+    />,
+    <FinancialData
+      key="financialData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      financialInfo={financialInfo}
+      setFinancialInfo={setFinancialInfo}
+      handleCancel={handleCancel}
+      errorsFinancialInfo={errorsFinancialInfo}
+      setErrorsFinancialInfo={setErrorsFinancialInfo}
       handleContinue={handleContinue}
       isLoadingSave={save.isLoading}
     />,
@@ -475,9 +466,7 @@ export const DrawerValidateInfo = ({
                 onClick={() => {
                   expandedCardIndex === indx
                     ? null
-                    : setExpandedCardIndex(
-                        indx === expandedCardIndex ? null : indx
-                      );
+                    : handleExpandedCard(indx, expandedCardIndex);
                 }}
               >
                 <Row justify="space-between">
@@ -499,10 +488,8 @@ export const DrawerValidateInfo = ({
                     width={32}
                     height={32}
                     style={{ cursor: "pointer" }}
-                    onClick={() =>
-                      setExpandedCardIndex(
-                        indx === expandedCardIndex ? null : indx
-                      )
+                    onClick={(indx, expandedCardIndex) =>
+                      handleExpandedCard(indx, expandedCardIndex)
                     }
                   />
                 </Row>

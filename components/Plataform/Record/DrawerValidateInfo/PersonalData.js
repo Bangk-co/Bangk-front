@@ -16,19 +16,16 @@ import { validateEditPersonalInfo } from "@/utilities/validations";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export const PersonalData = ({
-  handleRadio,
   assessorConcept,
   setAssessorConcept,
-  handleChange,
-  assessorComments,
   isEditing,
   setIsEditing,
   personalInfo,
+  setPersonalInfo,
   countriesOptions,
   residenceStatesOptions,
   residenceCitiesOptions,
   handleCancel,
-  handleSelect,
   errorsPersonalInfo,
   setErrorsPersonalInfo,
   handleContinue,
@@ -155,6 +152,74 @@ export const PersonalData = ({
       ),
     },
   ];
+
+  const handleChange = (event) => {
+    const { value, id } = event.target;
+    if (id === "comments") {
+      setAssessorConcept((prevState) => ({
+        ...prevState,
+        personalInfo: {
+          ...prevState.personalInfo,
+          comments: value,
+        },
+      }));
+    } else {
+      const newErrorForm = { ...errorsPersonalInfo };
+      newErrorForm[id].error = false;
+      newErrorForm[id].message = "";
+      setErrorsPersonalInfo(newErrorForm);
+
+      const newPersonalInfo = { ...personalInfo };
+      newPersonalInfo[id] = value;
+      setPersonalInfo(newPersonalInfo);
+    }
+  };
+
+  const handleSelect = (event) => {
+    const { value, name } = event.target;
+    const newErrorForm = { ...errorsPersonalInfo };
+    newErrorForm[name].error = false;
+    newErrorForm[name].message = "";
+    setErrorsPersonalInfo(newErrorForm);
+
+    const newPersonalInfo = { ...personalInfo };
+    newPersonalInfo[name] = value;
+    if (name === "birthCountryId") {
+      newPersonalInfo.birthStateId = null;
+      newPersonalInfo.birthCityId = null;
+    } else if (name === "residenceCountryId") {
+      newPersonalInfo.residenceStateId = null;
+      newPersonalInfo.residenceCityId = null;
+    }
+    setPersonalInfo(newPersonalInfo);
+  };
+
+  const handleRadio = (event, name) => {
+    const { value } = event.target;
+    switch (name) {
+      case "correctInfo":
+        setAssessorConcept((prevState) => ({
+          ...prevState,
+          personalInfo: {
+            ...prevState.personalInfo,
+            concept: value,
+          },
+        }));
+        break;
+      case "isPublicPerson":
+        const newErrorForm = { ...errorsPersonalInfo };
+        newErrorForm[name].error = false;
+        newErrorForm[name].message = "";
+        setErrorsPersonalInfo(newErrorForm);
+
+        setPersonalInfo((prevInfo) => ({
+          ...prevInfo,
+          isPublicPerson: value === "true",
+        }));
+      default:
+        break;
+    }
+  };
 
   return (
     <Col gap="16px" m="24px 0 0 0">
@@ -327,18 +392,24 @@ export const PersonalData = ({
                 gap="5px"
                 name="correctInfo"
                 direction="row"
-                value={assessorConcept}
+                value={assessorConcept.personalInfo.concept}
                 onChange={(e) => handleRadio(e, "correctInfo")}
               >
                 <Radio
                   label="La información es correcta"
                   value={"La información es correcta"}
-                  checked={assessorConcept === "La información es correcta"}
+                  checked={
+                    assessorConcept.personalInfo.concept ===
+                    "La información es correcta"
+                  }
                 />
                 <Radio
                   label="Presenta novedades"
                   value={"Presenta novedades"}
-                  checked={assessorConcept === "Presenta novedades"}
+                  checked={
+                    assessorConcept.personalInfo.concept ===
+                    "Presenta novedades"
+                  }
                 />
               </RadioGroup>
               <TextField
@@ -353,7 +424,7 @@ export const PersonalData = ({
                 font={theme.fonts.family.primary}
                 size={theme.fonts.size.default2}
                 border={theme.colors.neutralGray500}
-                value={assessorComments}
+                value={assessorConcept.personalInfo.comments}
                 onChange={handleChange}
               />
             </Div>
@@ -370,7 +441,6 @@ export const PersonalData = ({
                 height={"40px"}
                 onClick={() => {
                   setIsEditing(true);
-                  setAssessorConcept("");
                 }}
               >
                 Editar
@@ -383,7 +453,10 @@ export const PersonalData = ({
                 font={theme.fonts.family.primaryBold}
                 width={"109px"}
                 height={"40px"}
-                disabled={assessorConcept === "" || assessorComments === ""}
+                disabled={
+                  assessorConcept.personalInfo.concept === "" ||
+                  assessorConcept.personalInfo.comments === ""
+                }
                 onClick={() =>
                   handleContinue(
                     validateEditPersonalInfo,

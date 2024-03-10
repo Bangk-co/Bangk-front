@@ -16,6 +16,7 @@ import { setTermsDate, setUserInfo, setValidCode } from "@/store/balance";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import toast from "react-hot-toast";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
+import { validateEmailRequired } from "@/utilities/validations";
 
 const UserData = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -41,6 +42,10 @@ const UserData = ({ isMobile, isTablet }) => {
     email: "",
   });
   const [terms, setTerms] = useState(false);
+  const [errorEmail, setErrorEmail] = useState({
+    error: false,
+    message: ""
+  });
   const [forceUpdate, setForceUpdate] = useState(false);
 
   useEffect(() => {
@@ -91,6 +96,13 @@ const UserData = ({ isMobile, isTablet }) => {
       newInfo[id] = value;
     }
 
+    if (id === "email") {
+      setErrorEmail({
+        error: false,
+        message: ""
+      })
+    }
+
     setFormInfo(newInfo);
   };
 
@@ -125,27 +137,46 @@ const UserData = ({ isMobile, isTablet }) => {
   };
 
   const handleContinue = () => {
-    dispatch(setUserInfo(formInfo));
-    sendCode.reset();
-    sendCode.mutate(
-      {
-        email: formInfo.email,
-        identificationNumber: formInfo.identificationNumber,
-      },
-      {
-        onSuccess: (res) => {
-          dispatch(setValidCode(res.data.code));
-          router.push(`/validacion-identidad`);
+    const validation = validateEmailRequired.validate(formInfo.email, {
+      abortEarly: false,
+    });
+
+    if (validation.error) {
+      setErrorEmail({
+        error: true,
+        message: "Formato inválido"
+      })
+    } else {
+      dispatch(setUserInfo(formInfo));
+      sendCode.reset();
+      sendCode.mutate(
+        {
+          email: formInfo.email,
+          identificationNumber: formInfo.identificationNumber,
         },
-        onError: (err) => {
-          err.response.data.map((error) => {
-            toast.custom(<ToastErrorClient message={`${error}`} />, {
-              duration: 1000,
+        {
+          onSuccess: (res) => {
+            dispatch(setValidCode(res.data.code));
+            router.push(`/validacion-identidad`);
+            setErrorEmail({
+              error: false,
+              message: ""
+            })
+          },
+          onError: (err) => {
+            err.response.data.map((error) => {
+              toast.custom(<ToastErrorClient message={`${error}`} />, {
+                duration: 1000,
+              });
             });
-          });
-        },
-      }
-    );
+            setErrorEmail({
+              error: false,
+              message: ""
+            })
+          },
+        }
+      );
+    }
   };
 
   return (
@@ -172,6 +203,7 @@ const UserData = ({ isMobile, isTablet }) => {
             handleBack={handleBack}
             handleContinue={handleContinue}
             handleWapp={handleWapp}
+            errorEmail={errorEmail}
           />
         </Div>
         {!isMobile && (

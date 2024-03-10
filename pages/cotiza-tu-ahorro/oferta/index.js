@@ -45,7 +45,7 @@ const Sale = ({ isMobile, isTablet }) => {
       month: "short",
       day: "numeric",
       year: "numeric",
-    });
+    }).replace(/(\w+) (\d+), (\d+)/, "$1. $2, $3");
 
     return formattedDate;
   };

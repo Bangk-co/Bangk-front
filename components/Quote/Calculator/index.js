@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/Common/Button";
-import { Div, Row, Text } from "@/styles/Common";
+import { Div, Row, Text, Col as DivCol } from "@/styles/Common";
 import { Col, WrapperInsurance, WrapperWappCal } from "@/styles/Quote";
 import { theme } from "@/styles/theme";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
@@ -25,7 +25,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
       >
         Acorde a los datos que nos suministraste este sería el valor aproximado de la prima anual que pagarías:
       </Text>
-      <Col gap="12px" m="26px 0 0 0">
+      <DivCol gap="12px" m="26px 0 0 0">
         {info.map((ele, indx) => (
           <Row key={indx} justify="space-between">
             <Text
@@ -44,7 +44,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
             </Text>
           </Row>
         ))}
-      </Col>
+      </DivCol>
       <WrapperInsurance>
         <Div
           height="52px"

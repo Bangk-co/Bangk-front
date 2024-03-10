@@ -28,7 +28,8 @@ export const UserForm = ({
     handleTerms,
     handleBack,
     handleContinue,
-    handleWapp
+    handleWapp,
+    errorEmail
   }) => {
   const isFormValid = Object.values(formInfo).every((value) => value !== "") && terms;
 
@@ -231,6 +232,9 @@ export const UserForm = ({
             id="email"
             value={formInfo.email}
             onChange={handleChange}
+            error={errorEmail.error}
+            helper={errorEmail.error ? errorEmail.message : ""}
+            helperColor={theme.colors.error}
           />
         </Grid>
       </Grid>

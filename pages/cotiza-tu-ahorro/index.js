@@ -34,7 +34,7 @@ const Quote = ({ isMobile, isTablet }) => {
   });
 
   useEffect(() => {
-    setFormInfo({ ...initData, birthdate: dayjs(initData.birthdate) });
+    setFormInfo({ ...initData, birthdate: initData.birthdate === null ? null : dayjs(initData.birthdate) });
   }, [initData]);
 
   useEffect(() => {

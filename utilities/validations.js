@@ -92,3 +92,25 @@ export const validateEditFinancialInfo = Joi.object({
   liabilitiesValue: Joi.number().required(),
   incomeOrigin: Joi.string().required(),
 });
+
+export const validateEditPropertyInfo = Joi.object({
+  housingTypeId: Joi.number().required(),
+  housingValue: Joi.number().required(),
+  builtgDate: Joi.alternatives(
+    Joi.string().isoDate(),
+    Joi.custom((value, helpers) => {
+      const isDayjsInstance = dayjs.isDayjs(value);
+      if (!isDayjsInstance) {
+        return helpers.error("any.custom");
+      }
+      return value;
+    }, "Dayjs object")
+  ).required(),
+  builtArea: Joi.number().required(),
+  basementNumber: Joi.number().required(),
+  apartmentNumber: Joi.number().required(),
+  buildingFloorsNumber: Joi.number().required(),
+  address: Joi.string().required(),
+  stateId: Joi.number().required(),
+  cityId: Joi.number().required(),
+});

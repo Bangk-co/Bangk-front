@@ -11,6 +11,7 @@ import arrowDownIcon from "@/assets/icons/arrow-down.svg";
 import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
+import { PropertyData } from "./PropertyData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -38,6 +39,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
     financialInfo: {
+      concept: "",
+      comments: "",
+    },
+    propertyInfo: {
       concept: "",
       comments: "",
     },
@@ -157,6 +162,48 @@ export const DrawerValidateInfo = ({
     stateId: null,
     cityId: null,
   });
+  const initialErrorPropertyInfo = {
+    housingValue: {
+      error: false,
+      message: "",
+    },
+    builtgDate: {
+      error: false,
+      message: "",
+    },
+    builtArea: {
+      error: false,
+      message: "",
+    },
+    basementNumber: {
+      error: false,
+      message: "",
+    },
+    apartmentNumber: {
+      error: false,
+      message: "",
+    },
+    buildingFloorsNumber: {
+      error: false,
+      message: "",
+    },
+    address: {
+      error: false,
+      message: "",
+    },
+    stateId: {
+      error: false,
+      message: "",
+    },
+    cityId: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsPropertyInfo, setErrorsPropertyInfo] = useState(
+    initialErrorPropertyInfo
+  );
+
   const [healthInfo, setHealthInfo] = useState({
     weight: null,
     height: null,
@@ -222,7 +269,7 @@ export const DrawerValidateInfo = ({
         buildingFloorsNumber:
           data?.data?.loanInsurancePolicies.buildingFloorsNumber,
         address: data?.data?.loanInsurancePolicies.address,
-        stateId: null,
+        stateId: data?.data?.loanInsurancePolicies.stateId,
         cityId: data?.data?.loanInsurancePolicies.cityId,
       });
       setHealthInfo({
@@ -335,9 +382,12 @@ export const DrawerValidateInfo = ({
           : "Verifica que los datos personales sean correctos",
     },
     {
-      icon: null,
+      icon: iconCondition[assessorConcept?.propertyInfo?.concept],
       title: "Datos del inmueble",
-      description: "Verifica que los datos del inmueble sean correctos",
+      description:
+        descriptionCondition[assessorConcept?.propertyInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
+          : "Verifica que los datos personales sean correctos",
     },
     {
       icon: null,
@@ -435,6 +485,20 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsFinancialInfo={errorsFinancialInfo}
       setErrorsFinancialInfo={setErrorsFinancialInfo}
+      handleContinue={handleContinue}
+      isLoadingSave={save.isLoading}
+    />,
+    <PropertyData
+      key="personalData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      propertyInfo={propertyInfo}
+      setPropertyInfo={setPropertyInfo}
+      handleCancel={handleCancel}
+      errorsPropertyInfo={errorsPropertyInfo}
+      setErrorsPropertyInfo={setErrorsPropertyInfo}
       handleContinue={handleContinue}
       isLoadingSave={save.isLoading}
     />,

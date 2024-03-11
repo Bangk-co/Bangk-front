@@ -10,3 +10,17 @@ export const InfoCard = styled.div`
   cursor: ${(props) => !props.isExpanded && "pointer"};
   transition: background-color 0.3s ease;
 `;
+
+export const CardButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 209px;
+  height: 89px;
+  padding: 16px;
+  border-radius: 8px;
+  gap: 5px;
+  background: ${theme.colors.white};
+  cursor: pointer;
+`;

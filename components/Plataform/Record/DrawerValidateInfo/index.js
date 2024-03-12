@@ -12,6 +12,7 @@ import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
 import { PropertyData } from "./PropertyData";
+import { HealtData } from "./HealthData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -489,7 +490,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
     />,
     <PropertyData
-      key="personalData"
+      key="propertyData"
       assessorConcept={assessorConcept}
       setAssessorConcept={setAssessorConcept}
       isEditing={isEditing}
@@ -499,6 +500,22 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsPropertyInfo={errorsPropertyInfo}
       setErrorsPropertyInfo={setErrorsPropertyInfo}
+      handleContinue={handleContinue}
+      isLoadingSave={save.isLoading}
+    />,
+    <HealtData
+      key="healthData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      financialInfo={financialInfo}
+      setFinancialInfo={setFinancialInfo}
+      healthInfo={healthInfo}
+      setHealthInfo={setHealthInfo}
+      handleCancel={handleCancel}
+      errorsFinancialInfo={errorsFinancialInfo}
+      setErrorsFinancialInfo={setErrorsFinancialInfo}
       handleContinue={handleContinue}
       isLoadingSave={save.isLoading}
     />,

@@ -705,6 +705,7 @@ export const PersonalData = ({
             label={
               "¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?"
             }
+            labelSize={theme.fonts.size.sm}
             value={personalInfo.isPublicPerson}
             onChange={(e) => handleRadio(e, "isPublicPerson")}
           >

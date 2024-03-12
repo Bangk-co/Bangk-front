@@ -11,6 +11,8 @@ import Image from "next/image";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import { numberFormat } from "@/utilities/helpers";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
+import { MenuItem } from "@mui/material";
+import { Select } from "@/components/Common/Select";
 
 export const HealtData = ({
   assessorConcept,
@@ -344,6 +346,37 @@ export const HealtData = ({
               }}
             />
           </Row>
+          <Select
+            label={
+              "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?"
+            }
+            name="diseases"
+            radius="4px"
+            width="100%"
+            height="40px"
+            size={theme.fonts.size.sm}
+            labelSize={theme.fonts.size.sm}
+            labelColor={theme.colors.neutralGray900}
+            labelFont={theme.fonts.family.primaryMedium}
+            font={theme.fonts.family.primary}
+            border={theme.colors.neutralGray500}
+            notFocused={true}
+            placeholderColor={theme.colors.neutralGray500}
+            value={healthInfo?.diseases}
+            /* onChange={handleSelect} */
+            error={errorsFinancialInfo.monthlyIncome.error}
+            helper={
+              errorsFinancialInfo.monthlyIncome.error
+                ? errorsFinancialInfo.monthlyIncome.message
+                : ""
+            }
+          >
+            {diseasesOptions.map((ele, indx) => (
+              <MenuItem key={indx} value={ele.id}>
+                {ele.name}
+              </MenuItem>
+            ))}
+          </Select>
           <RadioGroup
             gap="5px"
             name="hivActive"
@@ -351,6 +384,7 @@ export const HealtData = ({
             label={
               "¿Le han detectado la presencia de anticuerpos contra el virus V.I.H. productor del SIDA?"
             }
+            labelSize={theme.fonts.size.sm}
             value={healthInfo.hivActive}
             onChange={(e) => handleRadio(e, "hivActive")}
           >
@@ -364,6 +398,7 @@ export const HealtData = ({
             label={
               "¿Te encuentras actualmente en exámenes, estudios, investigación o te han indicado la necesidad de alguna cirugía o tratamiento que no te hayas realizado aún?"
             }
+            labelSize={theme.fonts.size.sm}
             value={healthInfo.plannedMedicalProcidure}
             onChange={(e) => handleRadio(e, "plannedMedicalProcidure")}
           >
@@ -385,6 +420,7 @@ export const HealtData = ({
             label={
               "¿Tiene algún tipo de discapacidad, incapacidad o limitación física o mental?"
             }
+            labelSize={theme.fonts.size.sm}
             value={healthInfo.disability}
             onChange={(e) => handleRadio(e, "disability")}
           >

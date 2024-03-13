@@ -20,8 +20,9 @@ export const FinancialData = ({
   handleCancel,
   errorsFinancialInfo,
   setErrorsFinancialInfo,
-  handleContinue,
+  handleSave,
   isLoadingSave,
+  handleContinue,
 }) => {
   const dataInfo = [
     {
@@ -210,14 +211,7 @@ export const FinancialData = ({
                   assessorConcept.financialInfo.concept === "" ||
                   assessorConcept.financialInfo.comments === ""
                 }
-                onClick={() =>
-                  handleContinue(
-                    validateEditFinancialInfo,
-                    financialInfo,
-                    errorsFinancialInfo,
-                    setErrorsFinancialInfo
-                  )
-                }
+                onClick={handleContinue}
                 startIcon={
                   isLoadingSave ? (
                     <CircularProgress
@@ -398,7 +392,7 @@ export const FinancialData = ({
               width={"166px"}
               height={"40px"}
               onClick={() =>
-                handleContinue(
+                handleSave(
                   validateEditFinancialInfo,
                   financialInfo,
                   errorsFinancialInfo,

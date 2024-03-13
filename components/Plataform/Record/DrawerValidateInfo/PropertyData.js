@@ -34,8 +34,9 @@ export const PropertyData = ({
   handleCancel,
   errorsPropertyInfo,
   setErrorsPropertyInfo,
-  handleContinue,
+  handleSave,
   isLoadingSave,
+  handleContinue,
 }) => {
   const housingTypeList = useGetHousingType();
   const { data: dataHousingType, isSuccess: isSuccessHousingType } =
@@ -371,14 +372,7 @@ export const PropertyData = ({
                   assessorConcept.propertyInfo.concept === "" ||
                   assessorConcept.propertyInfo.comments === ""
                 }
-                onClick={() =>
-                  handleContinue(
-                    validateEditPropertyInfo,
-                    propertyInfo,
-                    errorsPropertyInfo,
-                    setErrorsPropertyInfo
-                  )
-                }
+                onClick={handleContinue}
                 startIcon={
                   isLoadingSave ? (
                     <CircularProgress
@@ -694,7 +688,7 @@ export const PropertyData = ({
               width={"166px"}
               height={"40px"}
               onClick={() =>
-                handleContinue(
+                handleSave(
                   validateEditPropertyInfo,
                   propertyInfo,
                   errorsPropertyInfo,

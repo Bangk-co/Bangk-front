@@ -5,11 +5,8 @@ import { TextField } from "@/components/Common/TextField";
 import { Radio } from "@/components/Common/Radio";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Button } from "@/components/Common/Button";
-import { validateEditFinancialInfo } from "@/utilities/validations";
+import { validateEditHealthInfo } from "@/utilities/validations";
 import CircularProgress from "@mui/material/CircularProgress";
-import Image from "next/image";
-import pesosIcon from "@/assets/icons/pesos.svg";
-import { numberFormat } from "@/utilities/helpers";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import { MenuItem } from "@mui/material";
 import { Select } from "@/components/Common/Select";
@@ -19,17 +16,15 @@ export const HealtData = ({
   setAssessorConcept,
   isEditing,
   setIsEditing,
-  financialInfo,
-  setFinancialInfo,
   healthInfo,
   setHealthInfo,
   handleCancel,
-  errorsFinancialInfo,
-  setErrorsFinancialInfo,
-  handleContinue,
+  errorsHealthInfo,
+  setErrorsHealthInfo,
+  handleSave,
   isLoadingSave,
+  handleContinue,
 }) => {
-  console.log("healthInfo", healthInfo);
   const diseasesList = useGetDiseases();
   const { data: dataDiseases, isSuccess: isSuccessDiseases } = diseasesList;
   const [diseasesOptions, setDiseasesOptions] = useState([]);
@@ -42,7 +37,6 @@ export const HealtData = ({
         }))
       );
   }, [dataDiseases, isSuccessDiseases]);
-  console.log("diseasesOptions", diseasesOptions);
 
   const getLabelFromValue = (value, options, id, name) => {
     const selectedOption = options.find(
@@ -54,8 +48,8 @@ export const HealtData = ({
   const weightInfo = [
     { title: "¿Cúal es tu peso en kilos?(kg)", description: healthInfo.weight },
     {
-      title: "¿Cúal es tu estatura en metros?(m)",
-      description: healthInfo.height / 100,
+      title: "¿Cúal es tu estatura en centimetros?(cm)",
+      description: healthInfo.height,
     },
     {
       title: "Índice de masa corporal (IMC)",
@@ -99,32 +93,57 @@ export const HealtData = ({
     if (id === "comments") {
       setAssessorConcept((prevState) => ({
         ...prevState,
-        financialInfo: {
-          ...prevState.financialInfo,
+        healthInfo: {
+          ...prevState.healthInfo,
           comments: value,
         },
       }));
     } else {
-      const newErrorForm = { ...errorsFinancialInfo };
+      const newErrorForm = { ...errorsHealthInfo };
       newErrorForm[id].error = false;
       newErrorForm[id].message = "";
-      setErrorsFinancialInfo(newErrorForm);
+      setErrorsHealthInfo(newErrorForm);
 
-      const newFinancialInfo = { ...financialInfo };
-      newFinancialInfo[id] = Number(value);
-      setFinancialInfo(newFinancialInfo);
+      const newHealthInfo = { ...healthInfo };
+      newHealthInfo[id] = Number(value);
+      setHealthInfo(newHealthInfo);
     }
   };
 
-  const handleRadio = (event) => {
+  const handleSelect = (event) => {
+    const { value, name } = event.target;
+    const newErrorForm = { ...errorsHealthInfo };
+    newErrorForm[name].error = false;
+    newErrorForm[name].message = "";
+    setErrorsHealthInfo(newErrorForm);
+
+    const newHealthInfo = { ...healthInfo };
+    newHealthInfo[name] = value;
+
+    setHealthInfo(newHealthInfo);
+  };
+
+  const handleRadio = (event, name) => {
     const { value } = event.target;
-    setAssessorConcept((prevState) => ({
-      ...prevState,
-      financialInfo: {
-        ...prevState.financialInfo,
-        concept: value,
-      },
-    }));
+    if (name === "correctInfo") {
+      setAssessorConcept((prevState) => ({
+        ...prevState,
+        healthInfo: {
+          ...prevState.healthInfo,
+          concept: value,
+        },
+      }));
+    } else {
+      const newErrorForm = { ...errorsHealthInfo };
+      newErrorForm[name].error = false;
+      newErrorForm[name].message = "";
+      setErrorsHealthInfo(newErrorForm);
+
+      setHealthInfo((prevInfo) => ({
+        ...prevInfo,
+        [name]: value === "true",
+      }));
+    }
   };
 
   return (
@@ -206,14 +225,14 @@ export const HealtData = ({
                 gap="5px"
                 name="correctInfo"
                 direction="row"
-                value={assessorConcept.financialInfo.concept}
-                onChange={(e) => handleRadio(e)}
+                value={assessorConcept.healthInfo.concept}
+                onChange={(e) => handleRadio(e, "correctInfo")}
               >
                 <Radio
                   label="La información es correcta"
                   value={"La información es correcta"}
                   checked={
-                    assessorConcept.financialInfo.concept ===
+                    assessorConcept.healthInfo.concept ===
                     "La información es correcta"
                   }
                 />
@@ -221,8 +240,7 @@ export const HealtData = ({
                   label="Presenta novedades"
                   value={"Presenta novedades"}
                   checked={
-                    assessorConcept.financialInfo.concept ===
-                    "Presenta novedades"
+                    assessorConcept.healthInfo.concept === "Presenta novedades"
                   }
                 />
               </RadioGroup>
@@ -238,7 +256,7 @@ export const HealtData = ({
                 font={theme.fonts.family.primary}
                 size={theme.fonts.size.default2}
                 border={theme.colors.neutralGray500}
-                value={assessorConcept.financialInfo.comments}
+                value={assessorConcept.healthInfo.comments}
                 onChange={handleChange}
               />
             </Div>
@@ -268,17 +286,10 @@ export const HealtData = ({
                 width={"109px"}
                 height={"40px"}
                 disabled={
-                  assessorConcept.financialInfo.concept === "" ||
-                  assessorConcept.financialInfo.comments === ""
+                  assessorConcept.healthInfo.concept === "" ||
+                  assessorConcept.healthInfo.comments === ""
                 }
-                onClick={() =>
-                  handleContinue(
-                    validateEditFinancialInfo,
-                    financialInfo,
-                    errorsFinancialInfo,
-                    setErrorsFinancialInfo
-                  )
-                }
+                onClick={handleContinue}
                 startIcon={
                   isLoadingSave ? (
                     <CircularProgress
@@ -311,15 +322,15 @@ export const HealtData = ({
               border={theme.colors.neutralGray500}
               value={healthInfo.weight}
               onChange={handleChange}
-              error={errorsFinancialInfo.monthlyIncome.error}
+              error={errorsHealthInfo.weight.error}
               helper={
-                errorsFinancialInfo.monthlyIncome.error
-                  ? errorsFinancialInfo.monthlyIncome.message
+                errorsHealthInfo.weight.error
+                  ? errorsHealthInfo.weight.message
                   : ""
               }
             />
             <TextField
-              label={"¿Cúal es tu estatura en metros?(m)*"}
+              label={"¿Cúal es tu estatura en centimetros?(cm)*"}
               placeholder={"0"}
               id="height"
               type="number"
@@ -331,12 +342,12 @@ export const HealtData = ({
               font={theme.fonts.family.primary}
               size={theme.fonts.size.default2}
               border={theme.colors.neutralGray500}
-              value={healthInfo.height / 100}
+              value={healthInfo.height}
               onChange={handleChange}
-              error={errorsFinancialInfo.monthlyIncome.error}
+              error={errorsHealthInfo.height.error}
               helper={
-                errorsFinancialInfo.monthlyIncome.error
-                  ? errorsFinancialInfo.monthlyIncome.message
+                errorsHealthInfo.height.error
+                  ? errorsHealthInfo.height.message
                   : ""
               }
               notFocused={true}
@@ -363,11 +374,11 @@ export const HealtData = ({
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
             value={healthInfo?.diseases}
-            /* onChange={handleSelect} */
-            error={errorsFinancialInfo.monthlyIncome.error}
+            onChange={handleSelect}
+            error={errorsHealthInfo.diseases.error}
             helper={
-              errorsFinancialInfo.monthlyIncome.error
-                ? errorsFinancialInfo.monthlyIncome.message
+              errorsHealthInfo.diseases.error
+                ? errorsHealthInfo.diseases.message
                 : ""
             }
           >
@@ -451,11 +462,11 @@ export const HealtData = ({
               width={"166px"}
               height={"40px"}
               onClick={() =>
-                handleContinue(
-                  validateEditFinancialInfo,
-                  financialInfo,
-                  errorsFinancialInfo,
-                  setErrorsFinancialInfo
+                handleSave(
+                  validateEditHealthInfo,
+                  healthInfo,
+                  errorsHealthInfo,
+                  setErrorsHealthInfo
                 )
               }
               startIcon={

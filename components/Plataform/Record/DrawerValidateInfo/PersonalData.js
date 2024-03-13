@@ -28,8 +28,9 @@ export const PersonalData = ({
   handleCancel,
   errorsPersonalInfo,
   setErrorsPersonalInfo,
-  handleContinue,
+  handleSave,
   isLoadingSave,
+  handleContinue,
 }) => {
   const statesList = useGetStates(personalInfo.birthCountryId);
   const { data: dataStates, isSuccess: isSuccessStates } = statesList;
@@ -457,14 +458,7 @@ export const PersonalData = ({
                   assessorConcept.personalInfo.concept === "" ||
                   assessorConcept.personalInfo.comments === ""
                 }
-                onClick={() =>
-                  handleContinue(
-                    validateEditPersonalInfo,
-                    personalInfo,
-                    errorsPersonalInfo,
-                    setErrorsPersonalInfo
-                  )
-                }
+                onClick={handleContinue}
                 startIcon={
                   isLoadingSave ? (
                     <CircularProgress
@@ -705,6 +699,7 @@ export const PersonalData = ({
             label={
               "¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?"
             }
+            labelSize={theme.fonts.size.sm}
             value={personalInfo.isPublicPerson}
             onChange={(e) => handleRadio(e, "isPublicPerson")}
           >
@@ -842,7 +837,7 @@ export const PersonalData = ({
               width={"166px"}
               height={"40px"}
               onClick={() =>
-                handleContinue(
+                handleSave(
                   validateEditPersonalInfo,
                   personalInfo,
                   errorsPersonalInfo,

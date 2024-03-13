@@ -12,6 +12,7 @@ import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
 import { PropertyData } from "./PropertyData";
+import { HealtData } from "./HealthData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -20,7 +21,6 @@ import useGetCountries from "@/hooks/Common/useGetCountries";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
-import { getDiseasesNames, getDiseasesIds } from "@/utilities/helpers";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import { useQueryClient } from "react-query";
 
@@ -43,6 +43,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
     propertyInfo: {
+      concept: "",
+      comments: "",
+    },
+    healthInfo: {
       concept: "",
       comments: "",
     },
@@ -215,6 +219,40 @@ export const DrawerValidateInfo = ({
     plannedMedicalProcidureMoreInfo: null,
     disabilityMoreInfo: null,
   });
+  const initialErrorHealthInfo = {
+    weight: {
+      error: false,
+      message: "",
+    },
+    height: {
+      error: false,
+      message: "",
+    },
+    diseases: {
+      error: false,
+      message: "",
+    },
+    hivActive: {
+      error: false,
+      message: "",
+    },
+    plannedMedicalProcidure: {
+      error: false,
+      message: "",
+    },
+    disability: {
+      error: false,
+      message: "",
+    },
+    plannedMedicalProcidureMoreInfo: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsHealthInfo, setErrorsHealthInfo] = useState(
+    initialErrorHealthInfo
+  );
+
   const [additionalInfo, setAdditionalInfo] = useState({
     convicted: null,
     lifeEnsure: null,
@@ -275,7 +313,7 @@ export const DrawerValidateInfo = ({
       setHealthInfo({
         weight: data?.data?.loanInsurancePolicies.weight,
         height: data?.data?.loanInsurancePolicies.height,
-        diseases: data?.data?.loanInsurancePolicies.diseases,
+        diseases: Number(data?.data?.loanInsurancePolicies.diseases),
         hivActive: data?.data?.loanInsurancePolicies.hivActive,
         plannedMedicalProcidure:
           data?.data?.loanInsurancePolicies.plannedMedicalProcidure,
@@ -294,6 +332,20 @@ export const DrawerValidateInfo = ({
         beneficiaryIdentificationTypeId: 76,
         beneficiaryIdentificationNumber:
           data?.data?.loanInsurancePolicies.beneficiaryIdentificationNumber,
+        /* Personal additional info */
+        countryCodePhoneId:
+          data?.data?.loanInsurancePolicies.countryCodePhoneId,
+        countryNationalityId:
+          data?.data?.loanInsurancePolicies.countryNationalityId,
+        documentIdentificationTypeId:
+          data?.data?.loanInsurancePolicies.documentIdentificationTypeId,
+        documentIssueDate: data?.data?.loanInsurancePolicies.documentIssueDate,
+        email: data?.data?.loanInsurancePolicies.email,
+        identificationNumber:
+          data?.data?.loanInsurancePolicies.identificationNumber,
+        name: data?.data?.loanInsurancePolicies.name,
+        lastName: data?.data?.loanInsurancePolicies.lastName,
+        phoneNumber: data?.data?.loanInsurancePolicies.phoneNumber,
       });
     }
   }, [data, isLoading, cancelEdit]);
@@ -390,9 +442,12 @@ export const DrawerValidateInfo = ({
           : "Verifica que los datos personales sean correctos",
     },
     {
-      icon: null,
+      icon: iconCondition[assessorConcept?.healthInfo?.concept],
       title: "Datos de salud",
-      description: "Verifica que los datos de salud sean correctos",
+      description:
+        descriptionCondition[assessorConcept?.healthInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.healthInfo?.concept]
+          : "Verifica que los datos personales sean correctos",
     },
     {
       icon: null,
@@ -411,7 +466,7 @@ export const DrawerValidateInfo = ({
     setExpandedCardIndex(indx === expandedCardIndex ? null : indx);
   };
 
-  const handleContinue = (validate, form, errors, setError) => {
+  const handleSave = (validate, form, errors, setError) => {
     const validation = validate.validate(form, {
       abortEarly: false,
     });
@@ -456,6 +511,15 @@ export const DrawerValidateInfo = ({
     }
   };
 
+  const handleContinue = () => {
+    setIsEditing(false);
+    setExpandedCardIndex(expandedCardIndex + 1);
+    queryClient.invalidateQueries([
+      "LoanInsurancePolicyInfo",
+      loanApplicationId,
+    ]);
+  };
+
   const expandedCardData = [
     <PersonalData
       key="personalData"
@@ -471,8 +535,9 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsPersonalInfo={errorsPersonalInfo}
       setErrorsPersonalInfo={setErrorsPersonalInfo}
-      handleContinue={handleContinue}
+      handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
     />,
     <FinancialData
       key="financialData"
@@ -485,11 +550,12 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsFinancialInfo={errorsFinancialInfo}
       setErrorsFinancialInfo={setErrorsFinancialInfo}
-      handleContinue={handleContinue}
+      handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
     />,
     <PropertyData
-      key="personalData"
+      key="propertyData"
       assessorConcept={assessorConcept}
       setAssessorConcept={setAssessorConcept}
       isEditing={isEditing}
@@ -499,8 +565,24 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsPropertyInfo={errorsPropertyInfo}
       setErrorsPropertyInfo={setErrorsPropertyInfo}
-      handleContinue={handleContinue}
+      handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
+    />,
+    <HealtData
+      key="healthData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      healthInfo={healthInfo}
+      setHealthInfo={setHealthInfo}
+      handleCancel={handleCancel}
+      errorsHealthInfo={errorsHealthInfo}
+      setErrorsHealthInfo={setErrorsHealthInfo}
+      handleSave={handleSave}
+      isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
     />,
   ];
 

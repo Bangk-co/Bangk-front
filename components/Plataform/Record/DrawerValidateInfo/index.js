@@ -346,6 +346,12 @@ export const DrawerValidateInfo = ({
         name: data?.data?.loanInsurancePolicies.name,
         lastName: data?.data?.loanInsurancePolicies.lastName,
         phoneNumber: data?.data?.loanInsurancePolicies.phoneNumber,
+        countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
+        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
+        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
+        vehicleLicensePlate:
+          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
+        clienId: data?.data?.loanInsurancePolicies.clienId,
       });
     }
   }, [data, isLoading, cancelEdit]);

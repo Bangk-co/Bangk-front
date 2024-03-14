@@ -346,6 +346,12 @@ export const DrawerValidateInfo = ({
         name: data?.data?.loanInsurancePolicies.name,
         lastName: data?.data?.loanInsurancePolicies.lastName,
         phoneNumber: data?.data?.loanInsurancePolicies.phoneNumber,
+        birthDate: data?.data?.loanInsurancePolicies.birthDate,
+        genderId: data?.data?.loanInsurancePolicies.genderId,
+        loanTypeId: data?.data?.loanInsurancePolicies.loanTypeId,
+        loanBalance: data?.data?.loanInsurancePolicies.loanBalance,
+        monthlyCostInsurance:
+          data?.data?.loanInsurancePolicies.monthlyCostInsurance,
         countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
         stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
         cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,

@@ -172,7 +172,7 @@ export const renderDocumentStateDiv = (stateName) => {
     case "Revisión de extracto":
     case "Cotización enviada":
     case "Cotización aceptada":
-    case "Formularios diligenciados":
+    case "Formularios Diligenciados":
     case "Estudio Sarlaft":
     case "Estudio lista restrictiva SBS":
     case "Solicitud emisión de poliza":

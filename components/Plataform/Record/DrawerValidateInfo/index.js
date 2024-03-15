@@ -13,6 +13,7 @@ import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
 import { PropertyData } from "./PropertyData";
 import { HealtData } from "./HealthData";
+import { AdditionalData } from "./AdditionalData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -47,6 +48,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
     healthInfo: {
+      concept: "",
+      comments: "",
+    },
+    additionalInfo: {
       concept: "",
       comments: "",
     },
@@ -261,6 +266,57 @@ export const DrawerValidateInfo = ({
     beneficiaryIdentificationTypeId: 76,
     beneficiaryIdentificationNumber: null,
   });
+  const initialErrorAdditionalInfo = {
+    convicted: {
+      error: false,
+      message: "",
+    },
+    lifeEnsure: {
+      error: false,
+      message: "",
+    },
+    beneficiaries: {
+      error: false,
+      message: "",
+    },
+    beneficiaryName: {
+      error: false,
+      message: "",
+    },
+    beneficiaryIdentificationTypeId: {
+      error: false,
+      message: "",
+    },
+    beneficiaryIdentificationNumber: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsAdditionalInfo, setErrorsAdditionalInfo] = useState(
+    initialErrorAdditionalInfo
+  );
+
+  const [vehihuleInfo, setVehihuleInfo] = useState({
+    countryCodePhoneId: null,
+    countryNationalityId: null,
+    documentIdentificationTypeId: null,
+    documentIssueDate: null,
+    email: "",
+    identificationNumber: null,
+    name: "",
+    lastName: "",
+    phoneNumber: null,
+    birthDate: null,
+    genderId: null,
+    loanTypeId: null,
+    loanBalance: null,
+    monthlyCostInsurance: null,
+    /* countryVehiculeId: null,
+        stateVehiculeId: null, */
+    cityVehiculeId: null,
+    vehicleLicensePlate: "",
+    clienId: null,
+  });
 
   const loanInsurancePolicyData =
     useGetLoanInsurancePolicyInfo(loanApplicationId);
@@ -313,7 +369,7 @@ export const DrawerValidateInfo = ({
       setHealthInfo({
         weight: data?.data?.loanInsurancePolicies.weight,
         height: data?.data?.loanInsurancePolicies.height,
-        diseases: Number(data?.data?.loanInsurancePolicies.diseases),
+        diseases: data?.data?.loanInsurancePolicies.diseases,
         hivActive: data?.data?.loanInsurancePolicies.hivActive,
         plannedMedicalProcidure:
           data?.data?.loanInsurancePolicies.plannedMedicalProcidure,
@@ -332,7 +388,8 @@ export const DrawerValidateInfo = ({
         beneficiaryIdentificationTypeId: 76,
         beneficiaryIdentificationNumber:
           data?.data?.loanInsurancePolicies.beneficiaryIdentificationNumber,
-        /* Personal additional info */
+      });
+      setVehihuleInfo({
         countryCodePhoneId:
           data?.data?.loanInsurancePolicies.countryCodePhoneId,
         countryNationalityId:
@@ -346,6 +403,18 @@ export const DrawerValidateInfo = ({
         name: data?.data?.loanInsurancePolicies.name,
         lastName: data?.data?.loanInsurancePolicies.lastName,
         phoneNumber: data?.data?.loanInsurancePolicies.phoneNumber,
+        birthDate: data?.data?.loanInsurancePolicies.birthDate,
+        genderId: data?.data?.loanInsurancePolicies.genderId,
+        loanTypeId: data?.data?.loanInsurancePolicies.loanTypeId,
+        loanBalance: data?.data?.loanInsurancePolicies.loanBalance,
+        monthlyCostInsurance:
+          data?.data?.loanInsurancePolicies.monthlyCostInsurance,
+        /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
+        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId, */
+        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
+        vehicleLicensePlate:
+          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
+        clienId: data?.data?.loanInsurancePolicies.clienId,
       });
     }
   }, [data, isLoading, cancelEdit]);
@@ -450,9 +519,12 @@ export const DrawerValidateInfo = ({
           : "Verifica que los datos personales sean correctos",
     },
     {
-      icon: null,
+      icon: iconCondition[assessorConcept?.additionalInfo?.concept],
       title: "Datos adicionales",
-      description: "Verifica que los datos adicionales sean correctos",
+      description:
+        descriptionCondition[assessorConcept?.additionalInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.additionalInfo?.concept]
+          : "Verifica que los datos personales sean correctos",
     },
   ];
 
@@ -490,6 +562,7 @@ export const DrawerValidateInfo = ({
             ...propertyInfo,
             ...healthInfo,
             ...additionalInfo,
+            ...vehihuleInfo,
           },
         },
         {
@@ -584,7 +657,24 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       handleContinue={handleContinue}
     />,
+    <AdditionalData
+      key="additionalData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      additionalInfo={additionalInfo}
+      setAdditionalInfo={setAdditionalInfo}
+      handleCancel={handleCancel}
+      errorsAdditionalInfo={errorsAdditionalInfo}
+      setErrorsAdditionalInfo={setErrorsAdditionalInfo}
+      handleSave={handleSave}
+      isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
+    />,
   ];
+
+  console.log("additionalInfo", additionalInfo);
 
   return (
     <Drawer

@@ -126,3 +126,13 @@ export const validateEditHealthInfo = Joi.object({
   disability: Joi.bool().required(),
   disabilityMoreInfo: Joi.string().allow("", null),
 });
+
+export const validateEditAdditionalInfo = Joi.object({
+  convicted: Joi.bool().required(),
+  lifeEnsure: Joi.bool().required(),
+  beneficiaries: Joi.bool().required(),
+  beneficiaryName: Joi.string().allow("", null),
+  beneficiaryIdentificationTypeId: Joi.number().allow(null),
+  beneficiaryIdentificationNumber: Joi.string().allow("", null),
+  plannedMedicalProcidureMoreInfo: Joi.string().allow("", null),
+});

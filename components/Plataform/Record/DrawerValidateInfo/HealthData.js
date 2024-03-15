@@ -118,7 +118,7 @@ export const HealtData = ({
     setErrorsHealthInfo(newErrorForm);
 
     const newHealthInfo = { ...healthInfo };
-    newHealthInfo[name] = value;
+    newHealthInfo[name] = String(value);
 
     setHealthInfo(newHealthInfo);
   };

@@ -8,7 +8,7 @@ import { Button } from "@/components/Common/Button";
 import { MenuItem } from "@mui/material";
 import { Select } from "@/components/Common/Select";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
-import { validateEditPersonalInfo } from "@/utilities/validations";
+import { validateEditAdditionalInfo } from "@/utilities/validations";
 import CircularProgress from "@mui/material/CircularProgress";
 import { documentTypeAbbreviation } from "@/utilities/helpers";
 
@@ -20,6 +20,8 @@ export const AdditionalData = ({
   additionalInfo,
   setAdditionalInfo,
   handleCancel,
+  errorsAdditionalInfo,
+  setErrorsAdditionalInfo,
   handleSave,
   isLoadingSave,
   handleContinue,
@@ -444,7 +446,12 @@ export const AdditionalData = ({
               width={"166px"}
               height={"40px"}
               onClick={() =>
-                handleSave(validateEditPersonalInfo, additionalInfo, null, null)
+                handleSave(
+                  validateEditAdditionalInfo,
+                  additionalInfo,
+                  errorsAdditionalInfo,
+                  setErrorsAdditionalInfo
+                )
               }
               startIcon={
                 isLoadingSave ? (

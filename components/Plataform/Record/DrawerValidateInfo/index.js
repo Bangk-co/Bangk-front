@@ -266,6 +266,57 @@ export const DrawerValidateInfo = ({
     beneficiaryIdentificationTypeId: 76,
     beneficiaryIdentificationNumber: null,
   });
+  const initialErrorAdditionalInfo = {
+    convicted: {
+      error: false,
+      message: "",
+    },
+    lifeEnsure: {
+      error: false,
+      message: "",
+    },
+    beneficiaries: {
+      error: false,
+      message: "",
+    },
+    beneficiaryName: {
+      error: false,
+      message: "",
+    },
+    beneficiaryIdentificationTypeId: {
+      error: false,
+      message: "",
+    },
+    beneficiaryIdentificationNumber: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsAdditionalInfo, setErrorsAdditionalInfo] = useState(
+    initialErrorAdditionalInfo
+  );
+
+  const [vehihuleInfo, setVehihuleInfo] = useState({
+    countryCodePhoneId: null,
+    countryNationalityId: null,
+    documentIdentificationTypeId: null,
+    documentIssueDate: null,
+    email: "",
+    identificationNumber: null,
+    name: "",
+    lastName: "",
+    phoneNumber: null,
+    birthDate: null,
+    genderId: null,
+    loanTypeId: null,
+    loanBalance: null,
+    monthlyCostInsurance: null,
+    /* countryVehiculeId: null,
+        stateVehiculeId: null, */
+    cityVehiculeId: null,
+    vehicleLicensePlate: "",
+    clienId: null,
+  });
 
   const loanInsurancePolicyData =
     useGetLoanInsurancePolicyInfo(loanApplicationId);
@@ -318,7 +369,7 @@ export const DrawerValidateInfo = ({
       setHealthInfo({
         weight: data?.data?.loanInsurancePolicies.weight,
         height: data?.data?.loanInsurancePolicies.height,
-        diseases: Number(data?.data?.loanInsurancePolicies.diseases),
+        diseases: data?.data?.loanInsurancePolicies.diseases,
         hivActive: data?.data?.loanInsurancePolicies.hivActive,
         plannedMedicalProcidure:
           data?.data?.loanInsurancePolicies.plannedMedicalProcidure,
@@ -337,7 +388,8 @@ export const DrawerValidateInfo = ({
         beneficiaryIdentificationTypeId: 76,
         beneficiaryIdentificationNumber:
           data?.data?.loanInsurancePolicies.beneficiaryIdentificationNumber,
-        /* Personal additional info */
+      });
+      setVehihuleInfo({
         countryCodePhoneId:
           data?.data?.loanInsurancePolicies.countryCodePhoneId,
         countryNationalityId:
@@ -357,8 +409,8 @@ export const DrawerValidateInfo = ({
         loanBalance: data?.data?.loanInsurancePolicies.loanBalance,
         monthlyCostInsurance:
           data?.data?.loanInsurancePolicies.monthlyCostInsurance,
-        countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
-        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
+        /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
+        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId, */
         cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
         vehicleLicensePlate:
           data?.data?.loanInsurancePolicies.vehicleLicensePlate,
@@ -510,6 +562,7 @@ export const DrawerValidateInfo = ({
             ...propertyInfo,
             ...healthInfo,
             ...additionalInfo,
+            ...vehihuleInfo,
           },
         },
         {
@@ -613,11 +666,15 @@ export const DrawerValidateInfo = ({
       additionalInfo={additionalInfo}
       setAdditionalInfo={setAdditionalInfo}
       handleCancel={handleCancel}
+      errorsAdditionalInfo={errorsAdditionalInfo}
+      setErrorsAdditionalInfo={setErrorsAdditionalInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
       handleContinue={handleContinue}
     />,
   ];
+
+  console.log("additionalInfo", additionalInfo);
 
   return (
     <Drawer

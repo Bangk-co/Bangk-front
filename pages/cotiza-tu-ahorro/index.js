@@ -68,8 +68,13 @@ const Quote = ({ isMobile, isTablet }) => {
 
   const handleChangeDate = (event) => {
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(event);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    birthDate.setHours(0, 0, 0, 0);
+    
+    const ageMilliseconds = today - birthDate;
+    const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+    const age = Math.floor(ageMilliseconds / millisecondsPerYear);
 
     if (age < 18) {
       setErrorDate(true);

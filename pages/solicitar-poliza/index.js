@@ -324,6 +324,8 @@ const RequestPolicy = ({ isMobile }) => {
     }
   }, [isSuccessCities, dataCities])
 
+  const freeInvestment = loanTypeId === 104 || loanTypeId === 105
+
   const nextStep = () => {
     const newHealthInfo = {...healthInfo, diseases: getDiseasesIds(diseases, diseasesOptions)}
     save.reset();
@@ -341,11 +343,31 @@ const RequestPolicy = ({ isMobile }) => {
       },
       {
         onSuccess: (data) => {
-          if (activeStep !== 4) {
+          if (freeInvestment && activeStep !== 3) {
+            dispatch(setRequestInfo(data?.data.result))
+            setActiveStep(activeStep + 1)
+          } 
+          if (!freeInvestment && activeStep !== 4) {
             dispatch(setRequestInfo(data?.data.result))
             setActiveStep(activeStep + 1)
           }
-          if (activeStep === 4) {
+          if (freeInvestment && activeStep === 3) {
+            updateStatus.reset();
+            updateStatus.mutate(
+              { loanApplicationId: requestInfo.loanApplicationId },
+              {
+                onSuccess: () => {
+                  dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+                  router.push("/solicitar-poliza/solicitud-exitosa")
+                },
+                onError: (err) => {
+                  err.response.data.errors.map((error) => {
+                    toast.error(error);
+                  });
+                },
+              }
+            );
+          } else if (!freeInvestment && activeStep === 4) {
             updateStatus.reset();
             updateStatus.mutate(
               { loanApplicationId: requestInfo.loanApplicationId },

@@ -116,7 +116,7 @@ export const UploadButton = ({
               }}
             >
               <Div width="90%" align="center" justify="space-between">
-                {uploaded ? value?.name : "Seleccionar archivo"}
+                {uploaded ? value.name.length < 40 ? value.name : `${value?.name.slice(0, 40)}...` : "Seleccionar archivo"}
                 {(uploaded || hasError) &&
                   <IconButton
                     onClick={(event) => {

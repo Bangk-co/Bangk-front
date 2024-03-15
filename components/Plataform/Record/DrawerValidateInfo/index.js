@@ -13,6 +13,7 @@ import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
 import { PropertyData } from "./PropertyData";
 import { HealtData } from "./HealthData";
+import { AdditionalData } from "./AdditionalData";
 import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
@@ -47,6 +48,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
     healthInfo: {
+      concept: "",
+      comments: "",
+    },
+    additionalInfo: {
       concept: "",
       comments: "",
     },
@@ -462,9 +467,12 @@ export const DrawerValidateInfo = ({
           : "Verifica que los datos personales sean correctos",
     },
     {
-      icon: null,
+      icon: iconCondition[assessorConcept?.additionalInfo?.concept],
       title: "Datos adicionales",
-      description: "Verifica que los datos adicionales sean correctos",
+      description:
+        descriptionCondition[assessorConcept?.additionalInfo?.concept] !== null
+          ? descriptionCondition[assessorConcept?.additionalInfo?.concept]
+          : "Verifica que los datos personales sean correctos",
     },
   ];
 
@@ -592,6 +600,19 @@ export const DrawerValidateInfo = ({
       handleCancel={handleCancel}
       errorsHealthInfo={errorsHealthInfo}
       setErrorsHealthInfo={setErrorsHealthInfo}
+      handleSave={handleSave}
+      isLoadingSave={save.isLoading}
+      handleContinue={handleContinue}
+    />,
+    <AdditionalData
+      key="additionalData"
+      assessorConcept={assessorConcept}
+      setAssessorConcept={setAssessorConcept}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      additionalInfo={additionalInfo}
+      setAdditionalInfo={setAdditionalInfo}
+      handleCancel={handleCancel}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
       handleContinue={handleContinue}

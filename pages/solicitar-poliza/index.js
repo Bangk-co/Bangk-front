@@ -34,6 +34,7 @@ import toast from "react-hot-toast";
 import { getDiseasesIds, getDiseasesNames, initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
+import { Step3V } from "@/components/Policy/Steps/Step3V";
 
 const RequestPolicy = ({ isMobile }) => {
   const dispatch = useDispatch()
@@ -101,6 +102,11 @@ const RequestPolicy = ({ isMobile }) => {
     stateId: null,
     cityId: null,
   })
+  const [vehicleInfo, setVehicleInfo] = useState({
+    stateVehiculeId: null,
+    cityVehiculeId: null,
+    vehicleLicensePlate: null,
+  })
   const [healthInfo, setHealthInfo] = useState({
     weight: null,
     height: null,
@@ -128,16 +134,47 @@ const RequestPolicy = ({ isMobile }) => {
   const citiesList = useGetCities(userInfo.birthStateId)
   const { data: dataCities, isSuccess: isSuccessCities } = citiesList
   const [citiesOptions, setCitiesOptions] = useState([])
-
-  const steps = [
-    "Datos personales",
-    "Datos Financieros",
-    "Datos de tu Inmueble",
-    "Datos de tu salud",
-    "Datos adicionales"
-  ]
+  const [steps, setSteps] = useState([])
+  const [loanTypeId, setLoanTypeId] = useState(null)
 
   useEffect(() => {
+    switch (loanTypeId) {
+      case 102:
+      case 103:
+        setSteps([
+          "Datos personales",
+          "Datos Financieros",
+          "Datos de tu Inmueble",
+          "Datos de tu salud",
+          "Datos adicionales"
+        ])
+        break;
+      case 106:
+      case 139:
+        setSteps([
+          "Datos personales",
+          "Datos Financieros",
+          "Datos de tu vehículo",
+          "Datos de tu salud",
+          "Datos adicionales"
+        ])
+        break;
+      case 105:
+      case 104:
+        setSteps([
+          "Datos personales",
+          "Datos Financieros",
+          "Datos de tu salud",
+          "Datos adicionales"
+        ])
+        break;      
+      default:
+        break;
+    }
+  }, [loanTypeId])
+
+  useEffect(() => {
+    setLoanTypeId(requestInfo.loanTypeId)
     setUserInfo({
       birthCountryId: requestInfo.birthCountryId,
       birthStateId: requestInfo.birthStateId,
@@ -170,6 +207,11 @@ const RequestPolicy = ({ isMobile }) => {
       address: requestInfo.address,
       stateId: requestInfo.stateId,
       cityId: requestInfo.cityId,
+    })
+    setVehicleInfo({
+      stateVehiculeId: requestInfo.stateVehiculeId,
+      cityVehiculeId: requestInfo.cityVehiculeId,
+      vehicleLicensePlate: requestInfo.vehicleLicensePlate,
     })
     setHealthInfo({
       weight: requestInfo.weight,
@@ -293,7 +335,8 @@ const RequestPolicy = ({ isMobile }) => {
           ...financialInfo,
           ...propertyInfo,
           ...newHealthInfo,
-          ...additionalInfo
+          ...additionalInfo,
+          ...vehicleInfo,
         },
       },
       {
@@ -354,7 +397,7 @@ const RequestPolicy = ({ isMobile }) => {
         } else {
           return Object.values(obj).some(value => value === null);
         }
-      case 2:
+      case 2: 
         const obj2 = {
           housingTypeId: propertyInfo.housingTypeId,
           housingValue: propertyInfo.housingValue,
@@ -364,10 +407,32 @@ const RequestPolicy = ({ isMobile }) => {
           stateId: propertyInfo.stateId,
           cityId: propertyInfo.cityId,
         }
-        if (propertyInfo.housingTypeId !== 147) {
-          return Object.values(obj2).some(value => value === null);
+
+        if (loanTypeId === 102 || loanTypeId === 103) {
+          if (propertyInfo.housingTypeId !== 147) {
+            return Object.values(obj2).some(value => value === null);
+          } else {
+            return Object.values(propertyInfo).some(value => value === null);
+          }
+        } else if (loanTypeId === 106 || loanTypeId === 139) {
+          return Object.values(vehicleInfo).some(value => value === null);
         } else {
-          return Object.values(propertyInfo).some(value => value === null);
+          return false;
+        }
+      case 3: 
+        if (loanTypeId === 104 || loanTypeId === 105) {
+          const obj3 = {
+            convicted: additionalInfo.convicted,
+            lifeEnsure: additionalInfo.lifeEnsure,
+            beneficiaries: additionalInfo.beneficiaries,
+          }
+          if (additionalInfo.beneficiaries === false) {
+            return Object.values(additionalInfo).some(value => value === null);
+          } else {
+            return Object.values(obj3).some(value => value === null);
+          }
+        } else {
+          return false;
         }
       case 4:
         const obj3 = {
@@ -390,7 +455,7 @@ const RequestPolicy = ({ isMobile }) => {
       <Header isMobile={isMobile} />
       <WrapperPolicy style={{ padding: 0, alignItems: "center" }}>
         {isMobile ? (
-          <MobileStepperPolicy steps={steps} activeStep={activeStep} />
+          <MobileStepperPolicy loanTypeId={loanTypeId} steps={steps} activeStep={activeStep} />
         ) : (
           <Col width="100%">
             <Div height="68px" p="16px 40px 16px 40px" style={{ background: theme.colors.white }}>
@@ -434,22 +499,48 @@ const RequestPolicy = ({ isMobile }) => {
           />
         )}
         {activeStep === 2 && (
-          <Step3
-            isMobile={isMobile}
-            formInfo={propertyInfo}
-            setFormInfo={setPropertyInfo}
-            housingTypeOptions={housingTypeOptions}
-          />
+          loanTypeId === 102 || loanTypeId === 103 ? (
+            <Step3
+              isMobile={isMobile}
+              formInfo={propertyInfo}
+              setFormInfo={setPropertyInfo}
+              housingTypeOptions={housingTypeOptions}
+            />
+          ) : loanTypeId === 106 || loanTypeId === 139 ? (
+            <Step3V 
+              isMobile={isMobile}
+              formInfo={vehicleInfo}
+              setFormInfo={setVehicleInfo}
+            />
+          ) : (
+            <Step4
+              isMobile={isMobile}
+              formInfo={healthInfo}
+              setFormInfo={setHealthInfo}
+              diseasesOptions={diseasesOptions}
+              diseases={diseases}
+              setDiseases={setDiseases}
+            />
+          )
         )}
         {activeStep === 3 && (
-          <Step4
-            isMobile={isMobile}
-            formInfo={healthInfo}
-            setFormInfo={setHealthInfo}
-            diseasesOptions={diseasesOptions}
-            diseases={diseases}
-            setDiseases={setDiseases}
-          />
+          loanTypeId === 104 || loanTypeId === 105 ? (
+            <Step5
+              isMobile={isMobile}
+              formInfo={additionalInfo}
+              setFormInfo={setAdditionalInfo}
+              documentTypeOptions={documentTypeOptions}
+            />
+          ) : (
+            <Step4
+              isMobile={isMobile}
+              formInfo={healthInfo}
+              setFormInfo={setHealthInfo}
+              diseasesOptions={diseasesOptions}
+              diseases={diseases}
+              setDiseases={setDiseases}
+            />
+          )
         )}
         {activeStep === 4 && (
           <Step5

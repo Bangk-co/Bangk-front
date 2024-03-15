@@ -26,6 +26,7 @@ export const Select = ({
   labelWeight,
   notFocused,
   placeholderColor,
+  helperColor,
   ...rest
 }) => {
   return (
@@ -56,7 +57,7 @@ export const Select = ({
         border={border}
         notFocused={notFocused}
         placeholderColor={placeholderColor}
-        InputProps={{
+        inputProps={{
           startAdornment: (
             <InputAdornment position="start">{prefixIcon}</InputAdornment>
           ),
@@ -66,7 +67,7 @@ export const Select = ({
       {helper && (
         <Text
           size={theme.fonts.size.sm}
-          color={theme.colors.red}
+          color={helperColor || theme.colors.red}
           mt="2px"
           align="left"
         >

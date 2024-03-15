@@ -1,8 +1,8 @@
 import React from "react";
 import { CustomCircularProgress } from "./styles";
 
-export const CircularProgress = ({ ...rest }) => {
+export const CircularProgress = ({ lineColor, ...rest }) => {
   return (
-    <CustomCircularProgress {...rest} />
+    <CustomCircularProgress lineColor={lineColor} {...rest} />
   )
 }

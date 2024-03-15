@@ -2,9 +2,24 @@ import { Col, Div, Text } from "@/styles/Common";
 import { WrapperMobileStepper } from "@/styles/Policy";
 import { theme } from "@/styles/theme";
 import React from "react";
-import { CircularProgress } from "../Common/CircularProgress";
+import { Progress } from "./Progress";
 
-export const MobileStepperPolicy = ({ steps, activeStep }) => {
+export const MobileStepperPolicy = ({ loanTypeId, steps, activeStep }) => {
+
+  const currentStepFree = (step) => {
+    switch (step) {
+      case 0:
+        return { label: steps[0], value: 25};
+      case 1:
+        return { label: steps[1], value: 50};
+      case 2:
+        return { label: steps[2], value: 75};
+      case 3:
+        return { label: steps[3], value: 100};
+      default:
+        return { label: "", value: 0 };
+    }
+  }
 
   const currentStep = (step) => {
     switch (step) {
@@ -32,7 +47,7 @@ export const MobileStepperPolicy = ({ steps, activeStep }) => {
       case 2:
         return steps[3];
       case 3:
-        return steps[4];
+        return loanTypeId === 104 || loanTypeId === 105 ? "" : steps[4];
       default:
         return "";
     }
@@ -41,8 +56,8 @@ export const MobileStepperPolicy = ({ steps, activeStep }) => {
   return (
     <WrapperMobileStepper>
       <Div m="16px 0 0 0" width="30%" align="center" style={{ position: "relative" }}>
-        <CircularProgress thickness={6} variant="determinate" value={currentStep(activeStep).value}/>
-        <Div style={{ position: "absolute", bottom: "20px", left: "9px" }}>
+        <Progress currentStepFree={currentStepFree} loanTypeId={loanTypeId} currentStep={currentStep} activeStep={activeStep} />
+        <Div style={{ position: "absolute", top: "-15px", left: "10px" }}>
           <Text
             size={theme.fonts.size.xs}
             color={theme.colors.green900}
@@ -61,7 +76,7 @@ export const MobileStepperPolicy = ({ steps, activeStep }) => {
           size={theme.fonts.size.default}
           lineHeight={"22.28px"}
         >
-          {currentStep(activeStep).label}
+          {loanTypeId === 104 || loanTypeId === 105 ? currentStepFree(activeStep).label : currentStep(activeStep).label}
         </Text>
         <Text
           color={theme.colors.gray900}

@@ -71,7 +71,8 @@ const CreditData = ({ isMobile, isTablet }) => {
   const optionsTypeFile = [
     "application/pdf",
     "image/png",
-    "image/jpg"
+    "image/jpg",
+    "image/jpeg"
   ]
 
   const maxSize = 3000000

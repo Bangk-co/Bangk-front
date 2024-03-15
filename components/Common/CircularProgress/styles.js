@@ -7,7 +7,7 @@ export const CustomCircularProgress = styled(CircularProgress)`
     .MuiCircularProgress-svg {
       width: 56px;
       height: 56px;
-      color: ${({ lineColor }) => lineColor || theme.colors.green500} !important; // Color de la parte llena del progreso
+      color: ${({ lineColor }) => lineColor || theme.colors.green500} !important;
     }
   }
 `;

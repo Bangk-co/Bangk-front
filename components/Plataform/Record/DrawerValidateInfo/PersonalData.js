@@ -30,6 +30,7 @@ export const PersonalData = ({
   setErrorsPersonalInfo,
   handleSave,
   isLoadingSave,
+  isLoadingContinue,
   handleContinue,
 }) => {
   const statesList = useGetStates(personalInfo.birthCountryId);
@@ -458,9 +459,15 @@ export const PersonalData = ({
                   assessorConcept.personalInfo.concept === "" ||
                   assessorConcept.personalInfo.comments === ""
                 }
-                onClick={handleContinue}
+                onClick={() =>
+                  handleContinue(
+                    "personalInfo",
+                    assessorConcept.personalInfo.concept,
+                    assessorConcept.personalInfo.comments
+                  )
+                }
                 startIcon={
-                  isLoadingSave ? (
+                  isLoadingContinue ? (
                     <CircularProgress
                       size={10}
                       style={{ color: theme.colors.white }}

@@ -23,6 +23,7 @@ export const HealtData = ({
   setErrorsHealthInfo,
   handleSave,
   isLoadingSave,
+  isLoadingContinue,
   handleContinue,
 }) => {
   const diseasesList = useGetDiseases();
@@ -289,9 +290,15 @@ export const HealtData = ({
                   assessorConcept.healthInfo.concept === "" ||
                   assessorConcept.healthInfo.comments === ""
                 }
-                onClick={handleContinue}
+                onClick={() =>
+                  handleContinue(
+                    "healthInfo",
+                    assessorConcept.healthInfo.concept,
+                    assessorConcept.healthInfo.comments
+                  )
+                }
                 startIcon={
-                  isLoadingSave ? (
+                  isLoadingContinue ? (
                     <CircularProgress
                       size={10}
                       style={{ color: theme.colors.white }}

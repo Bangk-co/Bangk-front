@@ -18,6 +18,8 @@ import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
 import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";
+import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
+import useUpdateLoanFormAssessorConcept from "@/hooks/Customers/useUpdateLoanFormAssessorConcept";
 import useGetCountries from "@/hooks/Common/useGetCountries";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
@@ -32,6 +34,7 @@ export const DrawerValidateInfo = ({
 }) => {
   const queryClient = useQueryClient();
   const save = useSaveLoanInsurancePolicy();
+  const saveConcept = useUpdateLoanFormAssessorConcept();
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [assessorConcept, setAssessorConcept] = useState({
@@ -419,6 +422,67 @@ export const DrawerValidateInfo = ({
     }
   }, [data, isLoading, cancelEdit]);
 
+  const loanFormAssesorConcept =
+    useGetLoanFormAssessorConcept(loanApplicationId);
+  const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
+    loanFormAssesorConcept;
+  useEffect(() => {
+    if (dataAssesorConcept?.data?.getLoanForm) {
+      dataAssesorConcept?.data?.getLoanForm.map((item) => {
+        const { formName, concept, comment } = item;
+        switch (formName) {
+          case "personalInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              personalInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          case "financialInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              financialInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          case "propertyInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              propertyInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          case "healthInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              healthInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          case "additionalInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              additionalInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          default:
+            break;
+        }
+      });
+    }
+  }, [dataAssesorConcept, isLoadingAssessorConcept]);
+
   const countriesList = useGetCountries();
   const { data: dataCountries, isSuccess: isSuccessCountries } = countriesList;
   const [countriesOptions, setCountriesOptions] = useState([]);
@@ -584,13 +648,27 @@ export const DrawerValidateInfo = ({
     }
   };
 
-  const handleContinue = () => {
-    setIsEditing(false);
-    setExpandedCardIndex(expandedCardIndex + 1);
-    queryClient.invalidateQueries([
-      "LoanInsurancePolicyInfo",
-      loanApplicationId,
-    ]);
+  const handleContinue = (formName, concept, comment) => {
+    saveConcept.reset();
+    saveConcept.mutate(
+      {
+        loanApplicationId: loanApplicationId,
+        formName: formName,
+        concept: concept,
+        comment: comment,
+      },
+      {
+        onSuccess: () => {
+          setExpandedCardIndex(expandedCardIndex + 1);
+          queryClient.invalidateQueries(["loanForm", loanApplicationId]);
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   const expandedCardData = [
@@ -610,6 +688,7 @@ export const DrawerValidateInfo = ({
       setErrorsPersonalInfo={setErrorsPersonalInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
     />,
     <FinancialData
@@ -625,6 +704,7 @@ export const DrawerValidateInfo = ({
       setErrorsFinancialInfo={setErrorsFinancialInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
     />,
     <PropertyData
@@ -640,6 +720,7 @@ export const DrawerValidateInfo = ({
       setErrorsPropertyInfo={setErrorsPropertyInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
     />,
     <HealtData
@@ -655,6 +736,7 @@ export const DrawerValidateInfo = ({
       setErrorsHealthInfo={setErrorsHealthInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
     />,
     <AdditionalData
@@ -670,11 +752,10 @@ export const DrawerValidateInfo = ({
       setErrorsAdditionalInfo={setErrorsAdditionalInfo}
       handleSave={handleSave}
       isLoadingSave={save.isLoading}
+      isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
     />,
   ];
-
-  console.log("additionalInfo", additionalInfo);
 
   return (
     <Drawer
@@ -751,7 +832,11 @@ export const DrawerValidateInfo = ({
             font={theme.fonts.family.primaryBold}
             width={"181px"}
             height={"40px"}
-            disabled={true}
+            disabled={
+              !Object.values(assessorConcept).every(
+                (concept) => concept.concept !== ""
+              )
+            }
           >
             Finalizar validación
           </Button>

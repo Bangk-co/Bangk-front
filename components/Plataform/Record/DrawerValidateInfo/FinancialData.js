@@ -22,6 +22,7 @@ export const FinancialData = ({
   setErrorsFinancialInfo,
   handleSave,
   isLoadingSave,
+  isLoadingContinue,
   handleContinue,
 }) => {
   const dataInfo = [
@@ -211,9 +212,15 @@ export const FinancialData = ({
                   assessorConcept.financialInfo.concept === "" ||
                   assessorConcept.financialInfo.comments === ""
                 }
-                onClick={handleContinue}
+                onClick={() =>
+                  handleContinue(
+                    "financialInfo",
+                    assessorConcept.financialInfo.concept,
+                    assessorConcept.financialInfo.comments
+                  )
+                }
                 startIcon={
-                  isLoadingSave ? (
+                  isLoadingContinue ? (
                     <CircularProgress
                       size={10}
                       style={{ color: theme.colors.white }}

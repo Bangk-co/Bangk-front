@@ -691,7 +691,7 @@ export const DrawerValidateInfo = ({
     }
     changeState.reset();
     changeState.mutate(
-      { loanApplicationId: loanApplicationId, observations: "." },
+      { loanApplicationId: loanApplicationId, observations: observations },
       {
         onSuccess: () => {
           closeDrawer();

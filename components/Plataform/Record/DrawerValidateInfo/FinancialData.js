@@ -24,6 +24,7 @@ export const FinancialData = ({
   isLoadingSave,
   isLoadingContinue,
   handleContinue,
+  isValidated,
 }) => {
   const dataInfo = [
     {
@@ -183,54 +184,56 @@ export const FinancialData = ({
                 onChange={handleChange}
               />
             </Div>
-            <Row width="100%" justify="right" m="24px 0 0 0" gap="16px">
-              <Button
-                background={theme.colors.white}
-                hover={theme.colors.gray100}
-                borderHover={theme.colors.green900}
-                border={theme.colors.green900}
-                font={theme.fonts.family.primaryBold}
-                labelColor={theme.colors.green900}
-                borderHeight={"3px solid"}
-                width={"78px"}
-                height={"40px"}
-                onClick={() => {
-                  setIsEditing(true);
-                }}
-              >
-                Editar
-              </Button>
-              <Button
-                background={theme.colors.green900}
-                hover={theme.colors.green900}
-                borderHover={theme.colors.green900}
-                border={"transparent"}
-                font={theme.fonts.family.primaryBold}
-                width={"109px"}
-                height={"40px"}
-                disabled={
-                  assessorConcept.financialInfo.concept === "" ||
-                  assessorConcept.financialInfo.comments === ""
-                }
-                onClick={() =>
-                  handleContinue(
-                    "financialInfo",
-                    assessorConcept.financialInfo.concept,
-                    assessorConcept.financialInfo.comments
-                  )
-                }
-                startIcon={
-                  isLoadingContinue ? (
-                    <CircularProgress
-                      size={10}
-                      style={{ color: theme.colors.white }}
-                    />
-                  ) : null
-                }
-              >
-                Continuar
-              </Button>
-            </Row>
+            {isValidated && (
+              <Row width="100%" justify="right" m="24px 0 0 0" gap="16px">
+                <Button
+                  background={theme.colors.white}
+                  hover={theme.colors.gray100}
+                  borderHover={theme.colors.green900}
+                  border={theme.colors.green900}
+                  font={theme.fonts.family.primaryBold}
+                  labelColor={theme.colors.green900}
+                  borderHeight={"3px solid"}
+                  width={"78px"}
+                  height={"40px"}
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
+                >
+                  Editar
+                </Button>
+                <Button
+                  background={theme.colors.green900}
+                  hover={theme.colors.green900}
+                  borderHover={theme.colors.green900}
+                  border={"transparent"}
+                  font={theme.fonts.family.primaryBold}
+                  width={"109px"}
+                  height={"40px"}
+                  disabled={
+                    assessorConcept.financialInfo.concept === "" ||
+                    assessorConcept.financialInfo.comments === ""
+                  }
+                  onClick={() =>
+                    handleContinue(
+                      "financialInfo",
+                      assessorConcept.financialInfo.concept,
+                      assessorConcept.financialInfo.comments
+                    )
+                  }
+                  startIcon={
+                    isLoadingContinue ? (
+                      <CircularProgress
+                        size={10}
+                        style={{ color: theme.colors.white }}
+                      />
+                    ) : null
+                  }
+                >
+                  Continuar
+                </Button>
+              </Row>
+            )}
           </Div>
         </>
       ) : (

@@ -128,7 +128,9 @@ const UserData = ({ isMobile, isTablet }) => {
 
   const handleAccept = () => {
     setOpenModal(false);
+    const currentDate = new Date();
     setTerms(true);
+    dispatch(setTermsDate(currentDate));
     setForceUpdate(!forceUpdate);
   };
 

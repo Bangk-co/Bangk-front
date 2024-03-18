@@ -19,22 +19,26 @@ import checkIcon from "@/assets/icons/check_circle.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
 import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";
 import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
-import useUpdateLoanFormAssessorConcept from "@/hooks/Customers/useUpdateLoanFormAssessorConcept";
+import useSaveLoanFormAssessorConcept from "@/hooks/Customers/useSaveLoanFormAssessorConcept";
 import useGetCountries from "@/hooks/Common/useGetCountries";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import { useQueryClient } from "react-query";
+import useChangeStateForms from "@/hooks/Customers/useChangeStateForms";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const DrawerValidateInfo = ({
   showDrawer,
   setShowDrawerValidateInfo,
   loanApplicationId,
+  isValidated,
 }) => {
   const queryClient = useQueryClient();
   const save = useSaveLoanInsurancePolicy();
-  const saveConcept = useUpdateLoanFormAssessorConcept();
+  const saveConcept = useSaveLoanFormAssessorConcept();
+  const changeState = useChangeStateForms();
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
   const [assessorConcept, setAssessorConcept] = useState({
@@ -671,6 +675,37 @@ export const DrawerValidateInfo = ({
     );
   };
 
+  const handleChangeStateForm = () => {
+    let observations;
+    const presentingIssues = Object.values(assessorConcept).filter(
+      (concept) => concept.concept === "Presenta novedades"
+    );
+
+    if (presentingIssues.length > 0) {
+      const comments = presentingIssues
+        .map((issue) => issue.comments)
+        .join(", ");
+      observations = comments;
+    } else {
+      observations = "";
+    }
+    changeState.reset();
+    changeState.mutate(
+      { loanApplicationId: loanApplicationId, observations: "." },
+      {
+        onSuccess: () => {
+          closeDrawer();
+          queryClient.invalidateQueries(["historyList", loanApplicationId]);
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
+  };
+
   const expandedCardData = [
     <PersonalData
       key="personalData"
@@ -690,6 +725,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
+      isValidated={isValidated}
     />,
     <FinancialData
       key="financialData"
@@ -706,6 +742,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
+      isValidated={isValidated}
     />,
     <PropertyData
       key="propertyData"
@@ -722,6 +759,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
+      isValidated={isValidated}
     />,
     <HealtData
       key="healthData"
@@ -738,6 +776,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
+      isValidated={isValidated}
     />,
     <AdditionalData
       key="additionalData"
@@ -754,6 +793,7 @@ export const DrawerValidateInfo = ({
       isLoadingSave={save.isLoading}
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
+      isValidated={isValidated}
     />,
   ];
 
@@ -823,24 +863,35 @@ export const DrawerValidateInfo = ({
             ))}
           </Div>
         </Div>
-        <Row width="100%" justify="right" p="0 0 16px 0">
-          <Button
-            background={theme.colors.green900}
-            hover={theme.colors.green900}
-            borderHover={theme.colors.green900}
-            border={"transparent"}
-            font={theme.fonts.family.primaryBold}
-            width={"181px"}
-            height={"40px"}
-            disabled={
-              !Object.values(assessorConcept).every(
-                (concept) => concept.concept !== ""
-              )
-            }
-          >
-            Finalizar validación
-          </Button>
-        </Row>
+        {isValidated && (
+          <Row width="100%" justify="right" p="0 0 16px 0">
+            <Button
+              background={theme.colors.green900}
+              hover={theme.colors.green900}
+              borderHover={theme.colors.green900}
+              border={"transparent"}
+              font={theme.fonts.family.primaryBold}
+              width={"181px"}
+              height={"40px"}
+              disabled={
+                !Object.values(assessorConcept).every(
+                  (concept) => concept.concept !== ""
+                )
+              }
+              startIcon={
+                changeState.isLoading ? (
+                  <CircularProgress
+                    size={10}
+                    style={{ color: theme.colors.white }}
+                  />
+                ) : null
+              }
+              onClick={handleChangeStateForm}
+            >
+              Finalizar validación
+            </Button>
+          </Row>
+        )}
       </Div>
     </Drawer>
   );

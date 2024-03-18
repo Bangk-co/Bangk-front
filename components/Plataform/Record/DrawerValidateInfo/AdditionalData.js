@@ -24,6 +24,7 @@ export const AdditionalData = ({
   setErrorsAdditionalInfo,
   handleSave,
   isLoadingSave,
+  isLoadingContinue,
   handleContinue,
 }) => {
   const documentType = useGetDocumentType();
@@ -280,9 +281,15 @@ export const AdditionalData = ({
                   assessorConcept.additionalInfo.concept === "" ||
                   assessorConcept.additionalInfo.comments === ""
                 }
-                onClick={handleContinue}
+                onClick={() =>
+                  handleContinue(
+                    "additionalInfo",
+                    assessorConcept.additionalInfo.concept,
+                    assessorConcept.additionalInfo.comments
+                  )
+                }
                 startIcon={
-                  isLoadingSave ? (
+                  isLoadingContinue ? (
                     <CircularProgress
                       size={10}
                       style={{ color: theme.colors.white }}

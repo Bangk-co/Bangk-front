@@ -90,7 +90,7 @@ export const validateEditFinancialInfo = Joi.object({
   monthlyExpenses: Joi.number().required(),
   assetValue: Joi.number().required(),
   liabilitiesValue: Joi.number().required(),
-  incomeOrigin: Joi.string().required(),
+  incomeOrigin: Joi.string().allow("", null),
 });
 
 export const validateEditPropertyInfo = Joi.object({

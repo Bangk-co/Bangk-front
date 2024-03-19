@@ -15,6 +15,7 @@ export const CreditForm = ({
     banksOptions,
     creditTypeOptions,
     creditInfo,
+    documents,
     handleSelect,
     handleChange,
     username,
@@ -22,7 +23,6 @@ export const CreditForm = ({
     handleFile,
     handleDelete,
     handleCreate,
-    errorFile,
     loading,
   }) => {
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "");
@@ -168,40 +168,27 @@ export const CreditForm = ({
             Para poder brindarte información precisa carga <span style={{ color: theme.colors.yellow500, fontFamily: theme.fonts.family.primaryBold }}>el último extracto de tu crédito.</span>
           </Text>
         </Grid>
-        <Grid item md={12} xs={12}>
-          <UploadButton
-            isMobile={isMobile}
-            label={"Último extracto*"}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            helper={"Archivo en .PDF, .PNG, o .JPG"}
-            helperColor={theme.colors.white}
-            id={"bankStatementFile"}
-            value={creditInfo.bankStatementFile}
-            handleFile={handleFile}
-            handleDelete={handleDelete}
-            errorFile={errorFile}
-          />
-        </Grid>
-        <Grid direction={"column"} item md={12} xs={12}>
-          <UploadButton
-            isMobile={isMobile}
-            label={"Documento de identidad*"}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            helper={"Archivo en .PDF, .PNG, o .JPG"}
-            helperColor={theme.colors.white}
-            id={"identificationFile"}
-            value={creditInfo.identificationFile}
-            handleFile={handleFile}
-            handleDelete={handleDelete}
-            errorFile={errorFile}
-          />
-        </Grid>
+        
+        {documents.map((ele, indx) => 
+          <Grid key={indx} item md={12} xs={12}>
+            <UploadButton
+              isMobile={isMobile}
+              label={ele.label}
+              labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
+              labelColor={theme.colors.white}
+              labelFont={"Gilroy"}
+              labelWeight={theme.fonts.weight.medium}
+              helper={"Archivo en .PDF, .PNG, o .JPG"}
+              helperColor={theme.colors.white}
+              id={ele.id}
+              value={ele.value}
+              handleFile={handleFile}
+              handleDelete={handleDelete}
+              errorFile={ele.error}
+            />
+          </Grid>
+        )}
+        
       </Grid>
       <Div m="46px 0" justify="space-between">
         <Button

@@ -90,12 +90,14 @@ const ApplicationInfo = ({ application }) => {
                 overflow: "hidden",
               }}
             >
-              <Image
-                src={application.iconsBanksUrl}
-                alt="bankLogo"
-                width={24}
-                height={24}
-              />
+              {application.iconsBanksUrl && 
+                <Image
+                  src={application.iconsBanksUrl}
+                  alt="bankLogo"
+                  width={24}
+                  height={24}
+                />
+              }
             </Div>
             <Text
               color={theme.colors.neutralGray900}

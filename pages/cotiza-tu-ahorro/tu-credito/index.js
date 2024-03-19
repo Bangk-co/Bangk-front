@@ -26,15 +26,16 @@ const CreditData = ({ isMobile, isTablet }) => {
   const { data: dataCT, isSuccess: isSuccessCT} = creditTypeList
   const [banksOptions, setBanksOptions] = useState([])
   const [creditTypeOptions, setCreditTypeOptions] = useState([])
-  const [errorFile, setErrorFile] = useState({})
   const [forceUpdate, setForceUpdate] = useState(false)
   const [creditInfo, setCreditInfo] = useState({
     bankId: null,
     loanTypeId: null,
     loanNumber: "",
-    bankStatementFile: null,
-    identificationFile: null
   })
+  const [documents, setDocuments] = useState([
+    { id: "bankStatementFile", label: "Último extracto*", value: null, error: false },
+    { id: "identificationFile", label: "Documento de identidad*", value: null, error: false }
+  ])
 
   useEffect(() => {
     if (isSuccess && data?.data?.groupSettings.length > 0)
@@ -78,26 +79,26 @@ const CreditData = ({ isMobile, isTablet }) => {
   const maxSize = 3000000
 
   const handleFile = (file, id) => {
-    const newInfo = { ...creditInfo }
-    const newErrorFile = { ...errorFile };
-
+    const newInfo = [...documents]
+    const docIndex = newInfo.findIndex(ele => ele.id === id)
+    
     if (file?.type && file?.size) {
       if (optionsTypeFile.includes(file.type) && file.size < maxSize) {
-        newInfo[id] = file
-        newErrorFile[id] = false;
-        setCreditInfo(newInfo)
+        newInfo[docIndex].value = file
+        newInfo[docIndex].error = false;
       } else {
-        setErrorFile(true)
-        newErrorFile[id] = true;
-        setErrorFile(newErrorFile);
+        newInfo[docIndex].error = true;
       }
+      setDocuments(newInfo)
     }
   }
 
   const handleDelete = (id) => {
-    const newInfo = { ...creditInfo }
-    newInfo[id] = null
-    setCreditInfo(newInfo)
+    const newInfo = [...documents]
+    const docIndex = newInfo.findIndex(ele => ele.id === id)
+
+    newInfo[docIndex].value = null
+    setDocuments(newInfo)
     setForceUpdate(!forceUpdate)
   }
 
@@ -106,9 +107,19 @@ const CreditData = ({ isMobile, isTablet }) => {
   }
 
   const handleCreate = () => {
+    const bankStatementFile = documents.find((ele) => ele.id === "bankStatementFile")?.value
+    const identificationFile = documents.find((ele) => ele.id === "identificationFile")?.value
+
     create.reset();
     create.mutate(
-      { ...userInfo, ...creditInfo, ...initData, termsDate: termsDate },
+      { 
+        ...userInfo, 
+        ...creditInfo, 
+        ...initData, 
+        termsDate: termsDate,
+        bankStatementFile: bankStatementFile,
+        identificationFile: identificationFile 
+      },
       {
         onSuccess: (res) => {
           dispatch(resetInitData())
@@ -137,6 +148,7 @@ const CreditData = ({ isMobile, isTablet }) => {
             banksOptions={banksOptions}
             creditTypeOptions={creditTypeOptions}
             creditInfo={creditInfo}
+            documents={documents}
             handleSelect={handleSelect}
             handleChange={handleChange}
             username={userInfo.name}
@@ -144,7 +156,6 @@ const CreditData = ({ isMobile, isTablet }) => {
             handleFile={handleFile}
             handleDelete={handleDelete}
             handleCreate={handleCreate}
-            errorFile={errorFile}
             loading={create.isLoading}
           />
         </Div>

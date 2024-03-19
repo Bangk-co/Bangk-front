@@ -26,21 +26,22 @@ export const UploadButton = ({
   handleFile,
   handleDelete,
   errorFile,
+  errorMessage
 }) => {
   const uploaded = value !== null
-  const [hasError, setHasError] = useState(errorFile[id])
+  const [hasError, setHasError] = useState(errorFile)
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
-    setHasError(errorFile[id])
+    setHasError(errorFile)
     setForceUpdate(!forceUpdate)
   }, [errorFile])
 
-  const handleDeleteError = (idButton) => {
-    setHasError(!errorFile[idButton])
+  const handleDeleteError = () => {
+    setHasError(false)
   }
 
   const handleChange = (event, id) => {
@@ -72,6 +73,7 @@ export const UploadButton = ({
     handleFile(file, id);
     setForceUpdate(!forceUpdate)
   };
+  
 
   return (
     <Div width="100%" direction="column">
@@ -116,13 +118,14 @@ export const UploadButton = ({
               }}
             >
               <Div width="90%" align="center" justify="space-between">
-                {uploaded ? value.name.length < 40 ? value.name : `${value?.name.slice(0, 40)}...` : "Seleccionar archivo"}
+                {isMobile && (uploaded ? value.name.length < 20 ? value.name : `${value?.name.slice(0, 20)}...` : "Seleccionar archivo")}
+                {!isMobile && (uploaded ? value.name.length < 40 ? value.name : `${value?.name.slice(0, 40)}...` : "Seleccionar archivo")}
                 {(uploaded || hasError) &&
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();
                       handleDelete(id);
-                      hasError && handleDeleteError(id)
+                      hasError && handleDeleteError()
                     }}
                     style={{ zIndex: 5 }}
                   >

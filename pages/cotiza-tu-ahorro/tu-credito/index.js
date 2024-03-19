@@ -85,17 +85,13 @@ const CreditData = ({ isMobile, isTablet }) => {
       if (optionsTypeFile.includes(file.type) && file.size < maxSize) {
         newInfo[id] = file
         newErrorFile[id] = false;
+        setCreditInfo(newInfo)
       } else {
-        newInfo[id] = null
         setErrorFile(true)
         newErrorFile[id] = true;
+        setErrorFile(newErrorFile);
       }
-    } else {
-      newInfo[id] = null
     }
-
-    setCreditInfo(newInfo)
-    setErrorFile(newErrorFile);
   }
 
   const handleDelete = (id) => {

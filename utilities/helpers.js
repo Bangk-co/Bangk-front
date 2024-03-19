@@ -173,6 +173,7 @@ export const renderDocumentStateDiv = (stateName) => {
     case "Cotización enviada":
     case "Cotización aceptada":
     case "Formularios Diligenciados":
+    case "Formularios Validados":
     case "Estudio Sarlaft":
     case "Estudio lista restrictiva SBS":
     case "Solicitud emisión de poliza":
@@ -252,6 +253,7 @@ export const historyStatus = {
   CotizacionEnviada: "Cotización enviada",
   CotizaciónAceptada: "Cotización aceptada",
   FormulariosDiligenciados: "Formularios diligenciados",
+  FormulariosValidados: "Formularios validados",
   EstufioSarlaft: "Estudio Sarlaft",
   EstudioListaRestrictivaSBS: "Estudio lista restrictiva SBS",
   PolizaEmitida: "Póliza emitida",
@@ -307,7 +309,7 @@ export const getDiseasesNames = (selectedDiseaseIds, allDiseases) => {
 
 export const initDataLoanInsurancePolicy = {
   address: null,
-  apartmentNumber: null, 
+  apartmentNumber: null,
   assetValue: null,
   basementNumber: null,
   beneficiaries: null,
@@ -318,7 +320,7 @@ export const initDataLoanInsurancePolicy = {
   birthCountryId: null,
   birthDate: null,
   birthStateId: null,
-  buildingFloorsNumber: null, 
+  buildingFloorsNumber: null,
   builtArea: null,
   builtgDate: null,
   cityId: null,
@@ -345,7 +347,7 @@ export const initDataLoanInsurancePolicy = {
   incomeOrigin: null,
   isPublicPerson: null,
   lastName: null,
-  liabilitiesValue: null, 
+  liabilitiesValue: null,
   lifeEnsure: null,
   loanApplicationId: null,
   loanBalance: null,
@@ -363,7 +365,7 @@ export const initDataLoanInsurancePolicy = {
   residenceCityId: null,
   residenceCountryId: null,
   residenceStateId: null,
-  stateId: null, 
+  stateId: null,
   stateVehiculeId: null,
   vehicleLicensePlate: null,
   weight: null,

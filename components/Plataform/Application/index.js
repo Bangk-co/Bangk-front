@@ -265,7 +265,6 @@ const Application = ({ isMobile, isTablet }) => {
   };
 
   const handleBack = () => {
-    dispatch(setSelectedApplicationInformation({}));
     router.push("/plataforma/clientes/cliente");
   };
 

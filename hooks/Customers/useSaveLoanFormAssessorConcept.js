@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { axiosClient } from "../services/axiosInstance";
 
-const useUpdateLoanFormAssessorConcept = () => {
+const useSaveLoanFormAssessorConcept = () => {
   const mutation = useMutation(
     ({ loanApplicationId, formName, concept, comment }) => {
       return axiosClient.post(
@@ -12,4 +12,4 @@ const useUpdateLoanFormAssessorConcept = () => {
   return mutation;
 };
 
-export default useUpdateLoanFormAssessorConcept;
+export default useSaveLoanFormAssessorConcept;

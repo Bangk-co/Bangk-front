@@ -204,7 +204,6 @@ const Customer = ({ isMobile, isTablet }) => {
   }, [clientInfo, documentTypeOptions, genderOptions]);
 
   const handleBack = () => {
-    dispatch(setSelectedClientInformation({}));
     router.push("/plataforma/clientes");
   };
 

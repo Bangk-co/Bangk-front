@@ -154,6 +154,14 @@ export const PersonalData = ({
         "name"
       ),
     },
+    {
+      titleL:
+        "¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?",
+      descriptionL: personalInfo.isPublicPerson ? "Si" : "No",
+      titleR:
+        "¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?",
+      descriptionR: personalInfo.isPublicPerson ? "Si" : "No", //TODO update value
+    },
   ];
 
   const handleChange = (event) => {
@@ -266,24 +274,7 @@ export const PersonalData = ({
               </Col>
             </Row>
           ))}
-          <Col gap="10px" width="313.5px" m="16px 0 0 0">
-            <Text
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.sm}
-              color={theme.colors.neutralGray900}
-            >
-              ¿Eres o tienes familiares Públicamente Expuestos (Actores,
-              políticos, estrellas deportivas, etc...)?
-            </Text>
-            <Text
-              font={theme.fonts.family.primary}
-              size={theme.fonts.size.default2}
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-            >
-              {personalInfo.isPublicPerson ? "Si" : "No"}
-            </Text>
-          </Col>
+
           <Div
             width="100%"
             height="1px"
@@ -722,6 +713,28 @@ export const PersonalData = ({
               label="No"
               value={false}
               checked={!personalInfo.isPublicPerson}
+            />
+          </RadioGroup>
+          <RadioGroup
+            gap="5px"
+            name="isPublicPerson"
+            direction="row"
+            label={
+              "¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?"
+            }
+            labelSize={theme.fonts.size.sm}
+            value={personalInfo.isPublicPerson} //TODO update value
+            /* onChange={(e) => handleRadio(e, "isPublicPerson")} */
+          >
+            <Radio
+              label="Si"
+              value={true}
+              /* checked={personalInfo.isPublicPerson} */
+            />
+            <Radio
+              label="No"
+              value={false}
+              /* checked={!personalInfo.isPublicPerson} */
             />
           </RadioGroup>
           <Div

@@ -594,6 +594,7 @@ export const Record = ({
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
         loanApplicationId={applications?.selectedApplication?.loanApplicationId}
+        loanTypeName={dataLoanApplication?.data?.loanTypeName}
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios diligenciados"
         )}

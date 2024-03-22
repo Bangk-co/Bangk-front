@@ -33,6 +33,7 @@ export const DrawerValidateInfo = ({
   showDrawer,
   setShowDrawerValidateInfo,
   loanApplicationId,
+  loanTypeName,
   isValidated,
 }) => {
   const queryClient = useQueryClient();
@@ -562,6 +563,7 @@ export const DrawerValidateInfo = ({
           ? descriptionCondition[assessorConcept?.personalInfo?.concept]
           : "Verifica que los datos personales sean correctos",
     },
+
     {
       icon: iconCondition[assessorConcept?.financialInfo?.concept],
       title: "Datos financieros",
@@ -570,14 +572,21 @@ export const DrawerValidateInfo = ({
           ? descriptionCondition[assessorConcept?.financialInfo?.concept]
           : "Verifica que los datos personales sean correctos",
     },
-    {
-      icon: iconCondition[assessorConcept?.propertyInfo?.concept],
-      title: "Datos del inmueble",
-      description:
-        descriptionCondition[assessorConcept?.propertyInfo?.concept] !== null
-          ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
-          : "Verifica que los datos personales sean correctos",
-    },
+    loanTypeName === "Libre inversión"
+      ? null
+      : {
+          icon: iconCondition[assessorConcept?.propertyInfo?.concept],
+          title:
+            loanTypeName === "Hipotecario"
+              ? "Datos del inmueble"
+              : "Datos del vehículo",
+          //TODO change to vehicule
+          description:
+            descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
+            null
+              ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
+              : "Verifica que los datos personales sean correctos",
+        },
     {
       icon: iconCondition[assessorConcept?.healthInfo?.concept],
       title: "Datos de salud",
@@ -595,6 +604,7 @@ export const DrawerValidateInfo = ({
           : "Verifica que los datos personales sean correctos",
     },
   ];
+  const infoCardsFiltered = infoCards.filter((item) => item !== null);
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -706,6 +716,34 @@ export const DrawerValidateInfo = ({
     );
   };
 
+  const validateFormByType = () => {
+    switch (loanTypeName) {
+      case "Libre inversión":
+        return null;
+      case "Hipotecario":
+        return (
+          <PropertyData
+            key="propertyData"
+            assessorConcept={assessorConcept}
+            setAssessorConcept={setAssessorConcept}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            propertyInfo={propertyInfo}
+            setPropertyInfo={setPropertyInfo}
+            handleCancel={handleCancel}
+            errorsPropertyInfo={errorsPropertyInfo}
+            setErrorsPropertyInfo={setErrorsPropertyInfo}
+            handleSave={handleSave}
+            isLoadingSave={save.isLoading}
+            isLoadingContinue={saveConcept.isLoading}
+            handleContinue={handleContinue}
+            isValidated={isValidated}
+          />
+        );
+      case "Vehiculo":
+        return <Text>Vehiculo bien</Text>;
+    }
+  };
   const expandedCardData = [
     <PersonalData
       key="personalData"
@@ -744,23 +782,7 @@ export const DrawerValidateInfo = ({
       handleContinue={handleContinue}
       isValidated={isValidated}
     />,
-    <PropertyData
-      key="propertyData"
-      assessorConcept={assessorConcept}
-      setAssessorConcept={setAssessorConcept}
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-      propertyInfo={propertyInfo}
-      setPropertyInfo={setPropertyInfo}
-      handleCancel={handleCancel}
-      errorsPropertyInfo={errorsPropertyInfo}
-      setErrorsPropertyInfo={setErrorsPropertyInfo}
-      handleSave={handleSave}
-      isLoadingSave={save.isLoading}
-      isLoadingContinue={saveConcept.isLoading}
-      handleContinue={handleContinue}
-      isValidated={isValidated}
-    />,
+    validateFormByType(),
     <HealtData
       key="healthData"
       assessorConcept={assessorConcept}
@@ -796,6 +818,9 @@ export const DrawerValidateInfo = ({
       isValidated={isValidated}
     />,
   ];
+  const expandedCardDataFiltered = expandedCardData.filter(
+    (item) => item !== null
+  );
 
   return (
     <Drawer
@@ -816,7 +841,7 @@ export const DrawerValidateInfo = ({
             </Text>
           </Row>
           <Div direction="column" m="0 0 30px 0" gap="16px" p="0 0 16px 0">
-            {infoCards.map((card, indx) => (
+            {infoCardsFiltered.map((card, indx) => (
               <InfoCard
                 key={indx}
                 isExpanded={indx === expandedCardIndex}
@@ -858,7 +883,7 @@ export const DrawerValidateInfo = ({
                 >
                   {card.description}
                 </Text>
-                {expandedCardIndex === indx && expandedCardData[indx]}
+                {expandedCardIndex === indx && expandedCardDataFiltered[indx]}
               </InfoCard>
             ))}
           </Div>

@@ -66,12 +66,9 @@ export const HealtData = ({
     {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
-      description: getLabelFromValue(
-        healthInfo.diseases,
-        diseasesOptions,
-        "id",
-        "name"
-      ),
+      description:
+        getLabelFromValue(healthInfo.diseases, diseasesOptions, "id", "name") ||
+        "--",
     },
     {
       title:

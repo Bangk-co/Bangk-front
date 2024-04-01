@@ -16,6 +16,7 @@ import success from "@/assets/icons/successStepper.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
+import { setSelectedApplicationInformation } from "@/store/applications";
 import useSaveQuote from "@/hooks/Customers/useSaveQuote";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
@@ -38,6 +39,7 @@ export const Record = ({
   isSuccess,
   insurersOptions,
   quoteRate,
+  application,
 }) => {
   const dispatch = useDispatch();
   const { loanInfo } = useSelector((state) => state)?.clients;
@@ -378,7 +380,31 @@ export const Record = ({
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries(["clientInfo", actualInfo?.id]);
+            const newSelectedApplications = {
+              loanBalance: loanForm?.loanBalance,
+              bankName: banksOptions.find(
+                (ele) => ele.value === loanForm.bankId
+              )?.label,
+              loanTypeName: loanTypeOptions.find(
+                (ele) => ele.value === loanForm.loanTypeId
+              )?.label,
+              loanApplicationId: loanForm?.loanApplicationId,
+              reviewerName: application?.reviewerName,
+              stateName: application?.stateName,
+              iconsBanksUrl: application?.iconsBanksUrl, // TODO update url from data?.data?.loanApplication.iconBankUrl
+
+              creationDate: application?.creationDate,
+              clientId: application?.clientId,
+              clientName: userForm?.name,
+              clientLastName: userForm?.lastName,
+            };
+            dispatch(
+              setSelectedApplicationInformation(newSelectedApplications)
+            );
+            queryClient.invalidateQueries([
+              "clientInfo",
+              application?.clientId,
+            ]);
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {

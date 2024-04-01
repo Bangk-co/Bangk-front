@@ -52,6 +52,7 @@ const CreationSuceess = ({ isMobile }) => {
               mobileWidth={"100%"}
               height={"40px"}
               radius={"40px"}
+              onClick={() => router.push("/")}
             >
               Ver otras ofertas de Bangk
             </Button>

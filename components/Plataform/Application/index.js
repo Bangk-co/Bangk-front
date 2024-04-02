@@ -294,7 +294,11 @@ const Application = ({ isMobile, isTablet }) => {
             Volver a solicitudes
           </Text>
         </Row>
-        <ApplicationInfo application={applications?.selectedApplication} />
+        <ApplicationInfo
+          application={applications?.selectedApplication}
+          dataLoanInfo={dataLoanInfo?.data?.loanApplication}
+          banksOptions={banksOptions}
+        />
       </HeaderInfo>
       <Col p="0 24px 24px 24px">
         <Row>

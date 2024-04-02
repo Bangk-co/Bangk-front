@@ -371,40 +371,57 @@ export const Record = ({
   };
 
   const handleSave = (close) => {
-    if (JSON.stringify(prevUserForm) !== JSON.stringify(userForm)) {
-      updateClient.reset();
-      updateClient.mutate(
-        {
-          clientId: clientId,
-          formData: { ...userForm },
-        },
+    if (Object.values(userForm).every((value) => value !== null)) {
+      if (JSON.stringify(prevUserForm) !== JSON.stringify(userForm)) {
+        updateClient.reset();
+        updateClient.mutate(
+          {
+            clientId: clientId,
+            formData: { ...userForm },
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries([
+                "clientInfo",
+                application?.clientId,
+              ]);
+            },
+            onError: (err) => {
+              err.response.data.errors.map((error) => {
+                toast.error(error);
+              });
+            },
+          }
+        );
+      }
+      updateLoan.reset();
+      updateLoan.mutate(
+        { formData: { ...loanForm } },
         {
           onSuccess: () => {
-            const newSelectedApplications = {
-              loanBalance: loanForm?.loanBalance,
-              bankName: banksOptions.find(
-                (ele) => ele.value === loanForm.bankId
-              )?.label,
-              loanTypeName: loanTypeOptions.find(
-                (ele) => ele.value === loanForm.loanTypeId
-              )?.label,
-              loanApplicationId: loanForm?.loanApplicationId,
-              reviewerName: application?.reviewerName,
-              stateName: application?.stateName,
-              iconsBanksUrl: application?.iconsBanksUrl, // TODO update url from data?.data?.loanApplication.iconBankUrl
-
-              creationDate: application?.creationDate,
-              clientId: application?.clientId,
-              clientName: userForm?.name,
-              clientLastName: userForm?.lastName,
-            };
-            dispatch(
-              setSelectedApplicationInformation(newSelectedApplications)
-            );
-            queryClient.invalidateQueries([
-              "clientInfo",
-              application?.clientId,
-            ]);
+            if (close) {
+              toast.custom(
+                <ToastSuccess
+                  message={"Datos del cliente validados con éxito"}
+                />,
+                { duration: 1000 }
+              );
+              setShowDrawer(false);
+              queryClient.invalidateQueries(["historyList"]);
+              queryClient.invalidateQueries(["LoanInformation"]);
+            } else {
+              dispatch(
+                setLoanInfo({
+                  loanBalance: loanForm.loanBalance,
+                  monthlyCostInsurance: loanForm.monthlyCostInsurance,
+                  loanType: loanTypeOptions.find(
+                    (ele) => ele.value === loanForm.loanTypeId
+                  )?.label,
+                })
+              );
+              setShowDrawer(false);
+              setShowDrawerQuote(true);
+            }
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {
@@ -414,41 +431,6 @@ export const Record = ({
         }
       );
     }
-    updateLoan.reset();
-    updateLoan.mutate(
-      { formData: { ...loanForm } },
-      {
-        onSuccess: () => {
-          if (close) {
-            toast.custom(
-              <ToastSuccess
-                message={"Datos del cliente validados con éxito"}
-              />,
-              { duration: 1000 }
-            );
-            setShowDrawer(false);
-            queryClient.invalidateQueries(["historyList"]);
-          } else {
-            dispatch(
-              setLoanInfo({
-                loanBalance: loanForm.loanBalance,
-                monthlyCostInsurance: loanForm.monthlyCostInsurance,
-                loanType: loanTypeOptions.find(
-                  (ele) => ele.value === loanForm.loanTypeId
-                )?.label,
-              })
-            );
-            setShowDrawer(false);
-            setShowDrawerQuote(true);
-          }
-        },
-        onError: (err) => {
-          err.response.data.errors.map((error) => {
-            toast.error(error);
-          });
-        },
-      }
-    );
   };
 
   const handleDownload = () => {

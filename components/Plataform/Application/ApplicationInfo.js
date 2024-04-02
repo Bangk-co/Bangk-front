@@ -7,7 +7,7 @@ import {
   renderDocumentStateDiv,
 } from "@/utilities/helpers";
 
-const ApplicationInfo = ({ application }) => {
+const ApplicationInfo = ({ application, dataLoanInfo, banksOptions }) => {
   return (
     <Col width="100%" height="100%">
       <Row>
@@ -36,7 +36,7 @@ const ApplicationInfo = ({ application }) => {
             mt="8px"
             mb="8px"
           >
-            {`${application.clientName} ${application.clientLastName}`}
+            {`${dataLoanInfo?.clientName} ${dataLoanInfo?.clientLastName}`}
           </Text>
         </Col>
         <Col width="400px" align="left" gap="8px">
@@ -92,7 +92,7 @@ const ApplicationInfo = ({ application }) => {
             >
               {application.iconsBanksUrl && (
                 <Image
-                  src={application.iconsBanksUrl}
+                  src={dataLoanInfo?.iconsBanksUrl}
                   alt="bankLogo"
                   width={24}
                   height={24}
@@ -107,7 +107,10 @@ const ApplicationInfo = ({ application }) => {
               mt="8px"
               mb="8px"
             >
-              {application.bankName}
+              {
+                banksOptions.find((ele) => ele.value === dataLoanInfo?.bankId)
+                  ?.label
+              }
             </Text>
           </Row>
         </Col>
@@ -127,7 +130,7 @@ const ApplicationInfo = ({ application }) => {
             mt="8px"
             mb="8px"
           >
-            {formattedPrice(application.loanBalance)}
+            {formattedPrice(dataLoanInfo?.loanBalance)}
           </Text>
         </Col>
         <Col width="400px" align="left" gap="8px">

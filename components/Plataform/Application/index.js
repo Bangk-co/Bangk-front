@@ -61,6 +61,7 @@ const Application = ({ isMobile, isTablet }) => {
   const loanInfo = useGetLoanInfo(
     applications?.selectedApplication?.loanApplicationId
   );
+
   const {
     data: dataLoanInfo,
     isSuccess: isSuccessLoanInfo,
@@ -293,7 +294,11 @@ const Application = ({ isMobile, isTablet }) => {
             Volver a solicitudes
           </Text>
         </Row>
-        <ApplicationInfo application={applications?.selectedApplication} />
+        <ApplicationInfo
+          application={applications?.selectedApplication}
+          dataLoanInfo={dataLoanInfo?.data?.loanApplication}
+          banksOptions={banksOptions}
+        />
       </HeaderInfo>
       <Col p="0 24px 24px 24px">
         <Row>
@@ -325,6 +330,7 @@ const Application = ({ isMobile, isTablet }) => {
             isSuccess={isSuccessLoanInfo}
             insurersOptions={insurersOptions}
             quoteRate={quoteRate}
+            application={applications?.selectedApplication}
           />
         )}
         {selectedTab === 1 && <Text>Formularios</Text>}

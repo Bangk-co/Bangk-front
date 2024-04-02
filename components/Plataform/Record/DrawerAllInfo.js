@@ -235,6 +235,12 @@ export const DrawerAllInfo = ({
                   {...textFieldProps}
                   border={theme.colors.gray500}
                   value={userForm?.documentIssueDate}
+                  error={userForm?.documentIssueDate === null}
+                  helper={
+                    userForm?.documentIssueDate === null
+                      ? "Campo requerido"
+                      : ""
+                  }
                   onChange={(event) =>
                     handleChangeDate(event, "documentIssueDate")
                   }

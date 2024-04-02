@@ -16,6 +16,7 @@ import success from "@/assets/icons/successStepper.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
+import { setSelectedApplicationInformation } from "@/store/applications";
 import useSaveQuote from "@/hooks/Customers/useSaveQuote";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
@@ -38,6 +39,7 @@ export const Record = ({
   isSuccess,
   insurersOptions,
   quoteRate,
+  application,
 }) => {
   const dispatch = useDispatch();
   const { loanInfo } = useSelector((state) => state)?.clients;
@@ -369,16 +371,57 @@ export const Record = ({
   };
 
   const handleSave = (close) => {
-    if (JSON.stringify(prevUserForm) !== JSON.stringify(userForm)) {
-      updateClient.reset();
-      updateClient.mutate(
-        {
-          clientId: clientId,
-          formData: { ...userForm },
-        },
+    if (Object.values(userForm).every((value) => value !== null)) {
+      if (JSON.stringify(prevUserForm) !== JSON.stringify(userForm)) {
+        updateClient.reset();
+        updateClient.mutate(
+          {
+            clientId: clientId,
+            formData: { ...userForm },
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries([
+                "clientInfo",
+                application?.clientId,
+              ]);
+            },
+            onError: (err) => {
+              err.response.data.errors.map((error) => {
+                toast.error(error);
+              });
+            },
+          }
+        );
+      }
+      updateLoan.reset();
+      updateLoan.mutate(
+        { formData: { ...loanForm } },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries(["clientInfo", actualInfo?.id]);
+            if (close) {
+              toast.custom(
+                <ToastSuccess
+                  message={"Datos del cliente validados con éxito"}
+                />,
+                { duration: 1000 }
+              );
+              setShowDrawer(false);
+              queryClient.invalidateQueries(["historyList"]);
+              queryClient.invalidateQueries(["LoanInformation"]);
+            } else {
+              dispatch(
+                setLoanInfo({
+                  loanBalance: loanForm.loanBalance,
+                  monthlyCostInsurance: loanForm.monthlyCostInsurance,
+                  loanType: loanTypeOptions.find(
+                    (ele) => ele.value === loanForm.loanTypeId
+                  )?.label,
+                })
+              );
+              setShowDrawer(false);
+              setShowDrawerQuote(true);
+            }
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {
@@ -388,41 +431,6 @@ export const Record = ({
         }
       );
     }
-    updateLoan.reset();
-    updateLoan.mutate(
-      { formData: { ...loanForm } },
-      {
-        onSuccess: () => {
-          if (close) {
-            toast.custom(
-              <ToastSuccess
-                message={"Datos del cliente validados con éxito"}
-              />,
-              { duration: 1000 }
-            );
-            setShowDrawer(false);
-            queryClient.invalidateQueries(["historyList"]);
-          } else {
-            dispatch(
-              setLoanInfo({
-                loanBalance: loanForm.loanBalance,
-                monthlyCostInsurance: loanForm.monthlyCostInsurance,
-                loanType: loanTypeOptions.find(
-                  (ele) => ele.value === loanForm.loanTypeId
-                )?.label,
-              })
-            );
-            setShowDrawer(false);
-            setShowDrawerQuote(true);
-          }
-        },
-        onError: (err) => {
-          err.response.data.errors.map((error) => {
-            toast.error(error);
-          });
-        },
-      }
-    );
   };
 
   const handleDownload = () => {
@@ -594,6 +602,7 @@ export const Record = ({
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
         loanApplicationId={applications?.selectedApplication?.loanApplicationId}
+        loanTypeName={dataLoanApplication?.data?.loanTypeName}
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios diligenciados"
         )}

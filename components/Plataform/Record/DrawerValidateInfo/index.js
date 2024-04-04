@@ -76,6 +76,7 @@ export const DrawerValidateInfo = ({
     occupation: "",
     occupationActivityId: null,
     isPublicPerson: null,
+    hasBondPublicPerson: null,
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
@@ -118,6 +119,10 @@ export const DrawerValidateInfo = ({
       message: "",
     },
     isPublicPerson: {
+      error: false,
+      message: "",
+    },
+    hasBondPublicPerson: {
       error: false,
       message: "",
     },
@@ -329,6 +334,7 @@ export const DrawerValidateInfo = ({
   const loanInsurancePolicyData =
     useGetLoanInsurancePolicyInfo(loanApplicationId);
   const { data, isLoading } = loanInsurancePolicyData;
+  console.log("data", data);
   useEffect(() => {
     if (data?.data?.loanInsurancePolicies) {
       setPersonalInfo({
@@ -345,6 +351,8 @@ export const DrawerValidateInfo = ({
         occupationActivityId:
           data?.data?.loanInsurancePolicies.occupationActivityId,
         isPublicPerson: data?.data?.loanInsurancePolicies.isPublicPerson,
+        hasBondPublicPerson:
+          data?.data?.loanInsurancePolicies.hasBondPublicPerson,
         residenceCountryId:
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,

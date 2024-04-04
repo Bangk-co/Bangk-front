@@ -80,6 +80,7 @@ export const validateEditPersonalInfo = Joi.object({
   occupation: Joi.string().required(),
   occupationActivityId: Joi.number().required(),
   isPublicPerson: Joi.bool().required(),
+  hasBondPublicPerson: Joi.bool().required(),
   residenceCountryId: Joi.number().required(),
   residenceStateId: Joi.number().required(),
   residenceCityId: Joi.number().required(),

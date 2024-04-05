@@ -275,6 +275,7 @@ export const DrawerValidateInfo = ({
     convicted: null,
     lifeEnsure: null,
     beneficiaries: null,
+    beneficiary: [],
   });
   const initialErrorAdditionalInfo = {
     convicted: {
@@ -384,6 +385,8 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
+        beneficiary:
+          [] /*TODO add beneficiary data?.data?.loanInsurancePolicies.beneficiary */,
       });
       setVehihuleInfo({
         countryCodePhoneId:

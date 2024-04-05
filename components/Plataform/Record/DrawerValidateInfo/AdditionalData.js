@@ -81,10 +81,9 @@ export const AdditionalData = ({
     {
       title:
         "*En caso de que faltes y exista algún remanente después de pagar el saldo total de tu deuda, puedes escoger quién o quienes pueden recibirlo por parte de la aseguradora",
-      description:
-        additionalInfo.beneficiaries.length === 0
-          ? "Mis herederos legales"
-          : "Designado por mi",
+      description: additionalInfo.beneficiaries
+        ? "Mis herederos legales"
+        : "Designado por mi",
     },
   ];
 
@@ -99,39 +98,39 @@ export const AdditionalData = ({
         },
       }));
     } else {
-      const updatedBeneficiaries = [...additionalInfo.beneficiaries];
+      const updatedBeneficiaries = [...additionalInfo.beneficiary];
       updatedBeneficiaries[index] = {
         ...updatedBeneficiaries[index],
         [id]: value,
       };
       setAdditionalInfo((prevState) => ({
         ...prevState,
-        beneficiaries: updatedBeneficiaries,
+        beneficiary: updatedBeneficiaries,
       }));
     }
   };
 
   const handleSelect = (event, index) => {
     const { value, name } = event.target;
-    const updatedBeneficiaries = [...additionalInfo.beneficiaries];
+    const updatedBeneficiaries = [...additionalInfo.beneficiary];
     updatedBeneficiaries[index] = {
       ...updatedBeneficiaries[index],
       [name]: value,
     };
     setAdditionalInfo((prevState) => ({
       ...prevState,
-      beneficiaries: updatedBeneficiaries,
+      beneficiary: updatedBeneficiaries,
     }));
   };
 
   const addBeneficiary = () => {
     setAdditionalInfo((prevState) => ({
       ...prevState,
-      beneficiaries: [
-        ...prevState.beneficiaries,
+      beneficiary: [
+        ...prevState.beneficiary,
         {
-          id: null,
-          loanInsurancePolicyId: loanApplicationId,
+          id: 0,
+          loanInsurancePolicyId: 0,
           name: "",
           identificationTypeId: null,
           identificationNumber: "",
@@ -167,10 +166,14 @@ export const AdditionalData = ({
         }));
         break;
       case "beneficiaries":
+        setAdditionalInfo((prevInfo) => ({
+          ...prevInfo,
+          beneficiaries: value === "true",
+        }));
         if (value === "true") {
           setAdditionalInfo((prevState) => ({
             ...prevState,
-            beneficiaries: [],
+            beneficiary: [],
           }));
         } else {
           addBeneficiary();
@@ -178,39 +181,6 @@ export const AdditionalData = ({
         break;
     }
   };
-
-  const beneficieriesToDelete = [
-    {
-      id: null,
-      loanInsurancePolicyId: 46,
-      name: "Maria solano",
-      identificationTypeId: 77,
-      identificationNumber: "12345610",
-      relationshipId: 688,
-      percentInherit: "50",
-      creationDate: "2024-04-04T19:46:12.017Z",
-    },
-    {
-      id: null,
-      loanInsurancePolicyId: 46,
-      name: "Maria solano222222",
-      identificationTypeId: 77,
-      identificationNumber: "12345610",
-      relationshipId: 688,
-      percentInherit: "50",
-      creationDate: "2024-04-04T19:46:12.017Z",
-    },
-    {
-      id: null,
-      loanInsurancePolicyId: 46,
-      name: "Maria solano33333",
-      identificationTypeId: 77,
-      identificationNumber: "12345610",
-      relationshipId: 688,
-      percentInherit: "50",
-      creationDate: "2024-04-04T19:46:12.017Z",
-    },
-  ];
 
   return (
     <Col gap="16px" m="24px 0 0 0">
@@ -236,9 +206,9 @@ export const AdditionalData = ({
             </Col>
           ))}
 
-          {additionalInfo.beneficiaries.length > 0 && (
+          {additionalInfo.beneficiary.length > 0 && (
             <Grid container spacing={2}>
-              {additionalInfo.beneficiaries.map((beneficiary, index) => (
+              {additionalInfo.beneficiary.map((benefic, index) => (
                 <Grid item xs={6} key={index}>
                   <Col>
                     <Text
@@ -254,7 +224,7 @@ export const AdditionalData = ({
                       weight={theme.fonts.weight.regular}
                       color={theme.colors.neutralGray900}
                     >
-                      {beneficiary.name}
+                      {benefic.name}
                     </Text>
                     <Text
                       font={theme.fonts.family.primary}
@@ -264,12 +234,12 @@ export const AdditionalData = ({
                     >
                       {`${documentTypeAbbreviation(
                         getLabelFromValue(
-                          beneficiary.identificationTypeId,
+                          benefic.identificationTypeId,
                           documentTypeOptions,
                           "id",
                           "name"
                         )
-                      )} ${beneficiary.identificationNumber}`}
+                      )} ${benefic.identificationNumber}`}
                     </Text>
                     <Text
                       font={theme.fonts.family.primary}
@@ -278,7 +248,7 @@ export const AdditionalData = ({
                       color={theme.colors.neutralGray900}
                     >
                       {`Parentesco: ${getLabelFromValue(
-                        beneficiary.relationshipId,
+                        benefic.relationshipId,
                         relationshipOptions,
                         "id",
                         "name"
@@ -290,7 +260,7 @@ export const AdditionalData = ({
                       weight={theme.fonts.weight.regular}
                       color={theme.colors.neutralGray900}
                     >
-                      {`Porcentaje a heredar: ${beneficiary.percentInherit}%`}
+                      {`Porcentaje a heredar: ${benefic.percentInherit}%`}
                     </Text>
                   </Col>
                 </Grid>
@@ -467,13 +437,13 @@ export const AdditionalData = ({
               "*En caso de que faltes y exista algún remanente después de pagar el saldo total de tu deuda, puedes escoger quién o quienes pueden recibirlo por parte de la aseguradora"
             }
             labelSize={theme.fonts.size.sm}
-            value={additionalInfo.beneficiaries.length === 0}
+            value={additionalInfo.beneficiaries}
             onChange={(e) => handleRadio(e, "beneficiaries")}
           >
             <Radio label="Mis herederos legales" value={true} />
             <Radio label="Designado por mi" value={false} />
           </RadioGroup>
-          {additionalInfo.beneficiaries.map((beneficiary, index) => (
+          {additionalInfo.beneficiary.map((benefic, index) => (
             <Col gap="8px" key={index}>
               <Text
                 font={theme.fonts.family.primaryBold}
@@ -494,7 +464,7 @@ export const AdditionalData = ({
                 font={theme.fonts.family.primary}
                 size={theme.fonts.size.default2}
                 border={theme.colors.neutralGray500}
-                value={beneficiary.name}
+                value={benefic.name}
                 onChange={(event) => handleChange(event, index)}
               />
 
@@ -514,7 +484,7 @@ export const AdditionalData = ({
                     border={theme.colors.neutralGray500}
                     notFocused={true}
                     placeholderColor={theme.colors.neutralGray500}
-                    value={beneficiary.identificationTypeId}
+                    value={benefic.identificationTypeId}
                     onChange={(event) => handleSelect(event, index)}
                   >
                     {documentTypeOptions.map((ele, indx) => (
@@ -537,7 +507,7 @@ export const AdditionalData = ({
                   font={theme.fonts.family.primary}
                   size={theme.fonts.size.default2}
                   border={theme.colors.neutralGray500}
-                  value={beneficiary.identificationNumber}
+                  value={benefic.identificationNumber}
                   onChange={(event) => handleChange(event, index)}
                 />
               </Row>
@@ -556,7 +526,7 @@ export const AdditionalData = ({
                   border={theme.colors.neutralGray500}
                   notFocused={true}
                   placeholderColor={theme.colors.neutralGray500}
-                  value={beneficiary.relationshipId}
+                  value={benefic.relationshipId}
                   onChange={(event) => handleSelect(event, index)}
                 >
                   {relationshipOptions.map((ele, indx) => (
@@ -578,14 +548,14 @@ export const AdditionalData = ({
                   font={theme.fonts.family.primary}
                   size={theme.fonts.size.default2}
                   border={theme.colors.neutralGray500}
-                  value={beneficiary.percentInherit}
+                  value={benefic.percentInherit}
                   onChange={(event) => handleChange(event, index)}
                 />
               </Row>
             </Col>
           ))}
-          {additionalInfo.beneficiaries.length > 0 &&
-            additionalInfo.beneficiaries.length < 7 && (
+          {additionalInfo.beneficiary.length > 0 &&
+            additionalInfo.beneficiary.length < 7 && (
               <Row justify="right">
                 <Link
                   font={theme.fonts.family.primaryMedium}

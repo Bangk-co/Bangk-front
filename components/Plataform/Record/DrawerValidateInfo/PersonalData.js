@@ -160,7 +160,7 @@ export const PersonalData = ({
       descriptionL: personalInfo.isPublicPerson ? "Si" : "No",
       titleR:
         "¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?",
-      descriptionR: personalInfo.isPublicPerson ? "Si" : "No", //TODO update value
+      descriptionR: personalInfo.hasBondPublicPerson ? "Si" : "No",
     },
   ];
 
@@ -207,6 +207,7 @@ export const PersonalData = ({
 
   const handleRadio = (event, name) => {
     const { value } = event.target;
+    const newErrorForm = { ...errorsPersonalInfo };
     switch (name) {
       case "correctInfo":
         setAssessorConcept((prevState) => ({
@@ -218,7 +219,6 @@ export const PersonalData = ({
         }));
         break;
       case "isPublicPerson":
-        const newErrorForm = { ...errorsPersonalInfo };
         newErrorForm[name].error = false;
         newErrorForm[name].message = "";
         setErrorsPersonalInfo(newErrorForm);
@@ -227,6 +227,17 @@ export const PersonalData = ({
           ...prevInfo,
           isPublicPerson: value === "true",
         }));
+        break;
+      case "hasBondPublicPerson":
+        newErrorForm[name].error = false;
+        newErrorForm[name].message = "";
+        setErrorsPersonalInfo(newErrorForm);
+
+        setPersonalInfo((prevInfo) => ({
+          ...prevInfo,
+          hasBondPublicPerson: value === "true",
+        }));
+        break;
       default:
         break;
     }
@@ -717,24 +728,24 @@ export const PersonalData = ({
           </RadioGroup>
           <RadioGroup
             gap="5px"
-            name="isPublicPerson"
+            name="hasBondPublicPerson"
             direction="row"
             label={
               "¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?"
             }
             labelSize={theme.fonts.size.sm}
-            value={personalInfo.isPublicPerson} //TODO update value
-            /* onChange={(e) => handleRadio(e, "isPublicPerson")} */
+            value={personalInfo.hasBondPublicPerson}
+            onChange={(e) => handleRadio(e, "hasBondPublicPerson")}
           >
             <Radio
               label="Si"
               value={true}
-              /* checked={personalInfo.isPublicPerson} */
+              checked={personalInfo.hasBondPublicPerson}
             />
             <Radio
               label="No"
               value={false}
-              /* checked={!personalInfo.isPublicPerson} */
+              checked={!personalInfo.hasBondPublicPerson}
             />
           </RadioGroup>
           <Div

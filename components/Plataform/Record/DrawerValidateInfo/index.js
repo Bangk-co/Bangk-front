@@ -76,6 +76,7 @@ export const DrawerValidateInfo = ({
     occupation: "",
     occupationActivityId: null,
     isPublicPerson: null,
+    hasBondPublicPerson: null,
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
@@ -118,6 +119,10 @@ export const DrawerValidateInfo = ({
       message: "",
     },
     isPublicPerson: {
+      error: false,
+      message: "",
+    },
+    hasBondPublicPerson: {
       error: false,
       message: "",
     },
@@ -270,9 +275,7 @@ export const DrawerValidateInfo = ({
     convicted: null,
     lifeEnsure: null,
     beneficiaries: null,
-    beneficiaryName: null,
-    beneficiaryIdentificationTypeId: 76,
-    beneficiaryIdentificationNumber: null,
+    beneficiary: [],
   });
   const initialErrorAdditionalInfo = {
     convicted: {
@@ -284,18 +287,6 @@ export const DrawerValidateInfo = ({
       message: "",
     },
     beneficiaries: {
-      error: false,
-      message: "",
-    },
-    beneficiaryName: {
-      error: false,
-      message: "",
-    },
-    beneficiaryIdentificationTypeId: {
-      error: false,
-      message: "",
-    },
-    beneficiaryIdentificationNumber: {
       error: false,
       message: "",
     },
@@ -345,6 +336,8 @@ export const DrawerValidateInfo = ({
         occupationActivityId:
           data?.data?.loanInsurancePolicies.occupationActivityId,
         isPublicPerson: data?.data?.loanInsurancePolicies.isPublicPerson,
+        hasBondPublicPerson:
+          data?.data?.loanInsurancePolicies.hasBondPublicPerson,
         residenceCountryId:
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
@@ -392,10 +385,8 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
-        beneficiaryName: data?.data?.loanInsurancePolicies.beneficiaryName,
-        beneficiaryIdentificationTypeId: 76,
-        beneficiaryIdentificationNumber:
-          data?.data?.loanInsurancePolicies.beneficiaryIdentificationNumber,
+        beneficiary:
+          [] /*TODO add beneficiary data?.data?.loanInsurancePolicies.beneficiary */,
       });
       setVehihuleInfo({
         countryCodePhoneId:
@@ -816,6 +807,7 @@ export const DrawerValidateInfo = ({
       isLoadingContinue={saveConcept.isLoading}
       handleContinue={handleContinue}
       isValidated={isValidated}
+      loanApplicationId={loanApplicationId}
     />,
   ];
   const expandedCardDataFiltered = expandedCardData.filter(

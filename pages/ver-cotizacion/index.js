@@ -4,7 +4,7 @@ import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import { setValidCode } from "@/store/balance";
+import { setEmailStore, setValidCode } from "@/store/balance";
 import { ValidateInfo } from "@/components/ViewQuote/ValidateInfo";
 import { ValidateInfoMobile } from "@/components/ViewQuote/ValidateInfoMobile";
 import { setSelectedRequestInformation } from "@/store/requests";
@@ -29,6 +29,7 @@ const ValidateIdentity = ({ isMobile, isTablet }) => {
     reSendCode.mutate(email, {
       onSuccess: (res) => {
         dispatch(setValidCode(res.data.code));
+        dispatch(setEmailStore(email))
         router.push(`/validacion-identidad?source=quote`);
       },
       onError: (err) => {

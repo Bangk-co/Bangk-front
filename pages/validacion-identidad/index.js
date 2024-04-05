@@ -23,14 +23,14 @@ import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import toast from "react-hot-toast";
-import { setValidCode } from "@/store/balance";
+import { setEmailStore, setValidCode } from "@/store/balance";
 
 const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
   const router = useRouter();
   const dispatch = useDispatch()
   const { source } = router.query;
-  const { userInfo, validCode } = useSelector((state) => state)?.balance;
+  const { userInfo, validCode, email: emailStore } = useSelector((state) => state)?.balance;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
     { id: "first", value: "" },
@@ -112,8 +112,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   };
 
   const handleResendCode = () => {
+    const email = source === "quote" ? emailStore : userInfo.email;
     reSendCode.reset();
-    reSendCode.mutate(userInfo.email, {
+    reSendCode.mutate(email, {
       onSuccess: (res) => {
         dispatch(setValidCode(res.data.code))
         setIsCodeSuccess(null);
@@ -152,6 +153,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const handleContinue = () => {
     if (source === "quote") {
       router.push("/ver-cotizacion/informacion-cotizacion");
+      dispatch(setEmailStore(""))
     } else {
       router.push("/cotiza-tu-ahorro/tu-credito");
     }

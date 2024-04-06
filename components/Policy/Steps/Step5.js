@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Div, Text } from "@/styles/Common";
+import { Div, Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem } from "@mui/material";
 import { ColForm, WrapperAlert } from "@/styles/Policy";
@@ -20,6 +20,7 @@ export const Step5 = ({
   formInfo,
   setFormInfo,
   documentTypeOptions,
+  relationshipsOptions
 }) => {
   const [disabledButton, setDisabledButton] = useState(false)
   const inputsProps = {
@@ -65,6 +66,15 @@ export const Step5 = ({
     setFormInfo(newInfo)
   }
 
+  const handleChangePercentage = (event, index) => {
+    const { id, value } = event.target
+    const newInfo = { ...formInfo }
+    const newBeneficiary = [...newInfo.beneficiary]
+
+    newBeneficiary[index][id] = value.replace(/[^\d.]/g, "");
+    setFormInfo(newInfo)
+  };
+  
   const handleSelect = (event, index) => {
     const { name, value } = event.target
     const newInfo = { ...formInfo }
@@ -85,8 +95,8 @@ export const Step5 = ({
       setFormInfo({
         ...newInfo, 
         beneficiary: [{
-          id: 1,
-          loanInsurancePolicyId: null,
+          id: 0,
+          loanInsurancePolicyId: 0,
           name: "",
           lastName: "",
           identificationTypeId: 76,
@@ -105,8 +115,8 @@ export const Step5 = ({
       beneficiary: [
         ...newInfo.beneficiary,
         {
-          id: newInfo.beneficiary.length + 1,
-          loanInsurancePolicyId: null,
+          id: 0,
+          loanInsurancePolicyId: 0,
           name: "",
           lastName: "",
           identificationTypeId: 76,
@@ -117,8 +127,6 @@ export const Step5 = ({
       ]
     })
   }
-
-  console.log("-----", formInfo)
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -301,8 +309,18 @@ export const Step5 = ({
                       name="relationshipId"
                       value={ele.relationshipId}
                       onChange={(e) => handleSelect(e, indx)}
+                      displayEmpty
+                      renderValue={(selected) => {
+                        if (selected === null) {
+                          return <Placeholder>Seleccionar parentesco</Placeholder>
+                        } else {
+                          return relationshipsOptions.find((ele) => ele.id === selected)
+                            ? relationshipsOptions.find((ele) => ele.id === selected).name
+                            : null
+                        }
+                      }}
                     >
-                      {documentTypeOptions.map((ele, indx) => (
+                      {relationshipsOptions.map((ele, indx) => (
                         <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
                       ))}
                     </Select>
@@ -313,15 +331,15 @@ export const Step5 = ({
                       label={"Porcentaje a heredar (1 a 100%)*"}
                       width={"100%"}
                       placeholder={"Escribir porcentaje"}
-                      id="ipercentInherit"
-                      value={ele.ipercentInherit}
+                      id="percentInherit"
+                      value={ele.percentInherit}
                       inputProps={{
-                        maxLength: 3,
-                        pattern: "\\d*",
+                        maxLength: 5, 
+                        pattern: "\\d*\\.?\\d*", 
                         inputMode: "numeric"
                       }}
                       suffix={<Image alt="percentage" src={percentage} />}
-                      onChange={(e) => handleChangeNumber(e, indx)}
+                      onChange={(e) => handleChangePercentage(e, indx)}
                     />
                   </Grid>
                 </Grid>

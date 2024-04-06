@@ -80,6 +80,7 @@ export const validateEditPersonalInfo = Joi.object({
   occupation: Joi.string().required(),
   occupationActivityId: Joi.number().required(),
   isPublicPerson: Joi.bool().required(),
+  hasBondPublicPerson: Joi.bool().required(),
   residenceCountryId: Joi.number().required(),
   residenceStateId: Joi.number().required(),
   residenceCityId: Joi.number().required(),
@@ -131,8 +132,6 @@ export const validateEditAdditionalInfo = Joi.object({
   convicted: Joi.bool().required(),
   lifeEnsure: Joi.bool().required(),
   beneficiaries: Joi.bool().required(),
-  beneficiaryName: Joi.string().allow("", null),
-  beneficiaryIdentificationTypeId: Joi.number().allow(null),
-  beneficiaryIdentificationNumber: Joi.string().allow("", null),
+  beneficiary: Joi.array().required(),
   plannedMedicalProcidureMoreInfo: Joi.string().allow("", null),
 });

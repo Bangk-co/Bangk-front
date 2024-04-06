@@ -19,6 +19,7 @@ export const slice = createSlice({
       occupation: null,
       occupationActivityId: null,
       isPublicPerson: null,
+      hasBondPublicPerson: null,
       residenceCityId: null,
       monthlyIncome: null,
       monthlyExpenses: null,
@@ -32,7 +33,6 @@ export const slice = createSlice({
       disability: null,
       lifeEnsure: null,
       convicted: null,
-      beneficiaries: null,
       incomeOrigin: null,
       basementNumber: null,
       apartmentNumber: null,
@@ -49,9 +49,8 @@ export const slice = createSlice({
       diseasesMoreInfo: null,
       plannedMedicalProcidureMoreInfo: null,
       disabilityMoreInfo: null,
-      beneficiaryName: null,
-      beneficiaryIdentificationTypeId: null,
-      beneficiaryIdentificationNumber: null,
+      beneficiaries: null,
+      beneficiary: [],
       loanBalance: null,
       monthlyCostInsurance: null
     }

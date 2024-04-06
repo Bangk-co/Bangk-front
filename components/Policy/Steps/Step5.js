@@ -1,12 +1,19 @@
-import React from "react";
-import { Text } from "@/styles/Common";
+import React, { useEffect, useState } from "react";
+import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem } from "@mui/material";
-import { ColForm } from "@/styles/Policy";
+import { ColForm, WrapperAlert } from "@/styles/Policy";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
 import { TextField } from "@/components/Common/TextField";
 import { Select } from "@/components/Common/Select";
+import info from "../../../assets/icons/info.svg"
+import Image from "next/image";
+import percentage from "../../../assets/icons/percentage-small.svg"
+import addUser from "../../../assets/icons/add-user.svg"
+import addUserDisable from "../../../assets/icons/add-user-disable.svg"
+import { Link } from "@/components/Common/Link";
+
 
 export const Step5 = ({
   isMobile,
@@ -14,6 +21,7 @@ export const Step5 = ({
   setFormInfo,
   documentTypeOptions,
 }) => {
+  const [disabledButton, setDisabledButton] = useState(false)
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -31,27 +39,38 @@ export const Step5 = ({
     placeholderColor: theme.colors.neutralGray500,
   }
 
-  const handleChangeText = (event) => {
+  useEffect(() => {
+    if (formInfo.beneficiary.length === 7) {
+      setDisabledButton(true)
+    } else {
+      setDisabledButton(false)
+    }
+  }, [formInfo])
+
+  const handleChangeText = (event, index) => {
     const { id, value } = event.target
     const newInfo = { ...formInfo }
+    const newBeneficiary = [...newInfo.beneficiary]
 
-    newInfo[id] = value
+    newBeneficiary[index][id] = value
     setFormInfo(newInfo)
   }
 
-  const handleChangeNumber = (event) => {
+  const handleChangeNumber = (event, index) => {
     const { id, value } = event.target
     const newInfo = { ...formInfo }
+    const newBeneficiary = [...newInfo.beneficiary]
 
-    newInfo[id] = value.replace(/\D/g, "");
+    newBeneficiary[index][id] = value.replace(/\D/g, "");
     setFormInfo(newInfo)
   }
 
-  const handleSelect = (event) => {
+  const handleSelect = (event, index) => {
     const { name, value } = event.target
     const newInfo = { ...formInfo }
+    const newBeneficiary = [...newInfo.beneficiary]
 
-    newInfo[name] = value
+    newBeneficiary[index][name] = value
     setFormInfo(newInfo)
   }
 
@@ -61,7 +80,45 @@ export const Step5 = ({
 
     newInfo[id] = JSON.parse(defaultValue);
     setFormInfo(newInfo);
+
+    if (id === "beneficiaries" && JSON.parse(defaultValue) === true) {
+      setFormInfo({
+        ...newInfo, 
+        beneficiary: [{
+          id: 1,
+          loanInsurancePolicyId: null,
+          name: "",
+          lastName: "",
+          identificationTypeId: 76,
+          identificationNumber: "",
+          relationshipId: null,
+          percentInherit: null
+        }]
+      })
+    }
   };
+
+  const handleAdd = () => {
+    const newInfo = { ...formInfo };
+    setFormInfo({
+      ...newInfo,
+      beneficiary: [
+        ...newInfo.beneficiary,
+        {
+          id: newInfo.beneficiary.length + 1,
+          loanInsurancePolicyId: null,
+          name: "",
+          lastName: "",
+          identificationTypeId: 76,
+          identificationNumber: "",
+          relationshipId: null,
+          percentInherit: null
+        }
+      ]
+    })
+  }
+
+  console.log("-----", formInfo)
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -134,7 +191,7 @@ export const Step5 = ({
           <RadioGroup
             gap="5px"
             name="beneficiaries"
-            direction="row"
+            direction={isMobile ? "column" : "row"}
             label="*En caso de que faltes y exista algún remanente después de pagar el saldo total de tu deuda, puedes escoger quién o quienes pueden recibirlo por parte de la aseguradora"
             labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
@@ -145,61 +202,144 @@ export const Step5 = ({
           >
             <Radio
               label="Mis herederos legales"
-              value={true}
+              value={false}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
             <Radio
               label="Designado por mi"
-              value={false}
+              value={true}
               labelColor={theme.colors.white}
               radioColor={theme.colors.white}
             />
           </RadioGroup>
         </Grid>
-        {formInfo.beneficiaries === false && (
+        {formInfo.beneficiaries && (
           <>
+            <Grid item md={12} xs={12} style={{ padding: 0 }}>
+              <WrapperAlert>
+                <Image alt="info" src={info} />
+                <Text 
+                  size={theme.fonts.size.sm}
+                  color={theme.colors.green700}
+                  font={theme.fonts.family.primaryMedium}
+                >
+                  La sumatoria de los porcentaje de los herederos debe ser igual a 100%
+                </Text>
+              </WrapperAlert>
+            </Grid>
+            {formInfo.beneficiary.map((ele, indx) => (
+              <Div key={indx} direction="column">
+                <Text 
+                  color={theme.colors.white}
+                  font={theme.fonts.family.primaryBold}
+                  mt="30px"
+                  mb="35px"
+                >
+                  {`Heredero ${indx + 1} ${ele.name ? "-" : ""} ${ele.name ? ele.name : ""} ${ele.lastName ? ele.lastName : ""} ${ele.percentInherit ? `(${ele.percentInherit}%)` : ""}`}
+                </Text>
+                <Grid container spacing={2}>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                      {...inputsProps}
+                      label={"Nombre(s)*"}
+                      width={"100%"}
+                      placeholder={"Escribir nombre"}
+                      id="name"
+                      value={ele.name}
+                      inputProps={{ maxLength: 50 }}
+                      onChange={(e) => handleChangeText(e, indx)}
+                    />
+                  </Grid>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                      {...inputsProps}
+                      label={"Apellidos*"}
+                      width={"100%"}
+                      placeholder={"Escribir apellidos"}
+                      id="lastName"
+                      value={ele.lastName}
+                      inputProps={{ maxLength: 50 }}
+                      onChange={(e) => handleChangeText(e, indx)}
+                    />
+                  </Grid>
+                  <Grid item md={4} xs={4}>
+                    <Select
+                      {...inputsProps}
+                      label={"Tipo de documento*"}
+                      width={"100%"}
+                      name="identificationTypeId"
+                      value={ele.identificationTypeId}
+                      onChange={(e) => handleSelect(e, indx)}
+                    >
+                      {documentTypeOptions.map((ele, indx) => (
+                        <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                  <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
+                    <TextField
+                      {...inputsProps}
+                      label={"Número de documento*"}
+                      width={"100%"}
+                      placeholder={"Escribir número"}
+                      id="identificationNumber"
+                      value={ele.identificationNumber}
+                      inputProps={{
+                        maxLength: 15,
+                        pattern: ele.identificationTypeId !== 78 && "\\d*",
+                        inputMode: ele.identificationTypeId !== 78 && "numeric"
+                      }}
+                      onChange={(e) => handleChangeNumber(e, indx)}
+                    />
+                  </Grid>
+                  <Grid item md={6} xs={12}>
+                    <Select
+                      {...inputsProps}
+                      label={"Parentesco*"}
+                      width={"100%"}
+                      name="relationshipId"
+                      value={ele.relationshipId}
+                      onChange={(e) => handleSelect(e, indx)}
+                    >
+                      {documentTypeOptions.map((ele, indx) => (
+                        <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                      {...inputsProps}
+                      label={"Porcentaje a heredar (1 a 100%)*"}
+                      width={"100%"}
+                      placeholder={"Escribir porcentaje"}
+                      id="ipercentInherit"
+                      value={ele.ipercentInherit}
+                      inputProps={{
+                        maxLength: 3,
+                        pattern: "\\d*",
+                        inputMode: "numeric"
+                      }}
+                      suffix={<Image alt="percentage" src={percentage} />}
+                      onChange={(e) => handleChangeNumber(e, indx)}
+                    />
+                  </Grid>
+                </Grid>
+              </Div>
+            ))}
             <Grid item md={12} xs={12}>
-              <TextField
-                {...inputsProps}
-                label={"Nombre completo*"}
-                width={"100%"}
-                placeholder={"Nombre"}
-                id="beneficiaryName"
-                value={formInfo.beneficiaryName}
-                inputProps={{ maxLength: 50 }}
-                onChange={handleChangeText}
-              />
-            </Grid>
-            <Grid item md={4} xs={4}>
-              <Select
-                {...inputsProps}
-                label={"Tipo de documento*"}
-                width={"100%"}
-                name="beneficiaryIdentificationTypeId"
-                value={formInfo.beneficiaryIdentificationTypeId}
-                onChange={handleSelect}
+              <Link
+                startIcon={<Image alt="add" src={disabledButton ? addUserDisable : addUser} />}
+                color={theme.colors.yellow500}
+                size={theme.fonts.size.default2}
+                font={theme.fonts.family.primaryBold}
+                style={{ borderBottom: `2px solid ${disabledButton ? theme.colors.neutralGray400 : theme.colors.yellow500}` }}
+                width={"max-content"}
+                disabled={disabledButton}
+                onClick={handleAdd}
               >
-                {documentTypeOptions.map((ele, indx) => (
-                  <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
-                ))}
-              </Select>
-            </Grid>
-            <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
-              <TextField
-                {...inputsProps}
-                label={"Número de documento*"}
-                width={"100%"}
-                placeholder={"Escribir número"}
-                id="beneficiaryIdentificationNumber"
-                value={formInfo.beneficiaryIdentificationNumber}
-                inputProps={{
-                  maxLength: 15,
-                  pattern: formInfo.beneficiaryIdentificationTypeId !== 78 && "\\d*",
-                  inputMode: formInfo.beneficiaryIdentificationTypeId !== 78 && "numeric"
-                }}
-                onChange={handleChangeNumber}
-              />
+                Agregar otro heredero
+              </Link>
             </Grid>
           </>
         )}

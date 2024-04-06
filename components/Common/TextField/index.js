@@ -64,6 +64,9 @@ export const TextField = ({
           startAdornment: (
             <InputAdornment position="start">{prefixIcon}</InputAdornment>
           ),
+          endAdornment: (
+            <InputAdornment position="end">{suffix}</InputAdornment>
+          )
         }}
         {...rest}
       />

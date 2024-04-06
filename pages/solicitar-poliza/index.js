@@ -71,7 +71,7 @@ const RequestPolicy = ({ isMobile }) => {
   const documentType = useGetDocumentType();
   const { data: dataDocument, isSuccess: isSuccessDocument } = documentType;
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(4);
   const [checks, setChecks] = useState({
     check1: false,
     check2: false,
@@ -87,6 +87,7 @@ const RequestPolicy = ({ isMobile }) => {
     occupation: null,
     occupationActivityId: null,
     isPublicPerson: null,
+    hasBondPublicPerson: null,
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
@@ -130,9 +131,7 @@ const RequestPolicy = ({ isMobile }) => {
     convicted: null,
     lifeEnsure: null,
     beneficiaries: null,
-    beneficiaryName: null,
-    beneficiaryIdentificationTypeId: 76,
-    beneficiaryIdentificationNumber: null,
+    beneficiary: []
   });
   const [diseases, setDiseases] = useState(
     getDiseasesNames(healthInfo.diseases, diseasesOptions)
@@ -240,10 +239,7 @@ const RequestPolicy = ({ isMobile }) => {
       convicted: requestInfo.convicted,
       lifeEnsure: requestInfo.lifeEnsure,
       beneficiaries: requestInfo.beneficiaries,
-      beneficiaryName: requestInfo.beneficiaryName,
-      beneficiaryIdentificationTypeId: 76,
-      beneficiaryIdentificationNumber:
-        requestInfo.beneficiaryIdentificationNumber,
+      beneficiary: requestInfo.beneficiary,
     });
   }, [requestInfo]);
 

@@ -82,8 +82,8 @@ export const AdditionalData = ({
       title:
         "*En caso de que faltes y exista algún remanente después de pagar el saldo total de tu deuda, puedes escoger quién o quienes pueden recibirlo por parte de la aseguradora",
       description: additionalInfo.beneficiaries
-        ? "Mis herederos legales"
-        : "Designado por mi",
+        ? "Designado por mi"
+        : "Mis herederos legales",
     },
   ];
 
@@ -170,7 +170,7 @@ export const AdditionalData = ({
           ...prevInfo,
           beneficiaries: value === "true",
         }));
-        if (value === "true") {
+        if (value === "false") {
           setAdditionalInfo((prevState) => ({
             ...prevState,
             beneficiary: [],
@@ -440,8 +440,8 @@ export const AdditionalData = ({
             value={additionalInfo.beneficiaries}
             onChange={(e) => handleRadio(e, "beneficiaries")}
           >
-            <Radio label="Mis herederos legales" value={true} />
-            <Radio label="Designado por mi" value={false} />
+            <Radio label="Mis herederos legales" value={false} />
+            <Radio label="Designado por mi" value={true} />
           </RadioGroup>
           {additionalInfo.beneficiary.map((benefic, index) => (
             <Col gap="8px" key={index}>

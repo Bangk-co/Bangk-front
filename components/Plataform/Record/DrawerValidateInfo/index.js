@@ -410,8 +410,7 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
-        beneficiary:
-          [] /*TODO add beneficiary data?.data?.loanInsurancePolicies.beneficiary */,
+        beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
       });
       setVehiculeInfo({
         /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,*/

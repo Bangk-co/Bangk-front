@@ -567,7 +567,7 @@ const RequestPolicy = ({ isMobile }) => {
         break;
     }
   };
-console.log("----", validForm(activeStep))
+
   return (
     <Container>
       <Header isMobile={isMobile} />

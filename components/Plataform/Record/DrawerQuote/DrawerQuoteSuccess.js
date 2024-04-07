@@ -6,6 +6,7 @@ import { theme } from "@/styles/theme";
 import { numberFormat } from "@/utilities/helpers";
 import greenLogo from "@/assets/icons/green-logo.svg";
 import { LifeInsuranceTable } from "./lifeInsuranceTable";
+import { useEffect, useState } from "react";
 
 export const DrawerQuoteSuccess = ({
   showDrawer,
@@ -16,14 +17,18 @@ export const DrawerQuoteSuccess = ({
   bangkInsuranceData,
   saveValue,
 }) => {
-  const loanData = [
-    { label: "Tipo de crédito", value: loanInfo?.loanType },
-    {
-      label: "Saldo del crédito",
-      value: `$ ${numberFormat(loanInfo?.loanBalance)}`,
-    },
-    { label: "Aseguradora", value: insurer },
-  ];
+  const [loanData, setLoanData] = useState([]);
+
+  useEffect(() => {
+    setLoanData([
+      { label: "Tipo de crédito", value: loanInfo?.loanType },
+      {
+        label: "Saldo del crédito",
+        value: `$ ${numberFormat(Number(loanInfo?.loanBalance))}`,
+      },
+      { label: "Aseguradora", value: insurer },
+    ])
+  }, [loanInfo, insurer])
 
   const subtitleProps = {
     font: theme.fonts.family.primaryBold,

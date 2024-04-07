@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -30,11 +30,14 @@ export const DrawerQuote = ({
   isLoading,
 }) => {
   const [sendButton, setSendButton] = useState(false);
+  const [loanData, setLoanData] = useState([]);
 
-  const loanData = [
-    { label: "Tipo de crédito", value: loanInfo?.loanType },
-    { label: "Saldo del crédito", value: loanInfo?.loanBalance },
-  ];
+  useEffect(() => {
+    setLoanData([
+      { label: "Tipo de crédito", value: loanInfo?.loanType },
+      { label: "Saldo del crédito", value: Number(loanInfo?.loanBalance )},
+    ])
+  }, [loanInfo])
 
   const titleProps = {
     font: theme.fonts.family.primaryMedium,

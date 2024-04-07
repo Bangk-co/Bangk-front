@@ -37,7 +37,6 @@ export const DrawerValidateInfo = ({
   loanTypeName,
   isValidated,
 }) => {
-  console.log("isValidated", isValidated);
   const queryClient = useQueryClient();
   const save = useSaveLoanInsurancePolicy();
   const saveConcept = useSaveLoanFormAssessorConcept();

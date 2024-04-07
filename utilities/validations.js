@@ -135,3 +135,9 @@ export const validateEditAdditionalInfo = Joi.object({
   beneficiary: Joi.array().required(),
   plannedMedicalProcidureMoreInfo: Joi.string().allow("", null),
 });
+
+export const validateEditVehiculeInfo = Joi.object({
+  stateVehiculeId: Joi.number().required(),
+  cityVehiculeId: Joi.number().required(),
+  vehicleLicensePlate: Joi.string().required(),
+});

@@ -28,6 +28,7 @@ import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import { useQueryClient } from "react-query";
 import useChangeStateForms from "@/hooks/Customers/useChangeStateForms";
 import CircularProgress from "@mui/material/CircularProgress";
+import { VehiculeData } from "./VehiculeData";
 
 export const DrawerValidateInfo = ({
   showDrawer,
@@ -52,6 +53,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
     propertyInfo: {
+      concept: "",
+      comments: "",
+    },
+    vehiculeInfo: {
       concept: "",
       comments: "",
     },
@@ -295,7 +300,31 @@ export const DrawerValidateInfo = ({
     initialErrorAdditionalInfo
   );
 
-  const [vehihuleInfo, setVehihuleInfo] = useState({
+  const [vehiculeInfo, setVehiculeInfo] = useState({
+    /* countryVehiculeId: null,*/
+    stateVehiculeId: null,
+    cityVehiculeId: null,
+    vehicleLicensePlate: "",
+  });
+  const initialErrorVehiculeInfo = {
+    stateVehiculeId: {
+      error: false,
+      message: "",
+    },
+    cityVehiculeId: {
+      error: false,
+      message: "",
+    },
+    vehicleLicensePlate: {
+      error: false,
+      message: "",
+    },
+  };
+  const [errorsVehiculeInfo, setErrorsVehiculeInfo] = useState(
+    initialErrorVehiculeInfo
+  );
+
+  const [generalInfo, setGeneralInfo] = useState({
     countryCodePhoneId: null,
     countryNationalityId: null,
     documentIdentificationTypeId: null,
@@ -310,10 +339,6 @@ export const DrawerValidateInfo = ({
     loanTypeId: null,
     loanBalance: null,
     monthlyCostInsurance: null,
-    /* countryVehiculeId: null,
-        stateVehiculeId: null, */
-    cityVehiculeId: null,
-    vehicleLicensePlate: "",
     clienId: null,
   });
 
@@ -385,10 +410,16 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
-        beneficiary:
-          [] /*TODO add beneficiary data?.data?.loanInsurancePolicies.beneficiary */,
+        beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
       });
-      setVehihuleInfo({
+      setVehiculeInfo({
+        /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,*/
+        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
+        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
+        vehicleLicensePlate:
+          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
+      });
+      setGeneralInfo({
         countryCodePhoneId:
           data?.data?.loanInsurancePolicies.countryCodePhoneId,
         countryNationalityId:
@@ -408,11 +439,6 @@ export const DrawerValidateInfo = ({
         loanBalance: data?.data?.loanInsurancePolicies.loanBalance,
         monthlyCostInsurance:
           data?.data?.loanInsurancePolicies.monthlyCostInsurance,
-        /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
-        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId, */
-        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
-        vehicleLicensePlate:
-          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
         clienId: data?.data?.loanInsurancePolicies.clienId,
       });
     }
@@ -467,6 +493,15 @@ export const DrawerValidateInfo = ({
             setAssessorConcept((prevState) => ({
               ...prevState,
               additionalInfo: {
+                concept: concept,
+                comments: comment,
+              },
+            }));
+            break;
+          case "vehiculeInfo":
+            setAssessorConcept((prevState) => ({
+              ...prevState,
+              vehiculeInfo: {
                 concept: concept,
                 comments: comment,
               },
@@ -566,16 +601,24 @@ export const DrawerValidateInfo = ({
     loanTypeName === "Libre inversión"
       ? null
       : {
-          icon: iconCondition[assessorConcept?.propertyInfo?.concept],
+          icon:
+            loanTypeName === "Hipotecario"
+              ? iconCondition[assessorConcept?.propertyInfo?.concept]
+              : iconCondition[assessorConcept?.vehiculeInfo?.concept],
           title:
             loanTypeName === "Hipotecario"
               ? "Datos del inmueble"
               : "Datos del vehículo",
           //TODO change to vehicule
           description:
-            descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
-            null
-              ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
+            loanTypeName === "Hipotecario"
+              ? descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
+                null
+                ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
+                : "Verifica que los datos personales sean correctos"
+              : descriptionCondition[assessorConcept?.vehiculeInfo?.concept] !==
+                null
+              ? descriptionCondition[assessorConcept?.vehiculeInfo?.concept]
               : "Verifica que los datos personales sean correctos",
         },
     {
@@ -631,7 +674,8 @@ export const DrawerValidateInfo = ({
             ...propertyInfo,
             ...healthInfo,
             ...additionalInfo,
-            ...vehihuleInfo,
+            ...vehiculeInfo,
+            ...generalInfo, //TODO validate if is required
           },
         },
         {
@@ -732,7 +776,28 @@ export const DrawerValidateInfo = ({
           />
         );
       case "Vehiculo":
-        return <Text>Vehiculo bien</Text>;
+        return (
+          <VehiculeData
+            key="propertyData"
+            assessorConcept={assessorConcept}
+            setAssessorConcept={setAssessorConcept}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            vehiculeInfo={vehiculeInfo}
+            setVehiculeInfo={setVehiculeInfo}
+            handleCancel={handleCancel}
+            errorsVehiculeInfo={errorsVehiculeInfo}
+            setErrorsVehiculeInfo={setErrorsVehiculeInfo}
+            handleSave={handleSave}
+            isLoadingSave={save.isLoading}
+            isLoadingContinue={saveConcept.isLoading}
+            handleContinue={handleContinue}
+            isValidated={isValidated}
+            countryVehiculeId={
+              data?.data?.loanInsurancePolicies.countryVehiculeId
+            }
+          />
+        );
     }
   };
   const expandedCardData = [
@@ -880,7 +945,7 @@ export const DrawerValidateInfo = ({
             ))}
           </Div>
         </Div>
-        {isValidated && (
+        {!isValidated && (
           <Row width="100%" justify="right" p="0 0 16px 0">
             <Button
               background={theme.colors.green900}

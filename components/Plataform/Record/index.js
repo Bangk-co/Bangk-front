@@ -12,11 +12,9 @@ import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
-import success from "@/assets/icons/successStepper.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
-import { setSelectedApplicationInformation } from "@/store/applications";
 import useSaveQuote from "@/hooks/Customers/useSaveQuote";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
@@ -483,7 +481,7 @@ export const Record = ({
     );
   };
 
-  const disabledButtons = loanForm?.monthlyCostInsurance === "";
+  const disabledButtons = Object.values(userForm).some(value => value === "" || value === null) || Object.entries(loanForm).some(([key, value]) => key !== 'observations' && (value === '' || value === null || value === 0));
 
   const handleOpenSaved = () => {
     handleOpen();

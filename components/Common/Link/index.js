@@ -10,6 +10,7 @@ export const Link = ({
   border,
   size,
   onClick,
+  font,
   ...rest
 }) => {
   return (
@@ -21,6 +22,7 @@ export const Link = ({
       border={border}
       size={size}
       onClick={onClick}
+      font={font}
       {...rest}
     >
       {children}

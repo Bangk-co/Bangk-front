@@ -31,7 +31,6 @@ export const VehiculeData = ({
   isValidated,
   countryVehiculeId,
 }) => {
-  console.log("vehiculeInfo", vehiculeInfo);
   const statesList = useGetStates(countryVehiculeId);
   const { data: dataStates, isSuccess: isSuccessStates } = statesList;
   const [statesOptions, setStatesOptions] = useState([]);

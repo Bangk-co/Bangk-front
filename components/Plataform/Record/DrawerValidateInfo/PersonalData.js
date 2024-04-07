@@ -433,7 +433,7 @@ export const PersonalData = ({
                 onChange={handleChange}
               />
             </Div>
-            {isValidated && (
+            {!isValidated && (
               <Row width="100%" justify="right" m="24px 0 0 0" gap="16px">
                 <Button
                   background={theme.colors.white}

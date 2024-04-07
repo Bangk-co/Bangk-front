@@ -37,6 +37,7 @@ export const DrawerValidateInfo = ({
   loanTypeName,
   isValidated,
 }) => {
+  console.log("isValidated", isValidated);
   const queryClient = useQueryClient();
   const save = useSaveLoanInsurancePolicy();
   const saveConcept = useSaveLoanFormAssessorConcept();
@@ -945,7 +946,7 @@ export const DrawerValidateInfo = ({
             ))}
           </Div>
         </Div>
-        {isValidated && (
+        {!isValidated && (
           <Row width="100%" justify="right" p="0 0 16px 0">
             <Button
               background={theme.colors.green900}

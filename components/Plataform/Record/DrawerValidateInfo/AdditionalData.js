@@ -273,69 +273,70 @@ export const AdditionalData = ({
             height="1px"
             background={theme.colors.neutralGray200}
           />
-          <Div direction="column">
-            <Div
-              radius="8px 8px 0 0"
-              background={theme.colors.yellow500}
-              p="12px 16px"
-              width="100%"
-            >
-              <Text
-                font={theme.fonts.family.primaryBold}
-                size={theme.fonts.size.default2}
-                color={theme.colors.neutralGray900}
-              >
-                Concepto del asesor
-              </Text>
-            </Div>
-            <Div
-              radius="0 0 8px 8px"
-              p="16px"
-              gap="16px"
-              direction="column"
-              style={{ border: `1px solid ${theme.colors.neutralGray200}` }}
-            >
-              <RadioGroup
-                gap="5px"
-                name="correctInfo"
-                direction="row"
-                value={assessorConcept.additionalInfo.concept}
-                onChange={(e) => handleRadio(e, "correctInfo")}
-              >
-                <Radio
-                  label="La información es correcta"
-                  value={"La información es correcta"}
-                  checked={
-                    assessorConcept.additionalInfo.concept ===
-                    "La información es correcta"
-                  }
-                />
-                <Radio
-                  label="Presenta novedades"
-                  value={"Presenta novedades"}
-                  checked={
-                    assessorConcept.additionalInfo.concept ===
-                    "Presenta novedades"
-                  }
-                />
-              </RadioGroup>
-              <TextField
-                placeholder={"Texto descriptivo"}
-                label="Comentarios*"
-                id="comments"
-                radius="4px"
+
+          {!isValidated ? (
+            <Div direction="column">
+              <Div
+                radius="8px 8px 0 0"
+                background={theme.colors.yellow500}
+                p="12px 16px"
                 width="100%"
-                height="40px"
-                labelFont={theme.fonts.family.primaryMedium}
-                labelSize={theme.fonts.size.sm}
-                font={theme.fonts.family.primary}
-                size={theme.fonts.size.default2}
-                border={theme.colors.neutralGray500}
-                value={assessorConcept.additionalInfo.comments}
-                onChange={handleChange}
-              />
-            </Div>
-            {!isValidated && (
+              >
+                <Text
+                  font={theme.fonts.family.primaryBold}
+                  size={theme.fonts.size.default2}
+                  color={theme.colors.neutralGray900}
+                >
+                  Concepto del asesor
+                </Text>
+              </Div>
+              <Div
+                radius="0 0 8px 8px"
+                p="16px"
+                gap="16px"
+                direction="column"
+                style={{ border: `1px solid ${theme.colors.neutralGray200}` }}
+              >
+                <RadioGroup
+                  gap="5px"
+                  name="correctInfo"
+                  direction="row"
+                  value={assessorConcept.additionalInfo.concept}
+                  onChange={(e) => handleRadio(e, "correctInfo")}
+                >
+                  <Radio
+                    label="La información es correcta"
+                    value={"La información es correcta"}
+                    checked={
+                      assessorConcept.additionalInfo.concept ===
+                      "La información es correcta"
+                    }
+                  />
+                  <Radio
+                    label="Presenta novedades"
+                    value={"Presenta novedades"}
+                    checked={
+                      assessorConcept.additionalInfo.concept ===
+                      "Presenta novedades"
+                    }
+                  />
+                </RadioGroup>
+                <TextField
+                  placeholder={"Texto descriptivo"}
+                  label="Comentarios*"
+                  id="comments"
+                  radius="4px"
+                  width="100%"
+                  height="40px"
+                  labelFont={theme.fonts.family.primaryMedium}
+                  labelSize={theme.fonts.size.sm}
+                  font={theme.fonts.family.primary}
+                  size={theme.fonts.size.default2}
+                  border={theme.colors.neutralGray500}
+                  value={assessorConcept.additionalInfo.comments}
+                  onChange={handleChange}
+                />
+              </Div>
               <Row width="100%" justify="right" m="24px 0 0 0" gap="16px">
                 <Button
                   background={theme.colors.white}
@@ -384,8 +385,41 @@ export const AdditionalData = ({
                   Continuar
                 </Button>
               </Row>
-            )}
-          </Div>
+            </Div>
+          ) : (
+            <Div
+              background={theme.colors.primary25}
+              p="16px"
+              width="100%"
+              gap="8px"
+              direction="column"
+            >
+              <Text
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.sm}
+                color={theme.colors.neutralGray900}
+              >
+                Concepto del asesor
+              </Text>
+              <Text
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.default2}
+                color={theme.colors.neutralGray900}
+              >
+                {assessorConcept.additionalInfo.concept ===
+                "La información es correcta"
+                  ? "La información se encuentra correcta"
+                  : "Información con novedades"}
+              </Text>
+              <Text
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.default2}
+                color={theme.colors.neutralGray900}
+              >
+                {assessorConcept.additionalInfo.comments}
+              </Text>
+            </Div>
+          )}
         </>
       ) : (
         <Col gap="16px">

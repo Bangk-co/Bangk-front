@@ -93,7 +93,6 @@ const Customers = ({ isMobile, isTablet }) => {
     });
 
     setForceUpdate(!forceUpdate);
-    handleSort(null);
   };
 
   const tableColumns = useMemo(

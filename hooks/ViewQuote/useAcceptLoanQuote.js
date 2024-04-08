@@ -2,9 +2,9 @@ import { useMutation } from "react-query";
 import { axiosClient } from "../services/axiosInstance";
 
 const useAcceptLoanQuote = () => {
-  const mutation = useMutation((loanApplicationId) => {
+  const mutation = useMutation((formData) => {
     return axiosClient.post(
-      `/LoanQuote/AcceptLoanQuote?loanApplicationId=${loanApplicationId}`
+      `/LoanQuote/AcceptLoanQuote?loanApplicationId=${formData.loanApplicationId}&termsConditionsAcceptanceQuote=${formData.terms}`
     );
   });
   return mutation;

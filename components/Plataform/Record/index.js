@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import _ from "lodash";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import React, { useEffect, useState } from "react";
 import { Card, DashedLine, SaveSuccess } from "./styles";
@@ -12,9 +13,12 @@ import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
+import success from "@/assets/icons/successStepper.svg";
+import alertIcon from "@/assets/icons/alert-yellow.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
+import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
 import useSaveQuote from "@/hooks/Customers/useSaveQuote";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { DrawerQuoteSuccess } from "./DrawerQuote/DrawerQuoteSuccess";
@@ -257,6 +261,33 @@ export const Record = ({
     }
   }, [isSuccess, data]);
 
+  const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
+    applications?.selectedApplication?.loanApplicationId
+  );
+  const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
+    loanFormAssesorConcept;
+  const [formsConcept, setFormsConcept] = useState({
+    concept: false,
+    comments: "",
+  });
+  useEffect(() => {
+    if (dataAssesorConcept?.data?.getLoanForm) {
+      const hasNews = _.some(dataAssesorConcept?.data?.getLoanForm, {
+        concept: "Presenta novedades",
+      });
+
+      const comments = _.map(
+        dataAssesorConcept?.data?.getLoanForm,
+        "comment"
+      ).join(", ");
+
+      setFormsConcept({
+        concept: hasNews,
+        comments: hasNews ? comments : "Sin novedades",
+      });
+    }
+  }, [dataAssesorConcept, isLoadingAssessorConcept]);
+
   const handleCloseQuoteSuccess = () => {
     setShowQuoteSuccess(false);
     dispatch(setLoanInfo({}));
@@ -481,7 +512,13 @@ export const Record = ({
     );
   };
 
-  const disabledButtons = Object.values(userForm).some(value => value === "" || value === null) || Object.entries(loanForm).some(([key, value]) => key !== 'observations' && (value === '' || value === null || value === 0));
+  const disabledButtons =
+    Object.values(userForm).some((value) => value === "" || value === null) ||
+    Object.entries(loanForm).some(
+      ([key, value]) =>
+        key !== "observations" &&
+        (value === "" || value === null || value === 0)
+    );
 
   const handleOpenSaved = () => {
     handleOpen();
@@ -499,7 +536,9 @@ export const Record = ({
         };
       case "Formularios diligenciados":
         return {
-          label: "Revisar formularios",
+          label: formsConcept.concept
+            ? "Resolver novedad"
+            : "Revisar formularios",
           onClick: () => setShowDrawerValidateInfo(true),
         };
       default:
@@ -518,7 +557,9 @@ export const Record = ({
         };
       case "Formularios diligenciados":
         return {
-          label: "Revisar formularios",
+          label: formsConcept.concept
+            ? "Resolver novedad"
+            : "Revisar formularios",
           onClick: () => setShowDrawerValidateInfo(true),
         };
       default:
@@ -602,8 +643,10 @@ export const Record = ({
         loanApplicationId={applications?.selectedApplication?.loanApplicationId}
         loanTypeName={dataLoanApplication?.data?.loanTypeName}
         isValidated={historyInfo.some(
-          (item) => item.status === "Formularios diligenciados"
+          (item) => item.status === "Formularios validados"
         )}
+        assessorConcept={formsConcept}
+        setAssessorConcept={setFormsConcept}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (
@@ -615,7 +658,27 @@ export const Record = ({
       </Div>
       <Col gap="16px">
         {historyInfo.map((ele, indx) => (
-          <Card key={indx}>
+          <Card key={indx} style={{ flexDirection: "column" }} height="auto">
+            {ele.status === "Formularios diligenciados" &&
+              formsConcept.concept && (
+                <Div
+                  background={theme.colors.yellow100}
+                  radius="4px"
+                  p="6px 10px"
+                  m="0 0 16px 0"
+                >
+                  <Row gap="4px" align="center">
+                    <Image alt="alert" src={alertIcon} width={16} height={16} />
+                    <Text
+                      color={theme.colors.yellow600}
+                      font={theme.fonts.family.primaryMedium}
+                      size={theme.fonts.size.sm}
+                    >
+                      Presta una novedad{" "}
+                    </Text>
+                  </Row>
+                </Div>
+              )}
             <Grid container>
               <Grid item md={2.5}>
                 <Col gap="16px">
@@ -665,15 +728,31 @@ export const Record = ({
                   >
                     Observaciones
                   </Text>
-                  <Text
-                    color={theme.colors.neutralGray900}
-                    font={theme.fonts.family.primary}
-                    size={theme.fonts.size.md}
-                  >
-                    {ele.status === "Cotización rechazada"
-                      ? `Motivo de rechazo: ${ele.observations}`
-                      : ele.observations}
-                  </Text>
+                  {ele.status === "Formularios diligenciados" &&
+                  formsConcept.concept ? (
+                    <Col>
+                      {formsConcept.comments
+                        .split(",")
+                        .map((comment, index) => (
+                          <Text
+                            key={index}
+                            color={theme.colors.neutralGray900}
+                            font={theme.fonts.family.primary}
+                            size={theme.fonts.size.md}
+                          >{`\u2022 ${comment.trim()}`}</Text>
+                        ))}
+                    </Col>
+                  ) : (
+                    <Text
+                      color={theme.colors.neutralGray900}
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.md}
+                    >
+                      {ele.status === "Cotización rechazada"
+                        ? `Motivo de rechazo: ${ele.observations}`
+                        : ele.observations}
+                    </Text>
+                  )}
                 </Col>
               </Grid>
               <Grid item md={2.5}>

@@ -34,6 +34,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
   }, [dataLoanApplication, isLoading]);
 
   const [terms, setTerms] = useState(false);
+  const [termsDate, setTermsDate] = useState(null);
   const [openModalTerms, setOpenModalTerms] = useState(false);
   const [openModalAccept, setOpenModalAccept] = useState(false);
   const [openModalDecline, setOpenModalDecline] = useState(false);
@@ -54,9 +55,12 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleTerms = (event) => {
     const { checked } = event.target;
+    const currentDate = new Date();
 
     setTerms(checked);
+    setTermsDate(currentDate);
   };
+
   const handleClose = () => {
     setOpenModalTerms(false);
     setOpenModalAccept(false);
@@ -66,12 +70,16 @@ const ViewQuote = ({ isMobile, isTablet }) => {
   };
   const handleAcceptTerms = () => {
     setOpenModalTerms(false);
+    const currentDate = new Date();
     setTerms(true);
+    setTermsDate(currentDate);  
   };
+
   const handleDecline = () => {
     setOpenModalAccept(false);
     setOpenModalDecline(true);
   };
+
   const handleRadio = (event) => {
     const { value } = event.target;
 
@@ -80,7 +88,10 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleAccept = () => {
     acceptLoanQuote.reset();
-    acceptLoanQuote.mutate(requests?.selectedRequest, {
+    acceptLoanQuote.mutate({ 
+      loanApplicationId: requests?.selectedRequest,
+      terms: termsDate 
+    }, {
       onSuccess: () => {
         handleClose();
         router.push("/ver-cotizacion/aceptacion-exitosa");

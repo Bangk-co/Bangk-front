@@ -93,7 +93,6 @@ const Customers = ({ isMobile, isTablet }) => {
     });
 
     setForceUpdate(!forceUpdate);
-    handleSort(null);
   };
 
   const tableColumns = useMemo(
@@ -140,7 +139,7 @@ const Customers = ({ isMobile, isTablet }) => {
         dataIndex: "sales",
         key: "sales",
         width: 150,
-        sorter: true,
+        sorter: false,
         sortOrder: sortOptions.sortBy === "sales" && sortOptions.sortDirection,
         render: (value, record) => <span>{formattedPrice(value)}</span>,
       },

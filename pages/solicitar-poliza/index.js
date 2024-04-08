@@ -199,6 +199,7 @@ const RequestPolicy = ({ isMobile }) => {
       occupation: requestInfo.occupation,
       occupationActivityId: requestInfo.occupationActivityId,
       isPublicPerson: requestInfo.isPublicPerson,
+      hasBondPublicPerson: requestInfo.hasBondPublicPerson,
       residenceCountryId: requestInfo.residenceCountryId,
       residenceStateId: requestInfo.residenceStateId,
       residenceCityId: requestInfo.residenceCityId,
@@ -358,7 +359,7 @@ const RequestPolicy = ({ isMobile }) => {
     };
     if (freeInvestment && activeStep === 3 || !freeInvestment && activeStep === 4) {
       const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
-      if (percentage !== 100) {
+      if (additionalInfo.beneficiaries === true && percentage !== 100) {
         toast.custom(<ToastErrorClient message={'El porcentaje de tus herederos debe dar 100%'} />, {
           duration: 1000,
         });

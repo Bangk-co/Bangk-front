@@ -39,6 +39,8 @@ import {
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
 import { Step3V } from "@/components/Policy/Steps/Step3V";
+import useGetRelationships from "@/hooks/Common/useGetRelationships";
+import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 
 const RequestPolicy = ({ isMobile }) => {
   const dispatch = useDispatch();
@@ -71,6 +73,9 @@ const RequestPolicy = ({ isMobile }) => {
   const documentType = useGetDocumentType();
   const { data: dataDocument, isSuccess: isSuccessDocument } = documentType;
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  const relationship = useGetRelationships();
+  const { data: dataRelationship, isSuccess: isSuccessRelationship } = relationship;
+  const [relationshipsOptions, setRelationshipsOptions] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [checks, setChecks] = useState({
     check1: false,
@@ -87,6 +92,7 @@ const RequestPolicy = ({ isMobile }) => {
     occupation: null,
     occupationActivityId: null,
     isPublicPerson: null,
+    hasBondPublicPerson: null,
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
@@ -130,9 +136,7 @@ const RequestPolicy = ({ isMobile }) => {
     convicted: null,
     lifeEnsure: null,
     beneficiaries: null,
-    beneficiaryName: null,
-    beneficiaryIdentificationTypeId: 76,
-    beneficiaryIdentificationNumber: null,
+    beneficiary: []
   });
   const [diseases, setDiseases] = useState(
     getDiseasesNames(healthInfo.diseases, diseasesOptions)
@@ -240,10 +244,7 @@ const RequestPolicy = ({ isMobile }) => {
       convicted: requestInfo.convicted,
       lifeEnsure: requestInfo.lifeEnsure,
       beneficiaries: requestInfo.beneficiaries,
-      beneficiaryName: requestInfo.beneficiaryName,
-      beneficiaryIdentificationTypeId: 76,
-      beneficiaryIdentificationNumber:
-        requestInfo.beneficiaryIdentificationNumber,
+      beneficiary: requestInfo.beneficiary,
     });
   }, [requestInfo]);
 
@@ -299,6 +300,16 @@ const RequestPolicy = ({ isMobile }) => {
       );
   }, [dataDiseases, isSuccessDiseases]);
 
+  useEffect(() => {
+    if (isSuccessRelationship)
+      setRelationshipsOptions(
+        dataRelationship?.data?.groupSettings.map((ele) => ({
+          name: ele.name,
+          id: ele.id,
+        }))
+      );
+  }, [dataRelationship, isSuccessRelationship]);
+
   const iconHousingType = (name) => {
     switch (name) {
       case "Casa":
@@ -345,70 +356,103 @@ const RequestPolicy = ({ isMobile }) => {
       ...healthInfo,
       diseases: getDiseasesIds(diseases, diseasesOptions),
     };
-    save.reset();
-    save.mutate(
-      {
-        formData: {
-          loanApplicationId: requestInfo.loanApplicationId,
-          ...userInfo,
-          ...financialInfo,
-          ...propertyInfo,
-          ...newHealthInfo,
-          ...additionalInfo,
-          ...vehicleInfo,
-        },
-      },
-      {
-        onSuccess: (data) => {
-          if (freeInvestment && activeStep !== 3) {
-            dispatch(setRequestInfo(data?.data.result))
-            setActiveStep(activeStep + 1)
-          } 
-          if (!freeInvestment && activeStep !== 4) {
-            dispatch(setRequestInfo(data?.data.result))
-            setActiveStep(activeStep + 1)
-          }
-          if (freeInvestment && activeStep === 3) {
-            updateStatus.reset();
-            updateStatus.mutate(
-              { loanApplicationId: requestInfo.loanApplicationId },
-              {
-                onSuccess: () => {
-                  dispatch(setRequestInfo(initDataLoanInsurancePolicy))
-                  router.push("/solicitar-poliza/solicitud-exitosa")
-                },
-                onError: (err) => {
-                  err.response.data.errors.map((error) => {
-                    toast.error(error);
-                  });
-                },
+    if (freeInvestment && activeStep === 3 || !freeInvestment && activeStep === 4) {
+      const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
+      if (percentage !== 100) {
+        toast.custom(<ToastErrorClient message={'El porcentaje de tus herederos debe dar 100%'} />, {
+          duration: 1000,
+        });
+      } else {
+        save.reset();
+        save.mutate(
+          {
+            formData: {
+              loanApplicationId: requestInfo.loanApplicationId,
+              ...userInfo,
+              ...financialInfo,
+              ...propertyInfo,
+              ...newHealthInfo,
+              ...additionalInfo,
+              ...vehicleInfo,
+            },
+          },
+          {
+            onSuccess: () => {
+              if (freeInvestment && activeStep === 3) {
+                updateStatus.reset();
+                updateStatus.mutate(
+                  { loanApplicationId: requestInfo.loanApplicationId },
+                  {
+                    onSuccess: () => {
+                      dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+                      router.push("/solicitar-poliza/solicitud-exitosa")
+                    },
+                    onError: (err) => {
+                      err.response.data.errors.map((error) => {
+                        toast.error(error);
+                      });
+                    },
+                  }
+                );
+              } else if (!freeInvestment && activeStep === 4) {
+                updateStatus.reset();
+                updateStatus.mutate(
+                  { loanApplicationId: requestInfo.loanApplicationId },
+                  {
+                    onSuccess: () => {
+                      dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+                      router.push("/solicitar-poliza/solicitud-exitosa");
+                    },
+                    onError: (err) => {
+                      err.response.data.errors.map((error) => {
+                        toast.error(error);
+                      });
+                    },
+                  }
+                );
               }
-            );
-          } else if (!freeInvestment && activeStep === 4) {
-            updateStatus.reset();
-            updateStatus.mutate(
-              { loanApplicationId: requestInfo.loanApplicationId },
-              {
-                onSuccess: () => {
-                  dispatch(setRequestInfo(initDataLoanInsurancePolicy));
-                  router.push("/solicitar-poliza/solicitud-exitosa");
-                },
-                onError: (err) => {
-                  err.response.data.errors.map((error) => {
-                    toast.error(error);
-                  });
-                },
-              }
-            );
+            },
+            onError: (err) => {
+              err.response.data.errors.map((error) => {
+                toast.error(error);
+              });
+            },
           }
-        },
-        onError: (err) => {
-          err.response.data.errors.map((error) => {
-            toast.error(error);
-          });
-        },
+        );
       }
-    );
+    } else {
+      save.reset();
+      save.mutate(
+        {
+          formData: {
+            loanApplicationId: requestInfo.loanApplicationId,
+            ...userInfo,
+            ...financialInfo,
+            ...propertyInfo,
+            ...newHealthInfo,
+            ...additionalInfo,
+            ...vehicleInfo,
+          },
+        },
+        {
+          onSuccess: (data) => {
+            if (freeInvestment && activeStep !== 3) {
+              dispatch(setRequestInfo(data?.data.result))
+              setActiveStep(activeStep + 1)
+            } 
+            if (!freeInvestment && activeStep !== 4) {
+              dispatch(setRequestInfo(data?.data.result))
+              setActiveStep(activeStep + 1)
+            }
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    }
   };
 
   const backStep = () => {
@@ -418,6 +462,48 @@ const RequestPolicy = ({ isMobile }) => {
       setActiveStep(activeStep - 1);
     }
   };
+
+  const validationHealth = () => {
+    const HealthData = {
+      weight: healthInfo.weight,
+      height: healthInfo.height,
+      hivActive: healthInfo.hivActive,
+      plannedMedicalProcidure: healthInfo.plannedMedicalProcidure,
+      disability: healthInfo.disability,
+    }
+
+    if (diseases.length > 0) {
+      HealthData.diseasesMoreInfo = healthInfo.diseasesMoreInfo;
+    }
+
+    if (healthInfo.plannedMedicalProcidure) {
+      HealthData.plannedMedicalProcidureMoreInfo = healthInfo.plannedMedicalProcidureMoreInfo;
+    }
+
+    if (healthInfo.disability) {
+      HealthData.disabilityMoreInfo = healthInfo.disabilityMoreInfo;
+    }
+
+    return Object.values(HealthData).some(value => value === null);
+  }
+
+  const validationAdditional = () => {
+    const additionalData = {
+      convicted: additionalInfo.convicted,
+      lifeEnsure: additionalInfo.lifeEnsure,
+      beneficiaries: additionalInfo.beneficiaries,
+    };
+
+    if (additionalInfo.beneficiaries === true) {
+      return Object.values(additionalData).some(value => value === null) ||
+      !additionalInfo.beneficiary.every(obj =>
+        Object.keys(obj)
+            .filter(key => key !== "id" && key !== "loanInsurancePolicyId")
+            .every(key => obj[key] !== null && obj[key] !== ""));
+    } else {
+      return Object.values(additionalData).some(value => value === null);
+    }
+  }
 
   const validForm = (currentStep) => {
     switch (currentStep) {
@@ -467,34 +553,16 @@ const RequestPolicy = ({ isMobile }) => {
         } else if (loanTypeId === 106 || loanTypeId === 139) {
           return Object.values(vehicleInfo).some(value => value === null);
         } else {
-          return false;
+          return validationHealth();
         }
       case 3: 
         if (loanTypeId === 104 || loanTypeId === 105) {
-          const obj3 = {
-            convicted: additionalInfo.convicted,
-            lifeEnsure: additionalInfo.lifeEnsure,
-            beneficiaries: additionalInfo.beneficiaries,
-          }
-          if (additionalInfo.beneficiaries === false) {
-            return Object.values(additionalInfo).some(value => value === null);
-          } else {
-            return Object.values(obj3).some(value => value === null);
-          }
+          return validationAdditional(); 
         } else {
-          return false;
+          return validationHealth();
         }
       case 4:
-        const obj3 = {
-          convicted: additionalInfo.convicted,
-          lifeEnsure: additionalInfo.lifeEnsure,
-          beneficiaries: additionalInfo.beneficiaries,
-        };
-        if (additionalInfo.beneficiaries === false) {
-          return Object.values(additionalInfo).some((value) => value === null);
-        } else {
-          return Object.values(obj3).some((value) => value === null);
-        }
+        return validationAdditional();        
       default:
         break;
     }
@@ -584,6 +652,7 @@ const RequestPolicy = ({ isMobile }) => {
               formInfo={additionalInfo}
               setFormInfo={setAdditionalInfo}
               documentTypeOptions={documentTypeOptions}
+              relationshipsOptions={relationshipsOptions}
             />
           ) : (
             <Step4
@@ -602,6 +671,7 @@ const RequestPolicy = ({ isMobile }) => {
             formInfo={additionalInfo}
             setFormInfo={setAdditionalInfo}
             documentTypeOptions={documentTypeOptions}
+            relationshipsOptions={relationshipsOptions}
           />
         )}
         <Div
@@ -641,7 +711,9 @@ const RequestPolicy = ({ isMobile }) => {
             onClick={nextStep}
             disabled={validForm(activeStep)}
           >
-            Siguiente
+            {activeStep === 3 && (loanTypeId === 104 || loanTypeId === 105) 
+              || activeStep === 4 ? 
+                "Finalizar" : "Siguiente"}
           </Button>
         </Div>
       </WrapperPolicy>

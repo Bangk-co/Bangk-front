@@ -265,18 +265,45 @@ export const Step1 = ({
             ))}
           </Select>
         </Grid>
-        <Grid item md={12} xs={12} style={{ borderBottom: `1px solid ${theme.colors.primary25}` }}>
+        <Grid item md={12} xs={12}>
           <RadioGroup
             gap="5px"
             name="isPublicPerson"
             direction="row"
-            label="¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?"
+            label="¿Eres una persona públicamente expuesta (Actores, políticos, estrellas deportivas, etc...)?"
             labelFont={theme.fonts.family.primaryMedium}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.white}
             color={theme.colors.white}
             value={formInfo.isPublicPerson}
             onChange={(event) => handleChangeRadio(event, "isPublicPerson")}
+          >
+            <Radio
+              label="Si"
+              value={true}
+              labelColor={theme.colors.white}
+              radioColor={theme.colors.white}
+            />
+            <Radio
+              label="No"
+              value={false}
+              labelColor={theme.colors.white}
+              radioColor={theme.colors.white}
+            />
+          </RadioGroup>
+        </Grid>
+        <Grid item md={12} xs={12} style={{ borderBottom: `1px solid ${theme.colors.primary25}` }}>
+          <RadioGroup
+            gap="5px"
+            name="hasBondPublicPerson"
+            direction="row"
+            label="¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?"
+            labelFont={theme.fonts.family.primaryMedium}
+            labelSize={theme.fonts.size.sm}
+            labelColor={theme.colors.white}
+            color={theme.colors.white}
+            value={formInfo.hasBondPublicPerson}
+            onChange={(event) => handleChangeRadio(event, "hasBondPublicPerson")}
           >
             <Radio
               label="Si"

@@ -512,7 +512,13 @@ export const Record = ({
     );
   };
 
-  const disabledButtons = loanForm?.monthlyCostInsurance === "";
+  const disabledButtons =
+    Object.values(userForm).some((value) => value === "" || value === null) ||
+    Object.entries(loanForm).some(
+      ([key, value]) =>
+        key !== "observations" &&
+        (value === "" || value === null || value === 0)
+    );
 
   const handleOpenSaved = () => {
     handleOpen();

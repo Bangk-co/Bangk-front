@@ -13,6 +13,7 @@ import { DatePicker } from "@/components/Common/DatePicker";
 import { Select } from "@/components/Common/Select";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
+import dayjs from "dayjs";
 
 export const Step3 = ({
   isMobile,
@@ -86,7 +87,12 @@ export const Step3 = ({
   const handleChangeYear = (event) => {
     const newInfo = { ...formInfo }
 
-    newInfo["builtgDate"] = event
+    if (event > new Date()) {
+      newInfo["builtgDate"] = null
+    } else {
+      newInfo["builtgDate"] = event
+    }
+    
     setFormInfo(newInfo)
   }
 
@@ -156,6 +162,7 @@ export const Step3 = ({
               formInfo.housingValue === null ? "" : numberFormat(Number(formInfo.housingValue))
             }
             inputProps={{
+              maxLength: 14,
               pattern: "\\d*",
               inputMode: "numeric",
             }}
@@ -172,8 +179,9 @@ export const Step3 = ({
                 id="builtArea"
                 notFocused={true}
                 prefixIcon={<Image alt="area" src={area} />}
-                value={formInfo.builtArea}
+                value={formInfo.builtArea === null ? "" : numberFormat(Number(formInfo.builtArea))}
                 inputProps={{
+                  maxLength: 7,
                   pattern: "\\d*",
                   inputMode: "numeric",
                 }}
@@ -188,6 +196,7 @@ export const Step3 = ({
                 notFocused={true}
                 value={formInfo.apartmentNumber}
                 inputProps={{
+                  maxLength: 4,
                   pattern: "\\d*",
                   inputMode: "numeric",
                 }}
@@ -202,6 +211,7 @@ export const Step3 = ({
                 notFocused={true}
                 value={formInfo.buildingFloorsNumber}
                 inputProps={{
+                  maxLength: 4,
                   pattern: "\\d*",
                   inputMode: "numeric",
                 }}
@@ -216,6 +226,7 @@ export const Step3 = ({
                 notFocused={true}
                 value={formInfo.basementNumber}
                 inputProps={{
+                  maxLength: 4,
                   pattern: "\\d*",
                   inputMode: "numeric",
                 }}
@@ -233,6 +244,7 @@ export const Step3 = ({
             views={['year']}
             format={"YYYY"}
             onChange={handleChangeYear}
+            maxDate={dayjs(new Date())}
           />
         </Grid>
         <Grid item md={6} xs={6}>
@@ -271,8 +283,9 @@ export const Step3 = ({
               prefixIcon={
                 <Image alt="area" src={area} />
               }
-              value={formInfo.builtArea}
+              value={formInfo.builtArea === null ? "" : numberFormat(Number(formInfo.builtArea))}
               inputProps={{
+                maxLength: 7,
                 pattern: "\\d*",
                 inputMode: "numeric",
               }}
@@ -290,6 +303,9 @@ export const Step3 = ({
               <Image alt="address" src={address} />
             }
             value={formInfo.address}
+            inputProps={{
+              maxLength: 200
+            }}
             onChange={handleChangeText}
           />
         </Grid>

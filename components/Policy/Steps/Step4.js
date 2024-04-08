@@ -103,6 +103,7 @@ export const Step4 = ({
             notFocused={true}
             value={formInfo.weight}
             inputProps={{
+              maxLength: 3,
               pattern: "\\d*",
               inputMode: "numeric",
             }}
@@ -118,6 +119,7 @@ export const Step4 = ({
             notFocused={true}
             value={formInfo.height}
             inputProps={{
+              maxLength: 3,
               pattern: "\\d*",
               inputMode: "numeric",
             }}
@@ -187,6 +189,9 @@ export const Step4 = ({
               id="diseasesMoreInfo"
               notFocused={true}
               value={formInfo.diseasesMoreInfo}
+              inputProps={{
+                maxLength: 200
+              }}
               onChange={handleChangeText}
             />
           </Grid>
@@ -253,6 +258,9 @@ export const Step4 = ({
               id="plannedMedicalProcidureMoreInfo"
               notFocused={true}
               value={formInfo.plannedMedicalProcidureMoreInfo}
+              inputProps={{
+                maxLength: 200
+              }}
               onChange={handleChangeText}
             />
           </Grid>
@@ -292,6 +300,9 @@ export const Step4 = ({
               id="disabilityMoreInfo"
               notFocused={true}
               value={formInfo.disabilityMoreInfo}
+              inputProps={{
+                maxLength: 200
+              }}
               onChange={handleChangeText}
             />
           </Grid>

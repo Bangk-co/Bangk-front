@@ -231,7 +231,7 @@ export const DrawerAllInfo = ({
               </Grid>
               <Grid item md="12">
                 <DatePicker
-                  label={"Fecha de expedición del documento"}
+                  label={"Fecha de expedición del documento*"}
                   {...textFieldProps}
                   border={theme.colors.gray500}
                   value={userForm?.documentIssueDate}

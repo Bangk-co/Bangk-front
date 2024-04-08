@@ -6,7 +6,7 @@ export const CustomLink = styled(({ color, ...props }) => (
   <Button {...props} />
 ))`
   && {
-    width: ${({ width }) => width};
+    width: ${({ width }) => width} !important;
     height: ${({ height }) => height};
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     padding: 0px;
@@ -22,6 +22,10 @@ export const CustomLink = styled(({ color, ...props }) => (
       color: ${({ color }) => color || theme.colors.orange};
       background: ${({ hover }) => hover || "transparent"};
       cursor: pointer;
+    }
+
+    &:disabled {
+      color: ${theme.colors.neutralGray400};
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {

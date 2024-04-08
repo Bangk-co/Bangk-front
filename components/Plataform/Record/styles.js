@@ -5,23 +5,23 @@ import styled from "styled-components";
 export const Card = styled.div`
   display: flex;
   width: 80vw;
-  height: 193px;
+  min-height: 193px;
   padding: 24px;
   border-radius: 10px;
   background: ${theme.colors.white};
-`
+`;
 
 export const DashedLine = styled.div`
   border-left: 2px dashed ${theme.colors.green500};
   height: 185px;
-`
+`;
 
 export const WrapperClose = styled.div`
   display: flex;
   width: 100%;
   justify-content: right;
   margin-bottom: 16px;
-`
+`;
 
 export const StyledDocument = styled(Document)`
   /* Estilos para el componente Document */

@@ -686,6 +686,7 @@ export const DrawerValidateInfo = ({
               "LoanInsurancePolicyInfo",
               loanApplicationId,
             ]);
+            queryClient.invalidateQueries(["historyList"]);
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {

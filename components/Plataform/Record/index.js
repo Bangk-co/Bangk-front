@@ -604,7 +604,7 @@ export const Record = ({
         loanApplicationId={applications?.selectedApplication?.loanApplicationId}
         loanTypeName={dataLoanApplication?.data?.loanTypeName}
         isValidated={historyInfo.some(
-          (item) => item.status === "Formularios diligenciados"
+          (item) => item.status === "Formularios validados"
         )}
       />
       <Div width="24px" direction="column">

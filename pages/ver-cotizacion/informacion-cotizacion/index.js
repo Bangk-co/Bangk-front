@@ -14,6 +14,7 @@ import Banner from "@/components/ViewQuote/Banner";
 import { ModalTerms } from "@/components/Common/ModalTerms";
 import { ModalAccept } from "@/components/ViewQuote/ModalAccept";
 import { ModalDecline } from "@/components/ViewQuote/ModalDecline";
+import dayjs from "dayjs";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -90,7 +91,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate({ 
       loanApplicationId: requests?.selectedRequest,
-      terms: termsDate 
+      terms: dayjs(termsDate)
     }, {
       onSuccess: () => {
         handleClose();

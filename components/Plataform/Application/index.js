@@ -21,6 +21,7 @@ import formIconBold from "../../../assets/icons/form-bold.svg";
 import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import { Record } from "../Record";
+import { Forms } from "./Forms";
 import pending from "@/assets/icons/pendingStepper.svg";
 import success from "@/assets/icons/successStepper.svg";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
@@ -300,7 +301,7 @@ const Application = ({ isMobile, isTablet }) => {
           banksOptions={banksOptions}
         />
       </HeaderInfo>
-      <Col p="0 24px 24px 24px">
+      <Col p="0 24px 24px 24px" width="100%">
         <Row>
           <Tabs
             value={selectedTab}
@@ -333,7 +334,14 @@ const Application = ({ isMobile, isTablet }) => {
             application={applications?.selectedApplication}
           />
         )}
-        {selectedTab === 1 && <Text>Formularios</Text>}
+        {selectedTab === 1 && (
+          <Forms
+            loanApplicationId={
+              applications?.selectedApplication?.loanApplicationId
+            }
+            loanTypeName={applications?.selectedApplication?.loanTypeName}
+          />
+        )}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}
       </Col>

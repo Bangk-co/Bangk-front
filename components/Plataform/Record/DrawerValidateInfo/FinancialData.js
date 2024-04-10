@@ -36,7 +36,7 @@ export const FinancialData = ({
     {
       titleL: "Valor de tus activos",
       descriptionL: numberFormat(financialInfo.assetValue),
-      titleR: "valor de tus pasivos",
+      titleR: "Valor de tus pasivos",
       descriptionR: numberFormat(financialInfo.liabilitiesValue),
     },
   ];

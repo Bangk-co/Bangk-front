@@ -33,6 +33,23 @@ export const UserForm = ({
   }) => {
   const isFormValid = Object.values(formInfo).every((value) => value !== "") && terms;
 
+  const inputProps = {
+    width: "100%",
+    placeholder: "Escribir",
+    radius: "4px",
+    height: "40px",
+    font: theme.fonts.family.primary,
+    size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
+    labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
+    labelColor: theme.colors.white,
+    labelFont: theme.fonts.family.primaryMedium,
+    labelWeight: theme.fonts.weight.medium,
+    background: theme.colors.primary25,
+    border: theme.colors.primary25,
+    notFocused: true,
+    placeholderColor: theme.colors.neutralGray500,
+  }
+
   return (
     <Col m={"12px 0 0 0"}>
       <Modal open={openModal}>
@@ -59,21 +76,8 @@ export const UserForm = ({
       <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3  }} columnSpacing={{ xs: 2, sm: 2, md: 2 }} style={{ marginTop: "8px" }}>
         <Grid item md={4} xs={4}>
           <Select
+            {...inputProps}
             label={"Tipo de documento*"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
             name="documentType"
             value={formInfo.documentType}
             onChange={handleSelect}
@@ -85,21 +89,8 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
           <TextField
-            label={"Número de documento"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
+            {...inputProps}
+            label={"Número de documento*"}
             id="identificationNumber"
             value={formInfo.identificationNumber}
             onChange={handleChange}
@@ -112,67 +103,32 @@ export const UserForm = ({
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
+            {...inputProps}
             label={"Nombre(s)*"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
             id="name"
             value={formInfo.name}
             onChange={handleChange}
             inputProps={{ maxLength: 50 }}
+            helper={"Escribe el nombre como aparece en la cédula"}
+            helperColor={theme.colors.white}
           />
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
+            {...inputProps}
             label={"Apellidos*"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
             id="lastname"
             value={formInfo.lastname}
             onChange={handleChange}
             inputProps={{ maxLength: 50 }}
+            helper={"Escribe los apellidos como aparece en la cédula"}
+            helperColor={theme.colors.white}
           />
         </Grid>
         <Grid item md={4} xs={4}>
           <Select
+            {...inputProps}
             label={"Código de país*"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
             name="countryCode"
             value={formInfo.countryCode}
             onChange={handleSelect}
@@ -184,21 +140,8 @@ export const UserForm = ({
         </Grid>
         <Grid item md={8} xs={8}>
           <TextField
+            {...inputProps}
             label={"Número de telefono*"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
             id="phone"
             value={formInfo.phone}
             onChange={handleChange}
@@ -211,21 +154,8 @@ export const UserForm = ({
         </Grid>
         <Grid item md={12} xs={12}>
           <TextField
-            label={"Correo electrónico"}
-            width={"100%"}
-            placeholder={"Escribir"}
-            radius="4px"
-            height="40px"
-            font={theme.fonts.family.primary}
-            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-            labelColor={theme.colors.white}
-            labelFont={"Gilroy"}
-            labelWeight={theme.fonts.weight.medium}
-            background={theme.colors.primary25}
-            border={theme.colors.primary25}
-            notFocused={true}
-            placeholderColor={theme.colors.neutralGray500}
+            {...inputProps}
+            label={"Correo electrónico*"}
             prefixIcon={
               <Image alt="mail" src={email} width={16} height={16} />
             }

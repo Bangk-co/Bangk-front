@@ -514,23 +514,23 @@ const RequestPolicy = ({ isMobile }) => {
         );
         return isFormValid;
       case 1:
-        const obj = {
+        const financialData = {
           monthlyIncome: financialInfo.monthlyIncome,
           monthlyExpenses: financialInfo.monthlyExpenses,
           assetValue: financialInfo.assetValue,
           liabilitiesValue: financialInfo.liabilitiesValue,
-        };
+        }
         if (
           requestInfo.loanBalance > 137227300 ||
           requestInfo.monthlyCostInsurance > 6089880
         ) {
-          return (
-            Object.values(financialInfo).some((value) => value === null) ||
-            Object.values(checks).every((check) => check === false)
-          );
-        } else {
-          return Object.values(obj).some((value) => value === null);
+          financialData.incomeOrigin = financialInfo.incomeOrigin;
+          financialData.check1 = checks.check1;
+          financialData.check2 = checks.check2;
+          financialData.check3 = checks.check3;
         }
+
+        return Object.values(financialData).some((value) => value === null || value === false || value === "");
       case 2: 
         const obj2 = {
           housingTypeId: propertyInfo.housingTypeId,

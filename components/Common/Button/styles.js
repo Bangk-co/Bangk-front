@@ -33,6 +33,7 @@ export const CustomButton = styled(Button)`
     &:disabled {
       background: ${theme.colors.neutralGray200} 0% 0% no-repeat padding-box;
       color: ${theme.colors.neutralGray400};
+      border-color: ${theme.colors.neutralGray200};
     }
 
     @media (max-width: ${theme.breakpoints.sm}) {

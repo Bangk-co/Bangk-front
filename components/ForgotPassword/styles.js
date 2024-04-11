@@ -55,6 +55,7 @@ export const WrapperForm = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
     padding: 0 22px;
   }
 

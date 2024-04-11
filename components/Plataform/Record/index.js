@@ -733,7 +733,7 @@ export const Record = ({
                 </Div>
               )
             }
-            {ele.validationClientResult !== 0 || ele.validationClientResult !== null &&
+            {ele.validationClientResult !== 0 && ele.validationClientResult !== null &&
               <Div
                 background={validation(ele.validationClientResult).background}
                 radius="4px"

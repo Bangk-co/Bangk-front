@@ -36,6 +36,7 @@ export const theme = {
     primary300: "#5A8180",
     primary900: "#021615",
     neutralGray200: "#D2D1D4",
+    neutralGray300: "BCBABE",
     neutralGray400: "#A6A4A8",
     neutralGray500: "#8F8D93",
     neutralGray600: "#656268",

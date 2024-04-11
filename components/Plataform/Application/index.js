@@ -134,17 +134,20 @@ const Application = ({ isMobile, isTablet }) => {
   ];
 
   const statusCard = (status, generalStatus, validation, index) => {
-    if ((status === "FormulariosDiligenciados" && 
-      generalStatus === "No asegurable") || validation === 1) {
+    if (
+      (status === "FormulariosDiligenciados" &&
+        generalStatus === "No asegurable") ||
+      validation === 1
+    ) {
       return "Alert";
     } else if (validation === 2 || validation === 3) {
       return "Error";
     } else if (index === 0) {
       return "Pending";
-    }else {
+    } else {
       return "Success";
     }
-  }
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -156,14 +159,14 @@ const Application = ({ isMobile, isTablet }) => {
             status: "Revisión de extracto",
             date: "-",
             observations: "",
-            validationClientResult: ele.validationClientResult,
+            validationClientResult: null,
             statusCard: "Pending",
           },
           {
             status: historyStatus[info[0].stateName],
             date: formattedDate(info[0].creationDate),
             observations: info[0].observations,
-            validationClientResult: ele.validationClientResult,
+            validationClientResult: info[0].validationClientResult,
             statusCard: "Success",
           },
         ]);
@@ -174,7 +177,12 @@ const Application = ({ isMobile, isTablet }) => {
             date: formattedDate(ele.creationDate),
             observations: ele.observations,
             validationClientResult: ele.validationClientResult,
-            statusCard: statusCard(ele.stateName, selectedClient?.stateName, ele.validationClientResult, indx)
+            statusCard: statusCard(
+              ele.stateName,
+              selectedClient?.stateName,
+              ele.validationClientResult,
+              indx
+            ),
           }))
         );
       }

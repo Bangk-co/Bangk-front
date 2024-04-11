@@ -166,7 +166,7 @@ const Application = ({ isMobile, isTablet }) => {
             status: historyStatus[info[0].stateName],
             date: formattedDate(info[0].creationDate),
             observations: info[0].observations,
-            validationClientResult: null,
+            validationClientResult: info[0].validationClientResult,
             statusCard: "Success",
           },
         ]);

@@ -12,7 +12,7 @@ export const Card = styled.div`
 `;
 
 export const DashedLine = styled.div`
-  border-left: 2px dashed ${theme.colors.green500};
+  border-left: ${(props) => `2px dashed ${props.color}`};
   height: 185px;
 `;
 

@@ -141,6 +141,11 @@ export const renderStateDiv = (stateName) => {
       borderColor = theme.colors.red500;
       color = theme.colors.red500;
       break;
+    case "No asegurable":
+      backgroundColor = theme.colors.red100;
+      borderColor = theme.colors.red500;
+      color = theme.colors.red500;
+      break;
     default:
       backgroundColor = "transparent";
       borderColor = "transparent";

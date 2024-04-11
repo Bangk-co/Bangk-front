@@ -13,8 +13,13 @@ import useUpdateClientInfo from "@/hooks/Customers/useUpdateClientInfo";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import useUpdateLoan from "@/hooks/Customers/useUpdateLoan";
+import pending from "@/assets/icons/pendingStepper.svg";
 import success from "@/assets/icons/successStepper.svg";
+import error from "@/assets/icons/closeStepper.svg";
+import alert from "@/assets/icons/alertStepper.svg";
 import alertIcon from "@/assets/icons/alert-yellow.svg";
+import alertIconError from "@/assets/icons/alert-red.svg";
+import cancelIcon from "@/assets/icons/cancel-red.svg";
 import { DrawerQuote } from "./DrawerQuote/DrawerQuote";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoanInfo } from "@/store/customers";
@@ -44,7 +49,7 @@ export const Record = ({
   application,
 }) => {
   const dispatch = useDispatch();
-  const { loanInfo } = useSelector((state) => state)?.clients;
+  const { loanInfo, selectedClient } = useSelector((state) => state)?.clients;
   const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
@@ -579,6 +584,54 @@ export const Record = ({
     "Formularios diligenciados",
   ];
 
+  const designStepper = (status) => {
+    switch (status) {
+      case "Pending": 
+        return { icon: pending, lineColor: theme.colors.green500 }
+      case "Alert":
+        return { icon: alert, lineColor: theme.colors.yellow600 }
+      case "Error":
+        return { icon: error, lineColor: theme.colors.error }
+      case "Success":
+        return { icon: success, lineColor: theme.colors.green500 }
+      default:
+        return { icon: success, lineColor: theme.colors.green500 }
+    }
+  }
+
+  const validation = (status) => {
+    switch (status) {
+      case 1:
+        return { 
+          background: theme.colors.yellow100, 
+          color: theme.colors.yellow600, 
+          label: "Presta una novedad",
+          icon: alertIcon
+        };
+      case 2:
+        return { 
+          background: theme.colors.error100, 
+          color: theme.colors.error, 
+          label: "Cliente no apto",
+          icon: cancelIcon
+        };
+      case 3:
+        return { 
+          background: theme.colors.error100, 
+          color: theme.colors.error, 
+          label: "Error en la comunicación",
+          icon: alertIconError
+        };
+      default:
+        return { 
+          background: theme.colors.white, 
+          color: theme.colors.white, 
+          label: "",
+          icon: ""
+        };
+    }
+  }
+
   return (
     <Row m="24px 0 0 0" gap="16px">
       <DrawerAllInfo
@@ -651,8 +704,8 @@ export const Record = ({
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (
           <Div key={indx} direction="column" align="center">
-            <Image alt="icon" src={ele.icon} />
-            {indx < historyInfo.length - 1 && <DashedLine />}
+            <Image alt="icon" src={designStepper(ele.statusCard)?.icon} />
+            {indx < historyInfo.length - 1 && <DashedLine color={designStepper(ele.statusCard)?.lineColor} />}
           </Div>
         ))}
       </Div>
@@ -660,7 +713,7 @@ export const Record = ({
         {historyInfo.map((ele, indx) => (
           <Card key={indx} style={{ flexDirection: "column" }} height="auto">
             {ele.status === "Formularios diligenciados" &&
-              formsConcept.concept && (
+              (formsConcept.concept || selectedClient.stateName === "No asegurable") && (
                 <Div
                   background={theme.colors.yellow100}
                   radius="4px"
@@ -678,7 +731,27 @@ export const Record = ({
                     </Text>
                   </Row>
                 </Div>
-              )}
+              )
+            }
+            {ele.validationClientResult !== 0 || ele.validationClientResult !== null &&
+              <Div
+                background={validation(ele.validationClientResult).background}
+                radius="4px"
+                p="6px 10px"
+                m="0 0 16px 0"
+              >
+                <Row gap="4px" align="center">
+                  <Image alt="alert" src={validation(ele.validationClientResult).icon} width={16} height={16} />
+                  <Text
+                    color={validation(ele.validationClientResult).color}
+                    font={theme.fonts.family.primaryMedium}
+                    size={theme.fonts.size.sm}
+                  >
+                    {validation(ele.validationClientResult).label}{" "}
+                  </Text>
+                </Row>
+              </Div>
+            }
             <Grid container>
               <Grid item md={2.5}>
                 <Col gap="16px">

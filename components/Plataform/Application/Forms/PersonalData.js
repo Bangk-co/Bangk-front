@@ -28,6 +28,17 @@ export const PersonalData = ({ personalInfo }) => {
       setStatesOptions([]);
     }
   }, [isSuccessStates, dataStates]);
+  const statesResidenceList = useGetStates(personalInfo.residenceCountryId);
+  const { data: dataStatesResidence, isSuccess: isSuccessStatesResidence } =
+    statesResidenceList;
+  const [statesResidenceOptions, setStatesResidenceOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessStatesResidence) {
+      setStatesResidenceOptions(dataStatesResidence?.data.states || []);
+    } else {
+      setStatesResidenceOptions([]);
+    }
+  }, [isSuccessStatesResidence, dataStatesResidence]);
 
   const citiesList = useGetCities(personalInfo.birthStateId);
   const { data: dataCities, isSuccess: isSuccessCities } = citiesList;
@@ -39,6 +50,17 @@ export const PersonalData = ({ personalInfo }) => {
       setCitiesOptions([]);
     }
   }, [isSuccessCities, dataCities]);
+  const citiesResidenceList = useGetCities(personalInfo.residenceStateId);
+  const { data: dataCitiesResidence, isSuccess: isSuccessCitiesResidence } =
+    citiesResidenceList;
+  const [citiesResidenceOptions, setCitiesResidenceOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessCitiesResidence) {
+      setCitiesResidenceOptions(dataCitiesResidence?.data.cities);
+    } else {
+      setCitiesResidenceOptions([]);
+    }
+  }, [isSuccessCitiesResidence, dataCitiesResidence]);
 
   const nationalityList = useGetNationality();
   const { data: dataNationality, isSuccess: isSuccessNationality } =
@@ -173,7 +195,7 @@ export const PersonalData = ({ personalInfo }) => {
       title: "Departamento de residencia",
       description: getLabelFromValue(
         personalInfo.residenceStateId,
-        statesOptions,
+        statesResidenceOptions,
         "id",
         "name"
       ),
@@ -182,7 +204,7 @@ export const PersonalData = ({ personalInfo }) => {
       title: "Ciudad de residencia",
       description: getLabelFromValue(
         personalInfo.residenceCityId,
-        citiesOptions,
+        citiesResidenceOptions,
         "id",
         "name"
       ),

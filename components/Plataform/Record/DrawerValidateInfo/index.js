@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { omit } from "lodash";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -43,20 +44,12 @@ export const DrawerValidateInfo = ({
   const changeState = useChangeStateForms();
 
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
-  const [assessorConcept, setAssessorConcept] = useState({
+  let initialAssessorConcept = {
     personalInfo: {
       concept: "",
       comments: "",
     },
     financialInfo: {
-      concept: "",
-      comments: "",
-    },
-    propertyInfo: {
-      concept: "",
-      comments: "",
-    },
-    vehiculeInfo: {
       concept: "",
       comments: "",
     },
@@ -68,7 +61,21 @@ export const DrawerValidateInfo = ({
       concept: "",
       comments: "",
     },
-  });
+  };
+
+  if (loanTypeName === "Libre inversión") {
+    initialAssessorConcept = omit(initialAssessorConcept, [
+      "vehiculeInfo",
+      "propertyInfo",
+    ]);
+  } else if (loanTypeName === "Hipotecario") {
+    initialAssessorConcept = omit(initialAssessorConcept, ["vehiculeInfo"]);
+  } else if (loanTypeName === "Vehiculo") {
+    initialAssessorConcept = omit(initialAssessorConcept, ["propertyInfo"]);
+  }
+  const [assessorConcept, setAssessorConcept] = useState(
+    initialAssessorConcept
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [cancelEdit, setCancelEdit] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({

@@ -5,6 +5,7 @@ import balance from "./balance";
 import clients from "./customers";
 import applications from "./applications";
 import requests from "./requests";
+import auth from "./auth";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const store = configureStore({
     clients,
     applications,
     requests: persistedRequestsReducer,
+    auth
   },
 });
 

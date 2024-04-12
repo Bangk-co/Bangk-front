@@ -18,6 +18,8 @@ export const useAuth = () => {
       "/olvide-contrasena",
       "recuperar-constrasena",
       "/cambiar-contrasena",
+      "/establecer-contrasena",
+      "/establecer-contrasena/exitoso"
     ];
 
     if (!localStorageUser) {

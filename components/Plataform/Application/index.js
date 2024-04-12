@@ -3,13 +3,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { theme } from "../../../styles/theme";
 import { Text } from "@/styles/Common";
-import { Div, Row, Col } from "@/styles/Common";
+import { Row, Col } from "@/styles/Common";
 import { Button } from "@/components/Common/Button";
 import { Tabs } from "@/components/Common/Tabs";
 import { Tab } from "@/components/Common/Tabs/Tab";
 import backIcon from "../../../assets/icons/back.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectedApplicationInformation } from "@/store/applications";
+import { useSelector } from "react-redux";
 import { HeaderInfo, WrapperPage } from "./styles";
 import ApplicationInfo from "./ApplicationInfo";
 import flagIconBold from "../../../assets/icons/flag-bold.svg";
@@ -37,8 +36,8 @@ import useGetInsurers from "@/hooks/Common/useGetInsurers";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const documentsType = useGetDocumentType();
+  const { selectedClient } = useSelector((state) => state)?.clients;
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
   const phoneCode = useGetIndicatives();
   const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode;
@@ -134,6 +133,22 @@ const Application = ({ isMobile, isTablet }) => {
     },
   ];
 
+  const statusCard = (status, generalStatus, validation, index) => {
+    if (
+      (status === "FormulariosDiligenciados" &&
+        generalStatus === "No asegurable") ||
+      validation === 1
+    ) {
+      return "Alert";
+    } else if (validation === 2 || validation === 3) {
+      return "Error";
+    } else if (index === 0) {
+      return "Pending";
+    } else {
+      return "Success";
+    }
+  };
+
   useEffect(() => {
     if (isSuccess) {
       const info = data?.data.loanApplicationHistory;
@@ -144,13 +159,15 @@ const Application = ({ isMobile, isTablet }) => {
             status: "Revisión de extracto",
             date: "-",
             observations: "",
-            icon: pending,
+            validationClientResult: null,
+            statusCard: "Pending",
           },
           {
             status: historyStatus[info[0].stateName],
             date: formattedDate(info[0].creationDate),
             observations: info[0].observations,
-            icon: success,
+            validationClientResult: info[0].validationClientResult,
+            statusCard: "Success",
           },
         ]);
       } else {
@@ -159,12 +176,18 @@ const Application = ({ isMobile, isTablet }) => {
             status: historyStatus[ele.stateName],
             date: formattedDate(ele.creationDate),
             observations: ele.observations,
-            icon: indx === 0 ? pending : success,
+            validationClientResult: ele.validationClientResult,
+            statusCard: statusCard(
+              ele.stateName,
+              selectedClient?.stateName,
+              ele.validationClientResult,
+              indx
+            ),
           }))
         );
       }
     }
-  }, [isSuccess, data]);
+  }, [isSuccess, data, selectedClient]);
 
   useEffect(() => {
     if (isSuccessDocuments) {

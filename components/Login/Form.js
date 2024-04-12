@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { theme } from "@/styles/theme";
 import { WrapperForm, LoginCard } from "@/components/Login/styles";
-import { Text, Row, Col } from "@/styles/Common";
+import { Text, Row, Col, Div } from "@/styles/Common";
 import logo from "../../assets/icons/green-logo.svg";
 import { TextField } from "@/components/Common/TextField";
 import { Button } from "@/components/Common/Button";
@@ -16,6 +16,9 @@ import useLogin from "@/hooks/Login/useLogin";
 import { setLocalUser } from "../../hooks/services/axiosInstance";
 import CircularProgress from "@mui/material/CircularProgress";
 import { encrypt } from "@/utilities/helpers";
+import eye from '@/assets/icons/eye.svg';
+import eyeoff from '@/assets/icons/eyeoff.svg';
+import { IconButton } from '@mui/material';
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -37,6 +40,15 @@ const Form = ({ isMobile, isTablet }) => {
       message: "",
     },
   });
+  const [showPassword, setShowPassword] = useState(false);
+  
+  const handleClickShowPassword = () => {
+    setShowPassword((show) => !show);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };  
 
   const handleChange = (event) => {
     const { value, id } = event.target;
@@ -96,6 +108,8 @@ const Form = ({ isMobile, isTablet }) => {
     }
   };
 
+  const isValid = Object.values(loginForm).every((value) => value !== "")
+
   return (
     <WrapperForm>
       <LoginCard>
@@ -135,7 +149,20 @@ const Form = ({ isMobile, isTablet }) => {
               width="100%"
               height="48px"
               label="Contraseña"
-              type="password"
+              type={showPassword ? "text" : "password"}
+              suffix={
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <Image alt="eyeoff" src={eyeoff} />
+                  ) : (
+                    <Image alt="eye" src={eye} />
+                  )}
+                </IconButton>
+              }
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
@@ -147,33 +174,41 @@ const Form = ({ isMobile, isTablet }) => {
               }
             />
           </Row>
-          <Row width="100%" justify="center">
-            <Link
-              size={theme.fonts.size.sm}
-              weight={theme.fonts.weight.regular}
-              onClick={handleForgotPassword}
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </Row>
-          <Row width="100%" justify="center">
-            <Button
-              width="325px"
-              onClick={handleLogin}
-              disabled={isLoading}
-              startIcon={
-                isLoading ? (
-                  <CircularProgress
-                    size={20}
-                    style={{ color: theme.colors.white }}
-                  />
-                ) : null
-              }
-            >
-              Iniciar sesión
-            </Button>
-          </Row>
         </Col>
+        <Div m="8px 0 0 0" width="100%">
+          <Link
+            width={"100%"}
+            font={theme.fonts.family.primaryBold}
+            size={theme.fonts.size.default2}
+            weight={theme.fonts.weight.bold}
+            color={theme.colors.green}
+            onClick={handleForgotPassword}
+            style={{ justifyContent: "right", padding: "0px" }}
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </Div>
+        <Div m="22px 0 0 0" width="100%" justify="center">
+          <Button
+            width="325px"
+            background={theme.colors.green}
+            hover={theme.colors.green}
+            borderHover={theme.colors.green}
+            font={theme.fonts.family.primaryBold}
+            onClick={handleLogin}
+            disabled={isLoading || !isValid}
+            startIcon={
+              isLoading ? (
+                <CircularProgress
+                  size={20}
+                  style={{ color: theme.colors.white }}
+                />
+              ) : null
+            }
+          >
+            Iniciar sesión
+          </Button>
+        </Div>
       </LoginCard>
     </WrapperForm>
   );

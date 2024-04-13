@@ -164,11 +164,12 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
     {
       title: "Datos financieros",
     },
-    loanTypeName === "Libre inversión"
+    loanTypeName === "Libre inversión" || loanTypeName === "Libranza"
       ? null
       : {
           title:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? "Datos del inmueble"
               : "Datos del vehículo",
         },
@@ -184,10 +185,13 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
   const validateFormByType = () => {
     switch (loanTypeName) {
       case "Libre inversión":
+      case "Libranza":
         return null;
       case "Hipotecario":
+      case "Leasing habitacional":
         return <PropertyData key="propertyData" propertyInfo={propertyInfo} />;
       case "Vehiculo":
+      case "Leasing Vehiculo":
         return <VehiculeData key="vehiculeData" vehiculeInfo={vehiculeInfo} />;
     }
   };

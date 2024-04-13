@@ -53,6 +53,14 @@ export const DrawerValidateInfo = ({
       concept: "",
       comments: "",
     },
+    propertyInfo: {
+      concept: "",
+      comments: "",
+    },
+    vehiculeInfo: {
+      concept: "",
+      comments: "",
+    },
     healthInfo: {
       concept: "",
       comments: "",
@@ -63,14 +71,20 @@ export const DrawerValidateInfo = ({
     },
   };
 
-  if (loanTypeName === "Libre inversión") {
+  if (loanTypeName === "Libre inversión" || loanTypeName === "Libranza") {
     initialAssessorConcept = omit(initialAssessorConcept, [
       "vehiculeInfo",
       "propertyInfo",
     ]);
-  } else if (loanTypeName === "Hipotecario") {
+  } else if (
+    loanTypeName === "Hipotecario" ||
+    loanTypeName === "Leasing habitacional"
+  ) {
     initialAssessorConcept = omit(initialAssessorConcept, ["vehiculeInfo"]);
-  } else if (loanTypeName === "Vehiculo") {
+  } else if (
+    loanTypeName === "Vehiculo" ||
+    loanTypeName === "Leasing Vehiculo"
+  ) {
     initialAssessorConcept = omit(initialAssessorConcept, ["propertyInfo"]);
   }
   const [assessorConcept, setAssessorConcept] = useState(
@@ -605,20 +619,22 @@ export const DrawerValidateInfo = ({
           ? descriptionCondition[assessorConcept?.financialInfo?.concept]
           : "Verifica que los datos personales sean correctos",
     },
-    loanTypeName === "Libre inversión"
+    loanTypeName === "Libre inversión" || loanTypeName === "Libranza"
       ? null
       : {
           icon:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? iconCondition[assessorConcept?.propertyInfo?.concept]
               : iconCondition[assessorConcept?.vehiculeInfo?.concept],
           title:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? "Datos del inmueble"
               : "Datos del vehículo",
-          //TODO change to vehicule
           description:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
                 null
                 ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
@@ -762,8 +778,10 @@ export const DrawerValidateInfo = ({
   const validateFormByType = () => {
     switch (loanTypeName) {
       case "Libre inversión":
+      case "Libranza":
         return null;
       case "Hipotecario":
+      case "Leasing habitacional":
         return (
           <PropertyData
             key="propertyData"
@@ -784,6 +802,7 @@ export const DrawerValidateInfo = ({
           />
         );
       case "Vehiculo":
+      case "Leasing Vehiculo":
         return (
           <VehiculeData
             key="propertyData"

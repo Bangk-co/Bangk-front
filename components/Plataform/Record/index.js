@@ -544,6 +544,11 @@ export const Record = ({
             : "Revisar formularios",
           onClick: () => setShowDrawerValidateInfo(true),
         };
+      case "Formularios validados":
+        return {
+          label: "Ver formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
@@ -565,6 +570,11 @@ export const Record = ({
             : "Revisar formularios",
           onClick: () => setShowDrawerValidateInfo(true),
         };
+      case "Formularios validados":
+        return {
+          label: "Ver formularios",
+          onClick: () => setShowDrawerValidateInfo(true),
+        };
       default:
         break;
     }
@@ -574,12 +584,13 @@ export const Record = ({
     "Revisión de extracto",
     "Cotización enviada",
     "Formularios diligenciados",
+    "Formularios validados",
   ];
 
   const secondaryButtons = [
     "Revisión de extracto",
     "Cotización enviada",
-    "Formularios diligenciados",
+    "Formularios validados",
   ];
 
   const designStepper = (status) => {
@@ -838,7 +849,8 @@ export const Record = ({
                 {historyInfo.length > 0 &&
                   indx === 0 &&
                   principalButtons.includes(ele.status) &&
-                  ele.status !== "Cotización enviada" && (
+                  ele.status !== "Cotización enviada" &&
+                  ele.status !== "Formularios validados" && (
                     <Div height="100%" justify="end" align="center">
                       <Button
                         background={theme.colors.green900}
@@ -855,7 +867,8 @@ export const Record = ({
                   )}
                 {historyInfo.length > 2 &&
                   indx === 0 &&
-                  ele.status === "Cotización enviada" && (
+                  (ele.status === "Cotización enviada" ||
+                    ele.status === "Formularios validados") && (
                     <Div height="100%" justify="end" align="center">
                       <Button
                         font={theme.fonts.family.primaryBold}

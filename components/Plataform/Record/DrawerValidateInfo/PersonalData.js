@@ -156,7 +156,7 @@ export const PersonalData = ({
     },
     {
       titleL:
-        "¿Eres o tienes familiares Públicamente Expuestos (Actores, políticos, estrellas deportivas, etc...)?",
+        "¿Eres o una persona públicamente expuesta (Actores, políticos, estrellas deportivas, etc...)?",
       descriptionL: personalInfo.isPublicPerson ? "Si" : "No",
       titleR:
         "¿Tienes familiares que sean personas públicamente expuestas (Actores, políticos, estrellas deportivas, etc...)?",

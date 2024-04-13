@@ -623,7 +623,8 @@ export const DrawerValidateInfo = ({
       ? null
       : {
           icon:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? iconCondition[assessorConcept?.propertyInfo?.concept]
               : iconCondition[assessorConcept?.vehiculeInfo?.concept],
           title:
@@ -631,9 +632,9 @@ export const DrawerValidateInfo = ({
             loanTypeName === "Leasing habitacional"
               ? "Datos del inmueble"
               : "Datos del vehículo",
-          //TODO change to vehicule
           description:
-            loanTypeName === "Hipotecario"
+            loanTypeName === "Hipotecario" ||
+            loanTypeName === "Leasing habitacional"
               ? descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
                 null
                 ? descriptionCondition[assessorConcept?.propertyInfo?.concept]

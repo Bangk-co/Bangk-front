@@ -91,7 +91,6 @@ export const DrawerValidateInfo = ({
       setAssessorConcept(_.omit(initialAssessorConcept, ["propertyInfo"]));
     }
   }, [loanTypeName]);
-  console.log("assessorConcept", assessorConcept);
   const [isEditing, setIsEditing] = useState(false);
   const [cancelEdit, setCancelEdit] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({

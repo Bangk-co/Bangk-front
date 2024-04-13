@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { omit } from "lodash";
+import _ from "lodash";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -71,25 +71,27 @@ export const DrawerValidateInfo = ({
     },
   };
 
-  if (loanTypeName === "Libre inversión" || loanTypeName === "Libranza") {
-    initialAssessorConcept = omit(initialAssessorConcept, [
-      "vehiculeInfo",
-      "propertyInfo",
-    ]);
-  } else if (
-    loanTypeName === "Hipotecario" ||
-    loanTypeName === "Leasing habitacional"
-  ) {
-    initialAssessorConcept = omit(initialAssessorConcept, ["vehiculeInfo"]);
-  } else if (
-    loanTypeName === "Vehiculo" ||
-    loanTypeName === "Leasing Vehiculo"
-  ) {
-    initialAssessorConcept = omit(initialAssessorConcept, ["propertyInfo"]);
-  }
   const [assessorConcept, setAssessorConcept] = useState(
     initialAssessorConcept
   );
+  useEffect(() => {
+    if (loanTypeName === "Libre inversión" || loanTypeName === "Libranza") {
+      setAssessorConcept(
+        _.omit(initialAssessorConcept, ["vehiculeInfo", "propertyInfo"])
+      );
+    } else if (
+      loanTypeName === "Hipotecario" ||
+      loanTypeName === "Leasing habitacional"
+    ) {
+      setAssessorConcept(_.omit(initialAssessorConcept, ["vehiculeInfo"]));
+    } else if (
+      loanTypeName === "Vehiculo" ||
+      loanTypeName === "Leasing Vehiculo"
+    ) {
+      setAssessorConcept(_.omit(initialAssessorConcept, ["propertyInfo"]));
+    }
+  }, [loanTypeName]);
+  console.log("assessorConcept", assessorConcept);
   const [isEditing, setIsEditing] = useState(false);
   const [cancelEdit, setCancelEdit] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({
@@ -984,7 +986,7 @@ export const DrawerValidateInfo = ({
               height={"40px"}
               disabled={
                 !Object.values(assessorConcept).every(
-                  (concept) => concept.concept !== ""
+                  (concept) => concept.concept === "La información es correcta"
                 )
               }
               startIcon={

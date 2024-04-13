@@ -275,10 +275,6 @@ export const Record = ({
     concept: false,
     comments: "",
   });
-  console.log(
-    "dataAssesorConcept?.data?.getLoanForm",
-    dataAssesorConcept?.data?.getLoanForm
-  );
   useEffect(() => {
     if (dataAssesorConcept?.data?.getLoanForm) {
       const hasNews = _.some(dataAssesorConcept?.data?.getLoanForm, {

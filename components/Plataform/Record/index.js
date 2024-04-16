@@ -93,7 +93,7 @@ export const Record = ({
   const [yearlyFee, setYearlyFee] = useState("");
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    data?.data?.loanApplication.loanApplicationId
+    applications?.selectedApplication?.loanApplicationId
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();

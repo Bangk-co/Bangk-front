@@ -203,7 +203,7 @@ export const DrawerAllInfo = ({
                   label={"Tipo de documento*"}
                   {...textFieldProps}
                   notFocused={true}
-                  name="documentType"
+                  name="documentTypeId"
                   value={userForm?.documentTypeId}
                   onChange={handleSelectUser}
                   disabled={savedBankStatStatement}

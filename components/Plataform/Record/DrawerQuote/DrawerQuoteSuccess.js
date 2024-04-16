@@ -16,6 +16,7 @@ export const DrawerQuoteSuccess = ({
   currentInsuranceData,
   bangkInsuranceData,
   saveValue,
+  isLoading,
 }) => {
   const [loanData, setLoanData] = useState([]);
 
@@ -27,8 +28,8 @@ export const DrawerQuoteSuccess = ({
         value: `$ ${numberFormat(Number(loanInfo?.loanBalance))}`,
       },
       { label: "Aseguradora", value: insurer },
-    ])
-  }, [loanInfo, insurer])
+    ]);
+  }, [loanInfo, insurer]);
 
   const subtitleProps = {
     font: theme.fonts.family.primaryBold,

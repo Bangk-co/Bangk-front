@@ -16,7 +16,6 @@ export const DrawerQuoteSuccess = ({
   currentInsuranceData,
   bangkInsuranceData,
   saveValue,
-  isLoading,
 }) => {
   const [loanData, setLoanData] = useState([]);
 

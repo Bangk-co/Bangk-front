@@ -173,11 +173,19 @@ export const PersonalData = ({ personalInfo }) => {
     },
     {
       title: "Es PEP",
-      description: personalInfo.isPublicPerson ? "Si" : "No",
+      description: personalInfo.isPublicPerson
+        ? personalInfo.isPublicPerson
+          ? "Si"
+          : "No"
+        : "--",
     },
     {
       title: "Relacionado con PEP",
-      description: personalInfo.hasBondPublicPerson ? "Si" : "No",
+      description: personalInfo.hasBondPublicPerson
+        ? personalInfo.hasBondPublicPerson
+          ? "Si"
+          : "No"
+        : "--",
     },
   ];
 

@@ -61,25 +61,31 @@ export const PropertyData = ({ propertyInfo }) => {
     },
     {
       title: "Valor comercial",
-      description: `$ ${numberFormat(propertyInfo.housingValue)}`,
+      description: `$ ${numberFormat(propertyInfo.housingValue) || "--"} `,
     },
     {
       title: "Año de construcción",
-      description: new Date(propertyInfo.builtgDate).getFullYear(),
+      description: propertyInfo.builtgDate
+        ? new Date(propertyInfo.builtgDate).getFullYear()
+        : "--",
     },
     {
       title: "Antigüedad",
-      description: `${
-        new Date().getFullYear() -
-        new Date(propertyInfo.builtgDate).getFullYear()
-      } años`,
+      description: propertyInfo.builtgDate
+        ? `${
+            new Date().getFullYear() -
+            new Date(propertyInfo.builtgDate).getFullYear()
+          } años`
+        : "--",
     },
   ];
 
   const RowInfo2 = [
     {
       title: "Área de construcción",
-      description: `${propertyInfo.builtArea} mts`,
+      description: propertyInfo.builtArea
+        ? `${propertyInfo.builtArea} mts`
+        : "--",
     },
     {
       title: "Número de piso del apartamento",

@@ -42,25 +42,29 @@ export const HealthData = ({ healthInfo }) => {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
       description:
-        getLabelFromValue(healthInfo.diseases, diseasesOptions) || "--",
+        healthInfo.hivActive !== null
+          ? getLabelFromValue(healthInfo.diseases, diseasesOptions) || "Ninguna"
+          : "--",
     },
     {
       title:
         "¿Le han detectado la presencia de anticuerpos contra el virus V.I.H. productor del SIDA?",
-      description: healthInfo.hivActive
-        ? healthInfo.hivActive
-          ? "Si"
-          : "No"
-        : "--",
+      description:
+        healthInfo.hivActive !== null
+          ? healthInfo.hivActive
+            ? "Si"
+            : "No"
+          : "--",
     },
     {
       title:
         "¿Te encuentras actualmente en exámenes, estudios, investigación o te han indicado la necesidad de alguna cirugía o tratamiento que no te hayas realizado aún?",
-      description: healthInfo.plannedMedicalProcidure
-        ? healthInfo.plannedMedicalProcidure
-          ? "Si"
-          : "No"
-        : "--",
+      description:
+        healthInfo.plannedMedicalProcidure !== null
+          ? healthInfo.plannedMedicalProcidure
+            ? "Si"
+            : "No"
+          : "--",
     },
   ];
 
@@ -68,11 +72,12 @@ export const HealthData = ({ healthInfo }) => {
     {
       title:
         "¿Tiene algún tipo de discapacidad, incapacidad o limitación física o mental?",
-      description: healthInfo.disability
-        ? healthInfo.disability
-          ? "Si"
-          : "No"
-        : "--",
+      description:
+        healthInfo.disability !== null
+          ? healthInfo.disability
+            ? "Si"
+            : "No"
+          : "--",
     },
   ];
 

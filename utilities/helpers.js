@@ -199,6 +199,7 @@ export const renderDocumentStateDiv = (stateName) => {
       break;
     case "Rechazado":
     case "Vencido":
+    case "Cliente no asegurable":
       borderColor = theme.colors.red500;
       color = theme.colors.red500;
       break;

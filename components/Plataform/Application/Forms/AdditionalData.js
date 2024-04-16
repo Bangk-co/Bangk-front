@@ -46,29 +46,32 @@ export const AdditionalData = ({ additionalInfo }) => {
     {
       title:
         "¿Has sido indiciado, investigado, procesado, inculpado, imputado, detenido y/o condenado por algún delito?",
-      description: additionalInfo.convicted
-        ? additionalInfo.convicted
-          ? "Si"
-          : "No"
-        : "--",
+      description:
+        additionalInfo.convicted !== null
+          ? additionalInfo.convicted
+            ? "Si"
+            : "No"
+          : "--",
     },
     {
       title:
         "¿Tienes algún seguro de vida individual o de accidentes personales con Allianz o con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
-      description: additionalInfo.lifeEnsure
-        ? additionalInfo.lifeEnsure
-          ? "Si"
-          : "No"
-        : "--",
+      description:
+        additionalInfo.lifeEnsure !== null
+          ? additionalInfo.lifeEnsure
+            ? "Si"
+            : "No"
+          : "--",
     },
     {
       title:
         "*En caso de que faltes y exista algún remanente después de pagar el saldo total de tu deuda, puedes escoger quién o quienes pueden recibirlo por parte de la aseguradora",
-      description: additionalInfo.beneficiaries
-        ? additionalInfo.beneficiaries
-          ? "Designado por mi"
-          : "Mis herederos legales"
-        : "--",
+      description:
+        additionalInfo.beneficiaries !== null
+          ? additionalInfo.beneficiaries
+            ? "Designado por mi"
+            : "Mis herederos legales"
+          : "--",
     },
   ];
 

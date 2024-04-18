@@ -703,12 +703,9 @@ export const Record = ({
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
         loanApplicationId={applications?.selectedApplication?.loanApplicationId}
-        loanTypeName={dataLoanApplication?.data?.loanTypeName}
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios validados"
         )}
-        assessorConcept={formsConcept}
-        setAssessorConcept={setFormsConcept}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (

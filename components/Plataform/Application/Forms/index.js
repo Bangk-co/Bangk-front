@@ -1,18 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import dayjs from "dayjs";
 import { Div, Text, Row } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { InfoCard } from "../styles";
 import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
-import { PropertyData } from "./PropertyData";
 import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";
 import { HealthData } from "./HealthData";
 import { AdditionalData } from "./AdditionalData";
-import { VehiculeData } from "./VehiculeData";
 
-export const Forms = ({ loanApplicationId, loanTypeName }) => {
+export const Forms = ({ loanApplicationId }) => {
   const [personalInfo, setPersonalInfo] = useState({
     birthCountryId: null,
     countryNationalityId: null,
@@ -37,19 +34,6 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
     incomeOrigin: null,
   });
 
-  const [propertyInfo, setPropertyInfo] = useState({
-    housingTypeId: null,
-    housingValue: null,
-    builtgDate: null,
-    builtArea: null,
-    basementNumber: null,
-    apartmentNumber: null,
-    buildingFloorsNumber: null,
-    address: null,
-    stateId: null,
-    cityId: null,
-  });
-
   const [healthInfo, setHealthInfo] = useState({
     weight: null,
     height: null,
@@ -67,13 +51,6 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
     lifeEnsure: null,
     beneficiaries: null,
     beneficiary: [],
-  });
-
-  const [vehiculeInfo, setVehiculeInfo] = useState({
-    countryVehiculeId: null,
-    stateVehiculeId: null,
-    cityVehiculeId: null,
-    vehicleLicensePlate: "",
   });
 
   const loanInsurancePolicyData =
@@ -110,22 +87,6 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
         liabilitiesValue: data?.data?.loanInsurancePolicies.liabilitiesValue,
         incomeOrigin: data?.data?.loanInsurancePolicies.incomeOrigin,
       });
-      setPropertyInfo({
-        housingTypeId: data?.data?.loanInsurancePolicies.housingTypeId,
-        housingValue: data?.data?.loanInsurancePolicies.housingValue,
-        builtgDate:
-          data?.data?.loanInsurancePolicies.builtgDate === null
-            ? null
-            : dayjs(data?.data?.loanInsurancePolicies.builtgDate),
-        builtArea: data?.data?.loanInsurancePolicies.builtArea,
-        basementNumber: data?.data?.loanInsurancePolicies.basementNumber,
-        apartmentNumber: data?.data?.loanInsurancePolicies.apartmentNumber,
-        buildingFloorsNumber:
-          data?.data?.loanInsurancePolicies.buildingFloorsNumber,
-        address: data?.data?.loanInsurancePolicies.address,
-        stateId: data?.data?.loanInsurancePolicies.stateId,
-        cityId: data?.data?.loanInsurancePolicies.cityId,
-      });
       setHealthInfo({
         weight: data?.data?.loanInsurancePolicies.weight,
         height: data?.data?.loanInsurancePolicies.height,
@@ -146,13 +107,6 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
         beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
       });
-      setVehiculeInfo({
-        countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,
-        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
-        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
-        vehicleLicensePlate:
-          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
-      });
     }
   }, [data, isLoading]);
 
@@ -164,15 +118,6 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
     {
       title: "Datos financieros",
     },
-    loanTypeName === "Libre inversión" || loanTypeName === "Libranza"
-      ? null
-      : {
-          title:
-            loanTypeName === "Hipotecario" ||
-            loanTypeName === "Leasing habitacional"
-              ? "Datos del inmueble"
-              : "Datos del vehículo",
-        },
     {
       title: "Datos de salud",
     },
@@ -182,23 +127,9 @@ export const Forms = ({ loanApplicationId, loanTypeName }) => {
   ];
   const infoCardsFiltered = infoCards.filter((item) => item !== null);
 
-  const validateFormByType = () => {
-    switch (loanTypeName) {
-      case "Libre inversión":
-      case "Libranza":
-        return null;
-      case "Hipotecario":
-      case "Leasing habitacional":
-        return <PropertyData key="propertyData" propertyInfo={propertyInfo} />;
-      case "Vehiculo":
-      case "Leasing Vehiculo":
-        return <VehiculeData key="vehiculeData" vehiculeInfo={vehiculeInfo} />;
-    }
-  };
   const cardData = [
     <PersonalData key="personalData" personalInfo={personalInfo} />,
     <FinancialData key="financialData" financialInfo={financialInfo} />,
-    validateFormByType(),
     <HealthData key="HealthData" healthInfo={healthInfo} />,
     <AdditionalData key="additionalData" additionalInfo={additionalInfo} />,
   ];

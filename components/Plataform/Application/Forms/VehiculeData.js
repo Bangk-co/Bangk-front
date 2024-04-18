@@ -49,7 +49,9 @@ export const VehiculeData = ({ vehiculeInfo, propertyInfo }) => {
     },
     {
       title: "Placa",
-      description: vehiculeInfo.vehicleLicensePlate.toUpperCase(),
+      description: vehiculeInfo.vehicleLicensePlate
+        ? vehiculeInfo.vehicleLicensePlate.toUpperCase()
+        : "--",
     },
   ];
 

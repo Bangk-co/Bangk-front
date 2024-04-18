@@ -618,7 +618,7 @@ export const DrawerValidateInfo = ({
       description:
         descriptionCondition[assessorConcept?.financialInfo?.concept] !== null
           ? descriptionCondition[assessorConcept?.financialInfo?.concept]
-          : "Verifica que los datos personales sean correctos",
+          : "Verifica que los datos financieros sean correctos",
     },
     loanTypeName === "Libre inversión" || loanTypeName === "Libranza"
       ? null
@@ -639,11 +639,11 @@ export const DrawerValidateInfo = ({
               ? descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
                 null
                 ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
-                : "Verifica que los datos personales sean correctos"
+                : "Verifica que los datos del inmueble sean correctos"
               : descriptionCondition[assessorConcept?.vehiculeInfo?.concept] !==
                 null
               ? descriptionCondition[assessorConcept?.vehiculeInfo?.concept]
-              : "Verifica que los datos personales sean correctos",
+              : "Verifica que los datos del vehiculo sean correctos",
         },
     {
       icon: iconCondition[assessorConcept?.healthInfo?.concept],
@@ -651,7 +651,7 @@ export const DrawerValidateInfo = ({
       description:
         descriptionCondition[assessorConcept?.healthInfo?.concept] !== null
           ? descriptionCondition[assessorConcept?.healthInfo?.concept]
-          : "Verifica que los datos personales sean correctos",
+          : "Verifica que los datos de salud sean correctos",
     },
     {
       icon: iconCondition[assessorConcept?.additionalInfo?.concept],
@@ -659,7 +659,7 @@ export const DrawerValidateInfo = ({
       description:
         descriptionCondition[assessorConcept?.additionalInfo?.concept] !== null
           ? descriptionCondition[assessorConcept?.additionalInfo?.concept]
-          : "Verifica que los datos personales sean correctos",
+          : "Verifica que los datos adicionales sean correctos",
     },
   ];
   const infoCardsFiltered = infoCards.filter((item) => item !== null);

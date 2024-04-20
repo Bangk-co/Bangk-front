@@ -8,7 +8,6 @@ import { theme } from "@/styles/theme";
 import { MobileStepperPolicy } from "@/components/Policy/MobileStepperPolicy";
 import { Step1 } from "@/components/Policy/Steps/Step1";
 import { Step2 } from "@/components/Policy/Steps/Step2";
-import { Step3 } from "@/components/Policy/Steps/Step3";
 import { Step4 } from "@/components/Policy/Steps/Step4";
 import { Step5 } from "@/components/Policy/Steps/Step5";
 import useGetCountries from "@/hooks/Common/useGetCountries";
@@ -21,13 +20,8 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/Common/Button";
 import Image from "next/image";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
-import dayjs from "dayjs";
 import useGetEconomicActivity from "@/hooks/Common/useGetEconomicActivity";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
-import useGetHousingType from "@/hooks/Common/useGetHousingType";
-import house from "@/assets/icons/house.svg";
-import building from "@/assets/icons/building.svg";
-import condominium from "@/assets/icons/condominium.svg";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
 import toast from "react-hot-toast";
@@ -38,7 +32,6 @@ import {
 } from "@/utilities/helpers";
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
-import { Step3V } from "@/components/Policy/Steps/Step3V";
 import useGetRelationships from "@/hooks/Common/useGetRelationships";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 
@@ -66,10 +59,6 @@ const RequestPolicy = ({ isMobile }) => {
   const diseasesList = useGetDiseases();
   const { data: dataDiseases, isSuccess: isSuccessDiseases } = diseasesList;
   const [diseasesOptions, setDiseasesOptions] = useState([]);
-  const housingTypeList = useGetHousingType();
-  const { data: dataHousingType, isSuccess: isSuccessHousingType } =
-    housingTypeList;
-  const [housingTypeOptions, setHousingTypeOptions] = useState([]);
   const documentType = useGetDocumentType();
   const { data: dataDocument, isSuccess: isSuccessDocument } = documentType;
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
@@ -104,23 +93,7 @@ const RequestPolicy = ({ isMobile }) => {
     liabilitiesValue: null,
     incomeOrigin: null,
   });
-  const [propertyInfo, setPropertyInfo] = useState({
-    housingTypeId: null,
-    housingValue: null,
-    builtgDate: null,
-    builtArea: null,
-    basementNumber: null,
-    apartmentNumber: null,
-    buildingFloorsNumber: null,
-    address: null,
-    stateId: null,
-    cityId: null,
-  })
-  const [vehicleInfo, setVehicleInfo] = useState({
-    stateVehiculeId: null,
-    cityVehiculeId: null,
-    vehicleLicensePlate: null,
-  })
+
   const [healthInfo, setHealthInfo] = useState({
     weight: null,
     height: null,
@@ -148,44 +121,14 @@ const RequestPolicy = ({ isMobile }) => {
   const citiesList = useGetCities(userInfo.birthStateId)
   const { data: dataCities, isSuccess: isSuccessCities } = citiesList
   const [citiesOptions, setCitiesOptions] = useState([])
-  const [steps, setSteps] = useState([])
   const [loanTypeId, setLoanTypeId] = useState(null)
 
-  useEffect(() => {
-    switch (loanTypeId) {
-      case 102:
-      case 103:
-        setSteps([
-          "Datos personales",
-          "Datos Financieros",
-          "Datos de tu Inmueble",
-          "Datos de tu salud",
-          "Datos adicionales"
-        ])
-        break;
-      case 106:
-      case 139:
-        setSteps([
-          "Datos personales",
-          "Datos Financieros",
-          "Datos de tu vehículo",
-          "Datos de tu salud",
-          "Datos adicionales"
-        ])
-        break;
-      case 105:
-      case 104:
-        setSteps([
-          "Datos personales",
-          "Datos Financieros",
-          "Datos de tu salud",
-          "Datos adicionales"
-        ])
-        break;      
-      default:
-        break;
-    }
-  }, [loanTypeId])
+  const steps = [
+    "Datos personales",
+    "Datos Financieros",
+    "Datos de tu salud",
+    "Datos adicionales"
+  ];
 
   useEffect(() => {
     setLoanTypeId(requestInfo.loanTypeId)
@@ -211,24 +154,6 @@ const RequestPolicy = ({ isMobile }) => {
       liabilitiesValue: requestInfo.liabilitiesValue,
       incomeOrigin: requestInfo.incomeOrigin,
     });
-    setPropertyInfo({
-      housingTypeId: requestInfo.housingTypeId,
-      housingValue: requestInfo.housingValue,
-      builtgDate:
-        requestInfo.builtgDate === null ? null : dayjs(requestInfo.builtgDate),
-      builtArea: requestInfo.builtArea,
-      basementNumber: requestInfo.basementNumber,
-      apartmentNumber: requestInfo.apartmentNumber,
-      buildingFloorsNumber: requestInfo.buildingFloorsNumber,
-      address: requestInfo.address,
-      stateId: requestInfo.stateId,
-      cityId: requestInfo.cityId,
-    })
-    setVehicleInfo({
-      stateVehiculeId: requestInfo.stateVehiculeId,
-      cityVehiculeId: requestInfo.cityVehiculeId,
-      vehicleLicensePlate: requestInfo.vehicleLicensePlate,
-    })
     setHealthInfo({
       weight: requestInfo.weight,
       height: requestInfo.height,
@@ -311,33 +236,6 @@ const RequestPolicy = ({ isMobile }) => {
       );
   }, [dataRelationship, isSuccessRelationship]);
 
-  const iconHousingType = (name) => {
-    switch (name) {
-      case "Casa":
-        return house;
-      case "Apartamento":
-        return building;
-      case "Condominio":
-        return condominium;
-      default:
-        return house;
-    }
-  };
-
-  useEffect(() => {
-    if (isSuccessHousingType) {
-      const sortedHousingType = dataHousingType?.data?.groupSettings
-        .map((ele) => ({
-          name: ele.name,
-          id: ele.id,
-          icon: iconHousingType(ele.name),
-        }))
-        .sort((a, b) => a.id - b.id);
-
-      setHousingTypeOptions(sortedHousingType);
-    }
-  }, [dataHousingType, isSuccessHousingType]);
-
   useEffect(() => {
     if (isSuccessStates) {
       setStatesOptions(dataStates?.data.states);
@@ -350,14 +248,12 @@ const RequestPolicy = ({ isMobile }) => {
     }
   }, [isSuccessCities, dataCities]);
 
-  const freeInvestment = loanTypeId === 104 || loanTypeId === 105
-
   const nextStep = () => {
     const newHealthInfo = {
       ...healthInfo,
       diseases: getDiseasesIds(diseases, diseasesOptions),
     };
-    if (freeInvestment && activeStep === 3 || !freeInvestment && activeStep === 4) {
+    if (activeStep === 3) {
       const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
       if (additionalInfo.beneficiaries === true && percentage !== 100) {
         toast.custom(<ToastErrorClient message={'El porcentaje de tus herederos debe dar 100%'} />, {
@@ -371,47 +267,27 @@ const RequestPolicy = ({ isMobile }) => {
               loanApplicationId: requestInfo.loanApplicationId,
               ...userInfo,
               ...financialInfo,
-              ...propertyInfo,
               ...newHealthInfo,
               ...additionalInfo,
-              ...vehicleInfo,
             },
           },
           {
             onSuccess: () => {
-              if (freeInvestment && activeStep === 3) {
-                updateStatus.reset();
-                updateStatus.mutate(
-                  { loanApplicationId: requestInfo.loanApplicationId },
-                  {
-                    onSuccess: () => {
-                      dispatch(setRequestInfo(initDataLoanInsurancePolicy))
-                      router.push("/solicitar-poliza/solicitud-exitosa")
-                    },
-                    onError: (err) => {
-                      err.response.data.errors.map((error) => {
-                        toast.error(error);
-                      });
-                    },
-                  }
-                );
-              } else if (!freeInvestment && activeStep === 4) {
-                updateStatus.reset();
-                updateStatus.mutate(
-                  { loanApplicationId: requestInfo.loanApplicationId },
-                  {
-                    onSuccess: () => {
-                      dispatch(setRequestInfo(initDataLoanInsurancePolicy));
-                      router.push("/solicitar-poliza/solicitud-exitosa");
-                    },
-                    onError: (err) => {
-                      err.response.data.errors.map((error) => {
-                        toast.error(error);
-                      });
-                    },
-                  }
-                );
-              }
+              updateStatus.reset();
+              updateStatus.mutate(
+                { loanApplicationId: requestInfo.loanApplicationId },
+                {
+                  onSuccess: () => {
+                    dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+                    router.push("/solicitar-poliza/solicitud-exitosa")
+                  },
+                  onError: (err) => {
+                    err.response.data.errors.map((error) => {
+                      toast.error(error);
+                    });
+                  },
+                }
+              );
             },
             onError: (err) => {
               err.response.data.errors.map((error) => {
@@ -429,22 +305,14 @@ const RequestPolicy = ({ isMobile }) => {
             loanApplicationId: requestInfo.loanApplicationId,
             ...userInfo,
             ...financialInfo,
-            ...propertyInfo,
             ...newHealthInfo,
             ...additionalInfo,
-            ...vehicleInfo,
           },
         },
         {
           onSuccess: (data) => {
-            if (freeInvestment && activeStep !== 3) {
-              dispatch(setRequestInfo(data?.data.result))
-              setActiveStep(activeStep + 1)
-            } 
-            if (!freeInvestment && activeStep !== 4) {
-              dispatch(setRequestInfo(data?.data.result))
-              setActiveStep(activeStep + 1)
-            }
+            dispatch(setRequestInfo(data?.data.result))
+            setActiveStep(activeStep + 1)
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {
@@ -484,8 +352,7 @@ const RequestPolicy = ({ isMobile }) => {
     if (healthInfo.disability) {
       HealthData.disabilityMoreInfo = healthInfo.disabilityMoreInfo;
     }
-
-    return Object.values(HealthData).some(value => value === null);
+    return Object.values(HealthData).some((value) => value === null || value === "");
   }
 
   const validationAdditional = () => {
@@ -502,68 +369,43 @@ const RequestPolicy = ({ isMobile }) => {
             .filter(key => key !== "id" && key !== "loanInsurancePolicyId")
             .every(key => obj[key] !== null && obj[key] !== ""));
     } else {
-      return Object.values(additionalData).some(value => value === null);
+      return Object.values(additionalData).some((value) => value === null || value === "");
     }
+  }
+
+  const validationFinancial = () => {
+    const financialData = {
+      monthlyIncome: financialInfo.monthlyIncome,
+      monthlyExpenses: financialInfo.monthlyExpenses,
+      assetValue: financialInfo.assetValue,
+      liabilitiesValue: financialInfo.liabilitiesValue,
+    }
+    if (
+      requestInfo.loanBalance > 137227300 ||
+      requestInfo.monthlyCostInsurance > 6089880
+    ) {
+      financialData.incomeOrigin = financialInfo.incomeOrigin;
+      financialData.check1 = checks.check1;
+      financialData.check2 = checks.check2;
+      financialData.check3 = checks.check3;
+    }
+
+    return Object.values(financialData).some((value) => value === null || value === false || value === "");
   }
 
   const validForm = (currentStep) => {
     switch (currentStep) {
       case 0:
         const isFormValid = Object.values(userInfo).some(
-          (value) => value === null
+          (value) => value === null || value === ""
         );
         return isFormValid;
       case 1:
-        const financialData = {
-          monthlyIncome: financialInfo.monthlyIncome,
-          monthlyExpenses: financialInfo.monthlyExpenses,
-          assetValue: financialInfo.assetValue,
-          liabilitiesValue: financialInfo.liabilitiesValue,
-        }
-        if (
-          requestInfo.loanBalance > 137227300 ||
-          requestInfo.monthlyCostInsurance > 6089880
-        ) {
-          financialData.incomeOrigin = financialInfo.incomeOrigin;
-          financialData.check1 = checks.check1;
-          financialData.check2 = checks.check2;
-          financialData.check3 = checks.check3;
-        }
-
-        return Object.values(financialData).some((value) => value === null || value === false || value === "");
+        return validationFinancial();
       case 2: 
-        const obj2 = {
-          housingTypeId: propertyInfo.housingTypeId,
-          housingValue: propertyInfo.housingValue,
-          builtgDate:
-            propertyInfo.builtgDate === null
-              ? null
-              : dayjs(propertyInfo.builtgDate),
-          builtArea: propertyInfo.builtArea,
-          address: propertyInfo.address,
-          stateId: propertyInfo.stateId,
-          cityId: propertyInfo.cityId,
-        }
-
-        if (loanTypeId === 102 || loanTypeId === 103) {
-          if (propertyInfo.housingTypeId !== 147) {
-            return Object.values(obj2).some(value => value === null);
-          } else {
-            return Object.values(propertyInfo).some(value => value === null);
-          }
-        } else if (loanTypeId === 106 || loanTypeId === 139) {
-          return Object.values(vehicleInfo).some(value => value === null);
-        } else {
-          return validationHealth();
-        }
+        return validationHealth();
       case 3: 
-        if (loanTypeId === 104 || loanTypeId === 105) {
-          return validationAdditional(); 
-        } else {
-          return validationHealth();
-        }
-      case 4:
-        return validationAdditional();        
+        return validationAdditional(); 
       default:
         break;
     }
@@ -622,51 +464,17 @@ const RequestPolicy = ({ isMobile }) => {
           />
         )}
         {activeStep === 2 && (
-          loanTypeId === 102 || loanTypeId === 103 ? (
-            <Step3
-              isMobile={isMobile}
-              formInfo={propertyInfo}
-              setFormInfo={setPropertyInfo}
-              housingTypeOptions={housingTypeOptions}
-            />
-          ) : loanTypeId === 106 || loanTypeId === 139 ? (
-            <Step3V 
-              isMobile={isMobile}
-              formInfo={vehicleInfo}
-              setFormInfo={setVehicleInfo}
-            />
-          ) : (
-            <Step4
-              isMobile={isMobile}
-              formInfo={healthInfo}
-              setFormInfo={setHealthInfo}
-              diseasesOptions={diseasesOptions}
-              diseases={diseases}
-              setDiseases={setDiseases}
-            />
-          )
+          <Step4
+            isMobile={isMobile}
+            formInfo={healthInfo}
+            setFormInfo={setHealthInfo}
+            diseasesOptions={diseasesOptions}
+            diseases={diseases}
+            setDiseases={setDiseases}
+          />
+          
         )}
         {activeStep === 3 && (
-          loanTypeId === 104 || loanTypeId === 105 ? (
-            <Step5
-              isMobile={isMobile}
-              formInfo={additionalInfo}
-              setFormInfo={setAdditionalInfo}
-              documentTypeOptions={documentTypeOptions}
-              relationshipsOptions={relationshipsOptions}
-            />
-          ) : (
-            <Step4
-              isMobile={isMobile}
-              formInfo={healthInfo}
-              setFormInfo={setHealthInfo}
-              diseasesOptions={diseasesOptions}
-              diseases={diseases}
-              setDiseases={setDiseases}
-            />
-          )
-        )}
-        {activeStep === 4 && (
           <Step5
             isMobile={isMobile}
             formInfo={additionalInfo}
@@ -712,9 +520,7 @@ const RequestPolicy = ({ isMobile }) => {
             onClick={nextStep}
             disabled={validForm(activeStep)}
           >
-            {activeStep === 3 && (loanTypeId === 104 || loanTypeId === 105) 
-              || activeStep === 4 ? 
-                "Finalizar" : "Siguiente"}
+            {activeStep === 3 ? "Finalizar" : "Siguiente"}
           </Button>
         </Div>
       </WrapperPolicy>

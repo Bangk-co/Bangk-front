@@ -87,7 +87,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     return "";
   };
 
-  const email = hideEmailUsername(userInfo.email);
+  const email = hideEmailUsername(userInfo.email || emailStore);
 
   const focusInputs = (value, indx) => {
     if (value !== "" && indx < (code.length - 1)) {

@@ -272,6 +272,7 @@ export const historyStatus = {
   RechazadoPorLaAseguradora: "Rechazado por la aseguradora",
   CotizaciónRechazada: "Cotización rechazada",
   CotizaciónNoRespondida: "Cotización no respondida",
+  ClienteNoAsegurable: "Cliente no asegurable"
 };
 
 export const getFileType = (url) => {

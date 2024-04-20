@@ -9,6 +9,7 @@ import { ColForm } from "@/styles/Policy";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import { numberFormat } from "@/utilities/helpers";
 import { Checkbox } from "@/components/Common/Checkbox";
+import useGetSMMLV from "@/hooks/Common/useGetSMMLV";
 
 export const Step2 = ({
   isMobile,
@@ -20,6 +21,13 @@ export const Step2 = ({
   monthlyCostInsurance,
 }) => {
   const [openChecks, setOpenChecks] = useState(false)
+  const { data, isSuccess } = useGetSMMLV();
+  const [smmlv, setSmmlv] = useState(0);
+
+  useEffect(() => {
+    if (isSuccess)
+      setSmmlv(data?.data?.groupSettings[0].code);
+  }, [data, isSuccess]);
 
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -38,11 +46,14 @@ export const Step2 = ({
     placeholderColor: theme.colors.neutralGray500,
   }
 
+  const minLoan = 135 * smmlv
+  const minMonthlyCost = 6 * smmlv
+
   useEffect(() => {
-    if (loanBalance > 137227300 || monthlyCostInsurance > 6089880) {
+    if (loanBalance >= minLoan || monthlyCostInsurance >= minMonthlyCost) {
       setOpenChecks(true)
     }
-  }, [])
+  }, [loanBalance, monthlyCostInsurance, minLoan, minMonthlyCost])
 
   const handleChangeNumber = (event) => {
     const { id, value } = event.target
@@ -211,7 +222,11 @@ export const Step2 = ({
                 id="incomeOrigin"
                 notFocused={true}
                 value={formInfo.incomeOrigin}
-                onChange={handleChangeText} />
+                onChange={handleChangeText} 
+                inputProps={{
+                  maxLength: 200
+                }}
+              />  
             </Grid>
           </>
         }

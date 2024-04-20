@@ -720,27 +720,26 @@ export const Record = ({
       <Col gap="16px">
         {historyInfo.map((ele, indx) => (
           <Card key={indx} style={{ flexDirection: "column" }} height="auto">
-            {ele.status === "Formularios diligenciados" &&
-              (formsConcept.concept ||
-                selectedClient.stateName === "No asegurable") && (
-                <Div
-                  background={theme.colors.yellow100}
-                  radius="4px"
-                  p="6px 10px"
-                  m="0 0 16px 0"
-                >
-                  <Row gap="4px" align="center">
-                    <Image alt="alert" src={alertIcon} width={16} height={16} />
-                    <Text
-                      color={theme.colors.yellow600}
-                      font={theme.fonts.family.primaryMedium}
-                      size={theme.fonts.size.sm}
-                    >
-                      Presta una novedad{" "}
-                    </Text>
-                  </Row>
-                </Div>
-              )}
+            {((ele.status === "Formularios diligenciados" && formsConcept.concept) ||
+              ele.status === "Cliente no asegurable") &&
+              <Div
+                background={theme.colors.yellow100}
+                radius="4px"
+                p="6px 10px"
+                m="0 0 16px 0"
+              >
+                <Row gap="4px" align="center">
+                  <Image alt="alert" src={alertIcon} width={16} height={16} />
+                  <Text
+                    color={theme.colors.yellow600}
+                    font={theme.fonts.family.primaryMedium}
+                    size={theme.fonts.size.sm}
+                  >
+                    Presenta novedad{" "}
+                  </Text>
+                </Row>
+              </Div>
+            }
             {ele.validationClientResult !== 0 &&
               ele.validationClientResult !== null && (
                 <Div

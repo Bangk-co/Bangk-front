@@ -133,12 +133,8 @@ const Application = ({ isMobile, isTablet }) => {
     },
   ];
 
-  const statusCard = (status, generalStatus, validation, index) => {
-    if (
-      (status === "FormulariosDiligenciados" &&
-        generalStatus === "No asegurable") ||
-      validation === 1
-    ) {
+  const statusCard = (status, validation, index) => {
+    if (status === "ClienteNoAsegurable" || validation === 1) {
       return "Alert";
     } else if (validation === 2 || validation === 3) {
       return "Error";
@@ -179,7 +175,6 @@ const Application = ({ isMobile, isTablet }) => {
             validationClientResult: ele.validationClientResult,
             statusCard: statusCard(
               ele.stateName,
-              selectedClient?.stateName,
               ele.validationClientResult,
               indx
             ),

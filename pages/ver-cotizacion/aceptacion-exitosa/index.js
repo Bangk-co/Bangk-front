@@ -34,7 +34,8 @@ const CreationSuceess = ({ isMobile }) => {
               weight={theme.fonts.weight.bold}
               mt="24px"
             >
-              ¡Excelente decisión! Estas a pocos pasos de tu nueva póliza
+              ¡Excelente decisión! <br/>
+              Estas a pocos pasos de tu nueva póliza
             </Text>
             <Text
               size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}

@@ -134,7 +134,7 @@ export const Calculation = ({
             color={theme.colors.green900}
             font={theme.fonts.family.primaryBold}
           >
-            Seguro de vida deudor
+            Seguro de vida
           </Text>
         </Div>
         <Row width="100%">

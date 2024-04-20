@@ -20,10 +20,8 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/Common/Button";
 import Image from "next/image";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
-import dayjs from "dayjs";
 import useGetEconomicActivity from "@/hooks/Common/useGetEconomicActivity";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
-import useGetHousingType from "@/hooks/Common/useGetHousingType";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
 import toast from "react-hot-toast";
@@ -249,8 +247,6 @@ const RequestPolicy = ({ isMobile }) => {
       setCitiesOptions(dataCities?.data.cities);
     }
   }, [isSuccessCities, dataCities]);
-
-  const freeInvestment = loanTypeId === 104 || loanTypeId === 105
 
   const nextStep = () => {
     const newHealthInfo = {

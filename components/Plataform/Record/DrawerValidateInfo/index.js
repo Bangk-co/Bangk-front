@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import dayjs from "dayjs";
 import _ from "lodash";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
@@ -12,7 +11,6 @@ import arrowDownIcon from "@/assets/icons/arrow-down.svg";
 import arrowUpIcon from "@/assets/icons/arrow-up.svg";
 import { PersonalData } from "./PersonalData";
 import { FinancialData } from "./FinancialData";
-import { PropertyData } from "./PropertyData";
 import { HealtData } from "./HealthData";
 import { AdditionalData } from "./AdditionalData";
 import { Button } from "@/components/Common/Button";
@@ -29,13 +27,11 @@ import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import { useQueryClient } from "react-query";
 import useChangeStateForms from "@/hooks/Customers/useChangeStateForms";
 import CircularProgress from "@mui/material/CircularProgress";
-import { VehiculeData } from "./VehiculeData";
 
 export const DrawerValidateInfo = ({
   showDrawer,
   setShowDrawerValidateInfo,
   loanApplicationId,
-  loanTypeName,
   isValidated,
 }) => {
   const queryClient = useQueryClient();
@@ -53,14 +49,6 @@ export const DrawerValidateInfo = ({
       concept: "",
       comments: "",
     },
-    propertyInfo: {
-      concept: "",
-      comments: "",
-    },
-    vehiculeInfo: {
-      concept: "",
-      comments: "",
-    },
     healthInfo: {
       concept: "",
       comments: "",
@@ -70,27 +58,10 @@ export const DrawerValidateInfo = ({
       comments: "",
     },
   };
-
   const [assessorConcept, setAssessorConcept] = useState(
     initialAssessorConcept
   );
-  useEffect(() => {
-    if (loanTypeName === "Libre inversión" || loanTypeName === "Libranza") {
-      setAssessorConcept(
-        _.omit(initialAssessorConcept, ["vehiculeInfo", "propertyInfo"])
-      );
-    } else if (
-      loanTypeName === "Hipotecario" ||
-      loanTypeName === "Leasing habitacional"
-    ) {
-      setAssessorConcept(_.omit(initialAssessorConcept, ["vehiculeInfo"]));
-    } else if (
-      loanTypeName === "Vehiculo" ||
-      loanTypeName === "Leasing Vehiculo"
-    ) {
-      setAssessorConcept(_.omit(initialAssessorConcept, ["propertyInfo"]));
-    }
-  }, [loanTypeName]);
+
   const [isEditing, setIsEditing] = useState(false);
   const [cancelEdit, setCancelEdit] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({
@@ -199,60 +170,6 @@ export const DrawerValidateInfo = ({
     initialErrorFinancialInfo
   );
 
-  const [propertyInfo, setPropertyInfo] = useState({
-    housingTypeId: null,
-    housingValue: null,
-    builtgDate: null,
-    builtArea: null,
-    basementNumber: null,
-    apartmentNumber: null,
-    buildingFloorsNumber: null,
-    address: null,
-    stateId: null,
-    cityId: null,
-  });
-  const initialErrorPropertyInfo = {
-    housingValue: {
-      error: false,
-      message: "",
-    },
-    builtgDate: {
-      error: false,
-      message: "",
-    },
-    builtArea: {
-      error: false,
-      message: "",
-    },
-    basementNumber: {
-      error: false,
-      message: "",
-    },
-    apartmentNumber: {
-      error: false,
-      message: "",
-    },
-    buildingFloorsNumber: {
-      error: false,
-      message: "",
-    },
-    address: {
-      error: false,
-      message: "",
-    },
-    stateId: {
-      error: false,
-      message: "",
-    },
-    cityId: {
-      error: false,
-      message: "",
-    },
-  };
-  const [errorsPropertyInfo, setErrorsPropertyInfo] = useState(
-    initialErrorPropertyInfo
-  );
-
   const [healthInfo, setHealthInfo] = useState({
     weight: null,
     height: null,
@@ -322,48 +239,6 @@ export const DrawerValidateInfo = ({
     initialErrorAdditionalInfo
   );
 
-  const [vehiculeInfo, setVehiculeInfo] = useState({
-    /* countryVehiculeId: null,*/
-    stateVehiculeId: null,
-    cityVehiculeId: null,
-    vehicleLicensePlate: "",
-  });
-  const initialErrorVehiculeInfo = {
-    stateVehiculeId: {
-      error: false,
-      message: "",
-    },
-    cityVehiculeId: {
-      error: false,
-      message: "",
-    },
-    vehicleLicensePlate: {
-      error: false,
-      message: "",
-    },
-  };
-  const [errorsVehiculeInfo, setErrorsVehiculeInfo] = useState(
-    initialErrorVehiculeInfo
-  );
-
-  const [generalInfo, setGeneralInfo] = useState({
-    countryCodePhoneId: null,
-    countryNationalityId: null,
-    documentIdentificationTypeId: null,
-    documentIssueDate: null,
-    email: "",
-    identificationNumber: null,
-    name: "",
-    lastName: "",
-    phoneNumber: null,
-    birthDate: null,
-    genderId: null,
-    loanTypeId: null,
-    loanBalance: null,
-    monthlyCostInsurance: null,
-    clienId: null,
-  });
-
   const loanInsurancePolicyData =
     useGetLoanInsurancePolicyInfo(loanApplicationId);
   const { data, isLoading } = loanInsurancePolicyData;
@@ -390,29 +265,12 @@ export const DrawerValidateInfo = ({
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
         residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
       });
-
       setFinancialInfo({
         monthlyIncome: data?.data?.loanInsurancePolicies.monthlyIncome,
         monthlyExpenses: data?.data?.loanInsurancePolicies.monthlyExpenses,
         assetValue: data?.data?.loanInsurancePolicies.assetValue,
         liabilitiesValue: data?.data?.loanInsurancePolicies.liabilitiesValue,
         incomeOrigin: data?.data?.loanInsurancePolicies.incomeOrigin,
-      });
-      setPropertyInfo({
-        housingTypeId: data?.data?.loanInsurancePolicies.housingTypeId,
-        housingValue: data?.data?.loanInsurancePolicies.housingValue,
-        builtgDate:
-          data?.data?.loanInsurancePolicies.builtgDate === null
-            ? null
-            : dayjs(data?.data?.loanInsurancePolicies.builtgDate),
-        builtArea: data?.data?.loanInsurancePolicies.builtArea,
-        basementNumber: data?.data?.loanInsurancePolicies.basementNumber,
-        apartmentNumber: data?.data?.loanInsurancePolicies.apartmentNumber,
-        buildingFloorsNumber:
-          data?.data?.loanInsurancePolicies.buildingFloorsNumber,
-        address: data?.data?.loanInsurancePolicies.address,
-        stateId: data?.data?.loanInsurancePolicies.stateId,
-        cityId: data?.data?.loanInsurancePolicies.cityId,
       });
       setHealthInfo({
         weight: data?.data?.loanInsurancePolicies.weight,
@@ -433,35 +291,6 @@ export const DrawerValidateInfo = ({
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
         beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
-      });
-      setVehiculeInfo({
-        /* countryVehiculeId: data?.data?.loanInsurancePolicies.countryVehiculeId,*/
-        stateVehiculeId: data?.data?.loanInsurancePolicies.stateVehiculeId,
-        cityVehiculeId: data?.data?.loanInsurancePolicies.cityVehiculeId,
-        vehicleLicensePlate:
-          data?.data?.loanInsurancePolicies.vehicleLicensePlate,
-      });
-      setGeneralInfo({
-        countryCodePhoneId:
-          data?.data?.loanInsurancePolicies.countryCodePhoneId,
-        countryNationalityId:
-          data?.data?.loanInsurancePolicies.countryNationalityId,
-        documentIdentificationTypeId:
-          data?.data?.loanInsurancePolicies.documentIdentificationTypeId,
-        documentIssueDate: data?.data?.loanInsurancePolicies.documentIssueDate,
-        email: data?.data?.loanInsurancePolicies.email,
-        identificationNumber:
-          data?.data?.loanInsurancePolicies.identificationNumber,
-        name: data?.data?.loanInsurancePolicies.name,
-        lastName: data?.data?.loanInsurancePolicies.lastName,
-        phoneNumber: data?.data?.loanInsurancePolicies.phoneNumber,
-        birthDate: data?.data?.loanInsurancePolicies.birthDate,
-        genderId: data?.data?.loanInsurancePolicies.genderId,
-        loanTypeId: data?.data?.loanInsurancePolicies.loanTypeId,
-        loanBalance: data?.data?.loanInsurancePolicies.loanBalance,
-        monthlyCostInsurance:
-          data?.data?.loanInsurancePolicies.monthlyCostInsurance,
-        clienId: data?.data?.loanInsurancePolicies.clienId,
       });
     }
   }, [data, isLoading, cancelEdit]);
@@ -493,15 +322,6 @@ export const DrawerValidateInfo = ({
               },
             }));
             break;
-          case "propertyInfo":
-            setAssessorConcept((prevState) => ({
-              ...prevState,
-              propertyInfo: {
-                concept: concept,
-                comments: comment,
-              },
-            }));
-            break;
           case "healthInfo":
             setAssessorConcept((prevState) => ({
               ...prevState,
@@ -515,15 +335,6 @@ export const DrawerValidateInfo = ({
             setAssessorConcept((prevState) => ({
               ...prevState,
               additionalInfo: {
-                concept: concept,
-                comments: comment,
-              },
-            }));
-            break;
-          case "vehiculeInfo":
-            setAssessorConcept((prevState) => ({
-              ...prevState,
-              vehiculeInfo: {
                 concept: concept,
                 comments: comment,
               },
@@ -620,31 +431,6 @@ export const DrawerValidateInfo = ({
           ? descriptionCondition[assessorConcept?.financialInfo?.concept]
           : "Verifica que los datos financieros sean correctos",
     },
-    loanTypeName === "Libre inversión" || loanTypeName === "Libranza"
-      ? null
-      : {
-          icon:
-            loanTypeName === "Hipotecario" ||
-            loanTypeName === "Leasing habitacional"
-              ? iconCondition[assessorConcept?.propertyInfo?.concept]
-              : iconCondition[assessorConcept?.vehiculeInfo?.concept],
-          title:
-            loanTypeName === "Hipotecario" ||
-            loanTypeName === "Leasing habitacional"
-              ? "Datos del inmueble"
-              : "Datos del vehículo",
-          description:
-            loanTypeName === "Hipotecario" ||
-            loanTypeName === "Leasing habitacional"
-              ? descriptionCondition[assessorConcept?.propertyInfo?.concept] !==
-                null
-                ? descriptionCondition[assessorConcept?.propertyInfo?.concept]
-                : "Verifica que los datos del inmueble sean correctos"
-              : descriptionCondition[assessorConcept?.vehiculeInfo?.concept] !==
-                null
-              ? descriptionCondition[assessorConcept?.vehiculeInfo?.concept]
-              : "Verifica que los datos del vehiculo sean correctos",
-        },
     {
       icon: iconCondition[assessorConcept?.healthInfo?.concept],
       title: "Datos de salud",
@@ -695,11 +481,8 @@ export const DrawerValidateInfo = ({
             loanApplicationId: loanApplicationId,
             ...personalInfo,
             ...financialInfo,
-            ...propertyInfo,
             ...healthInfo,
             ...additionalInfo,
-            ...vehiculeInfo,
-            ...generalInfo, //TODO validate if is required
           },
         },
         {
@@ -776,58 +559,6 @@ export const DrawerValidateInfo = ({
     );
   };
 
-  const validateFormByType = () => {
-    switch (loanTypeName) {
-      case "Libre inversión":
-      case "Libranza":
-        return null;
-      case "Hipotecario":
-      case "Leasing habitacional":
-        return (
-          <PropertyData
-            key="propertyData"
-            assessorConcept={assessorConcept}
-            setAssessorConcept={setAssessorConcept}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            propertyInfo={propertyInfo}
-            setPropertyInfo={setPropertyInfo}
-            handleCancel={handleCancel}
-            errorsPropertyInfo={errorsPropertyInfo}
-            setErrorsPropertyInfo={setErrorsPropertyInfo}
-            handleSave={handleSave}
-            isLoadingSave={save.isLoading}
-            isLoadingContinue={saveConcept.isLoading}
-            handleContinue={handleContinue}
-            isValidated={isValidated}
-          />
-        );
-      case "Vehiculo":
-      case "Leasing Vehiculo":
-        return (
-          <VehiculeData
-            key="propertyData"
-            assessorConcept={assessorConcept}
-            setAssessorConcept={setAssessorConcept}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            vehiculeInfo={vehiculeInfo}
-            setVehiculeInfo={setVehiculeInfo}
-            handleCancel={handleCancel}
-            errorsVehiculeInfo={errorsVehiculeInfo}
-            setErrorsVehiculeInfo={setErrorsVehiculeInfo}
-            handleSave={handleSave}
-            isLoadingSave={save.isLoading}
-            isLoadingContinue={saveConcept.isLoading}
-            handleContinue={handleContinue}
-            isValidated={isValidated}
-            countryVehiculeId={
-              data?.data?.loanInsurancePolicies.countryVehiculeId
-            }
-          />
-        );
-    }
-  };
   const expandedCardData = [
     <PersonalData
       key="personalData"
@@ -866,7 +597,6 @@ export const DrawerValidateInfo = ({
       handleContinue={handleContinue}
       isValidated={isValidated}
     />,
-    validateFormByType(),
     <HealtData
       key="healthData"
       assessorConcept={assessorConcept}

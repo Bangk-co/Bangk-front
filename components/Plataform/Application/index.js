@@ -362,7 +362,6 @@ const Application = ({ isMobile, isTablet }) => {
             loanApplicationId={
               applications?.selectedApplication?.loanApplicationId
             }
-            loanTypeName={applications?.selectedApplication?.loanTypeName}
           />
         )}
         {selectedTab === 2 && <Text>Pagos</Text>}

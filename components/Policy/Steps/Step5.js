@@ -89,7 +89,6 @@ export const Step5 = ({
     const newInfo = { ...formInfo };
 
     newInfo[id] = JSON.parse(defaultValue);
-    setFormInfo(newInfo);
 
     if (id === "beneficiaries" && JSON.parse(defaultValue) === true) {
       setFormInfo({
@@ -105,6 +104,11 @@ export const Step5 = ({
           percentInherit: null
         }]
       })
+    } else {
+      setFormInfo({
+        ...newInfo, 
+        beneficiary: [],
+      })    
     }
   };
 

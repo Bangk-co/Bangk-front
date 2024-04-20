@@ -25,7 +25,8 @@ export const CreditForm = ({
     handleCreate,
     loading,
   }) => {
-  const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "");
+  
+  const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "") && documents.every(item => item.value !== null);
 
   return (
     <Col m={"12px 0 0 0"}>

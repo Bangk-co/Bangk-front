@@ -4,8 +4,9 @@ import Header from "@/components/ClientPlatform/Header";
 import { Layout } from "@/components/ClientPlatform/Layout";
 import { useAuth } from "@/hooks/useAuth";
 import { Text } from "@/styles/Common";
+import { FooterNav } from "@/components/ClientPlatform/FooterNav";
 
-const Plataform = ({ isMobile, isTablet }) => {
+const ClientHome = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const { pathname } = router;
 
@@ -21,7 +22,10 @@ const Plataform = ({ isMobile, isTablet }) => {
     <div>
       <Header isMobile={isMobile} />
       {isMobile ? (
-        <Text>Home mobile</Text>
+        <>
+          <Text>Home mobile</Text>
+          <FooterNav />
+        </>
       ) : (
         <Layout>
           <Text>home</Text>
@@ -31,4 +35,4 @@ const Plataform = ({ isMobile, isTablet }) => {
   );
 };
 
-export default Plataform;
+export default ClientHome;

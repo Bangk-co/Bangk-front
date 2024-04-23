@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/ClientPlatform/Header";
 import { Layout } from "@/components/ClientPlatform/Layout";
 
-const Plataform = ({ isMobile, isTablet }) => {
+const ClientPlatform = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const Plataform = ({ isMobile, isTablet }) => {
   );
 };
 
-export default Plataform;
+export default ClientPlatform;

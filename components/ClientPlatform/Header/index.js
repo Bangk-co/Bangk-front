@@ -45,7 +45,7 @@ const Header = ({ isMobile, isTablet }) => {
             />
           </Div>
           <Button
-            /* padding="12px 16px" */
+            padding="0px"
             borderHover={theme.colors.green900}
             border={theme.colors.green900}
             hover={theme.colors.yellow500}
@@ -74,6 +74,7 @@ const Header = ({ isMobile, isTablet }) => {
           <Row gap="16px">
             <Button
               width={"251px"}
+              padding="0px"
               labelColor={theme.colors.green900}
               borderHover={theme.colors.white}
               border={theme.colors.white}

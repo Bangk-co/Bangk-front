@@ -6,13 +6,9 @@ import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
 import homeIcon from "../../../assets/icons/home.svg";
 import homeIconWhite from "../../../assets/icons/homeWhite.svg";
-import idIcon from "../../../assets/icons/identification.svg";
-import idIconWhite from "../../../assets/icons/identificationWhite.svg";
-import moneyIcon from "../../../assets/icons/money.svg";
-import moneyIconWhite from "../../../assets/icons/moneyWhite.svg";
-import calculatorIcon from "../../../assets/icons/calculator.svg";
-import calculatorIconWhite from "../../../assets/icons/calculatorWhite.svg";
-import settingIcon from "../../../assets/icons/settings.svg";
+import isuranceIcon from "../../../assets/icons/insurance.svg";
+import insuranceIconWhite from "../../../assets/icons/insuranceWhite.svg";
+import profileIconWhite from "../../../assets/icons/profileWhite.svg";
 
 export const Layout = ({ children, padding }) => {
   const router = useRouter();
@@ -37,7 +33,7 @@ export const Layout = ({ children, padding }) => {
       icon: (active) => (
         <Image
           alt="logo"
-          src={active ? idIcon : idIconWhite}
+          src={active ? isuranceIcon : insuranceIconWhite}
           width={24}
           height={24}
           style={{ cursor: "pointer", stroke: "red" }}
@@ -123,7 +119,7 @@ export const Layout = ({ children, padding }) => {
                 <Col align="center" gap="8px">
                   <Image
                     alt="logo"
-                    src={settingIcon}
+                    src={profileIconWhite}
                     width={24}
                     height={24}
                     style={{ cursor: "pointer" }}
@@ -133,7 +129,7 @@ export const Layout = ({ children, padding }) => {
                     weight={theme.fonts.weight.regular}
                     color={theme.colors.white}
                   >
-                    Mi perfil
+                    Perfil
                   </Text>
                 </Col>
               </Link>

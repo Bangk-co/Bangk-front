@@ -23,7 +23,7 @@ import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import toast from "react-hot-toast";
-import { setEmailStore, setValidCode } from "@/store/balance";
+import { setEmailStore, setOtpDate, setValidCode } from "@/store/balance";
 
 const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
@@ -151,6 +151,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   };
 
   const handleContinue = () => {
+    const newDate = new Date();
+    dispatch(setOtpDate(newDate))
+    
     if (source === "quote") {
       router.push("/ver-cotizacion/informacion-cotizacion");
       dispatch(setEmailStore(""))

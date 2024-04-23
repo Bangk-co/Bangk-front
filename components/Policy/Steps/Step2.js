@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Col, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -19,15 +19,30 @@ export const Step2 = ({
   setChecks,
   loanBalance,
   monthlyCostInsurance,
+  focusButton,
+  setAceptanceOriginOfFundsDate
 }) => {
-  const [openChecks, setOpenChecks] = useState(false)
   const { data, isSuccess } = useGetSMMLV();
   const [smmlv, setSmmlv] = useState(0);
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+  const thirdInputRef = useRef(null);
+  const fourInputRef = useRef(null);
+  const firstCheckRef = useRef(null);
+  const secondCheckRef = useRef(null);
+  const thirdCheckRef = useRef(null);
+  const fiveInputRef = useRef(null);
 
   useEffect(() => {
     if (isSuccess)
       setSmmlv(data?.data?.groupSettings[0].code);
   }, [data, isSuccess]);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
 
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -49,11 +64,7 @@ export const Step2 = ({
   const minLoan = 135 * smmlv
   const minMonthlyCost = 6 * smmlv
 
-  useEffect(() => {
-    if (loanBalance >= minLoan || monthlyCostInsurance >= minMonthlyCost) {
-      setOpenChecks(true)
-    }
-  }, [loanBalance, monthlyCostInsurance, minLoan, minMonthlyCost])
+  const checksCondition = loanBalance >= minLoan || monthlyCostInsurance >= minMonthlyCost
 
   const handleChangeNumber = (event) => {
     const { id, value } = event.target
@@ -74,16 +85,43 @@ export const Step2 = ({
   const handleCheck = (event, id) => {
     const { checked } = event.target
     const newChecks = { ...checks }
+    const currentDate = new Date();
 
     newChecks[id] = checked
     setChecks(newChecks)
+    setAceptanceOriginOfFundsDate(currentDate)
   }
 
   const checkboxOptions = [
-    { id: "check1", text: "Tanto mi actividad, profesión u oficio es lícita y la ejerzo dentro del marco legal y los recursos que poseo no provienen de actividades ilícitas de las contempladas en el código penal colombiano.", value: checks.check1 },
-    { id: "check2", text: "La información que he suministrado en la solicitud y en este documento es veraz y verificable y me comprometo a actualizarla.", value: checks.check2 },
-    { id: "check3", text: "Los recursos que se deriven del desarrollo de este contrato no se destinaran a la financiación del terrorismo, grupos terroristas o actividades terroristas.", value: checks.check3 }
+    { 
+      inputRef: firstCheckRef, 
+      onKeyPress: (event) => handleKeyPress(event, secondCheckRef),
+      id: "check1", 
+      text: "Tanto mi actividad, profesión u oficio es lícita y la ejerzo dentro del marco legal y los recursos que poseo no provienen de actividades ilícitas de las contempladas en el código penal colombiano.", 
+      value: checks.check1
+    },
+    { 
+      inputRef: secondCheckRef, 
+      onKeyPress: (event) => handleKeyPress(event, thirdCheckRef),
+      id: "check2", 
+      text: "La información que he suministrado en la solicitud y en este documento es veraz y verificable y me comprometo a actualizarla.", 
+      value: checks.check2 
+    },
+    { 
+      inputRef: thirdCheckRef, 
+      onKeyPress: (event) => handleKeyPress(event, fiveInputRef),
+      id: "check3", 
+      text: "Los recursos que se deriven del desarrollo de este contrato no se destinaran a la financiación del terrorismo, grupos terroristas o actividades terroristas.", 
+      value: checks.check3
+    },
   ]
+
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === "Enter" && nextRef.current) {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
+  };
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -116,6 +154,8 @@ export const Step2 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={firstInputRef}
+            onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -136,6 +176,8 @@ export const Step2 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={secondInputRef}
+            onKeyPress={(event) => handleKeyPress(event, thirdInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -158,6 +200,8 @@ export const Step2 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={thirdInputRef}
+            onKeyPress={(event) => handleKeyPress(event, fourInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -180,9 +224,11 @@ export const Step2 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={fourInputRef}
+            onKeyPress={checksCondition ? (event) => handleKeyPress(event, firstCheckRef) : (event) => focusButton(event)}
           />
         </Grid>
-        {openChecks &&
+        {checksCondition &&
           <>
             <Grid item md={12} xs={12}>
               <hr style={{ width: "100%", height: "1px", background: theme.colors.primary25, margin: 0 }} />
@@ -200,7 +246,12 @@ export const Step2 = ({
                 </Text>
                 {checkboxOptions.map((ele, indx) => (
                   <Row key={indx}>
-                    <Checkbox onChange={(event) => handleCheck(event, ele.id)} checked={ele.value} />
+                    <Checkbox 
+                      onChange={(event) => handleCheck(event, ele.id)} 
+                      checked={ele.value} 
+                      inputRef={ele.inputRef} 
+                      onKeyPress={ele.onKeyPress}
+                    />
                     <Text
                       color={theme.colors.white}
                       font={theme.fonts.family.primary}
@@ -226,6 +277,8 @@ export const Step2 = ({
                 inputProps={{
                   maxLength: 200
                 }}
+                inputRef={fiveInputRef}
+                onKeyPress={(event) => focusButton(event)}
               />  
             </Grid>
           </>

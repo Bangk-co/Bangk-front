@@ -15,11 +15,12 @@ import { setRequestInfo } from "@/store/requests";
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch()
   const router = useRouter();
+
   useEffect(() => {
     if (window.location.pathname !== router.pathname) {
       router.push(`/${window.location.pathname}`);
-    }
-    dispatch(setRequestInfo(initDataLoanInsurancePolicy))
+    };
+    dispatch(setRequestInfo(initDataLoanInsurancePolicy));
   }, []);
 
   return (

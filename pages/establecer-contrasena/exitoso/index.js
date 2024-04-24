@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { Container } from "@/components/Login/styles";
@@ -9,9 +10,17 @@ import logo from "@/assets/icons/green-logo.svg";
 import Image from "next/image";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
+import useLogin from "@/hooks/Login/useLogin";
+import { encrypt } from "@/utilities/helpers";
+import { setLocalUser } from "@/hooks/services/axiosInstance";
+import { setAuthCredentials } from "@/store/auth";
 
 const SetPasswordSuccess = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const authentication = useLogin();
+  const { isLoading } = authentication;
+  const { authCredentials } = useSelector((state) => state)?.auth;
 
   const { isAuth } = useAuth();
 
@@ -22,8 +31,26 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
   }, [isAuth, router]);
 
   const handleGo = () => {
-    router.push("/iniciar-sesion")
-  }
+    authentication.reset();
+    authentication.mutate(
+      { email: authCredentials.email, password: authCredentials.password },
+      {
+        onSuccess: (res) => {
+          setLocalUser(res.data.token);
+          dispatch(setAuthCredentials({
+            email: "",
+            password: ""
+          }))
+          router.push("/plataforma/home");
+        },
+        onError: (err) => {
+          err.response.data.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
+  }  
 
   return (
     <Container>
@@ -47,6 +74,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
               borderHover={theme.colors.green}
               font={theme.fonts.family.primaryBold}
               onClick={handleGo}
+              disabled={isLoading}
             >
               Ingresa a la plataforma
             </Button>

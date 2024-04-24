@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Div } from "@/styles/Common";
 import { Modal } from "@mui/material";
 import { Container, WrapperQuote } from "@/components/ViewQuote/styles";
@@ -15,10 +16,13 @@ import { ModalTerms } from "@/components/Common/ModalTerms";
 import { ModalAccept } from "@/components/ViewQuote/ModalAccept";
 import { ModalDecline } from "@/components/ViewQuote/ModalDecline";
 import dayjs from "dayjs";
+import { setOtpDate } from "@/store/balance";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { requests } = useSelector((state) => state);
+  const { otpDate } = useSelector((state) => state)?.balance;
 
   const acceptLoanQuote = useAcceptLoanQuote();
   const rejectLoanQuote = useRejectLoanQuote();
@@ -91,11 +95,13 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate({ 
       loanApplicationId: requests?.selectedRequest,
-      terms: dayjs(termsDate)
+      terms: dayjs(termsDate),
+      otpDate: dayjs(otpDate)
     }, {
       onSuccess: () => {
         handleClose();
         router.push("/ver-cotizacion/aceptacion-exitosa");
+        dispatch(setOtpDate(null));
       },
       onError: (err) => {
         err.response.data.map((error) => {

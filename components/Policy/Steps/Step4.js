@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -17,8 +17,18 @@ export const Step4 = ({
   setFormInfo,
   diseasesOptions,
   diseases,
-  setDiseases
+  setDiseases,
+  focusButton
 }) => {
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -81,6 +91,13 @@ export const Step4 = ({
     },
   };
 
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === "Enter" && nextRef.current) {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
+  };
+
   return (
     <ColForm m={"12px 0 0 0"}>
       <Text
@@ -108,6 +125,8 @@ export const Step4 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={firstInputRef}
+            onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
           />
         </Grid>
         <Grid item md={6} xs={6}>
@@ -124,6 +143,8 @@ export const Step4 = ({
               inputMode: "numeric",
             }}
             onChange={handleChangeNumber}
+            inputRef={secondInputRef}
+            onKeyPress={(event) => handleKeyPress(event, null)}
           />
         </Grid>
         <Grid item md={12} xs={12}>

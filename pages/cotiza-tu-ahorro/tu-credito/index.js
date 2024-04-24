@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
 import { Div } from "@/styles/Common";
-import { theme } from "@/styles/theme";
 import { Container, WrapperQuote } from "@/styles/Quote";
 import { BackButton } from "@/components/Quote/BackButton.js";
 import { CreditForm } from "@/components/Quote/CreditForm";
@@ -11,14 +10,14 @@ import useGetCreditType from "@/hooks/Common/useGetCreditType";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import useCreateClient from "@/hooks/QuoteSavings/useCreateUser";
-import { resetInitData } from "@/store/balance";
+import { resetInitData, setOtpDate } from "@/store/balance";
 import toast from "react-hot-toast";
 
 const CreditData = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const create = useCreateClient()
-  const { userInfo, initData, termsDate } = useSelector((state) => state)?.balance
+  const { userInfo, initData, termsDate, otpDate } = useSelector((state) => state)?.balance
   const [isHovered, setIsHovered] = useState(false);
   const banksList = useGetBanks()
   const creditTypeList = useGetCreditType()
@@ -118,12 +117,14 @@ const CreditData = ({ isMobile, isTablet }) => {
         ...initData, 
         termsDate: termsDate,
         bankStatementFile: bankStatementFile,
-        identificationFile: identificationFile 
+        identificationFile: identificationFile,
+        validateClientOtp: otpDate
       },
       {
         onSuccess: (res) => {
-          dispatch(resetInitData())
-          router.push("/cotiza-tu-ahorro/creacion-exitosa")
+          dispatch(resetInitData());
+          dispatch(setOtpDate(null));
+          router.push("/cotiza-tu-ahorro/creacion-exitosa");
         },
         onError: (err) => {
           err.response.data.map((error) => {

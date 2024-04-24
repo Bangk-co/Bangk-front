@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux"
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { Container } from "@/components/Login/styles";
@@ -7,6 +8,7 @@ import Form from "@/components/SetPassword/Form";
 
 const SetPassword = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { requestInfo } = useSelector((state) => state)?.requests;
 
   const { isAuth } = useAuth();
 
@@ -19,7 +21,7 @@ const SetPassword = ({ isMobile, isTablet }) => {
   return (
     <Container>
       {!isMobile && !isTablet && <Banner />}
-      <Form isMobile={isMobile} isTablet={isTablet} />
+      <Form isMobile={isMobile} isTablet={isTablet} requestInfo={requestInfo} />
     </Container>
   );
 };

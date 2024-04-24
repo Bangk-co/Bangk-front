@@ -4,6 +4,10 @@ export const slice = createSlice({
   name: "auth",
   initialState: {
     emailStore: "",
+    authCredentials: {
+      email: "",
+      password: ""
+    }
   },
   reducers: {
     setEmailStore: (state, action) => {
@@ -12,9 +16,15 @@ export const slice = createSlice({
         emailStore: action.payload,
       };
     },
+    setAuthCredentials: (state, action) => {
+      return {
+        ...state,
+        authCredentials: action.payload,
+      }
+    }
   },
 });
 
 export default slice.reducer;
 
-export const { setEmailStore } = slice.actions;
+export const { setEmailStore, setAuthCredentials } = slice.actions;

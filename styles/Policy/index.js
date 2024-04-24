@@ -93,5 +93,5 @@ export const WrapperAlert = styled.div`
   padding: 12px 16px 12px 16px;
   border-radius: 8px;
   gap: 8px;
-  background: ${theme.colors.primary100};
+  background: ${(props) => props.background};
 `

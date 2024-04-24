@@ -28,12 +28,12 @@ import toast from "react-hot-toast";
 import {
   getDiseasesIds,
   getDiseasesNames,
-  initDataLoanInsurancePolicy,
 } from "@/utilities/helpers";
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
 import useGetRelationships from "@/hooks/Common/useGetRelationships";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
+import dayjs from "dayjs";
 
 const RequestPolicy = ({ isMobile }) => {
   const dispatch = useDispatch();
@@ -115,13 +115,14 @@ const RequestPolicy = ({ isMobile }) => {
     getDiseasesNames(healthInfo.diseases, diseasesOptions)
   );
 
-  const statesList = useGetStates(userInfo.birthCountryId)
-  const { data: dataStates, isSuccess: isSuccessStates } = statesList
-  const [statesOptions, setStatesOptions] = useState([])
-  const citiesList = useGetCities(userInfo.birthStateId)
-  const { data: dataCities, isSuccess: isSuccessCities } = citiesList
-  const [citiesOptions, setCitiesOptions] = useState([])
-  const [loanTypeId, setLoanTypeId] = useState(null)
+  const statesList = useGetStates(userInfo.birthCountryId);
+  const { data: dataStates, isSuccess: isSuccessStates } = statesList;
+  const [statesOptions, setStatesOptions] = useState([]);
+  const citiesList = useGetCities(userInfo.birthStateId);
+  const { data: dataCities, isSuccess: isSuccessCities } = citiesList;
+  const [citiesOptions, setCitiesOptions] = useState([]);
+  const [loanTypeId, setLoanTypeId] = useState(null);
+  const [aceptanceOriginOfFundsDate, setAceptanceOriginOfFundsDate] = useState(null);
 
   const steps = [
     "Datos personales",
@@ -253,6 +254,11 @@ const RequestPolicy = ({ isMobile }) => {
       ...healthInfo,
       diseases: getDiseasesIds(diseases, diseasesOptions),
     };
+    const newAdditionalInfo = {
+      ...additionalInfo,
+      beneficiary: additionalInfo.beneficiaries === false ? [] : [...additionalInfo.beneficiary]
+    }
+
     if (activeStep === 3) {
       const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
       if (additionalInfo.beneficiaries === true && percentage !== 100) {
@@ -268,7 +274,8 @@ const RequestPolicy = ({ isMobile }) => {
               ...userInfo,
               ...financialInfo,
               ...newHealthInfo,
-              ...additionalInfo,
+              ...newAdditionalInfo,
+              aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
             },
           },
           {
@@ -278,7 +285,6 @@ const RequestPolicy = ({ isMobile }) => {
                 { loanApplicationId: requestInfo.loanApplicationId },
                 {
                   onSuccess: () => {
-                    dispatch(setRequestInfo(initDataLoanInsurancePolicy))
                     router.push("/solicitar-poliza/solicitud-exitosa")
                   },
                   onError: (err) => {
@@ -306,7 +312,8 @@ const RequestPolicy = ({ isMobile }) => {
             ...userInfo,
             ...financialInfo,
             ...newHealthInfo,
-            ...additionalInfo,
+            ...newAdditionalInfo,
+            aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
           },
         },
         {
@@ -411,6 +418,22 @@ const RequestPolicy = ({ isMobile }) => {
     }
   };
 
+  const focusButton = (event) => {
+    if (event.key === "Enter") {
+      const button = document.getElementById("buttonRef");
+      if (button) {
+          event.preventDefault();
+          button.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      nextStep;
+    }
+  };
+
   return (
     <Container>
       <Header isMobile={isMobile} />
@@ -461,6 +484,8 @@ const RequestPolicy = ({ isMobile }) => {
             setChecks={setChecks}
             loanBalance={requestInfo.loanBalance}
             monthlyCostInsurance={requestInfo.monthlyCostInsurance}
+            focusButton={focusButton}
+            setAceptanceOriginOfFundsDate={setAceptanceOriginOfFundsDate}
           />
         )}
         {activeStep === 2 && (
@@ -471,6 +496,7 @@ const RequestPolicy = ({ isMobile }) => {
             diseasesOptions={diseasesOptions}
             diseases={diseases}
             setDiseases={setDiseases}
+            focusButton={focusButton}
           />
           
         )}
@@ -481,6 +507,7 @@ const RequestPolicy = ({ isMobile }) => {
             setFormInfo={setAdditionalInfo}
             documentTypeOptions={documentTypeOptions}
             relationshipsOptions={relationshipsOptions}
+            focusButton={focusButton}
           />
         )}
         <Div
@@ -519,6 +546,8 @@ const RequestPolicy = ({ isMobile }) => {
             radius={"40px"}
             onClick={nextStep}
             disabled={validForm(activeStep)}
+            id={"buttonRef"}
+            onKeyPress={handleKeyDown}
           >
             {activeStep === 3 ? "Finalizar" : "Siguiente"}
           </Button>

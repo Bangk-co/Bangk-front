@@ -17,16 +17,18 @@ import eye from '@/assets/icons/eye.svg';
 import eyeoff from '@/assets/icons/eyeoff.svg';
 import checkSuccess from "@/assets/icons/check-green.svg"
 import error from "@/assets/icons/close-red.svg"
-import { validateEmailRequired } from "@/utilities/validations";
 import { setRequestInfo } from "@/store/requests";
-import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import { encrypt, initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import useCreatePassword from "@/hooks/Login/useCreatePassword";
+import { setAuthCredentials } from "@/store/auth";
 
 const Form = ({ isMobile, isTablet, requestInfo }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const create = useCreatePassword();
   const [terms, setTerms] = useState(false)
   const [termsDate, setTermsDate] = useState(null)
-  const [setPasswordForm, setSetPasswordForm] = useState({
+  const [passwordForm, setPasswordForm] = useState({
     password: "",
     confirmPassword: ""
   });
@@ -79,7 +81,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
       hasNumber,
       hasSpecialChar,
     });
-    setSetPasswordForm({ ...setPasswordForm, [id]: value });
+    setPasswordForm({ ...passwordForm, [id]: value });
     if (!value) {
       setShowValidationCriteria(false);
     }
@@ -94,13 +96,34 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
   };
 
   const handleSetPassword = () => {
-    const passwordsMatch = setPasswordForm.password === setPasswordForm.confirmPassword;
+    const passwordsMatch = passwordForm.password === passwordForm.confirmPassword;
   
     setPasswordError(!passwordsMatch);
 
     if (passwordsMatch) {
-      router.push("/establecer-contrasena/exitoso");
-      dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+      create.reset();
+      create.mutate(
+        { 
+          clientId: requestInfo.clienId, 
+          password: encrypt(passwordForm.password),
+          passwordConfirm: encrypt(passwordForm.confirmPassword) 
+        },
+        {
+          onSuccess: () => {
+            router.push("/establecer-contrasena/exitoso");
+            dispatch(setAuthCredentials({
+              email: requestInfo.email,
+              password: encrypt(passwordForm.password),
+            }));
+            dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+          },
+          onError: (err) => {
+            err.response.data.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
     }
   };
 
@@ -108,8 +131,8 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
     router.push("/iniciar-sesion")
   }
 
-  const isValid = Object.values(setPasswordForm).every((value) => value !== "") && 
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(setPasswordForm.password);
+  const isValid = Object.values(passwordForm).every((value) => value !== "") && 
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(passwordForm.password);
 
   const userData = [
     {
@@ -180,7 +203,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
-              value={setPasswordForm.password}
+              value={passwordForm.password}
               onChange={handlePasswordChange}
             />
           </Row>
@@ -207,7 +230,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
-              value={setPasswordForm.confirmPassword}
+              value={passwordForm.confirmPassword}
               onChange={handlePasswordChange}
               error={passwordError}
               helper={passwordError ? "La contraseña no coincide" : ""}

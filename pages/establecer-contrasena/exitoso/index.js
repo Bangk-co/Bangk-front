@@ -74,7 +74,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
               borderHover={theme.colors.green}
               font={theme.fonts.family.primaryBold}
               onClick={handleGo}
-              loading={isLoading}
+              disabled={isLoading}
             >
               Ingresa a la plataforma
             </Button>

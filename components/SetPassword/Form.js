@@ -275,7 +275,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
               borderHover={theme.colors.green}
               font={theme.fonts.family.primaryBold}
               onClick={handleSetPassword}
-              disabled={!isValid || !terms}
+              disabled={!isValid || !terms || create.isLoading}
             >
               Establece tu contraseña
             </Button>

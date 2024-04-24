@@ -94,15 +94,11 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
   };
 
   const handleSetPassword = () => {
-    const emailValidation = validateEmailRequired.validate(setPasswordForm.email, {
-      abortEarly: false,
-    });
-  
     const passwordsMatch = setPasswordForm.password === setPasswordForm.confirmPassword;
   
     setPasswordError(!passwordsMatch);
-  
-    if (!emailValidation.error && passwordsMatch) {
+
+    if (passwordsMatch) {
       router.push("/establecer-contrasena/exitoso");
       dispatch(setRequestInfo(initDataLoanInsurancePolicy));
     }

@@ -255,6 +255,11 @@ const RequestPolicy = ({ isMobile }) => {
       ...healthInfo,
       diseases: getDiseasesIds(diseases, diseasesOptions),
     };
+    const newAdditionalInfo = {
+      ...additionalInfo,
+      beneficiary: additionalInfo.beneficiaries === false ? [] : [...additionalInfo.beneficiary]
+    }
+
     if (activeStep === 3) {
       const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
       if (additionalInfo.beneficiaries === true && percentage !== 100) {
@@ -270,7 +275,7 @@ const RequestPolicy = ({ isMobile }) => {
               ...userInfo,
               ...financialInfo,
               ...newHealthInfo,
-              ...additionalInfo,
+              ...newAdditionalInfo,
               aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
             },
           },
@@ -309,7 +314,7 @@ const RequestPolicy = ({ isMobile }) => {
             ...userInfo,
             ...financialInfo,
             ...newHealthInfo,
-            ...additionalInfo,
+            ...newAdditionalInfo,
             aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
           },
         },

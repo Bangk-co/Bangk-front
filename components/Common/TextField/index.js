@@ -28,6 +28,7 @@ export const TextField = ({
   notFocused,
   placeholderColor,
   helperColor,
+  customError,
   ...rest
 }) => {
   return (
@@ -60,6 +61,7 @@ export const TextField = ({
         border={border}
         notFocused={notFocused}
         placeholderColor={placeholderColor}
+        customError={customError}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">{prefixIcon}</InputAdornment>
@@ -71,14 +73,26 @@ export const TextField = ({
         {...rest}
       />
       {helper && (
-        <Text
-          size={theme.fonts.size.sm}
-          color={helperColor || theme.colors.red}
-          mt="2px"
-          align="left"
-        >
-          {helper}
-        </Text>
+        customError ? (
+          <Div m="2px 0 0 0" height="20px" width="max-content" style={{ background: theme.colors.error }}>
+            <Text
+              size={theme.fonts.size.sm}
+              color={theme.colors.white}
+              align="left"
+            >
+              {helper}
+            </Text>
+          </Div>
+        ) : (
+          <Text
+            size={theme.fonts.size.sm}
+            color={helperColor || theme.colors.red}
+            mt="2px"
+            align="left"
+          >
+            {helper}
+          </Text>
+        )
       )}
     </Div>
   );

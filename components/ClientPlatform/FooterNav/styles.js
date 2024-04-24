@@ -14,3 +14,15 @@ export const FooterDiv = styled.div`
   justify-content: space-around;
   align-items: flex-end;
 `;
+
+export const AddDiv = styled.div`
+  display: flex;
+  width: 48px;
+  height: 48px;
+  position: fixed;
+  bottom: 28px;
+  background: ${theme.colors.orange};
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+`;

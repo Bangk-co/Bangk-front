@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { WrapperContent, FooterDiv, Sider, Content } from "./styles";
+import { FooterDiv, AddDiv } from "./styles";
 import { Div, Col, Text } from "@/styles/Common";
 import { Link } from "@/components/Common/Link";
 import { theme } from "../../../styles/theme";
@@ -9,6 +9,7 @@ import homeIconWhite from "../../../assets/icons/homeWhite.svg";
 import isuranceIcon from "../../../assets/icons/insurance.svg";
 import insuranceIconWhite from "../../../assets/icons/insuranceWhite.svg";
 import profileIconWhite from "../../../assets/icons/profileWhite.svg";
+import addIcon from "../../../assets/icons/addFill.svg";
 
 export const FooterNav = ({ children, padding }) => {
   const router = useRouter();
@@ -64,6 +65,15 @@ export const FooterNav = ({ children, padding }) => {
           </Link>
         </Div>
       ))}
+      <AddDiv>
+        <Image
+          alt="logo"
+          src={addIcon}
+          width={24}
+          height={24}
+          style={{ cursor: "pointer" }}
+        />
+      </AddDiv>
     </FooterDiv>
   );
 };

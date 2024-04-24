@@ -6,14 +6,19 @@ import { WrapperHeader } from "./styles";
 import greenLogo from "../../../assets/icons/green-logo.svg";
 import whiteLogo from "../../../assets/icons/white-logo.png";
 import hamburger from "../../../assets/icons/hamburgerGreen.svg";
+import close from "../../../assets/icons/close.svg";
 import logout from "../../../assets/icons/logout.svg";
 import whatsapp from "../../../assets/icons/whatsappBlack.svg";
 import { useRouter } from "next/router";
 import { deleteLocalUser } from "@/hooks/services/axiosInstance";
 import { theme } from "../../../styles/theme";
+import { Modal } from "@mui/material";
+import { MenuModal } from "./MenuModal";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
+
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleHome = () => {
     router.push("/plataforma-cliente");
@@ -30,10 +35,17 @@ const Header = ({ isMobile, isTablet }) => {
     router.push("/");
   };
 
+  const handleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <WrapperHeader isMobile={isMobile}>
       {isMobile ? (
         <>
+          <Modal open={showMenu} style={{ zIndex: 1 }}>
+            <MenuModal handleWpp={handleWpp} handleLogout={handleLogout} />
+          </Modal>
           <Div>
             <Image
               alt="logo"
@@ -53,10 +65,15 @@ const Header = ({ isMobile, isTablet }) => {
             font={theme.fonts.family.primary}
             size={theme.fonts.size.default2}
             radius={"40px"}
-            onClick={() => {}}
-            style={{ width: "30px" }}
+            onClick={handleMenu}
+            style={{ width: "30px", zIndex: 4 }}
           >
-            <Image alt="logo" src={hamburger} width={24} height={24} />
+            <Image
+              alt="logo"
+              src={showMenu ? close : hamburger}
+              width={24}
+              height={24}
+            />
           </Button>
         </>
       ) : (

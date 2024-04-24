@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -27,6 +27,17 @@ export const UserForm = ({
     query: `(max-width: ${theme.breakpoints.mini})`,
   })
 
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+  const thirdInputRef = useRef(null);
+  const fourInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
+
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     labelColor: theme.colors.white,
@@ -44,6 +55,29 @@ export const UserForm = ({
   }
 
   const isFormValid = Object.values(formInfo).some(value => value === "");
+
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === "Enter" && nextRef.current) {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
+  };
+
+  const focusButton = (event) => {
+    if (event.key === "Enter") {
+      const button = document.getElementById("buttonRef");
+      if (button) {
+          event.preventDefault();
+          button.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleContinue;
+    }
+  };
 
   return (
     <ColForm m={"12px 0 0 0"}>
@@ -95,6 +129,8 @@ export const UserForm = ({
               inputMode: formInfo.documentType !== 78 && "numeric"
             }}
             onChange={handleChange}
+            inputRef={firstInputRef}
+            onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
           />
         </Grid>
         <Grid item md="12" xs={12}>
@@ -118,6 +154,8 @@ export const UserForm = ({
             value={formInfo.name}
             inputProps={{ maxLength: 50 }}
             onChange={handleChange}
+            inputRef={secondInputRef}
+            onKeyPress={(event) => handleKeyPress(event, thirdInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -132,6 +170,8 @@ export const UserForm = ({
             value={formInfo.lastName}
             inputProps={{ maxLength: 50 }}
             onChange={handleChange}
+            inputRef={thirdInputRef}
+            onKeyPress={(event) => handleKeyPress(event, fourInputRef)}
           />
         </Grid>
         <Grid item md={4} xs={4}>
@@ -163,6 +203,8 @@ export const UserForm = ({
               inputMode: "numeric"
             }}
             onChange={handleChange}
+            inputRef={fourInputRef}
+            onKeyPress={focusButton}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -195,6 +237,8 @@ export const UserForm = ({
           radius={"40px"}
           onClick={handleContinue}
           disabled={isFormValid}
+          id={"buttonRef"}
+          onKeyPress={handleKeyDown}
         >
           Confirmar
         </Button>

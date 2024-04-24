@@ -24,6 +24,7 @@ const useCreateClient = () => {
     formData.append("LoadAplicacionDto.BankId", payload.bankId)
     formData.append("LoadAplicacionDto.LoanTypeId", payload.loanTypeId)
     formData.append("LoadAplicacionDto.LoanNumber", payload.loanNumber.toString())
+    formData.append("validateClientOtp", dayjs(payload.validateClientOtp))
 
     return axiosClient.post("/Client/CreateClientService", formData, {
       headers: {

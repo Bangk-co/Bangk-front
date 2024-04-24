@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Placeholder, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -28,6 +28,14 @@ export const Step1 = ({
   const residenceCitiesList = useGetCities(formInfo.residenceStateId)
   const { data: dataResidenceCities, isSuccess: isSuccessResidenceCities } = residenceCitiesList
   const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([])
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (isSuccessResidenceStates) {
@@ -88,6 +96,13 @@ export const Step1 = ({
 
     newInfo[id] = JSON.parse(defaultValue);
     setFormInfo(newInfo);
+  };
+
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === "Enter" && nextRef.current) {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
   };
 
   return (
@@ -239,6 +254,8 @@ export const Step1 = ({
               maxLength: 2,
             }}
             onChange={handleChangeNumber}
+            inputRef={firstInputRef}
+            onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -249,6 +266,7 @@ export const Step1 = ({
             id="occupation"
             value={formInfo.occupation}
             onChange={handleChangeText}
+            inputRef={secondInputRef}
           />
         </Grid>
         <Grid item md={12} xs={12}>

@@ -427,7 +427,7 @@ const RequestPolicy = ({ isMobile }) => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      nextStep();
+      nextStep;
     }
   };
 
@@ -470,7 +470,6 @@ const RequestPolicy = ({ isMobile }) => {
             citiesOptions={citiesOptions}
             economicActivityOptions={economicActivityOptions}
             userName={requestInfo.name}
-            focusButton={focusButton}
           />
         )}
         {activeStep === 1 && (

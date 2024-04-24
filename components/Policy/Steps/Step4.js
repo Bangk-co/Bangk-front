@@ -22,10 +22,6 @@ export const Step4 = ({
 }) => {
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
-  const firstSelectRef = useRef(null);
-  const firstRadioRef = useRef(null);
-  const secondRadioRef = useRef(null);
-  const thirdRadioRef = useRef(null);
 
   useEffect(() => {
     if (firstInputRef.current) {
@@ -148,7 +144,7 @@ export const Step4 = ({
             }}
             onChange={handleChangeNumber}
             inputRef={secondInputRef}
-            onKeyPress={(event) => handleKeyPress(event, firstSelectRef)}
+            onKeyPress={(event) => handleKeyPress(event, null)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -197,8 +193,6 @@ export const Step4 = ({
               }
             }}
             MenuProps={MenuProps}
-            inputRef={firstSelectRef}
-            onKeyPress={(event) => handleKeyPress(event, firstRadioRef)}
           >
             {diseasesOptions.map((ele, indx) => (
               <MenuItem key={indx} value={ele.name} style={{ fontFamily: theme.fonts.family.primary }}>

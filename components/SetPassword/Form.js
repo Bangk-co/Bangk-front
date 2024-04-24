@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { theme } from "@/styles/theme";
@@ -8,8 +9,6 @@ import logo from "../../assets/icons/green-logo.svg";
 import { TextField } from "@/components/Common/TextField";
 import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
-import email from "../../assets/icons/email.svg";
-import user from "../../assets/icons/user.svg";
 import lock from "../../assets/icons/lock.svg";
 import { SetPasswordCard, WrapperForm } from "./styles";
 import { Checkbox } from "../Common/Checkbox";
@@ -18,20 +17,21 @@ import eye from '@/assets/icons/eye.svg';
 import eyeoff from '@/assets/icons/eyeoff.svg';
 import checkSuccess from "@/assets/icons/check-green.svg"
 import error from "@/assets/icons/close-red.svg"
-import { validateEmailRequired } from "@/utilities/validations";
+import { setRequestInfo } from "@/store/requests";
+import { encrypt, initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import useCreatePassword from "@/hooks/Login/useCreatePassword";
+import { setAuthCredentials } from "@/store/auth";
 
-const Form = ({ isMobile, isTablet }) => {
+const Form = ({ isMobile, isTablet, requestInfo }) => {
   const router = useRouter();
-  const [forceUpdate, setForceUpdate] = useState(false);
+  const dispatch = useDispatch();
+  const create = useCreatePassword();
   const [terms, setTerms] = useState(false)
   const [termsDate, setTermsDate] = useState(null)
-  const [setPasswordForm, setSetPasswordForm] = useState({
-    email: "",
-    name: "",
+  const [passwordForm, setPasswordForm] = useState({
     password: "",
     confirmPassword: ""
   });
-  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -69,15 +69,6 @@ const Form = ({ isMobile, isTablet }) => {
     height: "48px",
   }
 
-  const handleChange = (event) => {
-    const { value, id } = event.target;
-
-    const newRegisterForm = { ...setPasswordForm };
-    newRegisterForm[id] = id === "email" ? value.toLowerCase() : value;
-    setSetPasswordForm(newRegisterForm);
-    setForceUpdate(!forceUpdate);
-  };
-
   const handlePasswordChange = (event) => {
     const { value, id } = event.target;
     const hasUpperCase = /[A-Z]/.test(value);
@@ -90,7 +81,7 @@ const Form = ({ isMobile, isTablet }) => {
       hasNumber,
       hasSpecialChar,
     });
-    setSetPasswordForm({ ...setPasswordForm, [id]: value });
+    setPasswordForm({ ...passwordForm, [id]: value });
     if (!value) {
       setShowValidationCriteria(false);
     }
@@ -105,17 +96,34 @@ const Form = ({ isMobile, isTablet }) => {
   };
 
   const handleSetPassword = () => {
-    const emailValidation = validateEmailRequired.validate(setPasswordForm.email, {
-      abortEarly: false,
-    });
+    const passwordsMatch = passwordForm.password === passwordForm.confirmPassword;
   
-    const passwordsMatch = setPasswordForm.password === setPasswordForm.confirmPassword;
-  
-    setEmailError(emailValidation.error ? true : false);
     setPasswordError(!passwordsMatch);
-  
-    if (!emailValidation.error && passwordsMatch) {
-      router.push("/establecer-contrasena/exitoso");
+
+    if (passwordsMatch) {
+      create.reset();
+      create.mutate(
+        { 
+          clientId: requestInfo.clienId, 
+          password: encrypt(passwordForm.password),
+          passwordConfirm: encrypt(passwordForm.confirmPassword) 
+        },
+        {
+          onSuccess: () => {
+            router.push("/establecer-contrasena/exitoso");
+            dispatch(setAuthCredentials({
+              email: requestInfo.email,
+              password: encrypt(passwordForm.password),
+            }));
+            dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+          },
+          onError: (err) => {
+            err.response.data.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
     }
   };
 
@@ -123,57 +131,61 @@ const Form = ({ isMobile, isTablet }) => {
     router.push("/iniciar-sesion")
   }
 
-  const isValid = Object.values(setPasswordForm).every((value) => value !== "") && 
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(setPasswordForm.password);
+  const isValid = Object.values(passwordForm).every((value) => value !== "") && 
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(passwordForm.password);
+
+  const userData = [
+    {
+      title: "Email",
+      value: requestInfo.email,
+    },
+    {
+      title: "Documento de identidad",
+      value: requestInfo.identificationNumber,
+    },
+    {
+      title: "Nombres",
+      value: requestInfo.name,
+    },
+    {
+      title: "Apellidos",
+      value: requestInfo.lastName,
+    },
+  ]
 
   return (
     <WrapperForm>
       <SetPasswordCard>
         <Image alt="logo" src={logo} width={120} height={45} />
         <Col gap="16px" align="center" width="100%" m="40px 0 0 0">
-          <Row gap="5px">
-            <Text
-              size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5}
-              weight={theme.fonts.weight.medium}
-              color={theme.colors.gray900}
-            >
-              Establece una <span style={{ color: theme.colors.orange }}>Contraseña</span>
-            </Text>
-          </Row>
-          <Row width="100%" justify="center" m="16px 0 0 0">
-            <TextField
-              {...inputProps}
-              placeholder={"Correo"}
-              id="email"
-              label="Correo*"
-              prefixIcon={
-                <Image alt="email" src={email} width={16} height={16} />
-              }
-              value={setPasswordForm.email}    
-              onChange={handleChange}
-              error={emailError}
-              helper={emailError ? "Formato inválido" : ""}
-            />
-          </Row>
-          <Row width="100%" justify="center">
-            <TextField
-              {...inputProps}
-              placeholder={"Nombre"}
-              id="name"
-              label="Nombre completo*"
-              prefixIcon={
-                <Image alt="user" src={user} width={16} height={16} />
-              }
-              value={setPasswordForm.name}
-              onChange={handleChange}
-            />
-          </Row>
+          <Div direction="column" gap="22px" style={{ alignSelf: 'flex-start', textAlign: 'justify' }}>
+            {userData.map((ele, indx) => (
+              <>
+                <Div gap="8px" direction="column">
+                  <Text
+                    color={theme.colors.neutralGray900}
+                    size={theme.fonts.size.sm}
+                    font={theme.fonts.family.primaryBold}
+                  >
+                    {ele.title}
+                  </Text>
+                  <Text
+                    color={theme.colors.neutralGray900}
+                    size={theme.fonts.size.default2}
+                    font={theme.fonts.family.primary}
+                  >
+                    {ele.value}
+                  </Text>
+                </Div>
+              </>
+            ))}
+          </Div>
           <Row width="100%" justify="center">
             <TextField
               {...inputProps}
               placeholder={"Contraseña"}
               id="password"
-              label="Contraseña"
+              label="Contraseña*"
               type={showPassword ? 'text' : 'password'}
               suffix={
                 <IconButton
@@ -191,7 +203,7 @@ const Form = ({ isMobile, isTablet }) => {
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
-              value={setPasswordForm.password}
+              value={passwordForm.password}
               onChange={handlePasswordChange}
             />
           </Row>
@@ -200,7 +212,7 @@ const Form = ({ isMobile, isTablet }) => {
               {...inputProps}
               placeholder={"Contraseña"}
               id="confirmPassword"
-              label="Contraseña"
+              label="Confirmar contraseña*"
               type={showConfirmPassword ? 'text' : 'password'}
               suffix={
                 <IconButton
@@ -218,7 +230,7 @@ const Form = ({ isMobile, isTablet }) => {
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
-              value={setPasswordForm.confirmPassword}
+              value={passwordForm.confirmPassword}
               onChange={handlePasswordChange}
               error={passwordError}
               helper={passwordError ? "La contraseña no coincide" : ""}
@@ -263,7 +275,7 @@ const Form = ({ isMobile, isTablet }) => {
               borderHover={theme.colors.green}
               font={theme.fonts.family.primaryBold}
               onClick={handleSetPassword}
-              disabled={!isValid || !terms}
+              disabled={!isValid || !terms || create.isLoading}
             >
               Establece tu contraseña
             </Button>

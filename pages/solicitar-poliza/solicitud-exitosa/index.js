@@ -8,12 +8,20 @@ import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
 import { useRouter } from "next/router";
 import { ColForm, Container, WrapperPolicy } from "@/styles/Policy";
+import { setRequestInfo } from "@/store/requests";
+import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
   const router = useRouter()
 
   const handleBangk = () => {
-    router.push("/")
+    router.push("/");
+    dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+  }
+
+  const handleCreate = () => {
+    router.push("/establecer-contrasena")
   }
 
   return (
@@ -45,21 +53,29 @@ const RequestSuccess = ({ isMobile }) => {
             >
               Te estaremos contactando para informarte el estado de tu solicitud.
             </Text>
-            <Button
-              font={theme.fonts.family.primaryBold}
-              background={theme.colors.yellow500}
-              hover={theme.colors.yellow500}
-              borderHover={theme.colors.yellow500}
-              labelColor={theme.colors.green900}
-              size={theme.fonts.size.default2}
-              width={"300px"}
-              mobileWidth={"100%"}
-              height={"40px"}
-              radius={"40px"}
-              onClick={handleBangk}
-            >
-              Ver más ofertas Bangk
-            </Button>
+            <Div gap="10px" direction={"column"} align={"center"} justify={"center"}>
+              <Button
+                font={theme.fonts.family.primaryBold}
+                background={theme.colors.yellow500}
+                hover={theme.colors.yellow500}
+                borderHover={theme.colors.yellow500}
+                labelColor={theme.colors.green900}
+                size={theme.fonts.size.default2}
+                width={"300px"}
+                mobileWidth={"100%"}
+                height={"40px"}
+                radius={"40px"}
+                onClick={handleBangk}
+              >
+                Ver más ofertas Bangk
+              </Button>
+              <Link
+                color={theme.colors.yellow500}
+                onClick={handleCreate}
+              >
+                Establece una contraseña
+              </Link>
+            </Div>
           </ColForm>
         </Div>
       </WrapperPolicy>

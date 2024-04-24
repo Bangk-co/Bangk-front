@@ -28,7 +28,6 @@ import toast from "react-hot-toast";
 import {
   getDiseasesIds,
   getDiseasesNames,
-  initDataLoanInsurancePolicy,
 } from "@/utilities/helpers";
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
@@ -286,7 +285,6 @@ const RequestPolicy = ({ isMobile }) => {
                 { loanApplicationId: requestInfo.loanApplicationId },
                 {
                   onSuccess: () => {
-                    dispatch(setRequestInfo(initDataLoanInsurancePolicy))
                     router.push("/solicitar-poliza/solicitud-exitosa")
                   },
                   onError: (err) => {

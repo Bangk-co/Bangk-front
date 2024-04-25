@@ -23,7 +23,7 @@ const Header = ({ isMobile, isTablet }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleHome = () => {
-    router.push("/plataforma-cliente");
+    router.push("/plataforma-cliente/home");
   };
 
   const handleWpp = () => {
@@ -47,6 +47,10 @@ const Header = ({ isMobile, isTablet }) => {
     setShowMenu(!showMenu);
   };
 
+  const handleProfile = () => {
+    router.push("/plataforma-cliente/mi-perfil");
+  };
+
   return (
     <WrapperHeader isMobile={isMobile}>
       {isMobile ? (
@@ -55,6 +59,7 @@ const Header = ({ isMobile, isTablet }) => {
             <MenuModal
               handleWpp={handleWpp}
               handleShowModal={handleShowModal}
+              handleProfile={handleProfile}
             />
           </Modal>
           <Modal open={showModal}>

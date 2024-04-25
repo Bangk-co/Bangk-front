@@ -74,4 +74,18 @@ export const Placeholder = styled.div`
   font-family: ${({ font }) => font};
   font-size: ${({ size }) => size};
   color: ${theme.colors.neutralGray500};
-`
+`;
+
+export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ gap }) => gap || null};
+  height: ${({ height }) => height || null};
+  width: ${({ width }) => width || null};
+  margin: ${({ m }) => m || "0px 0px 0px 0px"};
+  padding: ${({ p }) => p || "32px"};
+  background: ${({ background }) => background || theme.colors.white};
+  border-radius: ${({ radius }) => radius || "16px"};
+  align-items: ${({ align }) => align || "flex-start"};
+  box-shadow: 4px 4px 8px 0px #00000014;
+`;

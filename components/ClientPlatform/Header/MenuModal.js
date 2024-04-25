@@ -9,12 +9,12 @@ import whatsapp from "@/assets/icons/whatsappBlack.svg";
 import keyIcon from "@/assets/icons/key.svg";
 import { fontFamily } from "@mui/system";
 
-export const MenuModal = ({ handleWpp, handleShowModal }) => {
+export const MenuModal = ({ handleWpp, handleShowModal, handleProfile }) => {
   const menuOptions = [
     {
       icon: profileIcon,
       text: "Mi perfil",
-      onclick: () => {},
+      onclick: handleProfile,
     },
     {
       icon: keyIcon,

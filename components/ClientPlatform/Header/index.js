@@ -14,11 +14,13 @@ import { deleteLocalUser } from "@/hooks/services/axiosInstance";
 import { theme } from "../../../styles/theme";
 import { Modal } from "@mui/material";
 import { MenuModal } from "./MenuModal";
+import { LogoutModal } from "./LogoutModal";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleHome = () => {
     router.push("/plataforma-cliente");
@@ -30,6 +32,12 @@ const Header = ({ isMobile, isTablet }) => {
       "_blank"
     );
   };
+
+  const handleShowModal = () => {
+    setShowMenu(false);
+    setShowModal(true);
+  };
+
   const handleLogout = () => {
     deleteLocalUser();
     router.push("/");
@@ -44,7 +52,16 @@ const Header = ({ isMobile, isTablet }) => {
       {isMobile ? (
         <>
           <Modal open={showMenu} style={{ zIndex: 1 }}>
-            <MenuModal handleWpp={handleWpp} handleLogout={handleLogout} />
+            <MenuModal
+              handleWpp={handleWpp}
+              handleShowModal={handleShowModal}
+            />
+          </Modal>
+          <Modal open={showModal}>
+            <LogoutModal
+              handleLogout={handleLogout}
+              setShowModal={setShowModal}
+            />
           </Modal>
           <Div>
             <Image

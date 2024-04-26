@@ -9,6 +9,7 @@ import homeIconWhite from "../../../assets/icons/homeWhite.svg";
 import isuranceIcon from "../../../assets/icons/insurance.svg";
 import insuranceIconWhite from "../../../assets/icons/insuranceWhite.svg";
 import profileIconWhite from "../../../assets/icons/profileWhite.svg";
+import profileIcon from "../../../assets/icons/profileClient.svg";
 
 export const Layout = ({ children, padding }) => {
   const router = useRouter();
@@ -36,7 +37,7 @@ export const Layout = ({ children, padding }) => {
           src={active ? isuranceIcon : insuranceIconWhite}
           width={24}
           height={24}
-          style={{ cursor: "pointer", stroke: "red" }}
+          style={{ cursor: "pointer" }}
         />
       ),
       name: "Seguros",
@@ -68,7 +69,7 @@ export const Layout = ({ children, padding }) => {
                   <Col align="center" gap="8px">
                     {item.icon(pathname.includes(item.path))}
                     <Text
-                      size={theme.fonts.size.sm}
+                      size={theme.fonts.size.default2}
                       weight={
                         pathname.includes(item.path)
                           ? theme.fonts.weight.bold
@@ -96,6 +97,7 @@ export const Layout = ({ children, padding }) => {
               direction={"column"}
               align="center"
               style={{ marginTop: "auto" }}
+              m="0 0 66px 0"
             >
               <Div
                 width="112px"
@@ -108,26 +110,41 @@ export const Layout = ({ children, padding }) => {
                 height="93px"
                 width="134px"
                 radius="0px 16px 16px 0px"
-                onClick={() => {}}
+                onClick={() => router.push("/plataforma-cliente/mi-perfil")}
                 background={
-                  pathname.includes("configuracion") && theme.colors.yellow500
+                  pathname.includes("mi-perfil") && theme.colors.yellow500
                 }
-                hover={
-                  pathname.includes("configuracion") && theme.colors.yellow500
-                }
+                hover={pathname.includes("mi-perfil") && theme.colors.yellow500}
               >
                 <Col align="center" gap="8px">
                   <Image
                     alt="logo"
-                    src={profileIconWhite}
+                    src={
+                      pathname.includes("mi-perfil")
+                        ? profileIcon
+                        : profileIconWhite
+                    }
                     width={24}
                     height={24}
                     style={{ cursor: "pointer" }}
                   />
                   <Text
-                    size={theme.fonts.size.sm}
-                    weight={theme.fonts.weight.regular}
-                    color={theme.colors.white}
+                    size={theme.fonts.size.default2}
+                    weight={
+                      pathname.includes("mi-perfil")
+                        ? theme.fonts.weight.bold
+                        : theme.fonts.weight.regular
+                    }
+                    color={
+                      pathname.includes("mi-perfil")
+                        ? theme.colors.green900
+                        : theme.colors.white
+                    }
+                    font={
+                      pathname.includes("mi-perfil")
+                        ? theme.fonts.family.primaryBold
+                        : theme.fonts.family.primary
+                    }
                   >
                     Perfil
                   </Text>

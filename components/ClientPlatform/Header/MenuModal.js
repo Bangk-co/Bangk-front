@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { WrapperModal } from "./styles";
+import { WrapperMenu } from "./styles";
 import { Text, Row } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import profileIcon from "@/assets/icons/profileMobile.svg";
@@ -9,12 +9,12 @@ import whatsapp from "@/assets/icons/whatsappBlack.svg";
 import keyIcon from "@/assets/icons/key.svg";
 import { fontFamily } from "@mui/system";
 
-export const MenuModal = ({ handleWpp, handleLogout }) => {
+export const MenuModal = ({ handleWpp, handleShowModal, handleProfile }) => {
   const menuOptions = [
     {
       icon: profileIcon,
       text: "Mi perfil",
-      onclick: () => {},
+      onclick: handleProfile,
     },
     {
       icon: keyIcon,
@@ -29,11 +29,11 @@ export const MenuModal = ({ handleWpp, handleLogout }) => {
     {
       icon: logoutIcon,
       text: "Cerrar sesión",
-      onclick: handleLogout,
+      onclick: handleShowModal,
     },
   ];
   return (
-    <WrapperModal>
+    <WrapperMenu>
       {menuOptions.map((menu, index) => (
         <Row
           key={index}
@@ -66,6 +66,6 @@ export const MenuModal = ({ handleWpp, handleLogout }) => {
           </Text>
         </Row>
       ))}
-    </WrapperModal>
+    </WrapperMenu>
   );
 };

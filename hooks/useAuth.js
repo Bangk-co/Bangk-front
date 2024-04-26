@@ -19,7 +19,8 @@ export const useAuth = () => {
       "recuperar-constrasena",
       "/cambiar-contrasena",
       "/establecer-contrasena",
-      "/establecer-contrasena/exitoso"
+      "/establecer-contrasena/exitoso",
+      "/establecer-contrasena-otp"
     ];
 
     if (!localStorageUser) {

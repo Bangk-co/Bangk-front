@@ -41,7 +41,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
             email: "",
             password: ""
           }))
-          router.push("/plataforma/home");
+          router.push("/plataforma-cliente/home");
         },
         onError: (err) => {
           err.response.data.map((error) => {

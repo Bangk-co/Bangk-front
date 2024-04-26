@@ -7,6 +7,16 @@ export const slice = createSlice({
     authCredentials: {
       email: "",
       password: ""
+    },
+    userInfo: {
+      clientId: 0,
+      name: "",
+      lastName: "",
+      email: "",
+      identificationNumber: "",
+      documenIdentificationTypeId: "",
+      permissionTreatPersonalDataDate: "",
+      validateClientOtp: ""
     }
   },
   reducers: {
@@ -21,10 +31,16 @@ export const slice = createSlice({
         ...state,
         authCredentials: action.payload,
       }
+    },
+    setUserInfo: (state, action) => {
+      return {
+        ...state,
+        userInfo: action.payload,
+      }
     }
   },
 });
 
 export default slice.reducer;
 
-export const { setEmailStore, setAuthCredentials } = slice.actions;
+export const { setEmailStore, setAuthCredentials, setUserInfo } = slice.actions;

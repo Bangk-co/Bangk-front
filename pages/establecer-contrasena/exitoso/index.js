@@ -13,7 +13,7 @@ import { theme } from "@/styles/theme";
 import useLogin from "@/hooks/Login/useLogin";
 import { encrypt } from "@/utilities/helpers";
 import { setLocalUser } from "@/hooks/services/axiosInstance";
-import { setAuthCredentials } from "@/store/auth";
+import { setAuthCredentials, setUserInfo } from "@/store/auth";
 
 const SetPasswordSuccess = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
 
   useEffect(() => {
     if (isAuth) {
-      router.push("/plataforma/home");
+      router.push("/plataforma-cliente/home");
     }
   }, [isAuth, router]);
 
@@ -41,6 +41,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
             email: "",
             password: ""
           }))
+          dispatch(setUserInfo({}));
           router.push("/plataforma-cliente/home");
         },
         onError: (err) => {

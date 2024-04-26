@@ -24,13 +24,18 @@ import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 import toast from "react-hot-toast";
 import { setEmailStore, setOtpDate, setValidCode } from "@/store/balance";
+import useCreateAccount from "@/hooks/Login/useCreateAccount";
+import { setUserInfo } from "@/store/auth";
+import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 
 const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
+  const create = useCreateAccount();
   const router = useRouter();
   const dispatch = useDispatch()
   const { source } = router.query;
   const { userInfo, validCode, email: emailStore } = useSelector((state) => state)?.balance;
+  const { userInfo: newUserInfo } = useSelector((state) => state)?.auth;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
     { id: "first", value: "" },
@@ -44,6 +49,21 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const [showResendButton, setShowResendButton] = useState(false);
   const [isReSend, setIsResend] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState("");
+
+  useEffect(() => {
+    switch (source) {
+      case "quote":
+        setCurrentEmail(emailStore)
+        break;
+      case "createAccount":
+        setCurrentEmail(newUserInfo.email)
+        break;
+      default:
+        setCurrentEmail(userInfo.email)
+        break;
+    }
+  }, [source])
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -87,7 +107,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     return "";
   };
 
-  const email = hideEmailUsername(userInfo.email || emailStore);
+  const email = hideEmailUsername(currentEmail);
 
   const focusInputs = (value, indx) => {
     if (value !== "" && indx < (code.length - 1)) {
@@ -112,7 +132,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   };
 
   const handleResendCode = () => {
-    const email = source === "quote" ? emailStore : userInfo.email;
+    const email = currentEmail;
     reSendCode.reset();
     reSendCode.mutate(email, {
       onSuccess: (res) => {
@@ -150,6 +170,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
       case "password":
         router.push("/establecer-contrasena-otp");
         break;
+      case "createAccount": 
+        router.push("/crear-cuenta");
+        break;
       default:
         router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
         break;
@@ -160,6 +183,33 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     urlBack(source)
   };
 
+  const createAccount = () => {
+    create.reset();
+    create.mutate(
+      { 
+        ...newUserInfo, 
+        validateClientOtp: new Date(),
+      },
+      {
+        onSuccess: (res) => {
+          dispatch(setUserInfo(res.data.result));
+          router.push("/establecer-contrasena");
+        },
+        onError: (err) => {
+          err.response.data.map((error) => {
+            toast.custom(<ToastErrorClient message={`${error}`} />, {
+              duration: 1000,
+            });
+          });
+          setErrorEmail({
+            error: false,
+            message: ""
+          })
+        },
+      }
+    );
+  }
+
   const urlSuccess = (sour) => {
     switch (sour) {
       case "quote":
@@ -169,6 +219,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
       case "password":
         router.push("/establecer-contrasena");
         break;
+      case "createAccount": 
+        createAccount();
+        break;
       default:
         router.push("/cotiza-tu-ahorro/tu-credito");
         break;
@@ -177,9 +230,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
 
   const handleContinue = () => {
     const newDate = new Date();
-    dispatch(setOtpDate(newDate))
+    dispatch(setOtpDate(newDate));
     
-    urlSuccess(source)
+    urlSuccess(source);
   };
 
   return (

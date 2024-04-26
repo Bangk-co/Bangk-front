@@ -22,7 +22,7 @@ import { encrypt, initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import useCreatePassword from "@/hooks/Login/useCreatePassword";
 import { setAuthCredentials } from "@/store/auth";
 
-const Form = ({ isMobile, isTablet, requestInfo }) => {
+const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const create = useCreatePassword();
@@ -35,6 +35,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [infoUser, setInfoUser] = useState({});
   
   const handleClickShowPassword = (field) => {
     if (field === 'password') {
@@ -104,7 +105,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
       create.reset();
       create.mutate(
         { 
-          clientId: requestInfo.clienId, 
+          clientId: requestInfo.clienId || userInfo.clientId, 
           password: encrypt(passwordForm.password),
           passwordConfirm: encrypt(passwordForm.confirmPassword) 
         },
@@ -112,7 +113,7 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
           onSuccess: () => {
             router.push("/establecer-contrasena/exitoso");
             dispatch(setAuthCredentials({
-              email: requestInfo.email,
+              email: requestInfo.email || userInfo.email,
               password: encrypt(passwordForm.password),
             }));
             dispatch(setRequestInfo(initDataLoanInsurancePolicy));
@@ -137,21 +138,21 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
   const userData = [
     {
       title: "Email",
-      value: requestInfo.email,
+      value: requestInfo.email || userInfo.email, 
     },
     {
       title: "Documento de identidad",
-      value: requestInfo.identificationNumber,
+      value: requestInfo.identificationNumber || userInfo.identificationNumber,
     },
     {
       title: "Nombres",
-      value: requestInfo.name,
+      value: requestInfo.name || userInfo.name,
     },
     {
       title: "Apellidos",
-      value: requestInfo.lastName,
+      value: requestInfo.lastName || userInfo.lastName,
     },
-  ]
+  ];
 
   return (
     <WrapperForm>

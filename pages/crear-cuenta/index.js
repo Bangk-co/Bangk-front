@@ -20,6 +20,8 @@ import useCreateAccount from "@/hooks/Login/useCreateAccount";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import { validateEmailRequired } from "@/utilities/validations";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
+import { setValidCode } from "@/store/balance";
+import { setUserInfo } from "@/store/auth";
 
 
 const CreateAccount = ({ isMobile, isTablet }) => {
@@ -35,8 +37,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
   const [formUser, setFormUser] = useState({
     email: "",
     name: "",
-    lastname: "",
-    documentType: 76,
+    lastName: "",
+    documenIdentificationTypeId: 76,
     identificationNumber: "",
   })
   const [errorEmail, setErrorEmail] = useState({
@@ -77,7 +79,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
     const newInfo = { ...formUser};
 
     if (id === "identificationNumber") {
-      if (formUser.documentType !== 78) {
+      if (formUser.documenIdentificationTypeId !== 78) {
         newInfo[id] = value.replace(/\D/g, "");
       } else {
         newInfo[id] = value;
@@ -115,40 +117,26 @@ const CreateAccount = ({ isMobile, isTablet }) => {
         message: "Formato inválido"
       })
     } else {
-      create.reset();
-      create.mutate(
-        { ...formUser },
+      sendCode.reset();
+      sendCode.mutate(
+        {
+          email: formUser.email,
+          identificationNumber: formUser.identificationNumber,
+        },
         {
           onSuccess: (res) => {
-            dispatch(setUserInfo(res.data));
-            sendCode.reset();
-            sendCode.mutate(
-              {
-                email: formUser.email,
-                identificationNumber: formUser.identificationNumber,
-              },
-              {
-                onSuccess: (res) => {
-                  dispatch(setValidCode(res.data.code));
-                  router.push(`/validacion-identidad?source=password`);
-                  setErrorEmail({
-                    error: false,
-                    message: ""
-                  })
-                },
-                onError: (err) => {
-                  err.response.data.map((error) => {
-                    toast.custom(<ToastErrorClient message={`${error}`} />, {
-                      duration: 1000,
-                    });
-                  });
-                  setErrorEmail({
-                    error: false,
-                    message: ""
-                  })
-                },
-              }
-            );
+            dispatch(setUserInfo({
+              ...formUser, 
+              clientId: 0,
+              permissionTreatPersonalDataDate: termsDate,
+              validateClientOtp: null
+            }))
+            dispatch(setValidCode(res.data.code));
+            router.push(`/validacion-identidad?source=createAccount`);
+            setErrorEmail({
+              error: false,
+              message: ""
+            })
           },
           onError: (err) => {
             err.response.data.map((error) => {
@@ -207,16 +195,22 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 label="Nombres*"
                 onChange={handleChange}
                 value={formUser.name}
+                inputProps={{
+                  maxLength: 50
+                }}
               />
             </Row>
             <Row width="100%" justify="center" m="16px 0 0 0">
               <TextField
                 {...inputProps}
                 placeholder={"Escribir apellidos"}
-                id="lastname"
+                id="lastName"
                 label="Apellidos*"
                 onChange={handleChange}
-                value={formUser.lastname}
+                value={formUser.lastName}
+                inputProps={{
+                  maxLength: 50
+                }}
               />
             </Row>
             <Row width="100%" justify="center" m="16px 0 0 0" gap="16px">
@@ -224,8 +218,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 <Select
                   {...inputProps}
                   label={"Tipo de documento*"}
-                  name="documentType"
-                  value={formUser.documentType}
+                  name="documenIdentificationTypeId"
+                  value={formUser.documenIdentificationTypeId}
                   onChange={handleSelect}
                 >
                   {documentTypeOptions.map((ele, indx) => (
@@ -267,7 +261,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 borderHover={theme.colors.green}
                 font={theme.fonts.family.primaryBold}
                 onClick={handleCreate}
-                disabled={!isFormValid || !terms || create.isLoading}
+                disabled={!isFormValid || !terms || sendCode.isLoading}
               >
                 Crea tu cuenta
               </Button>

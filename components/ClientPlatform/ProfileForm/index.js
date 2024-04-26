@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 import { Grid, MenuItem } from "@mui/material";
 import { Text, Card, Div, Row } from "@/styles/Common";
 import {
@@ -14,12 +15,29 @@ import { Select } from "@/components/Common/Select";
 import { theme } from "@/styles/theme";
 import whatsapp from "../../../assets/icons/settingsGreen.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
+import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
+import { getUserInfo } from "@/utilities/helpers";
 
 const ProfileForm = ({ isMobile }) => {
   const router = useRouter();
+
+  const { nameid: userId } = getUserInfo();
+
+  const getClient = useGetClientInfo(266); //TODO update to userID
+  const { data, isSuccess } = getClient;
+  const [clientInfo, setClientInfo] = useState();
+  const [userForm, setUserForm] = useState({});
+  console.log("clientInfo", clientInfo);
+  console.log("countryCode", phoneCodesOptions);
+  useEffect(() => {
+    if (isSuccess) {
+      setClientInfo(data?.data?.clientsInfo[0]);
+      setUserForm(data?.data?.clientsInfo[0]);
+    }
+  }, [data, isSuccess]);
 
   const documentsType = useGetDocumentType();
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
@@ -78,6 +96,32 @@ const ProfileForm = ({ isMobile }) => {
     height: "40px",
   };
 
+  const handleChangeUser = (event) => {
+    const { id, value } = event.target;
+    const newUserForm = { ...userForm };
+
+    if (id === "identificationNumber") {
+      if (userForm.documentTypeId !== 78) {
+        newUserForm[id] = value.replace(/\D/g, "");
+      } else {
+        newUserForm[id] = value;
+      }
+    } else if (id === "phoneNumber") {
+      newUserForm[id] = value.replace(/\D/g, "");
+    } else {
+      newUserForm[id] = value;
+    }
+
+    setUserForm(newUserForm);
+  };
+
+  const handleSelectUser = (event) => {
+    const { name, value } = event.target;
+    const newUserForm = { ...userForm };
+
+    newUserForm[name] = value;
+    setUserForm(newUserForm);
+  };
   const handleBack = () => {
     router.back();
   };
@@ -161,8 +205,8 @@ const ProfileForm = ({ isMobile }) => {
               id={"name"}
               helper={"Escribe el nombre como aparece en la cédula"}
               helperColor={theme.colors.neutralGray700}
-              /* value={userForm?.name}
-                  onChange={handleChangeUser}
+              value={userForm?.name}
+              /*    onChange={handleChangeUser}
                   disabled={savedBankStatStatement} */
             />
           </Grid>
@@ -173,8 +217,8 @@ const ProfileForm = ({ isMobile }) => {
               id={"lastName"}
               helper={"Escribe los apellidos como aparecen en la cédula"}
               helperColor={theme.colors.neutralGray700}
-              /* value={userForm?.lastName}
-                  onChange={handleChangeUser}
+              value={userForm?.lastName}
+              /*    onChange={handleChangeUser}
                   disabled={savedBankStatStatement} */
             />
           </Grid>
@@ -184,8 +228,8 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               notFocused={true}
               name="documentTypeId"
-              /* value={userForm?.documentTypeId}
-              onChange={handleSelectUser}
+              value={userForm?.documentTypeId}
+              /*onChange={handleSelectUser}
               disabled={savedBankStatStatement} */
             >
               {documentTypeOptions.map((ele, indx) => (
@@ -204,9 +248,9 @@ const ProfileForm = ({ isMobile }) => {
               label={"Número de documento*"}
               {...textFieldProps}
               id={"identificationNumber"}
-              /* value={userForm?.identificationNumber}
-              onChange={handleChangeUser}
-              disabled={savedBankStatStatement} */
+              value={userForm?.identificationNumber}
+              /*onChange={handleChangeUser}
+               */
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -214,8 +258,8 @@ const ProfileForm = ({ isMobile }) => {
               label={"Fecha de expedición del documento*"}
               {...textFieldProps}
               border={theme.colors.gray500}
-              /* value={userForm?.documentIssueDate}
-                  error={userForm?.documentIssueDate === null}
+              value={dayjs(userForm?.documentIssueDate)}
+              /*   error={userForm?.documentIssueDate === null}
                   helper={
                     userForm?.documentIssueDate === null
                       ? "Campo requerido"
@@ -224,7 +268,7 @@ const ProfileForm = ({ isMobile }) => {
                   onChange={(event) =>
                     handleChangeDate(event, "documentIssueDate")
                   }
-                  disabled={savedBankStatStatement} */
+                   */
             />
           </Grid>
           <Grid item xs={12} md={6} />
@@ -233,11 +277,11 @@ const ProfileForm = ({ isMobile }) => {
               label={"Fecha de nacimiento*"}
               {...textFieldProps}
               border={theme.colors.gray500}
-              /* error={errorDate}
+              value={dayjs(userForm?.birthDate)}
+              /*error={errorDate}
                   helper={errorDate ? "Debes ser mayor de edad" : ""}
-                  value={userForm?.birthDate}
                   onChange={(event) => handleChangeDate(event, "birthDate")}
-                  disabled={savedBankStatStatement} */
+                   */
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -248,7 +292,7 @@ const ProfileForm = ({ isMobile }) => {
               name="genderId"
               /* value={userForm?.documentTypeId}
               onChange={handleSelectUser}
-              disabled={savedBankStatStatement} */
+               */
             >
               {gendersOptions.map((ele, indx) => (
                 <MenuItem
@@ -267,9 +311,9 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               notFocused={true}
               name={"countryCode"}
-              /* value={userForm?.countryCode}
-              onChange={handleSelectUser}
-              disabled={savedBankStatStatement} */
+              value={userForm?.countryCode}
+              /*onChange={handleSelectUser}
+               */
             >
               {phoneCodesOptions?.map((ele, indx) => (
                 <MenuItem
@@ -287,9 +331,8 @@ const ProfileForm = ({ isMobile }) => {
               label={"Número de celular*"}
               {...textFieldProps}
               id={"phoneNumber"}
-              /* value={userForm?.phoneNumber}
-                  onChange={handleChangeUser}
-                  disabled={savedBankStatStatement} */
+              value={userForm?.phoneNumber}
+              /*    onChange={handleChangeUser} */
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -297,7 +340,7 @@ const ProfileForm = ({ isMobile }) => {
               label={"Correo electrónico*"}
               {...textFieldProps}
               id={"email"}
-              /* value={userForm?.email} */
+              value={userForm?.email}
               disabled={true}
             />
           </Grid>
@@ -306,19 +349,25 @@ const ProfileForm = ({ isMobile }) => {
               label={"ID cliente*"}
               {...textFieldProps}
               id={"clientId"}
-              /* value={userForm?.phoneNumber}
-                  onChange={handleChangeUser}*/
+              value={userForm?.idClient}
+              /*   onChange={handleChangeUser}*/
               disabled={true}
             />
           </Grid>
         </Grid>
         <Row width="100%" justify="center" m="24px 0 24px 0">
           <Button
-            background={theme.colors.green900}
+            background={
+              isMobile ? theme.colors.green900 : theme.colors.yellow500
+            }
             font={theme.fonts.family.primaryBold}
             size={theme.fonts.size.default2}
-            hover={theme.colors.green900}
-            borderHover={theme.colors.green900}
+            labelColor={isMobile ? theme.colors.white : theme.colors.green900}
+            hover={isMobile ? theme.colors.green900 : theme.colors.yellow500}
+            border={isMobile ? theme.colors.green900 : theme.colors.yellow500}
+            borderHover={
+              isMobile ? theme.colors.green900 : theme.colors.yellow500
+            }
             width={isMobile ? "247px" : "300px"}
             height={"40px"}
             /* onClick={() => handleSave(false)}

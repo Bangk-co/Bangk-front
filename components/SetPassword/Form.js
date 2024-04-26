@@ -158,6 +158,18 @@ const Form = ({ isMobile, isTablet, requestInfo }) => {
       <SetPasswordCard>
         <Image alt="logo" src={logo} width={120} height={45} />
         <Col gap="16px" align="center" width="100%" m="40px 0 0 0">
+          <Row gap="5px">
+            <Text
+              font={theme.fonts.family.primaryBold}
+              size={theme.fonts.size.ft}
+              weight={theme.fonts.weight.bold}
+              color={theme.colors.gray900}
+            >
+              Establece una{" "}
+              <span style={{ color: theme.colors.orange, fontFamily: theme.fonts.family.primaryBold }}>contraseña</span>{" "}
+              <span style={{ color: theme.colors.green900, fontFamily: theme.fonts.family.primaryBold }}>y termina de crear tu cuenta</span>
+            </Text>
+          </Row>
           <Div direction="column" gap="22px" style={{ alignSelf: 'flex-start', textAlign: 'justify' }}>
             {userData.map((ele, indx) => (
               <>

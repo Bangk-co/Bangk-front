@@ -142,24 +142,44 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     }
   };
 
-  const handleBack = () => {
-    if (source === "quote") {
-      router.push("/ver-cotizacion");
-    } else {
-      router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+  const urlBack = (sour) => {
+    switch (sour) {
+      case "quote":
+        router.push("/ver-cotizacion");
+        break;
+      case "password":
+        router.push("/establecer-contrasena-otp");
+        break;
+      default:
+        router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+        break;
     }
+  }
+
+  const handleBack = () => {
+    urlBack(source)
   };
+
+  const urlSuccess = (sour) => {
+    switch (sour) {
+      case "quote":
+        router.push("/ver-cotizacion/informacion-cotizacion");
+        dispatch(setEmailStore(""));
+        break;
+      case "password":
+        router.push("/establecer-contrasena");
+        break;
+      default:
+        router.push("/cotiza-tu-ahorro/tu-credito");
+        break;
+    }
+  }
 
   const handleContinue = () => {
     const newDate = new Date();
     dispatch(setOtpDate(newDate))
     
-    if (source === "quote") {
-      router.push("/ver-cotizacion/informacion-cotizacion");
-      dispatch(setEmailStore(""))
-    } else {
-      router.push("/cotiza-tu-ahorro/tu-credito");
-    }
+    urlSuccess(source)
   };
 
   return (

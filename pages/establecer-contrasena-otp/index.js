@@ -7,7 +7,6 @@ import { SetPasswordCard, WrapperForm } from "@/components/SetPassword/styles";
 import Image from "next/image";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import logo from "../../assets/icons/green-logo.svg";
-import { Checkbox } from "@/components/Common/Checkbox";
 import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import { theme } from "@/styles/theme";

@@ -9,6 +9,7 @@ import Form from "@/components/SetPassword/Form";
 const SetPassword = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const { requestInfo } = useSelector((state) => state)?.requests;
+  const { userInfo } = useSelector((state) => state)?.auth;
 
   const { isAuth } = useAuth();
 
@@ -21,7 +22,12 @@ const SetPassword = ({ isMobile, isTablet }) => {
   return (
     <Container>
       {!isMobile && !isTablet && <Banner />}
-      <Form isMobile={isMobile} isTablet={isTablet} requestInfo={requestInfo} />
+      <Form 
+        isMobile={isMobile} 
+        isTablet={isTablet} 
+        requestInfo={requestInfo}
+        userInfo={userInfo}
+      />
     </Container>
   );
 };

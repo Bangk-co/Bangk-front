@@ -20,7 +20,8 @@ export const useAuth = () => {
       "/cambiar-contrasena",
       "/establecer-contrasena",
       "/establecer-contrasena/exitoso",
-      "/establecer-contrasena-otp"
+      "/establecer-contrasena-otp",
+      "/crear-cuenta"
     ];
 
     if (!localStorageUser) {

@@ -19,6 +19,7 @@ import { encrypt } from "@/utilities/helpers";
 import eye from '@/assets/icons/eye.svg';
 import eyeoff from '@/assets/icons/eyeoff.svg';
 import { IconButton } from '@mui/material';
+import { jwtDecode } from "jwt-decode";
 
 const Form = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -95,8 +96,13 @@ const Form = ({ isMobile, isTablet }) => {
         { email: loginForm.email, password: encrypt(loginForm.password) },
         {
           onSuccess: (res) => {
+            const { role } = jwtDecode(res.data.token);            
             setLocalUser(res.data.token);
-            router.push("/plataforma/home");
+            if (role === "client") {
+              router.push("/plataforma-cliente/home");
+            } else {
+              router.push("/plataforma/home");
+            }
           },
           onError: (err) => {
             err.response.data.map((error) => {
@@ -108,6 +114,10 @@ const Form = ({ isMobile, isTablet }) => {
     }
   };
 
+  const handleCreate = () => {
+    router.push("/crear-cuenta")
+  }
+
   const isValid = Object.values(loginForm).every((value) => value !== "")
 
   return (
@@ -117,11 +127,12 @@ const Form = ({ isMobile, isTablet }) => {
         <Col gap="16px" align="center" width="100%" m="40px 0 0 0">
           <Row gap="5px">
             <Text
-              size={theme.fonts.size.h5}
-              weight={theme.fonts.weight.medium}
+              font={theme.fonts.family.primaryBold}
+              size={theme.fonts.size.ft}
+              weight={theme.fonts.weight.bold}
               color={theme.colors.gray900}
             >
-              Inicia <span style={{ color: theme.colors.orange }}>sesión</span>
+              Inicia <span style={{ color: theme.colors.orange, fontFamily: theme.fonts.family.primaryBold }}>sesión</span>
             </Text>
           </Row>
           <Row width="100%" justify="center" m="16px 0 0 0">
@@ -191,6 +202,7 @@ const Form = ({ isMobile, isTablet }) => {
         <Div m="22px 0 0 0" width="100%" justify="center">
           <Button
             width="325px"
+            height="40px"
             background={theme.colors.green}
             hover={theme.colors.green}
             borderHover={theme.colors.green}
@@ -208,6 +220,36 @@ const Form = ({ isMobile, isTablet }) => {
           >
             Iniciar sesión
           </Button>
+        </Div>
+        <Div align="center" gap="6px" width="100%" m="30px 0 40px 0">
+          <hr style={{ height: "1px", width: "45%", background: theme.colors.gray300 }} />
+          <Text 
+            color={theme.colors.gray300}
+            size={theme.fonts.size.sm}
+            font={theme.fonts.family.secondary}
+          >
+            O
+          </Text>
+          <hr style={{ height: "1px", width: "45%", background: theme.colors.gray300 }} />
+        </Div>
+        <Div direction={isMobile ? "column" : "row"} align="center" gap="8px">
+            <Text 
+              color={theme.colors.neutralGray900}
+              size={theme.fonts.size.default2}
+              weight={theme.fonts.weight.bold}
+            >
+              ¿No tienes cuenta?
+            </Text>
+            <Link
+              color={theme.colors.green}
+              family={theme.fonts.family.primary}
+              weight={theme.fonts.weight.medium}
+              size={theme.fonts.size.default2}
+              onClick={handleCreate}
+              style={{ textDecoration: "underline" }}
+            >
+              Crear cuenta
+            </Link>
         </Div>
       </LoginCard>
     </WrapperForm>

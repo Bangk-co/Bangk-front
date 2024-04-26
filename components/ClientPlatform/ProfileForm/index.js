@@ -3,18 +3,22 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Grid, MenuItem } from "@mui/material";
 import { Text, Card, Div, Row } from "@/styles/Common";
-import { HeaderProfile } from "@/components/ClientPlatform/Profile/styles";
+import {
+  HeaderProfile,
+  HeaderProfileMobile,
+} from "@/components/ClientPlatform/ProfileForm/styles";
 import { Button } from "@/components/Common/Button";
 import { TextField } from "@/components/Common/TextField";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { Select } from "@/components/Common/Select";
 import { theme } from "@/styles/theme";
 import whatsapp from "../../../assets/icons/settingsGreen.svg";
+import backIcon from "@/assets/icons/backArrow.svg";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 
-const ProfileWeb = ({ isMobile, isTablet }) => {
+const ProfileForm = ({ isMobile }) => {
   const router = useRouter();
 
   const documentsType = useGetDocumentType();
@@ -74,33 +78,60 @@ const ProfileWeb = ({ isMobile, isTablet }) => {
     height: "40px",
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <>
-      <HeaderProfile>
-        <Text
-          size={theme.fonts.size.h2}
-          color={theme.colors.neutralGray900}
-          font={theme.fonts.family.primaryBold}
-        >
-          Tu Perfil
-        </Text>
-        <Button
-          width={"251px"}
-          padding="0px"
-          labelColor={theme.colors.green900}
-          borderHover={"#F0F0F0"}
-          border={"#F0F0F0"}
-          hover={theme.colors.gray100}
-          background={"#F0F0F0"}
-          font={theme.fonts.family.primaryBold}
-          size={theme.fonts.size.default2}
-          radius={"40px"}
-          startIcon={<Image alt="logo" src={whatsapp} width={16} height={16} />}
-        >
-          Cambia tu constraseña
-        </Button>
-      </HeaderProfile>
-      <Card gap="8px" m="0 0 24px 0" width="752px">
+      {isMobile ? (
+        <HeaderProfileMobile>
+          <Image
+            alt="back"
+            src={backIcon}
+            width={16}
+            height={16}
+            onClick={handleBack}
+          />
+          <Text
+            size={theme.fonts.size.default2}
+            color={theme.colors.neutralGray900}
+            font={theme.fonts.family.primaryBold}
+            align="center"
+            style={{ width: "100%" }}
+          >
+            Tu Perfil
+          </Text>
+        </HeaderProfileMobile>
+      ) : (
+        <HeaderProfile>
+          <Text
+            size={theme.fonts.size.h2}
+            color={theme.colors.neutralGray900}
+            font={theme.fonts.family.primaryBold}
+          >
+            Tu Perfil
+          </Text>
+          <Button
+            width={"251px"}
+            padding="0px"
+            labelColor={theme.colors.green900}
+            borderHover={"#F0F0F0"}
+            border={"#F0F0F0"}
+            hover={theme.colors.gray100}
+            background={"#F0F0F0"}
+            font={theme.fonts.family.primaryBold}
+            size={theme.fonts.size.default2}
+            radius={"40px"}
+            startIcon={
+              <Image alt="logo" src={whatsapp} width={16} height={16} />
+            }
+          >
+            Cambia tu constraseña
+          </Button>
+        </HeaderProfile>
+      )}
+      <Card gap="8px" m="0 0 24px 0" width={isMobile ? "100%" : "752px"}>
         <Text
           size={theme.fonts.size.ft}
           color={theme.colors.primary900}
@@ -281,14 +312,14 @@ const ProfileWeb = ({ isMobile, isTablet }) => {
             />
           </Grid>
         </Grid>
-        <Row width="100%" justify="center" m="24px 0 0 0">
+        <Row width="100%" justify="center" m="24px 0 24px 0">
           <Button
             background={theme.colors.green900}
             font={theme.fonts.family.primaryBold}
             size={theme.fonts.size.default2}
             hover={theme.colors.green900}
             borderHover={theme.colors.green900}
-            width={"300px"}
+            width={isMobile ? "247px" : "300px"}
             height={"40px"}
             /* onClick={() => handleSave(false)}
                 disabled={disabledButtons || isLoading} */
@@ -301,4 +332,4 @@ const ProfileWeb = ({ isMobile, isTablet }) => {
   );
 };
 
-export default ProfileWeb;
+export default ProfileForm;

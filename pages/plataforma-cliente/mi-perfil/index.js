@@ -5,7 +5,7 @@ import { Layout } from "@/components/ClientPlatform/Layout";
 import { useAuth } from "@/hooks/useAuth";
 import { Text } from "@/styles/Common";
 import { FooterNav } from "@/components/ClientPlatform/FooterNav";
-import ProfileWeb from "@/components/ClientPlatform/Profile/ProfileWeb";
+import ProfileForm from "@/components/ClientPlatform/ProfileForm";
 
 const Profile = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -24,12 +24,12 @@ const Profile = ({ isMobile, isTablet }) => {
       <Header isMobile={isMobile} />
       {isMobile ? (
         <>
-          <Text>Perfil mobile</Text>
+          <ProfileForm isMobile={isMobile} />
           <FooterNav />
         </>
       ) : (
         <Layout>
-          <ProfileWeb />
+          <ProfileForm isMobile={isMobile} />
         </Layout>
       )}
     </div>

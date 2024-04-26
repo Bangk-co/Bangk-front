@@ -10,11 +10,13 @@ export const HeaderProfile = styled.div`
   width: 100%;
 `;
 
-export const infoCard = styled.div`
+export const HeaderProfileMobile = styled.div`
   display: flex;
-  width: 752px;
-  padding: var(--Base-Spacing-2xl, 32px) var(--Base-Spacing-3xl, 40px);
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--Base-Spacing-xl, 24px);
+  padding: 24px;
+  margin: 0 0 10px 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  box-shadow: 4px 4px 8px 0px #00000014;
 `;

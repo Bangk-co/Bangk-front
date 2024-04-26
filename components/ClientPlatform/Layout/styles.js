@@ -39,12 +39,13 @@ export const Sider = styled.div`
 export const Content = styled.div`
   position: relative;
   display: flex;
-  padding: ${({ p }) => p || "32px"};
+  flex-direction: column;
+  padding: ${({ p }) => p || "0 40px"};
   height: 100%;
   width: calc(100% - 150px);
-  background: ${theme.colors.white} 0% 0% no-repeat padding-box;
+  background: #f0f0f0 0% 0% no-repeat padding-box;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  justify-content: center;
+  align-items: center;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 0;

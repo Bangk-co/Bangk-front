@@ -14,7 +14,7 @@ export const WrapperHeader = styled.div`
   z-index: 2;
 `;
 
-export const WrapperModal = styled.div`
+export const WrapperMenu = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -26,6 +26,23 @@ export const WrapperModal = styled.div`
   top: 72px;
   padding: 10px 16px;
   border-radius: 0px 0px 8px 8px;
+  gap: 10px;
+  background: ${theme.colors.white};
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
+`;
+
+export const WrapperModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  height: max-content;
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0px;
+  padding: 10px 16px;
+  border-radius: 20px 20px 0 0;
   gap: 10px;
   background: ${theme.colors.white};
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);

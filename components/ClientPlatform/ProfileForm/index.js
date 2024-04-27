@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import dayjs from "dayjs";
+import { useQueryClient } from "react-query";
 import { Grid, MenuItem } from "@mui/material";
 import { Text, Card, Div, Row } from "@/styles/Common";
 import {
@@ -19,21 +21,37 @@ import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetGenders from "@/hooks/QuoteSavings/useGetGenders";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
+import useUpdateClientProfile from "@/hooks/Profile/useUpdateClientProfile";
+import { ToastSuccess } from "@/components/Common/ToastSucces";
+import CircularProgress from "@mui/material/CircularProgress";
 import { getUserInfo } from "@/utilities/helpers";
 
 const ProfileForm = ({ isMobile }) => {
   const router = useRouter();
+  const updateProfile = useUpdateClientProfile();
+  const queryClient = useQueryClient();
 
   const { nameid: userId } = getUserInfo();
 
-  const getClient = useGetClientInfo(266); //TODO update to userID
+  const getClient = useGetClientInfo(userId);
   const { data, isSuccess } = getClient;
   const [clientInfo, setClientInfo] = useState();
-  const [userForm, setUserForm] = useState({});
-  console.log("clientInfo", clientInfo);
-  console.log("countryCode", phoneCodesOptions);
+  const [userForm, setUserForm] = useState({
+    name: "",
+    lastName: "",
+    documentTypeId: null,
+    identificationNumber: "",
+    email: "",
+    countryCode: null,
+    phoneNumber: "",
+    birthDate: null,
+    genderId: null,
+    documentIssueDate: null,
+  });
+  const [errorDate, setErrorDate] = useState(false);
+
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data?.data?.clientsInfo.lenght > 0) {
       setClientInfo(data?.data?.clientsInfo[0]);
       setUserForm(data?.data?.clientsInfo[0]);
     }
@@ -74,7 +92,7 @@ const ProfileForm = ({ isMobile }) => {
     if (isSuccessPhone) {
       setPhoneCodesOptions(
         dataPhone?.data?.groupSettings?.map((ele) => ({
-          label: `(${ele.code})`,
+          label: `(${ele.code}) ${ele.name}`,
           value: ele.id,
         }))
       );
@@ -122,8 +140,67 @@ const ProfileForm = ({ isMobile }) => {
     newUserForm[name] = value;
     setUserForm(newUserForm);
   };
+
+  const handleChangeDate = (event, id) => {
+    const today = new Date();
+    const birthDate = new Date(event);
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (id === "birthDate") {
+      if (age < 18) {
+        setErrorDate(true);
+      } else {
+        setErrorDate(false);
+        setUserForm({ ...userForm, birthDate: event });
+      }
+    } else {
+      setUserForm({ ...userForm, documentIssueDate: event });
+    }
+  };
+
   const handleBack = () => {
     router.back();
+  };
+
+  const disabledButtons =
+    (userForm &&
+      Object.values(userForm).some(
+        (value) => value === "" || value === null
+      )) ||
+    (clientInfo && JSON.stringify(clientInfo) === JSON.stringify(userForm));
+
+  const handleSave = () => {
+    const formData = {
+      clientId: userForm?.idClient,
+      name: userForm?.name,
+      lastName: userForm?.lastName,
+      documentTypeId: userForm?.documentTypeId,
+      identificationNumber: userForm?.identificationNumber,
+      countryCode: userForm?.countryCode,
+      phoneNumber: userForm?.phoneNumber,
+      birthDate: userForm?.birthDate,
+      genderId: userForm?.genderId,
+      documentIssueDate: userForm?.documentIssueDate,
+    };
+    updateProfile.reset();
+    updateProfile.mutate(formData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["clientInfo"]);
+        toast.custom(
+          <ToastSuccess
+            message={"Los datos se han modificado con éxito"}
+            color={theme.colors.white}
+            background={theme.colors.primary300}
+          />,
+          { duration: 1000 }
+        );
+      },
+      onError: (err) => {
+        err.response.data.errors.map((error) => {
+          toast.error(error);
+        });
+      },
+    });
   };
 
   return (
@@ -206,8 +283,7 @@ const ProfileForm = ({ isMobile }) => {
               helper={"Escribe el nombre como aparece en la cédula"}
               helperColor={theme.colors.neutralGray700}
               value={userForm?.name}
-              /*    onChange={handleChangeUser}
-                  disabled={savedBankStatStatement} */
+              onChange={handleChangeUser}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -218,8 +294,7 @@ const ProfileForm = ({ isMobile }) => {
               helper={"Escribe los apellidos como aparecen en la cédula"}
               helperColor={theme.colors.neutralGray700}
               value={userForm?.lastName}
-              /*    onChange={handleChangeUser}
-                  disabled={savedBankStatStatement} */
+              onChange={handleChangeUser}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -229,8 +304,7 @@ const ProfileForm = ({ isMobile }) => {
               notFocused={true}
               name="documentTypeId"
               value={userForm?.documentTypeId}
-              /*onChange={handleSelectUser}
-              disabled={savedBankStatStatement} */
+              onChange={handleSelectUser}
             >
               {documentTypeOptions.map((ele, indx) => (
                 <MenuItem
@@ -249,8 +323,7 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               id={"identificationNumber"}
               value={userForm?.identificationNumber}
-              /*onChange={handleChangeUser}
-               */
+              onChange={handleChangeUser}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -259,16 +332,11 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               border={theme.colors.gray500}
               value={dayjs(userForm?.documentIssueDate)}
-              /*   error={userForm?.documentIssueDate === null}
-                  helper={
-                    userForm?.documentIssueDate === null
-                      ? "Campo requerido"
-                      : ""
-                  }
-                  onChange={(event) =>
-                    handleChangeDate(event, "documentIssueDate")
-                  }
-                   */
+              error={userForm?.documentIssueDate === null}
+              helper={
+                userForm?.documentIssueDate === null ? "Campo requerido" : ""
+              }
+              onChange={(event) => handleChangeDate(event, "documentIssueDate")}
             />
           </Grid>
           <Grid item xs={12} md={6} />
@@ -278,10 +346,9 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               border={theme.colors.gray500}
               value={dayjs(userForm?.birthDate)}
-              /*error={errorDate}
-                  helper={errorDate ? "Debes ser mayor de edad" : ""}
-                  onChange={(event) => handleChangeDate(event, "birthDate")}
-                   */
+              error={errorDate}
+              helper={errorDate ? "Debes ser mayor de edad" : ""}
+              onChange={(event) => handleChangeDate(event, "birthDate")}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -290,9 +357,8 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               notFocused={true}
               name="genderId"
-              /* value={userForm?.documentTypeId}
+              value={userForm?.genderId}
               onChange={handleSelectUser}
-               */
             >
               {gendersOptions.map((ele, indx) => (
                 <MenuItem
@@ -312,8 +378,7 @@ const ProfileForm = ({ isMobile }) => {
               notFocused={true}
               name={"countryCode"}
               value={userForm?.countryCode}
-              /*onChange={handleSelectUser}
-               */
+              onChange={handleSelectUser}
             >
               {phoneCodesOptions?.map((ele, indx) => (
                 <MenuItem
@@ -332,7 +397,7 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               id={"phoneNumber"}
               value={userForm?.phoneNumber}
-              /*    onChange={handleChangeUser} */
+              onChange={handleChangeUser}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -350,7 +415,6 @@ const ProfileForm = ({ isMobile }) => {
               {...textFieldProps}
               id={"clientId"}
               value={userForm?.idClient}
-              /*   onChange={handleChangeUser}*/
               disabled={true}
             />
           </Grid>
@@ -370,8 +434,16 @@ const ProfileForm = ({ isMobile }) => {
             }
             width={isMobile ? "247px" : "300px"}
             height={"40px"}
-            /* onClick={() => handleSave(false)}
-                disabled={disabledButtons || isLoading} */
+            startIcon={
+              updateProfile.isLoading ? (
+                <CircularProgress
+                  size={10}
+                  style={{ color: theme.colors.white }}
+                />
+              ) : null
+            }
+            onClick={handleSave}
+            disabled={disabledButtons || updateProfile.isLoading}
           >
             Guardar
           </Button>

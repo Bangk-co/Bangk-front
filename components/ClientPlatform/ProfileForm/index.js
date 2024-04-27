@@ -49,9 +49,8 @@ const ProfileForm = ({ isMobile }) => {
     documentIssueDate: null,
   });
   const [errorDate, setErrorDate] = useState(false);
-
   useEffect(() => {
-    if (isSuccess && data?.data?.clientsInfo.lenght > 0) {
+    if (isSuccess && data?.data?.clientsInfo.length > 0) {
       setClientInfo(data?.data?.clientsInfo[0]);
       setUserForm(data?.data?.clientsInfo[0]);
     }

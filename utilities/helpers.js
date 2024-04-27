@@ -1,6 +1,7 @@
 import { theme } from "../styles/theme";
 import { Div, Text } from "@/styles/Common";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const CryptoJS = require("crypto-js");
 
@@ -38,6 +39,19 @@ export const decrypt = (encryptedMessage) => {
   );
 
   return decryptedData.toString(CryptoJS.enc.Utf8);
+};
+
+export const getUserInfo = () => {
+  const user = localStorage.getItem("user")
+    ? jwtDecode(localStorage.getItem("user"))
+    : {
+        nameid: null,
+        unique_name: "",
+        family_name: "",
+        email: "",
+        role: "",
+      };
+  return user;
 };
 
 export const parseNumber = (value) => {
@@ -272,7 +286,7 @@ export const historyStatus = {
   RechazadoPorLaAseguradora: "Rechazado por la aseguradora",
   CotizaciónRechazada: "Cotización rechazada",
   CotizaciónNoRespondida: "Cotización no respondida",
-  ClienteNoAsegurable: "Cliente no asegurable"
+  ClienteNoAsegurable: "Cliente no asegurable",
 };
 
 export const getFileType = (url) => {

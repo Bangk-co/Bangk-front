@@ -10,5 +10,5 @@ export const SaveSuccess = styled.div`
   border-radius: 10px;
   border: 1px solid ${theme.colors.green900};
   gap: 12px;
-  background: ${theme.colors.primary50};
-`
+  background: ${(props) => props.background || theme.colors.primary50};
+`;

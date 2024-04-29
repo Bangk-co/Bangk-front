@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
 import { Div } from "@/styles/Common";
-import { theme } from "@/styles/theme";
 import { Container, WrapperQuote, WrapperWapp } from "@/styles/Quote";
 import Image from "next/image";
 import wappIcon from "@/assets/icons/whatsapp-original.svg";
 import { wappLink } from "@/utilities/options";
-import { BackButton } from "@/components/Quote/BackButton.js";
+import { BackButton } from "@/components/Quote/BackButton/index.js";
 import { UserForm } from "@/components/Quote/UserForm";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";

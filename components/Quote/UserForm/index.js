@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Div, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -29,9 +29,22 @@ export const UserForm = ({
     handleBack,
     handleContinue,
     handleWapp,
-    errorEmail
+    errorEmail,
+    
   }) => {
   const isFormValid = Object.values(formInfo).every((value) => value !== "") && terms;
+  const firstInputRef = useRef(null);
+  const secondInputRef = useRef(null);
+  const thirdInputRef = useRef(null);
+  const fourInputRef = useRef(null);
+  const fiveInputRef = useRef(null);
+  const firstCheckRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []); 
 
   const inputProps = {
     width: "100%",
@@ -49,6 +62,23 @@ export const UserForm = ({
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
   }
+
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === "Enter" && nextRef.current) {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
+  };
+
+  const focusButton = (event) => {
+    if (event.key === "Enter") {
+      const button = document.getElementById("buttonRef");
+      if (button) {
+          event.preventDefault();
+          button.focus();
+      }
+    }
+  };
 
   return (
     <Col m={"12px 0 0 0"}>
@@ -99,6 +129,8 @@ export const UserForm = ({
               pattern: formInfo.documentType !== 78 && "\\d*",
               inputMode: formInfo.documentType !== 78 && "numeric"
             }}
+            inputRef={firstInputRef}
+            onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -111,6 +143,8 @@ export const UserForm = ({
             inputProps={{ maxLength: 50 }}
             helper={"Escribe el nombre como aparece en la cédula"}
             helperColor={theme.colors.white}
+            inputRef={secondInputRef}
+            onKeyPress={(event) => handleKeyPress(event, thirdInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -123,6 +157,8 @@ export const UserForm = ({
             inputProps={{ maxLength: 50 }}
             helper={"Escribe los apellidos como aparece en la cédula"}
             helperColor={theme.colors.white}
+            inputRef={thirdInputRef}
+            onKeyPress={(event) => handleKeyPress(event, fourInputRef)}
           />
         </Grid>
         <Grid item md={4} xs={4}>
@@ -150,6 +186,8 @@ export const UserForm = ({
               pattern: "\\d*",
               inputMode: "numeric"
             }}
+            inputRef={fourInputRef}
+            onKeyPress={(event) => handleKeyPress(event, fiveInputRef)}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -165,11 +203,18 @@ export const UserForm = ({
             error={errorEmail.error}
             helper={errorEmail.error ? errorEmail.message : ""}
             helperColor={theme.colors.error}
+            inputRef={fiveInputRef}
+            onKeyPress={(event) => handleKeyPress(event, firstCheckRef)}
           />
         </Grid>
       </Grid>
       <Row m="22px 0 0 0">
-        <Checkbox checked={terms} onChange={handleTerms} />
+        <Checkbox 
+          checked={terms} 
+          onChange={handleTerms}             
+          inputRef={firstCheckRef}
+          onKeyPress={focusButton}
+        />
         <Text
           color={theme.colors.white}
           size={theme.fonts.size.default2}
@@ -226,6 +271,7 @@ export const UserForm = ({
           radius={"40px"}
           onClick={handleContinue}
           disabled={!isFormValid}
+          id={"buttonRef"}
         >
           Continuar
         </Button>

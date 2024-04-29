@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { DatePicker } from "@/components/Common/DatePicker";
 import { TextField } from "@/components/Common/TextField";
 import { Div, Row, Text } from "@/styles/Common";
@@ -23,6 +23,30 @@ export const InitForm = ({
   genderButtons,
   emptyValidation,
 }) => {
+  const firstInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []); 
+
+  const inputProps = {
+    radius: "4px",
+    width: "100%",
+    height: "40px",
+    font: theme.fonts.family.primary,
+    size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
+    labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
+    labelColor: theme.colors.white,
+    labelFont: theme.fonts.family.primary,
+    labelWeight: theme.fonts.weight.medium,
+    background: theme.colors.primary25,
+    border: theme.colors.primary25,
+    notFocused: true,
+    placeholderColor: theme.colors.neutralGray500,
+  }
+
   return (
     <Col m={"92px 0 0 0"} justifyMobile={"center"}>
       <Text
@@ -60,22 +84,10 @@ export const InitForm = ({
         Diligencia los siguientes datos
       </Text>
       <TextField
+        {...inputProps}
         placeholder={"Ingresa el saldo del crédito"}
         id="balance"
-        radius="4px"
-        width="100%"
-        height="40px"
         label="Saldo actual de tu crédito*"
-        font={theme.fonts.family.primary}
-        size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-        labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-        labelColor={theme.colors.white}
-        labelFont={"Gilroy"}
-        labelWeight={theme.fonts.weight.medium}
-        background={theme.colors.primary25}
-        border={theme.colors.primary25}
-        notFocused={true}
-        placeholderColor={theme.colors.neutralGray500}
         prefixIcon={
           <Image alt="pesos" src={pesosIcon} width={16} height={16} />
         }
@@ -93,6 +105,7 @@ export const InitForm = ({
             ? "El saldo mínimo de tu crédito debe ser de $30.000.000"
             : ""
         }
+        inputRef={firstInputRef}
       />
       <Text
         size={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
@@ -104,25 +117,14 @@ export const InitForm = ({
         Por favor, verifica el valor en tu extracto o app en línea
       </Text>
       <DatePicker
+        {...inputProps}
         placeholder={"dd/mm/aaaa"}
         id="birthdate"
-        radius="4px"
-        width="100%"
-        height="40px"
         label="Fecha de nacimiento*"
-        font={theme.fonts.family.primary}
         error={errorDate}
         helper={
           errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""
         }
-        size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
-        labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
-        labelColor={theme.colors.white}
-        labelFont={"Gilroy"}
-        labelWeight={theme.fonts.weight.medium}
-        background={theme.colors.primary25}
-        notFocused={true}
-        placeholderColor={theme.colors.neutralGray500}
         onChange={handleChangeDate}
         value={formInfo.birthdate}
       />

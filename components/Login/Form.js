@@ -201,7 +201,7 @@ const Form = ({ isMobile, isTablet }) => {
         </Div>
         <Div m="22px 0 0 0" width="100%" justify="center">
           <Button
-            width="325px"
+            width={isMobile ? "100%" : "325px"}
             height="40px"
             background={theme.colors.green}
             hover={theme.colors.green}

@@ -42,7 +42,7 @@ export const Step2 = ({
     if (firstInputRef.current) {
       firstInputRef.current.focus();
     }
-  }, []);
+  }, []); 
  
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,

@@ -28,7 +28,6 @@ export const CreditForm = ({
   
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "") && documents.every(item => item.value !== null);
   const firstInputRef = useRef(null);
-  const secondInputRef = useRef(null);
 
   useEffect(() => {
     if (firstInputRef.current) {
@@ -206,7 +205,6 @@ export const CreditForm = ({
               handleFile={handleFile}
               handleDelete={handleDelete}
               errorFile={ele.error}
-              inputRef={secondInputRef}
             />
           </Grid>
         )}

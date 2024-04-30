@@ -5,7 +5,7 @@ import { Header } from "@/components/Common/Header";
 import { Div } from "@/styles/Common";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
-import { BackButton } from "@/components/Quote/BackButton.js";
+import { BackButton } from "@/components/Quote/BackButton/index.js";
 import { UserForm } from "@/components/Policy/UserForm";
 import { useDispatch, useSelector } from "react-redux";
 import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";

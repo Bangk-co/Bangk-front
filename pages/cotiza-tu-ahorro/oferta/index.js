@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import wappIcon from "@/assets/icons/whatsapp-original.svg"
 import { wappLink } from "@/utilities/options";
-import { BackButton } from "@/components/Quote/BackButton.js";
+import { BackButton } from "@/components/Quote/BackButton/index.js";
 import { ImageCol } from "@/components/Quote/ImageCol";
 import { Calculator } from "@/components/Quote/Calculator";
 import { useSelector } from "react-redux";

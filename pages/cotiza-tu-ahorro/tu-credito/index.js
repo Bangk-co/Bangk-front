@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Common/Header";
 import { Div } from "@/styles/Common";
 import { Container, WrapperQuote } from "@/styles/Quote";
-import { BackButton } from "@/components/Quote/BackButton.js";
+import { BackButton } from "@/components/Quote/BackButton/index.js";
 import { CreditForm } from "@/components/Quote/CreditForm";
 import useGetBanks from "@/hooks/Common/useGetBanks";
 import useGetCreditType from "@/hooks/Common/useGetCreditType";

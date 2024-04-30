@@ -282,7 +282,7 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
           </Row>
           <Row width="100%" justify="center">
             <Button
-              width="325px"
+              width={isMobile ? "100%" : "325px"}
               background={theme.colors.green}
               hover={theme.colors.green}
               borderHover={theme.colors.green}

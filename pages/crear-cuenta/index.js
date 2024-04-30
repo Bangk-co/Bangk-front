@@ -100,10 +100,10 @@ const CreateAccount = ({ isMobile, isTablet }) => {
 
   const handleSelect = (event) => {
     const { name, value } = event.target;
-    const newInfo = { ...formInfo };
+    const newInfo = { ...formUser };
 
     newInfo[name] = value;
-    setFormInfo(newInfo);
+    setFormUser(newInfo);
   };
 
   const handleCreate = () => {
@@ -255,7 +255,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
             </Row>
             <Row width="100%" justify="center">
               <Button
-                width="325px"
+                width={isMobile ? "100%" : "325px"}
                 background={theme.colors.green}
                 hover={theme.colors.green}
                 borderHover={theme.colors.green}

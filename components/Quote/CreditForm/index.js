@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TextField } from "@/components/Common/TextField";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -27,6 +27,23 @@ export const CreditForm = ({
   }) => {
   
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "") && documents.every(item => item.value !== null);
+  const firstInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []); 
+
+  const focusButton = (event) => {
+    if (event.key === "Enter") {
+      const button = document.getElementById("buttonRef");
+      if (button) {
+          event.preventDefault();
+          button.focus();
+      }
+    }
+  };
 
   return (
     <Col m={"12px 0 0 0"}>
@@ -159,6 +176,8 @@ export const CreditForm = ({
               pattern: "\\d*",
               inputMode: "numeric"
             }}
+            inputRef={firstInputRef}
+            onKeyPress={focusButton}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -223,6 +242,7 @@ export const CreditForm = ({
           radius={"40px"}
           onClick={handleCreate}
           disabled={!isFormValid || loading}
+          id={"buttonRef"}
         >
           Cotizar
         </Button>

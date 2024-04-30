@@ -31,9 +31,9 @@ const ProfileForm = ({ isMobile }) => {
   const updateProfile = useUpdateClientProfile();
   const queryClient = useQueryClient();
 
-  const { nameid: userId } = getUserInfo();
+  const { ClientId } = getUserInfo();
 
-  const getClient = useGetClientInfo(userId);
+  const getClient = useGetClientInfo(ClientId);
   const { data, isSuccess } = getClient;
   const [clientInfo, setClientInfo] = useState();
   const [userForm, setUserForm] = useState({

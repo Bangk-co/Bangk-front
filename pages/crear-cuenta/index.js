@@ -23,7 +23,6 @@ import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import { setValidCode } from "@/store/balance";
 import { setUserInfo } from "@/store/auth";
 
-
 const CreateAccount = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -32,25 +31,27 @@ const CreateAccount = ({ isMobile, isTablet }) => {
   const documentType = useGetDocumentType();
   const { data, isSuccess } = documentType;
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
-  const [terms, setTerms] = useState(false)
-  const [termsDate, setTermsDate] = useState(null)
+  const [terms, setTerms] = useState(false);
+  const [termsDate, setTermsDate] = useState(null);
+  const [dataPP, setDataPP] = useState(false);
+  const [dataPPDate, setDataPPDate] = useState(null);
   const [formUser, setFormUser] = useState({
     email: "",
     name: "",
     lastName: "",
     documenIdentificationTypeId: 76,
     identificationNumber: "",
-  })
+  });
   const [errorEmail, setErrorEmail] = useState({
     error: false,
-    message: ""
+    message: "",
   });
 
   const inputProps = {
     radius: "4px",
     width: "100%",
     height: "48px",
-  }
+  };
 
   useEffect(() => {
     if (isSuccess && data?.data?.groupSettings.length > 0)
@@ -70,13 +71,21 @@ const CreateAccount = ({ isMobile, isTablet }) => {
     setTermsDate(dayjs(currentDate));
   };
 
+  const handleDPP = (event) => {
+    const { checked } = event.target;
+    const currentDate = new Date();
+
+    setDataPP(checked);
+    setDataPPDate(dayjs(currentDate));
+  };
+
   const handleLogin = () => {
-    router.push("/iniciar-sesion")
-  }
+    router.push("/iniciar-sesion");
+  };
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    const newInfo = { ...formUser};
+    const newInfo = { ...formUser };
 
     if (id === "identificationNumber") {
       if (formUser.documenIdentificationTypeId !== 78) {
@@ -91,8 +100,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
     if (id === "email") {
       setErrorEmail({
         error: false,
-        message: ""
-      })
+        message: "",
+      });
     }
 
     setFormUser(newInfo);
@@ -114,8 +123,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
     if (validation.error) {
       setErrorEmail({
         error: true,
-        message: "Formato inválido"
-      })
+        message: "Formato inválido",
+      });
     } else {
       sendCode.reset();
       sendCode.mutate(
@@ -125,18 +134,20 @@ const CreateAccount = ({ isMobile, isTablet }) => {
         },
         {
           onSuccess: (res) => {
-            dispatch(setUserInfo({
-              ...formUser, 
-              clientId: 0,
-              permissionTreatPersonalDataDate: termsDate,
-              validateClientOtp: null
-            }))
+            dispatch(
+              setUserInfo({
+                ...formUser,
+                clientId: 0,
+                permissionTreatPersonalDataDate: termsDate,
+                validateClientOtp: null,
+              })
+            );
             dispatch(setValidCode(res.data.code));
             router.push(`/validacion-identidad?source=createAccount`);
             setErrorEmail({
               error: false,
-              message: ""
-            })
+              message: "",
+            });
           },
           onError: (err) => {
             err.response.data.map((error) => {
@@ -146,15 +157,16 @@ const CreateAccount = ({ isMobile, isTablet }) => {
             });
             setErrorEmail({
               error: false,
-              message: ""
-            })
+              message: "",
+            });
           },
         }
       );
     }
   };
 
-  const isFormValid = Object.values(formUser).every((value) => value !== "") && terms;
+  const isFormValid =
+    Object.values(formUser).every((value) => value !== "") && terms;
 
   return (
     <Container>
@@ -171,7 +183,14 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 color={theme.colors.gray900}
               >
                 Crea tu{" "}
-                <span style={{ color: theme.colors.orange, fontFamily: theme.fonts.family.primaryBold }}>cuenta</span>
+                <span
+                  style={{
+                    color: theme.colors.orange,
+                    fontFamily: theme.fonts.family.primaryBold,
+                  }}
+                >
+                  cuenta
+                </span>
               </Text>
             </Row>
             <Row width="100%" justify="center" m="16px 0 0 0">
@@ -196,7 +215,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 onChange={handleChange}
                 value={formUser.name}
                 inputProps={{
-                  maxLength: 50
+                  maxLength: 50,
                 }}
               />
             </Row>
@@ -209,7 +228,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 onChange={handleChange}
                 value={formUser.lastName}
                 inputProps={{
-                  maxLength: 50
+                  maxLength: 50,
                 }}
               />
             </Row>
@@ -223,7 +242,13 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                   onChange={handleSelect}
                 >
                   {documentTypeOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
+                    <MenuItem
+                      key={indx}
+                      value={ele.value}
+                      style={{ fontFamily: theme.fonts.family.primary }}
+                    >
+                      {ele.label}
+                    </MenuItem>
                   ))}
                 </Select>
               </Div>
@@ -238,19 +263,36 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                   inputProps={{
                     maxLength: 15,
                     pattern: formUser.documentType !== 78 && "\\d*",
-                    inputMode: formUser.documentType !== 78 && "numeric"
+                    inputMode: formUser.documentType !== 78 && "numeric",
                   }}
                 />
               </Div>
             </Row>
 
             <Row align="center" style={{ alignSelf: "stretch" }}>
-              <Checkbox checked={terms} onChange={handleTerms} borderColor={theme.colors.neutralGray300} />
+              <Checkbox
+                checked={terms}
+                onChange={handleTerms}
+                borderColor={theme.colors.neutralGray300}
+              />
               <Text
                 color={theme.colors.neutralGray900}
                 size={theme.fonts.size.sm}
               >
                 He leído y acepto los términos y condiciones de Bangk
+              </Text>
+            </Row>
+            <Row align="center" style={{ alignSelf: "stretch" }}>
+              <Checkbox
+                checked={dataPP}
+                onChange={handleDPP}
+                borderColor={theme.colors.neutralGray300}
+              />
+              <Text
+                color={theme.colors.neutralGray900}
+                size={theme.fonts.size.sm}
+              >
+                He leído y acepto la política de tratamiento de datos de Bangk
               </Text>
             </Row>
             <Row width="100%" justify="center">
@@ -261,13 +303,20 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 borderHover={theme.colors.green}
                 font={theme.fonts.family.primaryBold}
                 onClick={handleCreate}
-                disabled={!isFormValid || !terms || sendCode.isLoading}
+                disabled={
+                  !isFormValid || !terms || !dataPP || sendCode.isLoading
+                }
               >
                 Crea tu cuenta
               </Button>
             </Row>
-            <Div direction={isMobile ? "column" : "row"} m="8px 0 0 0" align="center" gap="8px">
-              <Text 
+            <Div
+              direction={isMobile ? "column" : "row"}
+              m="8px 0 0 0"
+              align="center"
+              gap="8px"
+            >
+              <Text
                 color={theme.colors.neutralGray900}
                 size={theme.fonts.size.default2}
                 weight={theme.fonts.weight.bold}
@@ -289,7 +338,7 @@ const CreateAccount = ({ isMobile, isTablet }) => {
         </SetPasswordCard>
       </WrapperForm>
     </Container>
-  )
+  );
 };
 
 export default CreateAccount;

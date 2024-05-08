@@ -102,7 +102,7 @@ const ChangePasswordForm = ({ isMobile }) => {
     labelColor: theme.colors.neutralGray900,
     labelFont: theme.fonts.family.primaryMedium,
     labelWeight: theme.fonts.weight.medium,
-    labelSize: theme.fonts.size.xs,
+    labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
     font: theme.fonts.family.primary,
     size: theme.fonts.size.sm,
     border: theme.colors.neutralGray500,
@@ -218,9 +218,25 @@ const ChangePasswordForm = ({ isMobile }) => {
           </Text>
         </HeaderProfileMobile>
       )}
-      <Card gap="8px" m="0 0 24px 0" width={isMobile ? "100%" : "752px"}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+      <Card
+        gap="8px"
+        m="0 0 24px 0"
+        p={!isMobile && "24px 32px"}
+        width={isMobile ? "100%" : "478px"}
+        shadow={!isMobile && "0px"}
+        align="center"
+      >
+        {!isMobile && (
+          <Text
+            size={theme.fonts.size.ft}
+            color={theme.colors.green900}
+            font={theme.fonts.family.primaryBold}
+          >
+            Cambia tu contraseña
+          </Text>
+        )}
+        <Grid container spacing={2} margin={!isMobile && "16px 0 0 0"}>
+          <Grid item xs={12}>
             <TextField
               label={"Constraseña actual*"}
               {...textFieldProps}
@@ -243,7 +259,7 @@ const ChangePasswordForm = ({ isMobile }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <TextField
               label={"Nueva constraseña*"}
               {...textFieldProps}
@@ -266,7 +282,7 @@ const ChangePasswordForm = ({ isMobile }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} md={6} margin="0 0 16px 0">
+          <Grid item xs={12} margin="0 0 16px 0">
             <TextField
               label={"Confirma la ueva constraseña*"}
               {...textFieldProps}
@@ -299,7 +315,7 @@ const ChangePasswordForm = ({ isMobile }) => {
               </Text>
             </Row>
           ))}
-        <Row width="100%" justify="center" m="24px 0 24px 0">
+        <Row width="100%" justify="center" m="24px 0 0 0">
           <Button
             background={
               isMobile ? theme.colors.green900 : theme.colors.yellow500

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, MenuItem, Modal } from "@mui/material";
 import { Text, Card, Div, Row } from "@/styles/Common";
 import {
   HeaderProfile,
@@ -25,6 +25,7 @@ import useUpdateClientProfile from "@/hooks/Profile/useUpdateClientProfile";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getUserInfo } from "@/utilities/helpers";
+import { ChangePasswordModal } from "./ChangePasswordModal";
 
 const ProfileForm = ({ isMobile }) => {
   const router = useRouter();
@@ -36,6 +37,8 @@ const ProfileForm = ({ isMobile }) => {
   const getClient = useGetClientInfo(ClientId);
   const { data, isSuccess } = getClient;
   const [clientInfo, setClientInfo] = useState();
+
+  const [showModal, setShowModal] = useState(false);
   const [userForm, setUserForm] = useState({
     name: "",
     lastName: "",
@@ -225,6 +228,9 @@ const ProfileForm = ({ isMobile }) => {
         </HeaderProfileMobile>
       ) : (
         <HeaderProfile>
+          <Modal open={showModal}>
+            <ChangePasswordModal setShowModal={setShowModal} />
+          </Modal>
           <Text
             size={theme.fonts.size.h2}
             color={theme.colors.neutralGray900}
@@ -246,6 +252,7 @@ const ProfileForm = ({ isMobile }) => {
             startIcon={
               <Image alt="logo" src={whatsapp} width={16} height={16} />
             }
+            onClick={() => setShowModal(true)}
           >
             Cambia tu constraseña
           </Button>

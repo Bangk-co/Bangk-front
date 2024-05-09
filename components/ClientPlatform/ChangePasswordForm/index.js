@@ -13,8 +13,8 @@ import eye from "@/assets/icons/eye.svg";
 import eyeoff from "@/assets/icons/eyeoff.svg";
 import lock from "@/assets/icons/lock.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
-import check from "@/assets/icons/checkCircleGreen.svg";
-import cancel from "@/assets/icons/cancelCircleRed.svg";
+import check from "@/assets/icons/check-green.svg";
+import error from "@/assets/icons/close-red.svg";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -48,7 +48,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
       icon: (
         <Image
           alt="validation"
-          src={validations.samePassword ? check : cancel}
+          src={validations.samePassword ? check : error}
           width={16}
           height={16}
         />
@@ -59,7 +59,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
       icon: (
         <Image
           alt="validation"
-          src={validations.length ? check : cancel}
+          src={validations.length ? check : error}
           width={16}
           height={16}
         />
@@ -70,7 +70,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
       icon: (
         <Image
           alt="validation"
-          src={validations.capitalLetter ? check : cancel}
+          src={validations.capitalLetter ? check : error}
           width={16}
           height={16}
         />
@@ -81,7 +81,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
       icon: (
         <Image
           alt="validation"
-          src={validations.numbers ? check : cancel}
+          src={validations.numbers ? check : error}
           width={16}
           height={16}
         />
@@ -92,7 +92,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
       icon: (
         <Image
           alt="validation"
-          src={validations.character ? check : cancel}
+          src={validations.character ? check : error}
           width={16}
           height={16}
         />

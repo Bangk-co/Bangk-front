@@ -43,14 +43,15 @@ export const WrapperRightStar = styled.div`
 export const WrapperForm = styled.div`
   display: flex;
   flex: 1;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 102px;
   box-sizing: border-box;
   background: ${theme.colors.green};
+  height: 100vh;
 
-  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-      .breakpoints.md}) {
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme.breakpoints.md}) {
     padding: 0 22px;
   }
 
@@ -63,6 +64,7 @@ export const WrapperForm = styled.div`
     padding: 0 30px;
   }
 `;
+
 
 export const LoginCard = styled.div`
   display: flex;

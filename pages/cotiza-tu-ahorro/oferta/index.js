@@ -83,8 +83,8 @@ const Sale = ({ isMobile, isTablet }) => {
     { label: "Género", value: gender[formInfo?.gender] }
   ]
 
-  const insuranceMonthlyPercentage = Number(insuranceData.monthlyRatePercentage) * 100;
-  const insuranceAnnualPercentage =  Number(insuranceData.annualRatePercentage) * 100;
+  const insuranceMonthlyPercentage = Number(insuranceData.monthlyRatePercentage);
+  const insuranceAnnualPercentage =  Number(insuranceData.annualRatePercentage);
 
   const insuranceMonthly = (formInfo?.balance * insuranceMonthlyPercentage);
   const insuranceAnnual = (formInfo?.balance * insuranceAnnualPercentage);

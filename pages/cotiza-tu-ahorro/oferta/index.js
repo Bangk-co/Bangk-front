@@ -27,10 +27,32 @@ const Sale = ({ isMobile, isTablet }) => {
     monthlyRatePercentage: 0
   })
 
+  const ageCalulate = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const birthDate = new Date(initData.birthdate    );
+    birthDate.setHours(0, 0, 0, 0);
+    
+    const ageMilliseconds = today - birthDate;
+    const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+    const age = Math.floor(ageMilliseconds / millisecondsPerYear);
+
+    return age;
+  };
+
   useEffect(() => {
     if (isSuccess) {
-      const annualRate = data?.data?.groupSettings.find((ele) => ele.name === "AnnualRatePercentage")?.code
-      const monthRate = data?.data?.groupSettings.find((ele) => ele.name === "MonthlyRatePercentage")?.code
+      let annualRate = 0;
+      let monthRate = 0;
+
+      if (ageCalulate() < 50) {
+        annualRate = data?.data?.groupSettings.find((ele) => ele.name === "AnnualRatePercentage1")?.code
+        monthRate = data?.data?.groupSettings.find((ele) => ele.name === "MonthlyRatePercentage1")?.code
+      } else {
+        annualRate = data?.data?.groupSettings.find((ele) => ele.name === "AnnualRatePercentage2")?.code
+        monthRate = data?.data?.groupSettings.find((ele) => ele.name === "MonthlyRatePercentage2")?.code
+      }
+
       setInsuranceData({
         annualRatePercentage: annualRate,
         monthlyRatePercentage: monthRate
@@ -61,8 +83,8 @@ const Sale = ({ isMobile, isTablet }) => {
     { label: "Género", value: gender[formInfo?.gender] }
   ]
 
-  const insuranceMonthlyPercentage = insuranceData.monthlyRatePercentage / 100;
-  const insuranceAnnualPercentage =  insuranceData.annualRatePercentage / 100;
+  const insuranceMonthlyPercentage = Number(insuranceData.monthlyRatePercentage) * 100;
+  const insuranceAnnualPercentage =  Number(insuranceData.annualRatePercentage) * 100;
 
   const insuranceMonthly = (formInfo?.balance * insuranceMonthlyPercentage);
   const insuranceAnnual = (formInfo?.balance * insuranceAnnualPercentage);

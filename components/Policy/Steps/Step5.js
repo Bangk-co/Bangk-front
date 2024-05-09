@@ -27,7 +27,7 @@ export const Step5 = ({
 }) => {
   const [visibleButton, setVisibleButton] = useState(false);
   const [panels, setPanels] = useState([]);
-  const [activeKey, setActiveKey] = useState([]);
+  const [activeKey, setActiveKey] = useState(["1"]);
   const [forceUpdate, setForceUpdate] = useState(false);
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -139,7 +139,8 @@ export const Step5 = ({
           percentInherit: null
         }
       ]
-    })
+    });
+    setActiveKey([`${Number(activeKey[0]) + 1}`]);
   };
 
   const handleDelete = (index) => {
@@ -150,6 +151,7 @@ export const Step5 = ({
       ...newInfo,
       beneficiary: newBeneficiaries,
     });
+    setActiveKey([`${Number(activeKey[0]) - 1}`]);
   };
 
   const beneficiaryData = (ele, indx, mobile) => {

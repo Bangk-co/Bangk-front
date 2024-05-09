@@ -11,7 +11,6 @@ import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import lock from "../../assets/icons/lock.svg";
 import { SetPasswordCard, WrapperForm } from "./styles";
-import { Checkbox } from "../Common/Checkbox";
 import dayjs from "dayjs";
 import eye from '@/assets/icons/eye.svg';
 import eyeoff from '@/assets/icons/eyeoff.svg';
@@ -26,8 +25,6 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const create = useCreatePassword();
-  const [terms, setTerms] = useState(false)
-  const [termsDate, setTermsDate] = useState(null)
   const [passwordForm, setPasswordForm] = useState({
     password: "",
     confirmPassword: ""
@@ -86,14 +83,6 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
     if (!value) {
       setShowValidationCriteria(false);
     }
-  };
-
-  const handleTerms = (event) => {
-    const { checked } = event.target;
-    const currentDate = new Date();
-
-    setTerms(checked);
-    setTermsDate(dayjs(currentDate));
   };
 
   const handleSetPassword = () => {
@@ -271,15 +260,6 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
               </Col>
             )}
           </Div>
-          <Row align="center" style={{ alignSelf: "stretch" }}>
-            <Checkbox checked={terms} onChange={handleTerms} borderColor={theme.colors.neutralGray300} />
-            <Text
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.sm}
-            >
-              He leído y acepto los términos y condiciones de Bangk
-            </Text>
-          </Row>
           <Row width="100%" justify="center">
             <Button
               width={isMobile ? "100%" : "325px"}
@@ -288,7 +268,7 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
               borderHover={theme.colors.green}
               font={theme.fonts.family.primaryBold}
               onClick={handleSetPassword}
-              disabled={!isValid || !terms || create.isLoading}
+              disabled={!isValid || create.isLoading}
             >
               Establece tu contraseña
             </Button>

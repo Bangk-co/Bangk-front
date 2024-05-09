@@ -229,7 +229,10 @@ const ProfileForm = ({ isMobile }) => {
       ) : (
         <HeaderProfile>
           <Modal open={showModal}>
-            <ChangePasswordModal setShowModal={setShowModal} />
+            <ChangePasswordModal
+              iMobile={isMobile}
+              setShowModal={setShowModal}
+            />
           </Modal>
           <Text
             size={theme.fonts.size.h2}

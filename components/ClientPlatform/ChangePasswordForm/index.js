@@ -15,14 +15,17 @@ import lock from "@/assets/icons/lock.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
 import check from "@/assets/icons/checkCircleGreen.svg";
 import cancel from "@/assets/icons/cancelCircleRed.svg";
-import useUpdateClientProfile from "@/hooks/Profile/useUpdateClientProfile";
 import { ToastSuccess } from "@/components/Common/ToastSucces";
+import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import CircularProgress from "@mui/material/CircularProgress";
+import useUpdatePassword from "@/hooks/Profile/useUpdatePassword";
+import { getUserInfo, encrypt } from "@/utilities/helpers";
 
-const ChangePasswordForm = ({ isMobile }) => {
+const ChangePasswordForm = ({ isMobile, setShowModal }) => {
   const router = useRouter();
-  const updateProfile = useUpdateClientProfile();
-  const queryClient = useQueryClient();
+  const updatePassword = useUpdatePassword();
+
+  const { ClientId } = getUserInfo();
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -162,39 +165,44 @@ const ChangePasswordForm = ({ isMobile }) => {
     passwordForm &&
     Object.values(passwordForm).some((value) => value === "" || value === null);
 
-  /*   const handleSave = () => {
+  const handleSave = () => {
     const formData = {
-      clientId: passwordForm?.idClient,
-      name: passwordForm?.name,
-      lastName: passwordForm?.lastName,
-      documentTypeId: passwordForm?.documentTypeId,
-      identificationNumber: passwordForm?.identificationNumber,
-      countryCode: passwordForm?.countryCode,
-      phoneNumber: passwordForm?.phoneNumber,
-      birthDate: passwordForm?.birthDate,
-      genderId: passwordForm?.genderId,
-      documentIssueDate: passwordForm?.documentIssueDate,
+      userId: ClientId,
+      currentPassword: encrypt(passwordForm?.oldPassword),
+      password: encrypt(passwordForm?.password),
+      confirmPassword: encrypt(passwordForm?.confirmPassword),
     };
-    updateProfile.reset();
-    updateProfile.mutate(formData, {
+    updatePassword.reset();
+    updatePassword.mutate(formData, {
       onSuccess: () => {
-        queryClient.invalidateQueries(["clientInfo"]);
-        toast.custom(
-          <ToastSuccess
-            message={"Los datos se han modificado con éxito"}
-            color={theme.colors.white}
-            background={theme.colors.primary300}
-          />,
-          { duration: 1000 }
-        );
+        setShowModal(false);
+        isMobile
+          ? toast.custom(
+              <ToastSuccess
+                message={"La contraseña se han modificado con éxito"}
+                color={theme.colors.white}
+                background={theme.colors.primary300}
+              />,
+              { duration: 1000 }
+            )
+          : toast.success("La contraseña se han modificado con éxito");
       },
       onError: (err) => {
-        err.response.data.errors.map((error) => {
-          toast.error(error);
+        err.response.data.map((error) => {
+          isMobile
+            ? toast.custom(
+                <ToastErrorClient
+                  message={error}
+                  color={theme.colors.white}
+                  background={theme.colors.primary300}
+                />,
+                { duration: 1000 }
+              )
+            : toast.error(error);
         });
       },
     });
-  }; */
+  };
 
   return (
     <>
@@ -224,13 +232,13 @@ const ChangePasswordForm = ({ isMobile }) => {
         p={!isMobile && "24px 32px"}
         width={isMobile ? "100%" : "478px"}
         shadow={!isMobile && "0px"}
-        align="center"
       >
         {!isMobile && (
           <Text
             size={theme.fonts.size.ft}
             color={theme.colors.green900}
             font={theme.fonts.family.primaryBold}
+            style={{ alignSelf: "center" }}
           >
             Cambia tu contraseña
           </Text>
@@ -331,17 +339,17 @@ const ChangePasswordForm = ({ isMobile }) => {
             width={isMobile ? "247px" : "300px"}
             height={"40px"}
             startIcon={
-              updateProfile.isLoading ? (
+              updatePassword.isLoading ? (
                 <CircularProgress
                   size={10}
                   style={{ color: theme.colors.white }}
                 />
               ) : null
             }
-            /* onClick={handleSave} */
+            onClick={handleSave}
             disabled={
               Object.values(validations).some((value) => value === false) ||
-              updateProfile.isLoading
+              updatePassword.isLoading
             }
           >
             Guardar

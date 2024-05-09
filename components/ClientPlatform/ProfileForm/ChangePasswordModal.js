@@ -7,7 +7,7 @@ import { Button } from "@/components/Common/Button";
 import close from "@/assets/icons/close.svg";
 import ChangePasswordForm from "../ChangePasswordForm";
 
-export const ChangePasswordModal = ({ setShowModal }) => {
+export const ChangePasswordModal = ({ isMobile, setShowModal }) => {
   return (
     <WrapperModal>
       <Div justify="flex-end">
@@ -18,7 +18,7 @@ export const ChangePasswordModal = ({ setShowModal }) => {
           onClick={() => setShowModal(false)}
         />
       </Div>
-      <ChangePasswordForm />
+      <ChangePasswordForm isMobile={isMobile} setShowModal={setShowModal} />
     </WrapperModal>
   );
 };

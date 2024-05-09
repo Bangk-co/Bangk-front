@@ -33,8 +33,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
   const [terms, setTerms] = useState(false);
   const [termsDate, setTermsDate] = useState(null);
-  const [dataPP, setDataPP] = useState(false);
-  const [dataPPDate, setDataPPDate] = useState(null);
+  const [treatPersonalData, setTreatPersonalData] = useState(false);
+  const [treatPersonalDataDate, setTreatPersonalDataDate] = useState(null);
   const [formUser, setFormUser] = useState({
     email: "",
     name: "",
@@ -71,12 +71,12 @@ const CreateAccount = ({ isMobile, isTablet }) => {
     setTermsDate(dayjs(currentDate));
   };
 
-  const handleDPP = (event) => {
+  const handleTreatPersonalData = (event) => {
     const { checked } = event.target;
     const currentDate = new Date();
 
-    setDataPP(checked);
-    setDataPPDate(dayjs(currentDate));
+    setTreatPersonalData(checked);
+    setTreatPersonalDataDate(dayjs(currentDate));
   };
 
   const handleLogin = () => {
@@ -138,7 +138,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
               setUserInfo({
                 ...formUser,
                 clientId: 0,
-                permissionTreatPersonalDataDate: termsDate,
+                acceptTermsDate: termsDate,
+                permissionTreatPersonalDataDate: treatPersonalDataDate,
                 validateClientOtp: null,
               })
             );
@@ -284,8 +285,8 @@ const CreateAccount = ({ isMobile, isTablet }) => {
             </Row>
             <Row align="center" style={{ alignSelf: "stretch" }}>
               <Checkbox
-                checked={dataPP}
-                onChange={handleDPP}
+                checked={treatPersonalData}
+                onChange={handleTreatPersonalData}
                 borderColor={theme.colors.neutralGray300}
               />
               <Text
@@ -304,7 +305,10 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 font={theme.fonts.family.primaryBold}
                 onClick={handleCreate}
                 disabled={
-                  !isFormValid || !terms || !dataPP || sendCode.isLoading
+                  !isFormValid ||
+                  !terms ||
+                  !treatPersonalData ||
+                  sendCode.isLoading
                 }
               >
                 Crea tu cuenta

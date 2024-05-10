@@ -5,6 +5,7 @@ import { Layout } from "@/components/ClientPlatform/Layout";
 import { useAuth } from "@/hooks/useAuth";
 import { Text } from "@/styles/Common";
 import { FooterNav } from "@/components/ClientPlatform/FooterNav";
+import Insurance from "@/components/ClientPlatform/Insurance";
 
 const ClientInsurance = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -23,12 +24,12 @@ const ClientInsurance = ({ isMobile, isTablet }) => {
       <Header isMobile={isMobile} />
       {isMobile ? (
         <>
-          <Text>Seguros mobile</Text>
+          <Insurance isMobile={isMobile} />
           <FooterNav />
         </>
       ) : (
         <Layout>
-          <Text>Seguros</Text>
+          <Insurance isMobile={isMobile} />
         </Layout>
       )}
     </div>

@@ -228,7 +228,7 @@ export const renderDocumentStateDiv = (stateName) => {
       align="center"
       justify="center"
       radius="4px"
-      p="8px"
+      p="4px 8px"
       width="fit-content"
       style={{ border: `2px solid ${borderColor}` }}
     >

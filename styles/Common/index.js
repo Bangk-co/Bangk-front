@@ -87,5 +87,5 @@ export const Card = styled.div`
   background: ${({ background }) => background || theme.colors.white};
   border-radius: ${({ radius }) => radius || "16px"};
   align-items: ${({ align }) => align || "flex-start"};
-  box-shadow: 4px 4px 8px 0px #00000014;
+  box-shadow: ${({ shadow }) => shadow || "4px 4px 8px 0px #00000014"};
 `;

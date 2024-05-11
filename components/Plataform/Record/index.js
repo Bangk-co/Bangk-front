@@ -109,7 +109,6 @@ export const Record = ({
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
 
   const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
-  console.log("---------", loanInfo, quoteRate)
   const insuranceAnnual = _.multiply(Number(loanInfo?.loanBalance), Number(quoteRate));
   const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
   const insuranceMonthly = _.divide(insuranceAnnual, 12);

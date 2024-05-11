@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Tabs } from "@/components/Common/Tabs";
+import { Tab } from "@/components/Common/Tabs/Tab";
 import { Text, Card, Div, Row, Col } from "@/styles/Common";
 import { HeaderInsurace, HeaderInsuranceDetail } from "./styles";
 import { Grid, IconButton } from "@mui/material";
@@ -10,8 +12,14 @@ import endorsement from "@/assets/icons/endorsement.svg";
 import backIcon from "@/assets/icons/back.svg";
 import downIcon from "@/assets/icons/expand_circle_down.svg";
 import upIcon from "@/assets/icons/expand_circle_up.svg";
-import article from "@/assets/icons/article.svg";
-import addCircle from "@/assets/icons/addCircleOutline.svg";
+import flagIconBold from "../../../assets/icons/flag-bold.svg";
+import flagIcon from "../../../assets/icons/flag.svg";
+import moneyIcon from "../../../assets/icons/money-gray.svg";
+import moneyIconBold from "../../../assets/icons/money-bold.svg";
+import formIcon from "../../../assets/icons/form.svg";
+import formIconBold from "../../../assets/icons/form-bold.svg";
+import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
+import folderIcon from "../../../assets/icons/folder-gray.svg";
 import useGetBanks from "@/hooks/Common/useGetBanks";
 import { LinearProgress } from "@/components/Common/LinearProgress";
 import {
@@ -28,6 +36,7 @@ const InsuranceDetail = ({ isMobile }) => {
   const { ClientId } = getUserInfo();
 
   const [expandDetail, setExpandDetail] = useState(isMobile ? false : true);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const banks = useGetBanks();
   const { data: dataBanks, isSuccess: isSuccessBanks } = banks;
@@ -42,6 +51,124 @@ const InsuranceDetail = ({ isMobile }) => {
       );
     }
   }, [isSuccessBanks, dataBanks]);
+
+  const insuranceData = [
+    {
+      label: "Estado de solicitud",
+      content: renderDocumentStateDiv("Revisión de extracto"),
+      width: isMobile ? "135px" : "173px",
+    },
+    {
+      label: "Fecha de solicitud",
+      content: formattedDate(new Date()),
+      width: isMobile ? "135px" : "150px",
+    },
+    {
+      label: "Fecha de vencimiento",
+      content: formattedDate(new Date()),
+      width: isMobile ? "135px" : "150px",
+    },
+    {
+      label: "Monto del crédito",
+      content: formattedPrice(1111111),
+      width: isMobile ? "135px" : "150px",
+    },
+    {
+      label: "Monto prima anual de Bangk",
+      content: formattedPrice(222222),
+      width: isMobile ? "135px" : "165px",
+    },
+    {
+      label: "Asesor",
+      content: "nombre asesor",
+      width: isMobile ? "135px" : "150px",
+    },
+    {
+      label: "Entidad bancaria",
+      content: (
+        <Row align="center" gap="10px">
+          <Div
+            align="center"
+            justify="center"
+            width="24px"
+            height="24px"
+            radius="50%"
+            style={{
+              overflow: "hidden",
+            }}
+          >
+            <Image src={backIcon} alt="bankLogo" width={24} height={24} />
+          </Div>
+          <Text
+            color={theme.colors.neutralGray900}
+            size={theme.fonts.size.sm}
+            font={theme.fonts.family.primary}
+            weight={theme.fonts.weight.regular}
+            mt="8px"
+            mb="8px"
+          >
+            {/* {
+                banksOptions.find((ele) => ele.value === dataLoanInfo?.bankId)
+                  ?.label
+              } */}
+            Bancolombia
+          </Text>
+        </Row>
+      ),
+      width: isMobile ? "135px" : "150px",
+    },
+  ];
+
+  const tabs = [
+    {
+      icon: (
+        <Image
+          alt="back"
+          src={selectedTab === 0 ? flagIconBold : flagIcon}
+          width={24}
+          height={24}
+        />
+      ),
+      label: "Historial",
+    },
+    {
+      icon: (
+        <Image
+          alt="back"
+          src={selectedTab === 1 ? formIconBold : formIcon}
+          width={24}
+          height={24}
+        />
+      ),
+      label: "Formularios",
+    },
+    {
+      icon: (
+        <Image
+          alt="back"
+          src={selectedTab === 2 ? moneyIconBold : moneyIcon}
+          width={24}
+          height={24}
+        />
+      ),
+      label: "Pagos",
+    },
+    {
+      icon: (
+        <Image
+          alt="back"
+          src={selectedTab === 3 ? folderIconBold : folderIcon}
+          width={24}
+          height={24}
+        />
+      ),
+      label: "Documentos",
+    },
+  ];
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   const handleBack = () => {
     router.back();
@@ -118,158 +245,50 @@ const InsuranceDetail = ({ isMobile }) => {
             justify="space-between"
             gap={isMobile ? "16px" : "0px"}
           >
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "173px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Estado de solicitud
-                </Text>
-                {renderDocumentStateDiv("Revisión de extracto")}
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "150px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Fecha de solicitud
-                </Text>
-                <Text
-                  size={theme.fonts.size.sm}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primary}
-                >
-                  {formattedDate(new Date())}
-                </Text>
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "150px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Fecha de vencimiento
-                </Text>
-                <Text
-                  size={theme.fonts.size.sm}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primary}
-                >
-                  {formattedDate(new Date())}
-                </Text>
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "150px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Monto del credito
-                </Text>
-                <Text
-                  size={theme.fonts.size.sm}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primary}
-                >
-                  {formattedPrice(1111111)}
-                </Text>
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "165px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Monto prima anual de Bangk
-                </Text>
-                <Text
-                  size={theme.fonts.size.sm}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primary}
-                >
-                  {formattedPrice(222222)}
-                </Text>
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "150px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Asesor
-                </Text>
-                <Text
-                  size={theme.fonts.size.sm}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primary}
-                >
-                  {"nombre asesor"}
-                </Text>
-              </Col>
-            </Grid>
-            <Grid item xs={12}>
-              <Col gap="7px" width={isMobile ? "135px" : "150px"}>
-                <Text
-                  size={theme.fonts.size.xs}
-                  color={theme.colors.gray900}
-                  font={theme.fonts.family.primaryBold}
-                >
-                  Entidad bancaria
-                </Text>
-                <Row align="center" gap="10px">
-                  <Div
-                    align="center"
-                    justify="center"
-                    width="24px"
-                    height="24px"
-                    radius="50%"
-                    style={{
-                      overflow: "hidden",
-                    }}
-                  >
-                    {/* {application.iconsBanksUrl && ( */}
-                    <Image
-                      src={backIcon}
-                      alt="bankLogo"
-                      width={24}
-                      height={24}
-                    />
-                    {/*  )} */}
-                  </Div>
+            {insuranceData.map((item, index) => (
+              <Grid key={index} item xs={12}>
+                <Col gap="12px" width={item.width}>
                   <Text
-                    color={theme.colors.neutralGray900}
-                    size={theme.fonts.size.sm}
-                    font={theme.fonts.family.primary}
-                    weight={theme.fonts.weight.regular}
-                    mt="8px"
-                    mb="8px"
+                    size={theme.fonts.size.xs}
+                    color={theme.colors.gray900}
+                    font={theme.fonts.family.primaryBold}
                   >
-                    {/* {
-                banksOptions.find((ele) => ele.value === dataLoanInfo?.bankId)
-                  ?.label
-              } */}
+                    {item.label}
                   </Text>
-                </Row>
-              </Col>
-            </Grid>
+                  {item.content}
+                </Col>
+              </Grid>
+            ))}
           </Row>
         )}
       </HeaderInsuranceDetail>
+
+      <Col p="0 24px 24px 24px" width="100%">
+        <Row style={{ whiteSpace: "nowrap", overflowX: "auto" }}>
+          <Tabs
+            value={selectedTab}
+            background={theme.colors.orange}
+            onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            {tabs.map((tab, idx) => (
+              <Tab
+                key={idx}
+                label={tab.label}
+                icon={tab.icon}
+                iconPosition="start"
+                color={theme.colors.neutralGray600}
+              />
+            ))}
+          </Tabs>
+        </Row>
+        {selectedTab === 0 && <Text>Record</Text>}
+        {selectedTab === 1 && <Text>Formulario</Text>}
+        {selectedTab === 2 && <Text>Pagos</Text>}
+        {selectedTab === 3 && <Text>Documentos</Text>}
+      </Col>
     </WraperInsurance>
   );
 };
-
 export default InsuranceDetail;

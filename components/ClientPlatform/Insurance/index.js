@@ -41,6 +41,10 @@ const Insurance = ({ isMobile }) => {
     router.back();
   };
 
+  const handleDetail = () => {
+    router.push("/plataforma-cliente/seguros/detalle-seguro");
+  };
+
   return (
     <WraperInsurance>
       {isMobile ? (
@@ -200,8 +204,7 @@ const Insurance = ({ isMobile }) => {
               font={theme.fonts.family.primaryBold}
               size={theme.fonts.size.default2}
               radius={"40px"}
-
-              /* onClick={() => setShowModal(true)} */
+              onClick={handleDetail}
             >
               Ver Detalle
             </Button>

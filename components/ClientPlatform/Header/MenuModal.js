@@ -9,7 +9,12 @@ import whatsapp from "@/assets/icons/whatsappBlack.svg";
 import keyIcon from "@/assets/icons/key.svg";
 import { fontFamily } from "@mui/system";
 
-export const MenuModal = ({ handleWpp, handleShowModal, handleProfile }) => {
+export const MenuModal = ({
+  handleWpp,
+  handleShowModal,
+  handleProfile,
+  handleChangePassword,
+}) => {
   const menuOptions = [
     {
       icon: profileIcon,
@@ -19,7 +24,7 @@ export const MenuModal = ({ handleWpp, handleShowModal, handleProfile }) => {
     {
       icon: keyIcon,
       text: "Cambio de contraseña",
-      onclick: () => {},
+      onclick: handleChangePassword,
     },
     {
       icon: whatsapp,

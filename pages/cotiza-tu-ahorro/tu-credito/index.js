@@ -14,111 +14,131 @@ import { resetInitData, setOtpDate } from "@/store/balance";
 import toast from "react-hot-toast";
 
 const CreditData = ({ isMobile, isTablet }) => {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const create = useCreateClient()
-  const { userInfo, initData, termsDate, otpDate } = useSelector((state) => state)?.balance
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const create = useCreateClient();
+  const { userInfo, initData, termsDate, treatPersonalDataDate, otpDate } =
+    useSelector((state) => state)?.balance;
   const [isHovered, setIsHovered] = useState(false);
-  const banksList = useGetBanks()
-  const creditTypeList = useGetCreditType()
-  const { data, isSuccess } = banksList
-  const { data: dataCT, isSuccess: isSuccessCT} = creditTypeList
-  const [banksOptions, setBanksOptions] = useState([])
-  const [creditTypeOptions, setCreditTypeOptions] = useState([])
-  const [forceUpdate, setForceUpdate] = useState(false)
+  const banksList = useGetBanks();
+  const creditTypeList = useGetCreditType();
+  const { data, isSuccess } = banksList;
+  const { data: dataCT, isSuccess: isSuccessCT } = creditTypeList;
+  const [banksOptions, setBanksOptions] = useState([]);
+  const [creditTypeOptions, setCreditTypeOptions] = useState([]);
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [creditInfo, setCreditInfo] = useState({
     bankId: null,
     loanTypeId: null,
     loanNumber: "",
-  })
+  });
   const [documents, setDocuments] = useState([
-    { id: "bankStatementFile", label: "Último extracto*", value: null, error: false },
-    { id: "identificationFile", label: "Documento de identidad*", value: null, error: false }
-  ])
+    {
+      id: "bankStatementFile",
+      label: "Último extracto*",
+      value: null,
+      error: false,
+    },
+    {
+      id: "identificationFile",
+      label: "Documento de identidad*",
+      value: null,
+      error: false,
+    },
+  ]);
 
   useEffect(() => {
     if (isSuccess && data?.data?.groupSettings.length > 0)
-      setBanksOptions(data?.data?.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
-  }, [data, isSuccess])
+      setBanksOptions(
+        data?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [data, isSuccess]);
 
   useEffect(() => {
     if (isSuccessCT && dataCT?.data?.groupSettings.length > 0)
-      setCreditTypeOptions(dataCT?.data?.groupSettings.map((ele) => ({
-        label: ele.name,
-        value: ele.id
-      })))
-  }, [dataCT, isSuccessCT])
+      setCreditTypeOptions(
+        dataCT?.data?.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+  }, [dataCT, isSuccessCT]);
 
   const handleSelect = (event) => {
     const { name, value } = event.target;
-    const newInfo = { ...creditInfo }
+    const newInfo = { ...creditInfo };
 
-    newInfo[name] = value
-    setCreditInfo(newInfo)
-  }
+    newInfo[name] = value;
+    setCreditInfo(newInfo);
+  };
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    const newInfo = { ...creditInfo }
+    const newInfo = { ...creditInfo };
 
-    newInfo[id] = value.replace(/\D/g, '');
-    setCreditInfo(newInfo)
-  }
+    newInfo[id] = value.replace(/\D/g, "");
+    setCreditInfo(newInfo);
+  };
 
   const optionsTypeFile = [
     "application/pdf",
     "image/png",
     "image/jpg",
-    "image/jpeg"
-  ]
+    "image/jpeg",
+  ];
 
-  const maxSize = 3000000
+  const maxSize = 3000000;
 
   const handleFile = (file, id) => {
-    const newInfo = [...documents]
-    const docIndex = newInfo.findIndex(ele => ele.id === id)
-    
+    const newInfo = [...documents];
+    const docIndex = newInfo.findIndex((ele) => ele.id === id);
+
     if (file?.type && file?.size) {
       if (optionsTypeFile.includes(file.type) && file.size < maxSize) {
-        newInfo[docIndex].value = file
+        newInfo[docIndex].value = file;
         newInfo[docIndex].error = false;
       } else {
         newInfo[docIndex].error = true;
       }
-      setDocuments(newInfo)
+      setDocuments(newInfo);
     }
-  }
+  };
 
   const handleDelete = (id) => {
-    const newInfo = [...documents]
-    const docIndex = newInfo.findIndex(ele => ele.id === id)
+    const newInfo = [...documents];
+    const docIndex = newInfo.findIndex((ele) => ele.id === id);
 
-    newInfo[docIndex].value = null
-    setDocuments(newInfo)
-    setForceUpdate(!forceUpdate)
-  }
+    newInfo[docIndex].value = null;
+    setDocuments(newInfo);
+    setForceUpdate(!forceUpdate);
+  };
 
   const handleBack = () => {
-    router.push("/cotiza-tu-ahorro/diligencia-tus-datos")
-  }
+    router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+  };
 
   const handleCreate = () => {
-    const bankStatementFile = documents.find((ele) => ele.id === "bankStatementFile")?.value
-    const identificationFile = documents.find((ele) => ele.id === "identificationFile")?.value
+    const bankStatementFile = documents.find(
+      (ele) => ele.id === "bankStatementFile"
+    )?.value;
+    const identificationFile = documents.find(
+      (ele) => ele.id === "identificationFile"
+    )?.value;
 
     create.reset();
     create.mutate(
-      { 
-        ...userInfo, 
-        ...creditInfo, 
-        ...initData, 
+      {
+        ...userInfo,
+        ...creditInfo,
+        ...initData,
         termsDate: termsDate,
+        dataPPDate: treatPersonalDataDate,
         bankStatementFile: bankStatementFile,
         identificationFile: identificationFile,
-        validateClientOtp: otpDate
+        validateClientOtp: otpDate,
       },
       {
         onSuccess: (res) => {
@@ -133,15 +153,15 @@ const CreditData = ({ isMobile, isTablet }) => {
         },
       }
     );
-  }
+  };
 
   return (
     <Container>
       <Header isMobile={isMobile} />
       <WrapperQuote>
-        {!isMobile &&
+        {!isMobile && (
           <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
-        }
+        )}
 
         <Div justify="center" width="100%">
           <CreditForm
@@ -162,7 +182,7 @@ const CreditData = ({ isMobile, isTablet }) => {
         </Div>
       </WrapperQuote>
     </Container>
-  )
-}
+  );
+};
 
 export default CreditData;

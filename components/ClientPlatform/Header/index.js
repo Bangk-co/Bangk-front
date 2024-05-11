@@ -51,6 +51,10 @@ const Header = ({ isMobile, isTablet }) => {
     router.push("/plataforma-cliente/mi-perfil");
   };
 
+  const handleChangePassword = () => {
+    router.push("/plataforma-cliente/cambiar-contrasena");
+  };
+
   return (
     <WrapperHeader isMobile={isMobile}>
       {isMobile ? (
@@ -60,6 +64,7 @@ const Header = ({ isMobile, isTablet }) => {
               handleWpp={handleWpp}
               handleShowModal={handleShowModal}
               handleProfile={handleProfile}
+              handleChangePassword={handleChangePassword}
             />
           </Modal>
           <Modal open={showModal}>

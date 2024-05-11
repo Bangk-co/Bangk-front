@@ -5,7 +5,7 @@ const useGetClientInfo = (clientId) => {
   let urlString = `/Client/GetClientInfoService?clientId=${clientId}`;
 
   const data = useQuery(["clientInfo", clientId], () =>
-    axiosClient.get(urlString)
+    axiosClient.get(urlString), { enabled: !!clientId}
   );
 
   return data || {};

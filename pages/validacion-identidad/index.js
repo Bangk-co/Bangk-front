@@ -36,6 +36,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const { source } = router.query;
   const { userInfo, validCode, email: emailStore } = useSelector((state) => state)?.balance;
   const { userInfo: newUserInfo } = useSelector((state) => state)?.auth;
+  const { selectedRequest } = useSelector((state) => state)?.requests;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
     { id: "first", value: "" },
@@ -165,7 +166,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const urlBack = (sour) => {
     switch (sour) {
       case "quote":
-        router.push("/ver-cotizacion");
+        router.push(`/ver-cotizacion?requestId=${selectedRequest}&email=${currentEmail}`);
         break;
       case "password":
         router.push("/establecer-contrasena-otp");

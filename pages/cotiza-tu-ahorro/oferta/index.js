@@ -27,23 +27,23 @@ const Sale = ({ isMobile, isTablet }) => {
     monthlyRatePercentage: 0
   })
 
-  const ageCalulate = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const birthDate = new Date(initData.birthdate    );
-    birthDate.setHours(0, 0, 0, 0);
-    
-    const ageMilliseconds = today - birthDate;
-    const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
-    const age = Math.floor(ageMilliseconds / millisecondsPerYear);
-
-    return age;
-  };
-
   useEffect(() => {
     if (isSuccess) {
       let annualRate = 0;
       let monthRate = 0;
+
+      const ageCalulate = () => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const birthDate = new Date(initData.birthdate);
+        birthDate.setHours(0, 0, 0, 0);
+        
+        const ageMilliseconds = today - birthDate;
+        const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+        const age = Math.floor(ageMilliseconds / millisecondsPerYear);
+    
+        return age;
+      };
 
       if (ageCalulate() < 50) {
         annualRate = data?.data?.groupSettings.find((ele) => ele.name === "AnnualRatePercentage1")?.code
@@ -58,7 +58,7 @@ const Sale = ({ isMobile, isTablet }) => {
         monthlyRatePercentage: monthRate
       })
     }
-  }, [isSuccess])
+  }, [isSuccess, data, initData])
 
   const formatBirthdate = (birthdate) => {
     if (!birthdate) return "";

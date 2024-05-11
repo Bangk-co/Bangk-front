@@ -1,28 +1,22 @@
 import React, { useState } from "react";
 import { Container } from "@/components/ViewQuote/styles";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { setEmailStore, setValidCode } from "@/store/balance";
 import { ValidateInfo } from "@/components/ViewQuote/ValidateInfo";
 import { ValidateInfoMobile } from "@/components/ViewQuote/ValidateInfoMobile";
 import { setSelectedRequestInformation } from "@/store/requests";
+import { useRouter } from "next/router";
 
 const ValidateIdentity = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { email, requestId } = router.query;
 
   const dispatch = useDispatch();
   const reSendCode = useReSendCode();
-  const [email, setEmail] = useState("");
 
-  const { requestId } = router.query;
   dispatch(setSelectedRequestInformation(requestId));
-
-  const handleEmail = (event) => {
-    const { value } = event.target;
-    setEmail(value);
-  };
 
   const handleSend = () => {
     reSendCode.reset();
@@ -46,14 +40,12 @@ const ValidateIdentity = ({ isMobile, isTablet }) => {
         <ValidateInfoMobile
           isMobile={isMobile}
           email={email}
-          handleEmail={handleEmail}
           handleSend={handleSend}
           reSendCode={reSendCode}
         />
       ) : (
         <ValidateInfo
           email={email}
-          handleEmail={handleEmail}
           handleSend={handleSend}
           reSendCode={reSendCode}
         />

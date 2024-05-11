@@ -4,7 +4,7 @@ import Image from "next/image";
 import pesosIcon from "@/assets/icons/pesos.svg"
 import { numberFormat } from "@/utilities/helpers";
 import { LifeInsuranceTable } from "./lifeInsuranceTable";
-
+import _ from "lodash";
 
 export const SbsInsurer = ({
   quoteRate,
@@ -16,9 +16,12 @@ export const SbsInsurer = ({
   saveValue
 }) => {
 
+  const insuranceAnnual = _.multiply(Number(loanInfo?.loanBalance), Number(quoteRate));
+  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
+
   const loanData = [
-    { label: "Tasa anual", value: `${(quoteRate * 100).toFixed(3)}%` },
-    { label: "Prima anual", value: (loanInfo?.loanBalance * quoteRate) }
+    { label: "Tasa anual", value: `${(quoteRate * 100)}%` },
+    { label: "Prima anual", value: Number(insuranceAnnualFinal) }
   ]
 
   return (

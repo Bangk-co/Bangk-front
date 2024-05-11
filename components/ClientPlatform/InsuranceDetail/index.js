@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -21,7 +22,7 @@ import formIconBold from "../../../assets/icons/form-bold.svg";
 import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import useGetBanks from "@/hooks/Common/useGetBanks";
-import { LinearProgress } from "@/components/Common/LinearProgress";
+import useGetHistory from "@/hooks/Customers/useGetHistory";
 import {
   getUserInfo,
   renderDocumentStateDiv,
@@ -29,6 +30,7 @@ import {
   formattedPrice,
 } from "@/utilities/helpers";
 import { WraperInsurance } from "./styles";
+import { InsuranceHistory } from "./InsuranceHistory";
 
 const InsuranceDetail = ({ isMobile }) => {
   const router = useRouter();
@@ -37,6 +39,49 @@ const InsuranceDetail = ({ isMobile }) => {
 
   const [expandDetail, setExpandDetail] = useState(isMobile ? false : true);
   const [selectedTab, setSelectedTab] = useState(0);
+
+  const history = useGetHistory(112); //TODO validate
+  const { data: dataHistory, isSuccess: isSuccessHistory } = history;
+  const [historyInfo, setHistoryInfo] = useState([]);
+
+  useEffect(() => {
+    if (isSuccessHistory) {
+      const info = dataHistory?.data.loanApplicationHistory;
+
+      if (info.length === 1) {
+        setHistoryInfo([
+          {
+            status: "Revisión de extracto",
+            date: "-",
+            observations: "",
+            validationClientResult: null,
+            statusCard: "Pending",
+          },
+          {
+            status: historyStatus[info[0].stateName],
+            date: formattedDate(info[0].creationDate),
+            observations: info[0].observations,
+            validationClientResult: info[0].validationClientResult,
+            statusCard: "Success",
+          },
+        ]);
+      } else {
+        setHistoryInfo(
+          info.map((ele, indx) => ({
+            status: historyStatus[ele.stateName],
+            date: formattedDate(ele.creationDate),
+            observations: ele.observations,
+            validationClientResult: ele.validationClientResult,
+            statusCard: statusCard(
+              ele.stateName,
+              ele.validationClientResult,
+              indx
+            ),
+          }))
+        );
+      }
+    }
+  }, [isSuccessHistory, dataHistory]);
 
   const banks = useGetBanks();
   const { data: dataBanks, isSuccess: isSuccessBanks } = banks;
@@ -283,7 +328,7 @@ const InsuranceDetail = ({ isMobile }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 && <Text>Record</Text>}
+        {selectedTab === 0 && <InsuranceHistory historyInfo={historyInfo} />}
         {selectedTab === 1 && <Text>Formulario</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}

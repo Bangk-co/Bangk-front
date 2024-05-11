@@ -49,7 +49,7 @@ export const Record = ({
   application,
 }) => {
   const dispatch = useDispatch();
-  const { loanInfo, selectedClient } = useSelector((state) => state)?.clients;
+  const { loanInfo } = useSelector((state) => state)?.clients;
   const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
@@ -109,20 +109,27 @@ export const Record = ({
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
 
   const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
+  const insuranceAnnual = _.multiply(Number(loanInfo?.loanBalance), Number(quoteRate));
+  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
+  const insuranceMonthly = _.divide(insuranceAnnual, 12);
+  const insuranceMonthlyFinal = insuranceMonthly.toFixed();
+  const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);
+  const monthlyCostInsurance2 = Number(dataLoanApplication?.data?.monthlyCostInsurance);
+  const bangkYearlyFee = Number(dataLoanApplication?.data?.yearlyFee);
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {
       label: "Seguro mensual",
-      value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}`,
+      value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
     },
     {
       label: "Seguro anual",
-      value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+      value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
     },
   ]);
   const [saveValue, setSaveValue] = useState(
     `$ ${numberFormat(
-      loanInfo?.monthlyCostInsurance * 12 - loanInfo?.loanBalance * quoteRate
+      _.multiply(monthlyCostInsurance, 12) - Number(insuranceAnnualFinal)
     )}`
   );
 
@@ -131,24 +138,22 @@ export const Record = ({
       Object.keys(loanInfo).length === 0
         ? {
             label: "Seguro mensual",
-            value: `$ ${numberFormat(
-              Number(dataLoanApplication?.data?.monthlyCostInsurance)
-            )}`,
+            value: `$ ${numberFormat(monthlyCostInsurance2)}`,
           }
         : {
             label: "Seguro mensual",
-            value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}`,
+            value: `$ ${numberFormat(monthlyCostInsurance)}`,
           },
       Object.keys(loanInfo).length === 0
         ? {
             label: "Seguro anual",
             value: `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12
+              _.multiply(monthlyCostInsurance2, 12)
             )}`,
           }
         : {
             label: "Seguro anual",
-            value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}`,
+            value: `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12))}`,
           },
     ]);
     if (insurer === 114) {
@@ -156,35 +161,30 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                dataLoanApplication?.data?.yearlyFee / 12
-              )}`,
+              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                (loanInfo?.loanBalance * quoteRate) / 12
-              )}`,
+              value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
             },
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro anual",
-              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+              value: `$ ${numberFormat(bangkYearlyFee)}`,
             }
           : {
               label: "Seguro anual",
-              value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+              value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
             },
       ]);
       setSaveValue(
         Object.keys(loanInfo).length === 0
-          ? `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
-                dataLoanApplication?.data?.yearlyFee
+          ? `$ ${numberFormat(_.multiply(monthlyCostInsurance2, 12)
+               - bangkYearlyFee
             )}`
           : `$ ${numberFormat(
-              loanInfo?.monthlyCostInsurance * 12 -
-                loanInfo?.loanBalance * quoteRate
+              Number(_.multiply(monthlyCostInsurance, 12)) -
+              Number(insuranceAnnualFinal)
             )}`
       );
     } else {
@@ -193,17 +193,17 @@ export const Record = ({
           ? {
               label: "Seguro mensual",
               value: `$ ${numberFormat(
-                dataLoanApplication?.data?.yearlyFee / 12
+                _.divide(bangkYearlyFee, 12)
               )}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(yearlyFee / 12)}`,
+              value: `$ ${numberFormat(_.divide(yearlyFee, 12))}`,
             },
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro anual",
-              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+              value: `$ ${numberFormat(bangkYearlyFee)}`,
             }
           : {
               label: "Seguro anual",
@@ -213,13 +213,22 @@ export const Record = ({
       setSaveValue(
         Object.keys(loanInfo).length === 0
           ? `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
-                dataLoanApplication?.data?.yearlyFee
+              _.multiply(monthlyCostInsurance2, 12) -
+                bangkYearlyFee
             )}`
-          : `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12 - yearlyFee)}`
+          : `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12) - yearlyFee)}`
       );
     }
-  }, [insurer, loanInfo, yearlyFee, quoteRate]);
+  }, [
+      insurer, 
+      loanInfo, 
+      yearlyFee, 
+      insuranceAnnualFinal, 
+      insuranceMonthlyFinal, 
+      bangkYearlyFee, 
+      monthlyCostInsurance, 
+      monthlyCostInsurance2
+    ]);
 
   useEffect(() => {
     if (prevUserForm) {

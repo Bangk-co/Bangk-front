@@ -4,7 +4,6 @@ import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { useSelector } from "react-redux";
 import { numberFormat } from "@/utilities/helpers";
 import pesosIcon from "@/assets/icons/pesos.svg";
 import { Select } from "@/components/Common/Select";

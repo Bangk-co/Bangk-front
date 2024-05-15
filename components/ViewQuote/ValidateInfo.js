@@ -9,7 +9,7 @@ import { Button } from "../Common/Button";
 import { theme } from "@/styles/theme";
 import emailIcon from "../../assets/icons/email.svg";
 
-export const ValidateInfo = ({ email, handleEmail, handleSend, reSendCode }) => {
+export const ValidateInfo = ({ email, handleSend, reSendCode }) => {
   return (
     <WrapperQuote>
       <Div height="100%">
@@ -31,14 +31,6 @@ export const ValidateInfo = ({ email, handleEmail, handleSend, reSendCode }) => 
           >
             ¿Quién solicito la cotización?
           </Text>
-          <Text
-            size={theme.fonts.size.default2}
-            color={theme.colors.white}
-            mt="8px"
-          >
-            Ingresa el correo que registraste en tu solicitud para enviarte
-            un código de seguridad y conocer tu cotización.
-          </Text>
           <Div m="26px 0 0 0" direction="column" gap="46px">
             <TextField
               label={"Correo electrónico*"}
@@ -58,7 +50,7 @@ export const ValidateInfo = ({ email, handleEmail, handleSend, reSendCode }) => 
                 <Image alt="email" src={emailIcon} width={16} height={16} />
               }
               value={email}
-              onChange={handleEmail}
+              disabled
             />
             <Div width="100%" justify="center">
               <Button

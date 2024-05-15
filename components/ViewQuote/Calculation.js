@@ -6,7 +6,6 @@ import {
   WrapperWappCal,
 } from "@/components/ViewQuote/styles";
 import { theme } from "@/styles/theme";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import Image from "next/image";
 import wappIcon from "@/assets/icons/whatsapp-original.svg";
 import logo from "@/assets/icons/white-logo.png";

@@ -11,9 +11,8 @@ import Image from "next/image";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import useLogin from "@/hooks/Login/useLogin";
-import { encrypt } from "@/utilities/helpers";
 import { setLocalUser } from "@/hooks/services/axiosInstance";
-import { setAuthCredentials, setUserInfo } from "@/store/auth";
+import { setAuthCredentials, setClientId, setUserInfo } from "@/store/auth";
 
 const SetPasswordSuccess = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -42,6 +41,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
             password: ""
           }))
           dispatch(setUserInfo({}));
+          dispatch(setClientId(null));
           router.push("/plataforma-cliente/home");
         },
         onError: (err) => {
@@ -51,7 +51,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
         },
       }
     );
-  }  
+  };  
 
   return (
     <Container>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { WrapperInfo, WrapperQuote } from "./styles";
+import { WrapperInfo } from "./styles";
 import { Div, Text } from "@/styles/Common";
 import Banner from "./Banner";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import { Button } from "../Common/Button";
 import { theme } from "@/styles/theme";
 import emailIcon from "../../assets/icons/email.svg";
 
-export const ValidateInfoMobile = ({ isMobile, email, handleEmail, handleSend, reSendCode }) => {
+export const ValidateInfoMobile = ({ isMobile, email, handleSend, reSendCode }) => {
   const [currentView, setCurrentView] = useState(1)
 
   const handleGo = () => {
@@ -41,14 +41,6 @@ export const ValidateInfoMobile = ({ isMobile, email, handleEmail, handleSend, r
               >
                 ¿Quién solicito la cotización?
               </Text>
-              <Text
-                size={theme.fonts.size.sm}
-                color={theme.colors.white}
-                mt="8px"
-              >
-                Ingresa el correo que registraste en tu solicitud para enviarte
-                un código de seguridad y conocer tu cotización.
-              </Text>
               <TextField
                 label={"Correo electrónico*"}
                 placeholder={"Escribir correo electrónico"}
@@ -65,8 +57,8 @@ export const ValidateInfoMobile = ({ isMobile, email, handleEmail, handleSend, r
                   <Image alt="email" src={emailIcon} width={16} height={16} />
                 }
                 value={email}
-                onChange={handleEmail}
                 style={{ marginTop: "26px" }}
+                disabled
               />
             </Div>
             <Div>

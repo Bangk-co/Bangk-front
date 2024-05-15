@@ -34,6 +34,10 @@ import {
 } from "@/utilities/helpers";
 import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByApplicationId";
 import { DrawerValidateInfo } from "./DrawerValidateInfo";
+import useValidationSBS from "@/hooks/Customers/useValidationSBS";
+import useValidationSarlaft from "@/hooks/Customers/useValidationSarlaft";
+import useAddNoveltyComments from "@/hooks/Customers/useAddNoveltyComments";
+import { DrawerNovelty } from "./DrawerNovelty";
 
 export const Record = ({
   historyInfo,
@@ -49,17 +53,23 @@ export const Record = ({
   application,
 }) => {
   const dispatch = useDispatch();
-  const { loanInfo, selectedClient } = useSelector((state) => state)?.clients;
+  const { loanInfo } = useSelector((state) => state)?.clients;
   const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan();
   const saveQuote = useSaveQuote();
+  const validationSBS = useValidationSBS();
+  const validationSarlaft = useValidationSarlaft();
+  const addNoveltyComments = useAddNoveltyComments();
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerQuote, setShowDrawerQuote] = useState(false);
   const [showQuoteSuccess, setShowQuoteSuccess] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [savedBankStatStatement, setSavedBankStatStatement] = useState(false);
+  const [showDrawerNovelty, setShowDrawerNovelty] = useState(false);
+  const [statusName, setStatusName] = useState("");
+  const [comments, setComments] = useState("");
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -109,20 +119,27 @@ export const Record = ({
   const [currentInsuranceData, setCurrentInsuranceData] = useState([]);
 
   const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
+  const insuranceAnnual = _.multiply(Number(loanInfo?.loanBalance), Number(quoteRate));
+  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
+  const insuranceMonthly = _.divide(insuranceAnnual, 12);
+  const insuranceMonthlyFinal = insuranceMonthly.toFixed();
+  const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);
+  const monthlyCostInsurance2 = Number(dataLoanApplication?.data?.monthlyCostInsurance);
+  const bangkYearlyFee = Number(dataLoanApplication?.data?.yearlyFee);
 
   const [bangkInsuranceData, setBangkInsuranceData] = useState([
     {
       label: "Seguro mensual",
-      value: `$ ${numberFormat((loanInfo?.loanBalance * quoteRate) / 12)}`,
+      value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
     },
     {
       label: "Seguro anual",
-      value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+      value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
     },
   ]);
   const [saveValue, setSaveValue] = useState(
     `$ ${numberFormat(
-      loanInfo?.monthlyCostInsurance * 12 - loanInfo?.loanBalance * quoteRate
+      _.multiply(monthlyCostInsurance, 12) - Number(insuranceAnnualFinal)
     )}`
   );
 
@@ -131,24 +148,22 @@ export const Record = ({
       Object.keys(loanInfo).length === 0
         ? {
             label: "Seguro mensual",
-            value: `$ ${numberFormat(
-              Number(dataLoanApplication?.data?.monthlyCostInsurance)
-            )}`,
+            value: `$ ${numberFormat(monthlyCostInsurance2)}`,
           }
         : {
             label: "Seguro mensual",
-            value: `$ ${numberFormat(Number(loanInfo?.monthlyCostInsurance))}`,
+            value: `$ ${numberFormat(monthlyCostInsurance)}`,
           },
       Object.keys(loanInfo).length === 0
         ? {
             label: "Seguro anual",
             value: `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12
+              _.multiply(monthlyCostInsurance2, 12)
             )}`,
           }
         : {
             label: "Seguro anual",
-            value: `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12)}`,
+            value: `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12))}`,
           },
     ]);
     if (insurer === 114) {
@@ -156,35 +171,30 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                dataLoanApplication?.data?.yearlyFee / 12
-              )}`,
+              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                (loanInfo?.loanBalance * quoteRate) / 12
-              )}`,
+              value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
             },
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro anual",
-              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+              value: `$ ${numberFormat(bangkYearlyFee)}`,
             }
           : {
               label: "Seguro anual",
-              value: `$ ${numberFormat(loanInfo?.loanBalance * quoteRate)}`,
+              value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
             },
       ]);
       setSaveValue(
         Object.keys(loanInfo).length === 0
-          ? `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
-                dataLoanApplication?.data?.yearlyFee
+          ? `$ ${numberFormat(_.multiply(monthlyCostInsurance2, 12)
+               - bangkYearlyFee
             )}`
           : `$ ${numberFormat(
-              loanInfo?.monthlyCostInsurance * 12 -
-                loanInfo?.loanBalance * quoteRate
+              Number(_.multiply(monthlyCostInsurance, 12)) -
+              Number(insuranceAnnualFinal)
             )}`
       );
     } else {
@@ -193,17 +203,17 @@ export const Record = ({
           ? {
               label: "Seguro mensual",
               value: `$ ${numberFormat(
-                dataLoanApplication?.data?.yearlyFee / 12
+                _.divide(bangkYearlyFee, 12)
               )}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(yearlyFee / 12)}`,
+              value: `$ ${numberFormat(_.divide(yearlyFee, 12))}`,
             },
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro anual",
-              value: `$ ${numberFormat(dataLoanApplication?.data?.yearlyFee)}`,
+              value: `$ ${numberFormat(bangkYearlyFee)}`,
             }
           : {
               label: "Seguro anual",
@@ -213,13 +223,22 @@ export const Record = ({
       setSaveValue(
         Object.keys(loanInfo).length === 0
           ? `$ ${numberFormat(
-              dataLoanApplication?.data?.monthlyCostInsurance * 12 -
-                dataLoanApplication?.data?.yearlyFee
+              _.multiply(monthlyCostInsurance2, 12) -
+                bangkYearlyFee
             )}`
-          : `$ ${numberFormat(loanInfo?.monthlyCostInsurance * 12 - yearlyFee)}`
+          : `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12) - yearlyFee)}`
       );
     }
-  }, [insurer, loanInfo, yearlyFee, quoteRate]);
+  }, [
+      insurer, 
+      loanInfo, 
+      yearlyFee, 
+      insuranceAnnualFinal, 
+      insuranceMonthlyFinal, 
+      bangkYearlyFee, 
+      monthlyCostInsurance, 
+      monthlyCostInsurance2
+    ]);
 
   useEffect(() => {
     if (prevUserForm) {
@@ -625,6 +644,7 @@ export const Record = ({
           icon: cancelIcon,
         };
       case 3:
+      case 4:
         return {
           background: theme.colors.error100,
           color: theme.colors.error,
@@ -639,6 +659,81 @@ export const Record = ({
           icon: "",
         };
     }
+  };
+
+  const handleRetry = (status) => {
+    if (status === "Estudio lista restrictiva SBS") {
+      validationSBS.reset();
+      validationSBS.mutate(applications?.selectedApplication?.loanApplicationId,
+        {
+          onSuccess: (data) => {
+            queryClient.invalidateQueries(["historyList"]);
+            queryClient.invalidateQueries(["LoanInformation"]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    } else {
+      validationSarlaft.reset();
+      validationSarlaft.mutate(applications?.selectedApplication?.loanApplicationId,
+        {
+          onSuccess: (data) => {
+            queryClient.invalidateQueries(["historyList"]);
+            queryClient.invalidateQueries(["LoanInformation"]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    };
+  };
+
+  const handleResolve = (status) => {
+    setShowDrawerNovelty(true);
+    setStatusName(status);
+  };
+
+  const handleCloseDrawerNovelty = () => {
+    setShowDrawerNovelty(false);
+    setStatusName("");
+    setComments("");
+  };
+
+  const handleChangeComments = (event) => {
+    const { value } = event.target;
+    setComments(value);
+  };
+
+  const handleSaveComments = () => {
+    const formData = {
+      loanApplicationId: applications?.selectedApplication?.loanApplicationId, 
+      comments: comments
+    }
+
+    addNoveltyComments.reset();
+    addNoveltyComments.mutate(formData,
+      {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries(["historyList"]);
+          queryClient.invalidateQueries(["LoanInformation"]);
+          setShowDrawerNovelty(false);
+          setStatusName("");
+          setComments("");
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -706,6 +801,15 @@ export const Record = ({
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios validados"
         )}
+      />
+      <DrawerNovelty 
+        showDrawer={showDrawerNovelty}
+        closeDrawer={handleCloseDrawerNovelty}
+        statusName={statusName}
+        handleSave={handleSaveComments}
+        handleChange={handleChangeComments}
+        isLoading={addNoveltyComments.isLoading}
+        comments={comments}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (
@@ -902,6 +1006,20 @@ export const Record = ({
                       </Button>
                     </Div>
                   )}
+                {(ele.validationClientResult === 1 || ele.validationClientResult === 4) && (
+                  <Button
+                    background={theme.colors.green900}
+                    hover={theme.colors.green900}
+                    borderHover={theme.colors.green900}
+                    font={theme.fonts.family.primaryBold}
+                    width={"200px"}
+                    height={"40px"}
+                    onClick={ele.validationClientResult === 1 ? () => handleResolve(ele.status) : () => handleRetry(ele.status)}
+                    disabled={ele.validationClientResult === 4 && (validationSBS.isLoading || validationSarlaft.isLoading)}
+                  >
+                    {ele.validationClientResult === 1 ? "Resolver novedad" : "Reintentar"}
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Card>

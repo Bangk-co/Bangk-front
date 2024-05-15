@@ -22,10 +22,10 @@ export const CustomTextField = styled(TextField)`
             : theme.colors.orange} !important;
     }
     .MuiOutlinedInput-notchedOutline {
-      border-color: ${({ border }) => border || theme.colors.gray500};
+      border-color: ${({ border }) => border || theme.colors.gray500} !important;
     }
     &.Mui-disabled fieldset {
-      border-color: ${({ border }) => border || theme.colors.gray500};
+      border-color: ${({ border }) => border || theme.colors.gray500} !important; 
     }
     & input::placeholder {
       color: ${({ placeholderColor }) => placeholderColor};

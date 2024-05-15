@@ -34,6 +34,10 @@ import {
 } from "@/utilities/helpers";
 import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByApplicationId";
 import { DrawerValidateInfo } from "./DrawerValidateInfo";
+import useValidationSBS from "@/hooks/Customers/useValidationSBS";
+import useValidationSarlaft from "@/hooks/Customers/useValidationSarlaft";
+import useAddNoveltyComments from "@/hooks/Customers/useAddNoveltyComments";
+import { DrawerNovelty } from "./DrawerNovelty";
 
 export const Record = ({
   historyInfo,
@@ -55,11 +59,17 @@ export const Record = ({
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan();
   const saveQuote = useSaveQuote();
+  const validationSBS = useValidationSBS();
+  const validationSarlaft = useValidationSarlaft();
+  const addNoveltyComments = useAddNoveltyComments();
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerQuote, setShowDrawerQuote] = useState(false);
   const [showQuoteSuccess, setShowQuoteSuccess] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [savedBankStatStatement, setSavedBankStatStatement] = useState(false);
+  const [showDrawerNovelty, setShowDrawerNovelty] = useState(false);
+  const [statusName, setStatusName] = useState("");
+  const [comments, setComments] = useState("");
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -634,6 +644,7 @@ export const Record = ({
           icon: cancelIcon,
         };
       case 3:
+      case 4:
         return {
           background: theme.colors.error100,
           color: theme.colors.error,
@@ -648,6 +659,81 @@ export const Record = ({
           icon: "",
         };
     }
+  };
+
+  const handleRetry = (status) => {
+    if (status === "Estudio lista restrictiva SBS") {
+      validationSBS.reset();
+      validationSBS.mutate(applications?.selectedApplication?.loanApplicationId,
+        {
+          onSuccess: (data) => {
+            queryClient.invalidateQueries(["historyList"]);
+            queryClient.invalidateQueries(["LoanInformation"]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    } else {
+      validationSarlaft.reset();
+      validationSarlaft.mutate(applications?.selectedApplication?.loanApplicationId,
+        {
+          onSuccess: (data) => {
+            queryClient.invalidateQueries(["historyList"]);
+            queryClient.invalidateQueries(["LoanInformation"]);
+          },
+          onError: (err) => {
+            err.response.data.errors.map((error) => {
+              toast.error(error);
+            });
+          },
+        }
+      );
+    };
+  };
+
+  const handleResolve = (status) => {
+    setShowDrawerNovelty(true);
+    setStatusName(status);
+  };
+
+  const handleCloseDrawerNovelty = () => {
+    setShowDrawerNovelty(false);
+    setStatusName("");
+    setComments("");
+  };
+
+  const handleChangeComments = (event) => {
+    const { value } = event.target;
+    setComments(value);
+  };
+
+  const handleSaveComments = () => {
+    const formData = {
+      loanApplicationId: applications?.selectedApplication?.loanApplicationId, 
+      comments: comments
+    }
+
+    addNoveltyComments.reset();
+    addNoveltyComments.mutate(formData,
+      {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries(["historyList"]);
+          queryClient.invalidateQueries(["LoanInformation"]);
+          setShowDrawerNovelty(false);
+          setStatusName("");
+          setComments("");
+        },
+        onError: (err) => {
+          err.response.data.errors.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -715,6 +801,15 @@ export const Record = ({
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios validados"
         )}
+      />
+      <DrawerNovelty 
+        showDrawer={showDrawerNovelty}
+        closeDrawer={handleCloseDrawerNovelty}
+        statusName={statusName}
+        handleSave={handleSaveComments}
+        handleChange={handleChangeComments}
+        isLoading={addNoveltyComments.isLoading}
+        comments={comments}
       />
       <Div width="24px" direction="column">
         {historyInfo.map((ele, indx) => (
@@ -911,6 +1006,20 @@ export const Record = ({
                       </Button>
                     </Div>
                   )}
+                {(ele.validationClientResult === 1 || ele.validationClientResult === 4) && (
+                  <Button
+                    background={theme.colors.green900}
+                    hover={theme.colors.green900}
+                    borderHover={theme.colors.green900}
+                    font={theme.fonts.family.primaryBold}
+                    width={"200px"}
+                    height={"40px"}
+                    onClick={ele.validationClientResult === 1 ? () => handleResolve(ele.status) : () => handleRetry(ele.status)}
+                    disabled={ele.validationClientResult === 4 && (validationSBS.isLoading || validationSarlaft.isLoading)}
+                  >
+                    {ele.validationClientResult === 1 ? "Resolver novedad" : "Reintentar"}
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Card>

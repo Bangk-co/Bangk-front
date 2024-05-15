@@ -18,10 +18,11 @@ import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAsses
 
 export const InsuranceHistory = ({ historyInfo }) => {
   const dispatch = useDispatch();
-  const { loanInfo, selectedClient } = useSelector((state) => state)?.clients;
-  const { applications } = useSelector((state) => state);
+  const { policy } = useSelector((state) => state);
 
-  const loanFormAssesorConcept = useGetLoanFormAssessorConcept(240); //112 TODO validate applications?.selectedApplication?.loanApplicationId
+  const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
+    policy?.selectedPolicy?.loanApplicationId
+  );
   const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
     loanFormAssesorConcept;
   const [formsConcept, setFormsConcept] = useState({

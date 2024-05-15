@@ -6,6 +6,7 @@ import clients from "./customers";
 import applications from "./applications";
 import requests from "./requests";
 import auth from "./auth";
+import policy from "./policy";
 
 const persistConfig = {
   key: "root",
@@ -21,11 +22,11 @@ const store = configureStore({
     clients,
     applications,
     requests: persistedRequestsReducer,
-    auth
+    auth,
+    policy,
   },
 });
 
 const persistor = persistStore(store);
 
 export { store, persistor };
-

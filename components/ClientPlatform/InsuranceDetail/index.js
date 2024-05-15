@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Tabs } from "@/components/Common/Tabs";
@@ -35,16 +36,27 @@ import { InsuranceHistory } from "./InsuranceHistory";
 
 const InsuranceDetail = ({ isMobile }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { ClientId } = getUserInfo();
+  const { policy } = useSelector((state) => state);
+  console.log("policy", policy);
 
   const [expandDetail, setExpandDetail] = useState(isMobile ? false : true);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const history = useGetHistory(240); //112 TODO validate
+  useEffect(() => {
+    if (
+      !policy?.selectedPolicy?.loanApplicationId ||
+      !policy?.selectedPolicy?.policyId
+    ) {
+      router.push("/plataforma-cliente/seguros");
+    }
+  }, [policy?.selectedPolicy]);
+
+  const history = useGetHistory(policy?.selectedPolicy?.loanApplicationId);
   const { data: dataHistory, isSuccess: isSuccessHistory } = history;
   const [historyInfo, setHistoryInfo] = useState([]);
-
   const statusCard = (status, validation, index) => {
     if (status === "ClienteNoAsegurable" || validation === 1) {
       return "Alert";
@@ -56,7 +68,6 @@ const InsuranceDetail = ({ isMobile }) => {
       return "Success";
     }
   };
-
   useEffect(() => {
     if (isSuccessHistory) {
       const info = dataHistory?.data.loanApplicationHistory;

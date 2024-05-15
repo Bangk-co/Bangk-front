@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 import { Text, Card, Div, Row, Col } from "@/styles/Common";
 import { HeaderInsurace, HeaderInsuranceMobile } from "./styles";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
-import article from "@/assets/icons/article.svg";
 import addCircle from "@/assets/icons/addCircleOutline.svg";
-import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useGetClientInsurances from "@/hooks/Customers/useGetClientInsurances";
+import { setSelectedPolicyInformation } from "@/store/policy";
 import { LinearProgress } from "@/components/Common/LinearProgress";
 import {
   getUserInfo,
@@ -20,29 +21,50 @@ import { WraperInsurance } from "./styles";
 
 const Insurance = ({ isMobile }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { ClientId } = getUserInfo();
 
-  const documentsType = useGetDocumentType();
-  const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
-  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  const insurances = useGetClientInsurances(ClientId);
+  const { data: dataInsurances, isSuccess: isSuccessInsurances } = insurances;
+  const [insuranceList, setInsuranceList] = useState([]);
   useEffect(() => {
-    if (isSuccessDocuments) {
-      setDocumentTypeOptions(
-        dataDocuments?.data.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
-      );
+    if (isSuccessInsurances) {
+      setInsuranceList(dataInsurances?.data.clientPolicyInfo);
     }
-  }, [isSuccessDocuments, dataDocuments]);
+  }, [isSuccessInsurances, dataInsurances]);
 
   const handleBack = () => {
     router.back();
   };
 
-  const handleDetail = () => {
+  const handleDetail = (policyId) => {
+    dispatch(
+      setSelectedPolicyInformation({
+        policyId: policyId,
+        loanApplicationId: policyId, //TODO validate loanApplicationId
+      })
+    );
     router.push("/plataforma-cliente/seguros/detalle-seguro");
+  };
+
+  const calculateDaysRemaning = (date) => {
+    const applicationDate = new Date(date);
+    const currentDate = new Date();
+
+    const oneYearLater = new Date(applicationDate);
+    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+    const differenceMs = oneYearLater - currentDate;
+    const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+    const elapsedMs = currentDate - applicationDate;
+    const progress = (elapsedMs / differenceMs) * 100;
+
+    return {
+      dueDate: oneYearLater,
+      daysRemaining: daysRemaining,
+      progress: progress,
+    };
   };
 
   return (
@@ -93,122 +115,149 @@ const Insurance = ({ isMobile }) => {
         align="center"
         gap={isMobile ? "20px" : "16px"}
       >
-        <Card
-          gap="8px"
-          m={isMobile ? "20px 16px 0 16px" : "0"}
-          p="16px 24px"
-          width={isMobile ? "90%" : "560px"}
-        >
-          <Row justify="center" gap="8px">
-            <Image alt="endorsement" src={endorsement} width={40} height={40} />
-            <Col justify="center" align="left">
-              <Text
-                size={theme.fonts.size.xs}
-                color={theme.colors.neutralGray500}
-                font={theme.fonts.family.primary}
-                weight={theme.fonts.weight.semibold}
-              >
-                Numero de solicitud o de poliza
-              </Text>
-              <Text
-                size={
-                  isMobile
-                    ? theme.fonts.size.default2
-                    : theme.fonts.size.default
-                }
-                color={theme.colors.gray900}
-                font={theme.fonts.family.primaryBold}
-              >
-                Credito de
-              </Text>
-            </Col>
-          </Row>
-          <Div
-            width="100%"
-            height="1px"
-            background={theme.colors.gray50}
-            m="16px 0"
-          />
-          <Row
-            width="100%"
-            justify="space-between"
-            align="start"
-            m="0 0 20px 0"
+        {insuranceList.map((insurance, index) => (
+          <Card
+            key={index}
+            gap="8px"
+            m={isMobile ? "20px 16px 0 16px" : "0"}
+            p="16px 24px"
+            width={isMobile ? "90%" : "560px"}
           >
-            <Col justify="center" gap="8px">
-              <Text
-                size={theme.fonts.size.xs}
-                color={theme.colors.gray300}
-                font={theme.fonts.family.primary}
-                weight={theme.fonts.weight.semibold}
-              >
-                Estado de solicitud
-              </Text>
-              {renderDocumentStateDiv("Rechazado")}
-            </Col>
-            <Col justify="center" gap="8px">
-              <Text
-                size={theme.fonts.size.xs}
-                color={theme.colors.gray300}
-                font={theme.fonts.family.primary}
-                weight={theme.fonts.weight.semibold}
-              >
-                Fecha de solicitud
-              </Text>
-              <Text
-                size={theme.fonts.size.xs}
-                color={theme.colors.gray900}
-                font={theme.fonts.family.primary}
-              >
-                {formattedDate(new Date())}
-              </Text>
-            </Col>
-          </Row>
-          <Text
-            size={theme.fonts.size.xs}
-            color={theme.colors.gray300}
-            font={theme.fonts.family.primary}
-            weight={theme.fonts.weight.semibold}
-          >
-            {`Días restantes: 365`}
-          </Text>
-          <LinearProgress
-            variant="determinate"
-            height="10px"
-            value={0}
-            sx={{ width: "100%" }}
-          />
-          <Text
-            size={theme.fonts.size.xxs}
-            color={theme.colors.gray300}
-            font={theme.fonts.family.primary}
-            weight={theme.fonts.weight.regular}
-          >
-            {`Vence: ${formattedDate(new Date())}`}
-          </Text>
-          <Div
-            width="100%"
-            height="1px"
-            background={theme.colors.gray50}
-            m="16px 0"
-          />
-          <Row width="100%" justify="center" gap="16px">
-            <Button
-              width={"auto"}
-              padding="0px 16px"
-              labelColor={theme.colors.green900}
-              borderHover={"#F0F0F0"}
-              border={theme.colors.white}
-              hover={theme.colors.gray100}
-              background={theme.colors.white}
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.default2}
-              radius={"40px"}
-              onClick={handleDetail}
+            <Row justify="center" gap="8px">
+              <Image
+                alt="endorsement"
+                src={endorsement}
+                width={40}
+                height={40}
+              />
+              <Col justify="center" align="left">
+                <Text
+                  size={theme.fonts.size.xs}
+                  color={theme.colors.neutralGray500}
+                  font={theme.fonts.family.primary}
+                  weight={theme.fonts.weight.semibold}
+                >
+                  {insurance.stateName !== "Poliza Emitida"
+                    ? `Numero de solicitud ${insurance.policyId}`
+                    : `Numero de póliza ${insurance.policyId}`}{" "}
+                  {/* TODO validate applicationId */}
+                </Text>
+                <Text
+                  size={
+                    isMobile
+                      ? theme.fonts.size.default2
+                      : theme.fonts.size.default
+                  }
+                  color={theme.colors.gray900}
+                  font={theme.fonts.family.primaryBold}
+                >
+                  {`Credito ${insurance.loanType}`}
+                </Text>
+              </Col>
+            </Row>
+            <Div
+              width="100%"
+              height="1px"
+              background={theme.colors.gray50}
+              m="16px 0"
+            />
+            <Row
+              width="100%"
+              justify="space-between"
+              align="start"
+              m="0 0 20px 0"
             >
-              Ver Detalle
-            </Button>
-            {/* <Button
+              <Col justify="center" gap="8px">
+                <Text
+                  size={theme.fonts.size.xs}
+                  color={theme.colors.gray300}
+                  font={theme.fonts.family.primary}
+                  weight={theme.fonts.weight.semibold}
+                >
+                  Estado de solicitud
+                </Text>
+                {renderDocumentStateDiv(insurance.stateName)}
+              </Col>
+              <Col justify="center" gap="8px">
+                <Text
+                  size={theme.fonts.size.xs}
+                  color={theme.colors.gray300}
+                  font={theme.fonts.family.primary}
+                  weight={theme.fonts.weight.semibold}
+                >
+                  Fecha de solicitud
+                </Text>
+                <Text
+                  size={theme.fonts.size.xs}
+                  color={theme.colors.gray900}
+                  font={theme.fonts.family.primary}
+                >
+                  {insurance?.applicationDate
+                    ? formattedDate(insurance.applicationDate)
+                    : "--"}
+                </Text>
+              </Col>
+            </Row>
+            <Text
+              size={theme.fonts.size.xs}
+              color={theme.colors.gray300}
+              font={theme.fonts.family.primary}
+              weight={theme.fonts.weight.semibold}
+            >
+              {`Días restantes: ${
+                insurance?.applicationDate
+                  ? calculateDaysRemaning(insurance.applicationDate)
+                      .daysRemaining
+                  : "--"
+              }`}
+            </Text>
+            <LinearProgress
+              variant="determinate"
+              height="10px"
+              value={
+                insurance?.applicationDate
+                  ? calculateDaysRemaning(insurance.applicationDate).progress
+                  : 0
+              }
+              sx={{ width: "100%" }}
+            />
+            <Text
+              size={theme.fonts.size.xxs}
+              color={theme.colors.gray300}
+              font={theme.fonts.family.primary}
+              weight={theme.fonts.weight.regular}
+            >
+              {`Vence: ${
+                insurance?.applicationDate
+                  ? formattedDate(
+                      calculateDaysRemaning(insurance.applicationDate).dueDate
+                    )
+                  : "--"
+              }`}
+            </Text>
+            <Div
+              width="100%"
+              height="1px"
+              background={theme.colors.gray50}
+              m="16px 0"
+            />
+            <Row width="100%" justify="center" gap="16px">
+              <Button
+                width={"auto"}
+                padding="0px 16px"
+                labelColor={theme.colors.green900}
+                borderHover={"#F0F0F0"}
+                border={theme.colors.white}
+                hover={theme.colors.gray100}
+                background={theme.colors.white}
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.default2}
+                radius={"40px"}
+                onClick={() => handleDetail(insurance.policyId)}
+              >
+                Ver Detalle
+              </Button>
+              {/* <Button
               width={"174px"}
               padding="0px"
               labelColor={theme.colors.white}
@@ -226,8 +275,10 @@ const Insurance = ({ isMobile }) => {
             >
               Ver Documento
             </Button> */}
-          </Row>
-        </Card>
+            </Row>
+          </Card>
+        ))}
+
         <Card
           gap="4px"
           p="0 16px"

@@ -199,7 +199,7 @@ export const renderDocumentStateDiv = (stateName) => {
       borderColor = theme.colors.teal;
       color = theme.colors.teal;
       break;
-    case "Poliza emitida":
+    case "Poliza Emitida":
     case "Poliza Pagada":
     case "Carta de endoso realizada":
     case "Endoso aceptado":

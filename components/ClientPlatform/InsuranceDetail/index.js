@@ -40,7 +40,7 @@ const InsuranceDetail = ({ isMobile }) => {
   const [expandDetail, setExpandDetail] = useState(isMobile ? false : true);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const history = useGetHistory(112); //TODO validate
+  const history = useGetHistory(240); //112 TODO validate
   const { data: dataHistory, isSuccess: isSuccessHistory } = history;
   const [historyInfo, setHistoryInfo] = useState([]);
 

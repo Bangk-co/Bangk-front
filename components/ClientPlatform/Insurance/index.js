@@ -101,14 +101,14 @@ const Insurance = ({ isMobile }) => {
         >
           <Row justify="center" gap="8px">
             <Image alt="endorsement" src={endorsement} width={40} height={40} />
-            <Col justify="center">
+            <Col justify="center" align="left">
               <Text
                 size={theme.fonts.size.xs}
                 color={theme.colors.neutralGray500}
                 font={theme.fonts.family.primary}
                 weight={theme.fonts.weight.semibold}
               >
-                Poliza
+                Numero de solicitud o de poliza
               </Text>
               <Text
                 size={
@@ -208,7 +208,7 @@ const Insurance = ({ isMobile }) => {
             >
               Ver Detalle
             </Button>
-            <Button
+            {/* <Button
               width={"174px"}
               padding="0px"
               labelColor={theme.colors.white}
@@ -222,10 +222,10 @@ const Insurance = ({ isMobile }) => {
               startIcon={
                 <Image alt="article" src={article} width={16} height={16} />
               }
-              /*onClick={() => setShowModal(true)} */
+              onClick={() => setShowModal(true)}
             >
               Ver Documento
-            </Button>
+            </Button> */}
           </Row>
         </Card>
         <Card

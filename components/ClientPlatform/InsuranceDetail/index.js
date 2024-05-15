@@ -28,6 +28,7 @@ import {
   renderDocumentStateDiv,
   formattedDate,
   formattedPrice,
+  historyStatus,
 } from "@/utilities/helpers";
 import { WraperInsurance } from "./styles";
 import { InsuranceHistory } from "./InsuranceHistory";
@@ -43,6 +44,18 @@ const InsuranceDetail = ({ isMobile }) => {
   const history = useGetHistory(240); //112 TODO validate
   const { data: dataHistory, isSuccess: isSuccessHistory } = history;
   const [historyInfo, setHistoryInfo] = useState([]);
+
+  const statusCard = (status, validation, index) => {
+    if (status === "ClienteNoAsegurable" || validation === 1) {
+      return "Alert";
+    } else if (validation === 2 || validation === 3) {
+      return "Error";
+    } else if (index === 0) {
+      return "Pending";
+    } else {
+      return "Success";
+    }
+  };
 
   useEffect(() => {
     if (isSuccessHistory) {

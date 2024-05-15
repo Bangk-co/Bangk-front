@@ -21,9 +21,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
   const { loanInfo, selectedClient } = useSelector((state) => state)?.clients;
   const { applications } = useSelector((state) => state);
 
-  /*   const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
-    applications?.selectedApplication?.loanApplicationId
-  );
+  const loanFormAssesorConcept = useGetLoanFormAssessorConcept(240); //112 TODO validate applications?.selectedApplication?.loanApplicationId
   const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
     loanFormAssesorConcept;
   const [formsConcept, setFormsConcept] = useState({
@@ -44,7 +42,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
         comments: hasNews ? comments : "Sin novedades",
       });
     }
-  }, [dataAssesorConcept, isLoadingAssessorConcept]); */
+  }, [dataAssesorConcept, isLoadingAssessorConcept]);
 
   const designStepper = (status) => {
     switch (status) {

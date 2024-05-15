@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { theme } from "@/styles/theme";
 import { IconButton } from '@mui/material';
@@ -11,7 +11,6 @@ import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import lock from "../../assets/icons/lock.svg";
 import { SetPasswordCard, WrapperForm } from "./styles";
-import dayjs from "dayjs";
 import eye from '@/assets/icons/eye.svg';
 import eyeoff from '@/assets/icons/eyeoff.svg';
 import checkSuccess from "@/assets/icons/check-green.svg"
@@ -21,7 +20,15 @@ import { encrypt, initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import useCreatePassword from "@/hooks/Login/useCreatePassword";
 import { setAuthCredentials } from "@/store/auth";
 
-const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
+const Form = ({ 
+  isMobile, 
+  isTablet, 
+  requestInfo, 
+  userInfo, 
+  userData, 
+  source, 
+  clientId 
+}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const create = useCreatePassword();
@@ -32,8 +39,92 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [infoUser, setInfoUser] = useState({});
-  
+  const [infoUser, setInfoUser] = useState([
+    {
+      title: "Email",
+      value: "", 
+    },
+    {
+      title: "Documento de identidad",
+      value: "",
+    },
+    {
+      title: "Nombres",
+      value: "",
+    },
+    {
+      title: "Apellidos",
+      value: "",
+    },
+  ]);
+  const [id, setId] = useState(null);
+
+  useEffect(() => {
+    if (source === "otp") {
+      setInfoUser([
+        {
+          title: "Email",
+          value: userData.email, 
+        },
+        {
+          title: "Documento de identidad",
+          value: userData.identificationNumber,
+        },
+        {
+          title: "Nombres",
+          value: userData.name,
+        },
+        {
+          title: "Apellidos",
+          value: userData.lastName,
+        },
+      ]);
+      setId(clientId);
+    };
+    if (source === "create") {
+      setInfoUser([
+        {
+          title: "Email",
+          value: userInfo.email, 
+        },
+        {
+          title: "Documento de identidad",
+          value: userInfo.identificationNumber,
+        },
+        {
+          title: "Nombres",
+          value: userInfo.name,
+        },
+        {
+          title: "Apellidos",
+          value: userInfo.lastName,
+        },
+      ]);
+      setId(userInfo.clientId);
+    };
+    if (source === "continue") {
+      setInfoUser([
+        {
+          title: "Email",
+          value: requestInfo.email, 
+        },
+        {
+          title: "Documento de identidad",
+          value: requestInfo.identificationNumber,
+        },
+        {
+          title: "Nombres",
+          value: requestInfo.name,
+        },
+        {
+          title: "Apellidos",
+          value: requestInfo.lastName,
+        },
+      ]);
+      setId(requestInfo.clienId);
+    };
+  }, [source, requestInfo, userInfo, userData, clientId]);
+
   const handleClickShowPassword = (field) => {
     if (field === 'password') {
       setShowPassword((show) => !show);
@@ -94,7 +185,7 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
       create.reset();
       create.mutate(
         { 
-          clientId: requestInfo.clienId || userInfo.clientId, 
+          clientId: id, 
           password: encrypt(passwordForm.password),
           passwordConfirm: encrypt(passwordForm.confirmPassword) 
         },
@@ -102,7 +193,7 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
           onSuccess: () => {
             router.push("/establecer-contrasena/exitoso");
             dispatch(setAuthCredentials({
-              email: requestInfo.email || userInfo.email,
+              email: infoUser[0].value,
               password: encrypt(passwordForm.password),
             }));
             dispatch(setRequestInfo(initDataLoanInsurancePolicy));
@@ -124,25 +215,6 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
   const isValid = Object.values(passwordForm).every((value) => value !== "") && 
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(passwordForm.password);
 
-  const userData = [
-    {
-      title: "Email",
-      value: requestInfo.email || userInfo.email, 
-    },
-    {
-      title: "Documento de identidad",
-      value: requestInfo.identificationNumber || userInfo.identificationNumber,
-    },
-    {
-      title: "Nombres",
-      value: requestInfo.name || userInfo.name,
-    },
-    {
-      title: "Apellidos",
-      value: requestInfo.lastName || userInfo.lastName,
-    },
-  ];
-
   return (
     <WrapperForm>
       <SetPasswordCard>
@@ -161,7 +233,7 @@ const Form = ({ isMobile, isTablet, requestInfo, userInfo }) => {
             </Text>
           </Row>
           <Div direction="column" gap="22px" style={{ alignSelf: 'flex-start', textAlign: 'justify' }}>
-            {userData.map((ele, indx) => (
+            {infoUser.map((ele, indx) => (
               <>
                 <Div gap="8px" direction="column">
                   <Text

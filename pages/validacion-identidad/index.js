@@ -35,7 +35,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch()
   const { source } = router.query;
   const { userInfo, validCode, email: emailStore } = useSelector((state) => state)?.balance;
-  const { userInfo: newUserInfo } = useSelector((state) => state)?.auth;
+  const { userInfo: newUserInfo, clientId } = useSelector((state) => state)?.auth;
   const { selectedRequest } = useSelector((state) => state)?.requests;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
@@ -55,6 +55,9 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   useEffect(() => {
     switch (source) {
       case "quote":
+        setCurrentEmail(emailStore)
+        break;
+      case "password":
         setCurrentEmail(emailStore)
         break;
       case "createAccount":
@@ -169,7 +172,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
         router.push(`/ver-cotizacion?requestId=${selectedRequest}&email=${currentEmail}`);
         break;
       case "password":
-        router.push("/establecer-contrasena-otp");
+        router.push(`/establecer-contrasena-otp?requestId=${clientId}&email=${currentEmail}`);
         break;
       case "createAccount": 
         router.push("/crear-cuenta");
@@ -194,7 +197,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
       {
         onSuccess: (res) => {
           dispatch(setUserInfo(res.data.result));
-          router.push("/establecer-contrasena");
+          router.push("/establecer-contrasena?source=create");
         },
         onError: (err) => {
           err.response.data.map((error) => {
@@ -218,7 +221,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
         dispatch(setEmailStore(""));
         break;
       case "password":
-        router.push("/establecer-contrasena");
+        router.push("/establecer-contrasena?source=otp");
         break;
       case "createAccount": 
         createAccount();

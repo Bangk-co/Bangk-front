@@ -13,16 +13,16 @@ import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleBangk = () => {
     router.push("/");
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
-  }
+  };
 
   const handleCreate = () => {
-    router.push("/establecer-contrasena")
-  }
+    router.push("/establecer-contrasena?source=continue")
+  };
 
   return (
     <Container>

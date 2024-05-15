@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
 import { Container } from "@/components/Login/styles";
@@ -10,15 +12,21 @@ import logo from "../../assets/icons/green-logo.svg";
 import { Button } from "@/components/Common/Button";
 import { Link } from "@/components/Common/Link";
 import { theme } from "@/styles/theme";
+import { setClientId } from "@/store/auth";
+import { setEmailStore, setValidCode } from "@/store/balance";
+import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
 
 const SetPasswordValidation = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { requestId, email } = router.query;
+  const reSendCode = useReSendCode();
 
   const { isAuth } = useAuth();
 
   useEffect(() => {
     if (isAuth) {
-      router.push("/plataforma/home");
+      router.push("/plataforma-cliente/home");
     }
   }, [isAuth, router]);
 
@@ -27,8 +35,21 @@ const SetPasswordValidation = ({ isMobile, isTablet }) => {
   }
 
   const handleValidate = () => {
-    router.push("validacion-identidad?source=password")
-  }
+    reSendCode.reset();
+    reSendCode.mutate(email, {
+      onSuccess: (res) => {
+        dispatch(setValidCode(res.data.code));
+        dispatch(setEmailStore(email))
+        dispatch(setClientId(requestId));
+        router.push(`/validacion-identidad?source=password`);
+      },
+      onError: (err) => {
+        err.response.data.map((error) => {
+          toast.error(error);
+        });
+      },
+    });
+  };
 
   return (
     <Container>
@@ -64,7 +85,7 @@ const SetPasswordValidation = ({ isMobile, isTablet }) => {
                   size={theme.fonts.size.default2}
                   font={theme.fonts.family.primary}
                 >
-                  
+                  {email}
                 </Text>
               </Div>
             </Div>
@@ -76,6 +97,7 @@ const SetPasswordValidation = ({ isMobile, isTablet }) => {
                 borderHover={theme.colors.green}
                 font={theme.fonts.family.primaryBold}
                 onClick={handleValidate}
+                loading={reSendCode.isLoading}
               >
                 Valida tu identidad
               </Button>

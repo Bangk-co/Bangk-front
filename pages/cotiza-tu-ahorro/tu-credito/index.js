@@ -135,7 +135,7 @@ const CreditData = ({ isMobile, isTablet }) => {
         ...userInfo,
         ...creditInfo,
         ...initData,
-        termsDate: termsDate,
+        treatPersonalDataDate: termsDate,
         bankStatementFile: bankStatementFile,
         identificationFile: identificationFile,
         validateClientOtp: otpDate,

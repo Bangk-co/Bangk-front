@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { decrypt } from "@/utilities/helpers";
+import useGetLoanInsurancePolicyInfo from "@/hooks/Customers/useGetLoanInsurancePolicyInfo";
 import clock from "@/assets/icons/clock.svg";
 import { LinkButton } from "@/components/Common/LinkButton";
 import { Button } from "@/components/Common/Button";
@@ -32,10 +33,16 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const reSendCode = useReSendCode();
   const create = useCreateAccount();
   const router = useRouter();
-  const dispatch = useDispatch()
-  const { source } = router.query;
-  const { userInfo, validCode, email: emailStore } = useSelector((state) => state)?.balance;
-  const { userInfo: newUserInfo, clientId } = useSelector((state) => state)?.auth;
+  const dispatch = useDispatch();
+  const { source, loanApplicationId } = router.query;
+  const {
+    userInfo,
+    validCode,
+    email: emailStore,
+  } = useSelector((state) => state)?.balance;
+  const { userInfo: newUserInfo, clientId } = useSelector(
+    (state) => state
+  )?.auth;
   const { selectedRequest } = useSelector((state) => state)?.requests;
   const successCode = validCode ? decrypt(validCode) : null;
   const [code, setCode] = useState([
@@ -52,22 +59,29 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const [forceUpdate, setForceUpdate] = useState(false);
   const [currentEmail, setCurrentEmail] = useState("");
 
+  const loanInsurancePolicyData =
+    useGetLoanInsurancePolicyInfo(loanApplicationId);
+  const { data } = loanInsurancePolicyData;
+
   useEffect(() => {
     switch (source) {
       case "quote":
-        setCurrentEmail(emailStore)
+        setCurrentEmail(emailStore);
         break;
       case "password":
-        setCurrentEmail(emailStore)
+        setCurrentEmail(emailStore);
         break;
       case "createAccount":
-        setCurrentEmail(newUserInfo.email)
+        setCurrentEmail(newUserInfo.email);
+        break;
+      case "confirmInfo":
+        setCurrentEmail(data?.data.loanInsurancePolicies.email);
         break;
       default:
-        setCurrentEmail(userInfo.email)
+        setCurrentEmail(userInfo.email);
         break;
     }
-  }, [source])
+  }, [source, data]);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -114,22 +128,22 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const email = hideEmailUsername(currentEmail);
 
   const focusInputs = (value, indx) => {
-    if (value !== "" && indx < (code.length - 1)) {
-      const nextInput = code[indx + 1]?.id
-      document.getElementById(nextInput).focus()
+    if (value !== "" && indx < code.length - 1) {
+      const nextInput = code[indx + 1]?.id;
+      document.getElementById(nextInput).focus();
     } else if (value === "" && indx !== 0) {
-      const nextInput = code[indx - 1]?.id
-      document.getElementById(nextInput).focus()
+      const nextInput = code[indx - 1]?.id;
+      document.getElementById(nextInput).focus();
     }
-  }
+  };
 
   const handleChange = (event, indx) => {
     const { value } = event.target;
     const newCode = [...code];
 
-    newCode[indx].value = value.replace(/\D/g, '');
+    newCode[indx].value = value.replace(/\D/g, "");
     setCode(newCode);
-    focusInputs(value, indx)
+    focusInputs(value, indx);
     setIsCodeSuccess(null);
     setIsResend(false);
     setForceUpdate(!forceUpdate);
@@ -140,7 +154,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
     reSendCode.reset();
     reSendCode.mutate(email, {
       onSuccess: (res) => {
-        dispatch(setValidCode(res.data.code))
+        dispatch(setValidCode(res.data.code));
         setIsCodeSuccess(null);
         setIsResend(true);
         setTimeLeft(180);
@@ -169,29 +183,33 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const urlBack = (sour) => {
     switch (sour) {
       case "quote":
-        router.push(`/ver-cotizacion?requestId=${selectedRequest}&email=${currentEmail}`);
+        router.push(
+          `/ver-cotizacion?requestId=${selectedRequest}&email=${currentEmail}`
+        );
         break;
       case "password":
-        router.push(`/establecer-contrasena-otp?requestId=${clientId}&email=${currentEmail}`);
+        router.push(
+          `/establecer-contrasena-otp?requestId=${clientId}&email=${currentEmail}`
+        );
         break;
-      case "createAccount": 
+      case "createAccount":
         router.push("/crear-cuenta");
         break;
       default:
         router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
         break;
     }
-  }
+  };
 
   const handleBack = () => {
-    urlBack(source)
+    urlBack(source);
   };
 
   const createAccount = () => {
     create.reset();
     create.mutate(
-      { 
-        ...newUserInfo, 
+      {
+        ...newUserInfo,
         validateClientOtp: new Date(),
       },
       {
@@ -207,12 +225,12 @@ const ValidateUser = ({ isMobile, isTablet }) => {
           });
           setErrorEmail({
             error: false,
-            message: ""
-          })
+            message: "",
+          });
         },
       }
     );
-  }
+  };
 
   const urlSuccess = (sour) => {
     switch (sour) {
@@ -223,19 +241,24 @@ const ValidateUser = ({ isMobile, isTablet }) => {
       case "password":
         router.push("/establecer-contrasena?source=otp");
         break;
-      case "createAccount": 
+      case "createAccount":
         createAccount();
+        break;
+      case "confirmInfo":
+        router.push(
+          `solicitar-poliza/confirma-tus-datos/?loanApplicationId=${loanApplicationId}`
+        );
         break;
       default:
         router.push("/cotiza-tu-ahorro/tu-credito");
         break;
     }
-  }
+  };
 
   const handleContinue = () => {
     const newDate = new Date();
     dispatch(setOtpDate(newDate));
-    
+
     urlSuccess(source);
   };
 
@@ -282,7 +305,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
                         isCodeSuccess === false
                           ? theme.colors.error
                           : theme.colors.black,
-                      fontFamily: theme.fonts.family.primaryBold
+                      fontFamily: theme.fonts.family.primaryBold,
                     }}
                   />
                 </WrapperCodeNumber>
@@ -340,30 +363,36 @@ const ValidateUser = ({ isMobile, isTablet }) => {
             >
               Reenviar código
             </LinkButton>
-            <Div m="46px 0 0 0" justify="space-between" width="100%">
-              <Button
-                font={theme.fonts.family.primaryBold}
-                background={theme.colors.green900}
-                border={theme.colors.yellow500}
-                hover={theme.colors.terciary50}
-                borderHover={theme.colors.yellow500}
-                colorHover={theme.colors.green900}
-                labelColor={theme.colors.yellow500}
-                labelWeight={theme.fonts.weight.bold}
-                size={theme.fonts.size.default2}
-                borderHeight={"3px solid"}
-                width={isMobile ? "56px" : "113px"}
-                mobileWidth={"56px"}
-                height={"40px"}
-                onClick={handleBack}
-              >
-                <Image
-                  alt="arrow"
-                  src={arrowBack}
-                  style={{ marginRight: "4px" }}
-                />
-                {isMobile ? "" : "Atrás"}
-              </Button>
+            <Div
+              m="46px 0 0 0"
+              justify={source !== "confirmInfo" ? "space-between" : "center"}
+              width="100%"
+            >
+              {source !== "confirmInfo" && (
+                <Button
+                  font={theme.fonts.family.primaryBold}
+                  background={theme.colors.green900}
+                  border={theme.colors.yellow500}
+                  hover={theme.colors.terciary50}
+                  borderHover={theme.colors.yellow500}
+                  colorHover={theme.colors.green900}
+                  labelColor={theme.colors.yellow500}
+                  labelWeight={theme.fonts.weight.bold}
+                  size={theme.fonts.size.default2}
+                  borderHeight={"3px solid"}
+                  width={isMobile ? "56px" : "113px"}
+                  mobileWidth={"56px"}
+                  height={"40px"}
+                  onClick={handleBack}
+                >
+                  <Image
+                    alt="arrow"
+                    src={arrowBack}
+                    style={{ marginRight: "4px" }}
+                  />
+                  {isMobile ? "" : "Atrás"}
+                </Button>
+              )}
               <Button
                 font={theme.fonts.family.primaryBold}
                 background={theme.colors.yellow500}

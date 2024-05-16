@@ -25,7 +25,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
   const router = useRouter();
   const updatePassword = useUpdatePassword();
 
-  const { ClientId } = getUserInfo();
+  const { nameid } = getUserInfo();
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -167,7 +167,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
 
   const handleSave = () => {
     const formData = {
-      userId: ClientId,
+      userId: nameid,
       currentPassword: encrypt(passwordForm?.oldPassword),
       password: encrypt(passwordForm?.password),
       confirmPassword: encrypt(passwordForm?.confirmPassword),
@@ -243,8 +243,8 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
             Cambia tu contraseña
           </Text>
         )}
-        <Grid container spacing={2} margin={!isMobile && "16px 0 0 0"}>
-          <Grid item xs={12}>
+        <Grid container margin={!isMobile && "16px 0 0 0"}>
+          <Grid item xs={12} margin="0 0 16px 0">
             <TextField
               label={"Constraseña actual*"}
               {...textFieldProps}
@@ -267,7 +267,7 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} margin="0 0 16px 0">
             <TextField
               label={"Nueva constraseña*"}
               {...textFieldProps}

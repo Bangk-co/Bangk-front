@@ -17,8 +17,9 @@ const CreditData = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const create = useCreateClient();
-  const { userInfo, initData, termsDate, treatPersonalDataDate, otpDate } =
-    useSelector((state) => state)?.balance;
+  const { userInfo, initData, termsDate, otpDate } = useSelector(
+    (state) => state
+  )?.balance;
   const [isHovered, setIsHovered] = useState(false);
   const banksList = useGetBanks();
   const creditTypeList = useGetCreditType();
@@ -134,8 +135,7 @@ const CreditData = ({ isMobile, isTablet }) => {
         ...userInfo,
         ...creditInfo,
         ...initData,
-        termsDate: termsDate,
-        dataPPDate: treatPersonalDataDate,
+        treatPersonalDataDate: termsDate,
         bankStatementFile: bankStatementFile,
         identificationFile: identificationFile,
         validateClientOtp: otpDate,

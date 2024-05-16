@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Tabs } from "@/components/Common/Tabs";
 import { Tab } from "@/components/Common/Tabs/Tab";
-import { Text, Card, Div, Row, Col } from "@/styles/Common";
-import { HeaderInsurace, HeaderInsuranceDetail } from "./styles";
-import { Grid, IconButton } from "@mui/material";
+import { Text, Div, Row, Col } from "@/styles/Common";
+import { HeaderInsuranceDetail } from "./styles";
+import { Grid } from "@mui/material";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
@@ -24,8 +24,8 @@ import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import useGetBanks from "@/hooks/Common/useGetBanks";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
+import useGetLoanApplicationInfo from "@/hooks/Customers/useGetLoanApplicationInfo";
 import {
-  getUserInfo,
   renderDocumentStateDiv,
   formattedDate,
   formattedPrice,
@@ -36,11 +36,8 @@ import { InsuranceHistory } from "./InsuranceHistory";
 
 const InsuranceDetail = ({ isMobile }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
-  const { ClientId } = getUserInfo();
   const { policy } = useSelector((state) => state);
-  console.log("policy", policy);
 
   const [expandDetail, setExpandDetail] = useState(isMobile ? false : true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -53,6 +50,18 @@ const InsuranceDetail = ({ isMobile }) => {
       router.push("/plataforma-cliente/seguros");
     }
   }, [policy?.selectedPolicy]);
+
+  const applicationInfo = useGetLoanApplicationInfo(
+    policy?.selectedPolicy?.loanApplicationId
+  );
+  const { data: dataApplication, isSuccess: isSuccessApplication } =
+    applicationInfo;
+  const [application, setApplication] = useState();
+  useEffect(() => {
+    if (isSuccessApplication) {
+      setApplication(dataApplication?.data?.result[0]);
+    }
+  }, [dataApplication, isSuccessApplication]);
 
   const history = useGetHistory(policy?.selectedPolicy?.loanApplicationId);
   const { data: dataHistory, isSuccess: isSuccessHistory } = history;
@@ -124,32 +133,36 @@ const InsuranceDetail = ({ isMobile }) => {
   const insuranceData = [
     {
       label: "Estado de solicitud",
-      content: renderDocumentStateDiv("Revisión de extracto"),
+      content: renderDocumentStateDiv(application?.stateName),
       width: isMobile ? "135px" : "173px",
     },
     {
       label: "Fecha de solicitud",
-      content: formattedDate(new Date()),
+      content: formattedDate(application?.creationDate),
       width: isMobile ? "135px" : "150px",
     },
     {
       label: "Fecha de vencimiento",
-      content: formattedDate(new Date()),
+      content: formattedDate(
+        new Date(application?.creationDate).setFullYear(
+          new Date(application?.creationDate).getFullYear() + 1
+        )
+      ),
       width: isMobile ? "135px" : "150px",
     },
     {
       label: "Monto del crédito",
-      content: formattedPrice(1111111),
+      content: formattedPrice(application?.loanBalance),
       width: isMobile ? "135px" : "150px",
     },
     {
       label: "Monto prima anual de Bangk",
-      content: formattedPrice(222222),
+      content: formattedPrice(application?.yearlyFee),
       width: isMobile ? "135px" : "165px",
     },
     {
       label: "Asesor",
-      content: "nombre asesor",
+      content: application?.reviewerName,
       width: isMobile ? "135px" : "150px",
     },
     {
@@ -166,7 +179,14 @@ const InsuranceDetail = ({ isMobile }) => {
               overflow: "hidden",
             }}
           >
-            <Image src={backIcon} alt="bankLogo" width={24} height={24} />
+            {application?.iconsBanksUrl && (
+              <Image
+                src={application?.iconsBanksUrl}
+                alt="bankLogo"
+                width={24}
+                height={24}
+              />
+            )}
           </Div>
           <Text
             color={theme.colors.neutralGray900}
@@ -176,11 +196,7 @@ const InsuranceDetail = ({ isMobile }) => {
             mt="8px"
             mb="8px"
           >
-            {/* {
-                banksOptions.find((ele) => ele.value === dataLoanInfo?.bankId)
-                  ?.label
-              } */}
-            Bancolombia
+            {application?.bankName}
           </Text>
         </Row>
       ),
@@ -282,7 +298,9 @@ const InsuranceDetail = ({ isMobile }) => {
                 weight={theme.fonts.weight.semibold}
                 align="left"
               >
-                Poliza
+                {policy?.selectedPolicy?.policyId === null
+                  ? `Solicitud # ${application?.loanApplicationId}`
+                  : `Póliza # ${policy?.selectedPolicy?.policyId}`}
               </Text>
               <Text
                 size={
@@ -293,7 +311,7 @@ const InsuranceDetail = ({ isMobile }) => {
                 color={theme.colors.gray900}
                 font={theme.fonts.family.primaryBold}
               >
-                Credito de
+                {`Credito ${application?.loanTypeName}`}
               </Text>
             </Col>
           </Div>

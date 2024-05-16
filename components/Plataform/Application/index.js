@@ -52,7 +52,9 @@ const Application = ({ isMobile, isTablet }) => {
   const { data: dataInsurers, isSuccess: isSuccessInsurers } = insurers;
   const quoteRateData = useGetQuoteRate();
   const { data: dataQuoteRate, isSuccess: isSuccessQuoteRate } = quoteRateData;
-  const { data: dataUser, isSuccess: isSuccessUser } = useGetClientInfo(selectedClient.idClient);
+  const { data: dataUser, isSuccess: isSuccessUser } = useGetClientInfo(
+    selectedClient.idClient
+  );
 
   const { applications } = useSelector((state) => state);
 
@@ -88,6 +90,7 @@ const Application = ({ isMobile, isTablet }) => {
   const [insurersOptions, setInsurersOptions] = useState([]);
   const [quoteRate, setQuoteRate] = useState(null);
   const [birthdate, setBirthdate] = useState(null);
+  const [allianzRule, setAllianzRule] = useState(false);
 
   const tabs = [
     {
@@ -278,6 +281,7 @@ const Application = ({ isMobile, isTablet }) => {
   useEffect(() => {
     if (isSuccessUser) {
       setBirthdate(dataUser.data.clientsInfo[0].birthDate);
+      setAllianzRule(dataUser.data.clientsInfo[0].clientAge);
     }
   }, [isSuccessUser, dataUser]);
 
@@ -290,22 +294,26 @@ const Application = ({ isMobile, isTablet }) => {
         today.setHours(0, 0, 0, 0);
         const birthDate = new Date(birthdate);
         birthDate.setHours(0, 0, 0, 0);
-        
+
         const ageMilliseconds = today - birthDate;
         const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
         const age = Math.floor(ageMilliseconds / millisecondsPerYear);
-    
+
         return age;
       };
 
       if (ageCalulate() < 50) {
-        annualRate = dataQuoteRate?.data?.groupSettings.find((ele) => ele.name === "AnnualRate1")?.code
+        annualRate = dataQuoteRate?.data?.groupSettings.find(
+          (ele) => ele.name === "AnnualRate1"
+        )?.code;
       } else {
-        annualRate = dataQuoteRate?.data?.groupSettings.find((ele) => ele.name === "AnnualRate2")?.code
+        annualRate = dataQuoteRate?.data?.groupSettings.find(
+          (ele) => ele.name === "AnnualRate2"
+        )?.code;
       }
       setQuoteRate(annualRate);
     }
-  }, [isSuccessQuoteRate, dataQuoteRate, birthdate])
+  }, [isSuccessQuoteRate, dataQuoteRate, birthdate]);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -377,6 +385,7 @@ const Application = ({ isMobile, isTablet }) => {
             insurersOptions={insurersOptions}
             quoteRate={quoteRate}
             application={applications?.selectedApplication}
+            allianzRule={allianzRule}
           />
         )}
         {selectedTab === 1 && (

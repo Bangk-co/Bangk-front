@@ -27,6 +27,7 @@ export const DrawerQuote = ({
   saveValue,
   handleSaveQuote,
   isLoading,
+  allianzRule,
 }) => {
   const [sendButton, setSendButton] = useState(false);
   const [loanData, setLoanData] = useState([]);
@@ -34,9 +35,9 @@ export const DrawerQuote = ({
   useEffect(() => {
     setLoanData([
       { label: "Tipo de crédito", value: loanInfo?.loanType },
-      { label: "Saldo del crédito", value: Number(loanInfo?.loanBalance )},
-    ])
-  }, [loanInfo])
+      { label: "Saldo del crédito", value: Number(loanInfo?.loanBalance) },
+    ]);
+  }, [loanInfo]);
 
   const titleProps = {
     font: theme.fonts.family.primaryMedium,
@@ -105,6 +106,7 @@ export const DrawerQuote = ({
         name={"insurer"}
         value={insurer}
         onChange={handleSelectInsurer}
+        disabled={allianzRule}
       >
         {insurersOptions.map((ele, indx) => (
           <MenuItem

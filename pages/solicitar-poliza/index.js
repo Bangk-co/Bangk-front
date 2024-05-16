@@ -25,15 +25,13 @@ import useGetDiseases from "@/hooks/Common/useGetDiseases";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useSaveLoanInsurancePolicy from "@/hooks/Customers/useSaveLoanInsurancePolicy";
 import toast from "react-hot-toast";
-import {
-  getDiseasesIds,
-  getDiseasesNames,
-} from "@/utilities/helpers";
+import { getDiseasesIds, getDiseasesNames } from "@/utilities/helpers";
 import { setRequestInfo } from "@/store/requests";
 import useUpdateStatusPolicy from "@/hooks/Customers/useUpdateStatusPolicy";
 import useGetRelationships from "@/hooks/Common/useGetRelationships";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import dayjs from "dayjs";
+import { setOtpDate } from "@/store/balance";
 
 const RequestPolicy = ({ isMobile }) => {
   const dispatch = useDispatch();
@@ -41,6 +39,7 @@ const RequestPolicy = ({ isMobile }) => {
   const save = useSaveLoanInsurancePolicy();
   const updateStatus = useUpdateStatusPolicy();
   const { requestInfo } = useSelector((state) => state)?.requests;
+  const { otpDate } = useSelector((state) => state)?.balance;
   const countriesList = useGetCountries();
   const { data, isSuccess } = countriesList;
   const [countriesOptions, setCountriesOptions] = useState([]);
@@ -63,7 +62,8 @@ const RequestPolicy = ({ isMobile }) => {
   const { data: dataDocument, isSuccess: isSuccessDocument } = documentType;
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
   const relationship = useGetRelationships();
-  const { data: dataRelationship, isSuccess: isSuccessRelationship } = relationship;
+  const { data: dataRelationship, isSuccess: isSuccessRelationship } =
+    relationship;
   const [relationshipsOptions, setRelationshipsOptions] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [checks, setChecks] = useState({
@@ -109,7 +109,7 @@ const RequestPolicy = ({ isMobile }) => {
     convicted: null,
     lifeEnsure: null,
     beneficiaries: null,
-    beneficiary: []
+    beneficiary: [],
   });
   const [diseases, setDiseases] = useState(
     getDiseasesNames(healthInfo.diseases, diseasesOptions)
@@ -122,17 +122,18 @@ const RequestPolicy = ({ isMobile }) => {
   const { data: dataCities, isSuccess: isSuccessCities } = citiesList;
   const [citiesOptions, setCitiesOptions] = useState([]);
   const [loanTypeId, setLoanTypeId] = useState(null);
-  const [aceptanceOriginOfFundsDate, setAceptanceOriginOfFundsDate] = useState(null);
+  const [aceptanceOriginOfFundsDate, setAceptanceOriginOfFundsDate] =
+    useState(null);
 
   const steps = [
     "Datos personales",
     "Datos Financieros",
     "Datos de tu salud",
-    "Datos adicionales"
+    "Datos adicionales",
   ];
 
   useEffect(() => {
-    setLoanTypeId(requestInfo.loanTypeId)
+    setLoanTypeId(requestInfo.loanTypeId);
     setUserInfo({
       birthCountryId: requestInfo.birthCountryId,
       birthStateId: requestInfo.birthStateId,
@@ -256,15 +257,26 @@ const RequestPolicy = ({ isMobile }) => {
     };
     const newAdditionalInfo = {
       ...additionalInfo,
-      beneficiary: additionalInfo.beneficiaries === false ? [] : [...additionalInfo.beneficiary]
-    }
+      beneficiary:
+        additionalInfo.beneficiaries === false
+          ? []
+          : [...additionalInfo.beneficiary],
+    };
 
     if (activeStep === 3) {
-      const percentage = additionalInfo.beneficiary.reduce((total, obj) => total + (Number(obj.percentInherit) || 0), 0);
+      const percentage = additionalInfo.beneficiary.reduce(
+        (total, obj) => total + (Number(obj.percentInherit) || 0),
+        0
+      );
       if (additionalInfo.beneficiaries === true && percentage !== 100) {
-        toast.custom(<ToastErrorClient message={'El porcentaje de tus herederos debe dar 100%'} />, {
-          duration: 1000,
-        });
+        toast.custom(
+          <ToastErrorClient
+            message={"El porcentaje de tus herederos debe dar 100%"}
+          />,
+          {
+            duration: 1000,
+          }
+        );
       } else {
         save.reset();
         save.mutate(
@@ -275,17 +287,21 @@ const RequestPolicy = ({ isMobile }) => {
               ...financialInfo,
               ...newHealthInfo,
               ...newAdditionalInfo,
-              aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
+              aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+                ? dayjs(aceptanceOriginOfFundsDate)
+                : null,
+              otpDateForms: dayjs(otpDate),
             },
           },
           {
             onSuccess: () => {
+              dispatch(setOtpDate(null));
               updateStatus.reset();
               updateStatus.mutate(
                 { loanApplicationId: requestInfo.loanApplicationId },
                 {
                   onSuccess: () => {
-                    router.push("/solicitar-poliza/solicitud-exitosa")
+                    router.push("/solicitar-poliza/solicitud-exitosa");
                   },
                   onError: (err) => {
                     err.response.data.errors.map((error) => {
@@ -313,13 +329,17 @@ const RequestPolicy = ({ isMobile }) => {
             ...financialInfo,
             ...newHealthInfo,
             ...newAdditionalInfo,
-            aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate ? dayjs(aceptanceOriginOfFundsDate) : null,
+            aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+              ? dayjs(aceptanceOriginOfFundsDate)
+              : null,
+            otpDateForms: dayjs(otpDate),
           },
         },
         {
           onSuccess: (data) => {
-            dispatch(setRequestInfo(data?.data.result))
-            setActiveStep(activeStep + 1)
+            dispatch(setOtpDate(null));
+            dispatch(setRequestInfo(data?.data.result));
+            setActiveStep(activeStep + 1);
           },
           onError: (err) => {
             err.response.data.errors.map((error) => {
@@ -346,21 +366,24 @@ const RequestPolicy = ({ isMobile }) => {
       hivActive: healthInfo.hivActive,
       plannedMedicalProcidure: healthInfo.plannedMedicalProcidure,
       disability: healthInfo.disability,
-    }
+    };
 
     if (diseases.length > 0) {
       HealthData.diseasesMoreInfo = healthInfo.diseasesMoreInfo;
     }
 
     if (healthInfo.plannedMedicalProcidure) {
-      HealthData.plannedMedicalProcidureMoreInfo = healthInfo.plannedMedicalProcidureMoreInfo;
+      HealthData.plannedMedicalProcidureMoreInfo =
+        healthInfo.plannedMedicalProcidureMoreInfo;
     }
 
     if (healthInfo.disability) {
       HealthData.disabilityMoreInfo = healthInfo.disabilityMoreInfo;
     }
-    return Object.values(HealthData).some((value) => value === null || value === "");
-  }
+    return Object.values(HealthData).some(
+      (value) => value === null || value === ""
+    );
+  };
 
   const validationAdditional = () => {
     const additionalData = {
@@ -370,15 +393,20 @@ const RequestPolicy = ({ isMobile }) => {
     };
 
     if (additionalInfo.beneficiaries === true) {
-      return Object.values(additionalData).some(value => value === null) ||
-      !additionalInfo.beneficiary.every(obj =>
-        Object.keys(obj)
-            .filter(key => key !== "id" && key !== "loanInsurancePolicyId")
-            .every(key => obj[key] !== null && obj[key] !== ""));
+      return (
+        Object.values(additionalData).some((value) => value === null) ||
+        !additionalInfo.beneficiary.every((obj) =>
+          Object.keys(obj)
+            .filter((key) => key !== "id" && key !== "loanInsurancePolicyId")
+            .every((key) => obj[key] !== null && obj[key] !== "")
+        )
+      );
     } else {
-      return Object.values(additionalData).some((value) => value === null || value === "");
+      return Object.values(additionalData).some(
+        (value) => value === null || value === ""
+      );
     }
-  }
+  };
 
   const validationFinancial = () => {
     const financialData = {
@@ -386,7 +414,7 @@ const RequestPolicy = ({ isMobile }) => {
       monthlyExpenses: financialInfo.monthlyExpenses,
       assetValue: financialInfo.assetValue,
       liabilitiesValue: financialInfo.liabilitiesValue,
-    }
+    };
     if (
       requestInfo.loanBalance > 137227300 ||
       requestInfo.monthlyCostInsurance > 6089880
@@ -397,8 +425,10 @@ const RequestPolicy = ({ isMobile }) => {
       financialData.check3 = checks.check3;
     }
 
-    return Object.values(financialData).some((value) => value === null || value === false || value === "");
-  }
+    return Object.values(financialData).some(
+      (value) => value === null || value === false || value === ""
+    );
+  };
 
   const validForm = (currentStep) => {
     switch (currentStep) {
@@ -409,10 +439,10 @@ const RequestPolicy = ({ isMobile }) => {
         return isFormValid;
       case 1:
         return validationFinancial();
-      case 2: 
+      case 2:
         return validationHealth();
-      case 3: 
-        return validationAdditional(); 
+      case 3:
+        return validationAdditional();
       default:
         break;
     }
@@ -422,8 +452,8 @@ const RequestPolicy = ({ isMobile }) => {
     if (event.key === "Enter") {
       const button = document.getElementById("buttonRef");
       if (button) {
-          event.preventDefault();
-          button.focus();
+        event.preventDefault();
+        button.focus();
       }
     }
   };
@@ -439,7 +469,11 @@ const RequestPolicy = ({ isMobile }) => {
       <Header isMobile={isMobile} />
       <WrapperPolicy style={{ padding: 0, alignItems: "center" }}>
         {isMobile ? (
-          <MobileStepperPolicy loanTypeId={loanTypeId} steps={steps} activeStep={activeStep} />
+          <MobileStepperPolicy
+            loanTypeId={loanTypeId}
+            steps={steps}
+            activeStep={activeStep}
+          />
         ) : (
           <Col width="100%">
             <Div
@@ -498,7 +532,6 @@ const RequestPolicy = ({ isMobile }) => {
             setDiseases={setDiseases}
             focusButton={focusButton}
           />
-          
         )}
         {activeStep === 3 && (
           <Step5

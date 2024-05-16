@@ -68,6 +68,10 @@ const Insurance = ({ isMobile }) => {
     };
   };
 
+  const handleCreateEndorsement = () => {
+    router.push("/cotiza-tu-ahorro/tu-credito?source=create")
+  };
+
   return (
     <WraperInsurance>
       {isMobile ? (
@@ -146,6 +150,7 @@ const Insurance = ({ isMobile }) => {
                 borderHover={theme.colors.green900}
                 width={isMobile ? "282px" : "300px"}
                 style={{ alignSelf: "center" }}
+                onClick={handleCreateEndorsement}
               >
                 Nueva solicitud de endoso
               </Button>
@@ -337,6 +342,7 @@ const Insurance = ({ isMobile }) => {
                 color={theme.colors.green900}
                 font={theme.fonts.family.primaryBold}
                 style={{ padding: isMobile ? "0 60px" : "0 10px" }}
+                onClick={handleCreateEndorsement}
               >
                 Nueva Solicitud de endoso
               </Text>

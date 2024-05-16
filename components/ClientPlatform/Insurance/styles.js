@@ -30,6 +30,7 @@ export const HeaderInsuranceMobile = styled.div`
 
 export const WrapperCard = styled.div`
   display: flex;
+  flex-direction: row;
   width: 560px;
   height: 279px;
   justify-content: center;
@@ -38,4 +39,12 @@ export const WrapperCard = styled.div`
   border-radius: 16px;
   background: ${theme.colors.primary25};
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.08);
+
+  @media (max-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+    .breakpoints.md}) {
+      flex-direction: column;
+      width: 80%;
+      height: 381px;
+      margin-top: 24px;
+    }
 `;

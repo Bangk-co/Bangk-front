@@ -39,11 +39,11 @@ const Insurance = ({ isMobile }) => {
     router.back();
   };
 
-  const handleDetail = (policyId) => {
+  const handleDetail = (policyId, loanApplicationId) => {
     dispatch(
       setSelectedPolicyInformation({
         policyId: policyId,
-        loanApplicationId: policyId, //TODO validate loanApplicationId
+        loanApplicationId: loanApplicationId,
       })
     );
     router.push("/plataforma-cliente/seguros/detalle-seguro");
@@ -119,7 +119,7 @@ const Insurance = ({ isMobile }) => {
         {insuranceList.length === 0 ? (
           <WrapperCard>
             <Div>
-              <Image alt="woman" src={womanIcon} width="167px" />
+              <Image alt="woman" src={womanIcon} width={isMobile ? "137px" : "167px"} />
             </Div>
             <Div direction="column" width="318px">
               <Text
@@ -131,8 +131,24 @@ const Insurance = ({ isMobile }) => {
               >
                 Aún no tienes Solicitudes de Endoso con Bankg. 
               </Text>
-              <Text></Text>
-              <Button></Button>
+              <Text
+                color={theme.colors.green900}
+                font={theme.fonts.family.primaryMedium}
+                size={theme.fonts.size.sm}
+                lineHeight={"20px"}
+                mb="22px"
+              >
+                ¡Haz tu solicitud hoy mismo y descubre todo lo que tenemos para ti!
+              </Text>
+              <Button
+                background={theme.colors.green900}
+                hover={theme.colors.green900}
+                borderHover={theme.colors.green900}
+                width={isMobile ? "282px" : "300px"}
+                style={{ alignSelf: "center" }}
+              >
+                Nueva solicitud de endoso
+              </Button>
             </Div>
           </WrapperCard>
         ) : (
@@ -159,10 +175,9 @@ const Insurance = ({ isMobile }) => {
                       font={theme.fonts.family.primary}
                       weight={theme.fonts.weight.semibold}
                     >
-                      {insurance.stateName !== "Poliza Emitida"
-                        ? `Numero de solicitud ${insurance.policyId}`
-                        : `Numero de póliza ${insurance.policyId}`}{" "}
-                      {/* TODO validate applicationId */}
+                      {insurance.policyId === null
+                        ? `Numero de solicitud ${insurance.loanApplicationId}`
+                        : `Numero de póliza ${insurance.policyId}`}
                     </Text>
                     <Text
                       size={
@@ -214,8 +229,8 @@ const Insurance = ({ isMobile }) => {
                       color={theme.colors.gray900}
                       font={theme.fonts.family.primary}
                     >
-                      {insurance?.applicationDate
-                        ? formattedDate(insurance.applicationDate)
+                      {insurance?.creationDateLoanApplication
+                        ? formattedDate(insurance.creationDateLoanApplication)
                         : "--"}
                     </Text>
                   </Col>
@@ -227,8 +242,8 @@ const Insurance = ({ isMobile }) => {
                   weight={theme.fonts.weight.semibold}
                 >
                   {`Días restantes: ${
-                    insurance?.applicationDate
-                      ? calculateDaysRemaning(insurance.applicationDate)
+                    insurance?.creationDatePolicy
+                      ? calculateDaysRemaning(insurance.creationDatePolicy)
                           .daysRemaining
                       : "--"
                   }`}
@@ -237,8 +252,8 @@ const Insurance = ({ isMobile }) => {
                   variant="determinate"
                   height="10px"
                   value={
-                    insurance?.applicationDate
-                      ? calculateDaysRemaning(insurance.applicationDate).progress
+                    insurance?.creationDatePolicy
+                      ? calculateDaysRemaning(insurance.creationDatePolicy).progress
                       : 0
                   }
                   sx={{ width: "100%" }}
@@ -250,9 +265,10 @@ const Insurance = ({ isMobile }) => {
                   weight={theme.fonts.weight.regular}
                 >
                   {`Vence: ${
-                    insurance?.applicationDate
+                    insurance?.creationDatePolicy
                       ? formattedDate(
-                          calculateDaysRemaning(insurance.applicationDate).dueDate
+                          calculateDaysRemaning(insurance.creationDatePolicy)
+                            .dueDate
                         )
                       : "--"
                   }`}
@@ -275,7 +291,9 @@ const Insurance = ({ isMobile }) => {
                     font={theme.fonts.family.primaryBold}
                     size={theme.fonts.size.default2}
                     radius={"40px"}
-                    onClick={() => handleDetail(insurance.policyId)}
+                    onClick={() =>
+                      handleDetail(insurance.policyId, insurance.loanApplicationId)
+                    }
                   >
                     Ver Detalle
                   </Button>

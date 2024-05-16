@@ -27,3 +27,15 @@ export const HeaderInsuranceMobile = styled.div`
   width: 100%;
   box-shadow: 4px 4px 8px 0px #00000014;
 `;
+
+export const WrapperCard = styled.div`
+  display: flex;
+  width: 560px;
+  height: 279px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 16px;
+  background: ${theme.colors.primary25};
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.08);
+`;

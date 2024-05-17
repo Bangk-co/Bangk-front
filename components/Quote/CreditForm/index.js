@@ -185,7 +185,7 @@ export const CreditForm = ({
             color={theme.colors.white}
             size={theme.fonts.size.sm}
           >
-            Para poder brindarte información precisa carga <span style={{ color: theme.colors.yellow500, fontFamily: theme.fonts.family.primaryBold }}>el último extracto de tu crédito.</span>
+            Para poder brindarte información precisa, carga <span style={{ color: theme.colors.yellow500, fontFamily: theme.fonts.family.primaryBold }}>el último extracto de tu crédito.</span>
           </Text>
         </Grid>
         

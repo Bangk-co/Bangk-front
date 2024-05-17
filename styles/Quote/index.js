@@ -57,9 +57,10 @@ export const WrapperWapp = styled.div`
 `
 
 export const WrapperWappCal = styled.div`
-  position: absolute;
+  position: fixed;
   top: 610px;
   right: 38px;
+  z-index: 5;
 `
 
 export const WrapperInsurance = styled.div`

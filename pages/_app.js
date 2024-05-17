@@ -37,11 +37,6 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
           }
         }
       },
-      MuiPickersDay: {
-        defaultProps: {
-          selected: 'Fecha seleccionada', // Cambia el texto aquí
-        },
-      },
     },
   });
 

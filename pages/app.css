@@ -30,4 +30,8 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root {
+    align-content: center !important;
+  }
 }

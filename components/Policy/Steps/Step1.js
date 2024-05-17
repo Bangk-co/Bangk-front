@@ -9,6 +9,7 @@ import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
 import useGetStates from "@/hooks/Common/useGetStates";
 import useGetCities from "@/hooks/Common/useGetCities";
+import { Autocomplete } from "@/components/Common/Autocomplete";
 
 export const Step1 = ({
   isMobile,
@@ -28,6 +29,7 @@ export const Step1 = ({
   const residenceCitiesList = useGetCities(formInfo.residenceStateId)
   const { data: dataResidenceCities, isSuccess: isSuccessResidenceCities } = residenceCitiesList
   const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([])
+  const [forceUpdate, setForceUpdate] = useState(false);
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
 
@@ -270,18 +272,35 @@ export const Step1 = ({
           />
         </Grid>
         <Grid item md={12} xs={12}>
-          <Select
-            {...inputsProps}
-            label={"Actividad económica*"}
+          <Autocomplete
+            disablePortal
+            noOptionsText="No hay opciones"
+            labelSize={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
+            labelColor={theme.colors.white}
+            labelFont={theme.fonts.family.primaryMedium}
+            labelWeight={theme.fonts.weight.medium}
+            fontColor={theme.colors.neutralGray900}
+            font={theme.fonts.family.primary}
+            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+            border={theme.colors.primary25}
             width={"100%"}
             name="occupationActivityId"
-            value={formInfo.occupationActivityId}
-            onChange={handleSelect}
-          >
-            {economicActivityOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
-            ))}
-          </Select>
+            label="Actividad económica*"
+            options={economicActivityOptions}
+            getOptionLabel={(option) => `${option.label}`}
+            value={economicActivityOptions.find((ele) => ele.id === formInfo.occupationActivityId)}
+            onInputChange={(event, value) => {
+              setFormInfo({...formInfo, occupationActivityId: economicActivityOptions.find((ele) => ele.label === value)?.id});
+              setForceUpdate(!forceUpdate);
+            }}
+            renderInput={(params) => 
+              <TextField 
+                {...params} 
+                {...inputsProps} 
+                value={formInfo.occupationActivityId}
+              />
+            }
+          />
         </Grid>
         <Grid item md={12} xs={12}>
           <RadioGroup

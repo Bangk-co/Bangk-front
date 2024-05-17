@@ -64,6 +64,7 @@ const SetPasswordSuccess = ({ isMobile, isTablet }) => {
             weight={theme.fonts.weight.bold}
             color={theme.colors.gray900}
             mt="40px"
+            style={{ textAlign: "center" }}
           >
             Tu contraseña se ha creado <span style={{ color: theme.colors.orange }}>exitosamente</span>
           </Text>

@@ -274,7 +274,7 @@ export const historyStatus = {
   CotizaciónAceptada: "Cotización aceptada",
   FormulariosDiligenciados: "Formularios diligenciados",
   FormulariosValidados: "Formularios validados",
-  EstufioSarlaft: "Estudio Sarlaft",
+  EstudioSarlaft: "Estudio Sarlaft",
   EstudioListaRestrictivaSBS: "Estudio lista restrictiva SBS",
   PolizaEmitida: "Póliza emitida",
   PolizaPagada: "Póliza pagada",

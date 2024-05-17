@@ -290,13 +290,12 @@ const InsuranceDetail = ({ isMobile }) => {
         <Row justify="space-between" align="center" gap="8px">
           <Div gap="8px">
             <Image alt="endorsement" src={endorsement} width={40} height={40} />
-            <Col justify="center">
+            <Col justify="center" align="left">
               <Text
                 size={theme.fonts.size.xs}
                 color={theme.colors.neutralGray500}
                 font={theme.fonts.family.primary}
                 weight={theme.fonts.weight.semibold}
-                align="left"
               >
                 {policy?.selectedPolicy?.policyId === null
                   ? `Solicitud # ${application?.loanApplicationId}`
@@ -370,7 +369,9 @@ const InsuranceDetail = ({ isMobile }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 && <InsuranceHistory historyInfo={historyInfo} />}
+        {selectedTab === 0 && (
+          <InsuranceHistory historyInfo={historyInfo} isMobile={isMobile} />
+        )}
         {selectedTab === 1 && <Text>Formulario</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}

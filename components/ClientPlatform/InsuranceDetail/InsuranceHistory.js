@@ -16,7 +16,7 @@ import cancelIcon from "@/assets/icons/cancel-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
 
-export const InsuranceHistory = ({ historyInfo }) => {
+export const InsuranceHistory = ({ historyInfo, isMobile }) => {
   const dispatch = useDispatch();
   const { policy } = useSelector((state) => state);
 
@@ -100,7 +100,10 @@ export const InsuranceHistory = ({ historyInfo }) => {
           <Div key={indx} direction="column" align="center">
             <Image alt="icon" src={designStepper(ele.statusCard)?.icon} />
             {indx < historyInfo.length - 1 && (
-              <DashedLine color={designStepper(ele.statusCard)?.lineColor} />
+              <DashedLine
+                color={designStepper(ele.statusCard)?.lineColor}
+                isMobile={isMobile}
+              />
             )}
           </Div>
         ))}
@@ -156,7 +159,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
               )}
             <Grid container>
               <Grid item md={2.5}>
-                <Col gap="16px">
+                <Col gap="16px" m={isMobile ? "0 0 24px 0" : "0"}>
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}
@@ -175,7 +178,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
                 </Col>
               </Grid>
               <Grid item md={2}>
-                <Col gap="16px">
+                <Col gap="16px" m={isMobile ? "0 0 24px 0" : "0"}>
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}
@@ -194,7 +197,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
                 </Col>
               </Grid>
               <Grid item md={5}>
-                <Col gap="16px">
+                <Col gap="16px" m={isMobile ? "0 0 24px 0" : "0"}>
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}

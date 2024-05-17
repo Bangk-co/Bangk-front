@@ -33,7 +33,7 @@ export const Card = styled.div`
 
 export const DashedLine = styled.div`
   border-left: ${(props) => `2px dashed ${props.color}`};
-  height: 185px;
+  height: ${(props) => (props.isMobile ? "205px" : "185px")};
 `;
 
 export const WrapperClose = styled.div`

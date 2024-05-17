@@ -34,4 +34,8 @@
   .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root {
     align-content: center !important;
   }
+
+  .MuiInputAdornment-root {
+    margin-top: -2px !important;
+  }
 }

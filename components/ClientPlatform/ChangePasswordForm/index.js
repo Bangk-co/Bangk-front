@@ -175,17 +175,19 @@ const ChangePasswordForm = ({ isMobile, setShowModal }) => {
     updatePassword.reset();
     updatePassword.mutate(formData, {
       onSuccess: () => {
-        setShowModal(false);
-        isMobile
-          ? toast.custom(
-              <ToastSuccess
-                message={"La contraseña se han modificado con éxito"}
-                color={theme.colors.white}
-                background={theme.colors.primary300}
-              />,
-              { duration: 1000 }
-            )
-          : toast.success("La contraseña se han modificado con éxito");
+        if (isMobile) {
+          toast.custom(
+            <ToastSuccess
+              message={"La contraseña se han modificado con éxito"}
+              color={theme.colors.white}
+              background={theme.colors.primary300}
+            />,
+            { duration: 1000 }
+          );
+        } else {
+          setShowModal(false);
+          toast.success("La contraseña se han modificado con éxito");
+        }
       },
       onError: (err) => {
         err.response.data.map((error) => {

@@ -92,8 +92,21 @@ export const UserForm = ({
         weight={theme.fonts.weight.bold}
         lineHeight={isMobile ? "32px" : "44px"}
       >
-        Iniciemos conociendo al <br></br>
-        <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>titular del crédito</span>
+        {isMobile ? (
+          <>
+            Iniciemos conociendo al{" "}
+            <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.yellow500 }}>
+              titular del crédito
+            </span>
+          </>
+        ) : (
+          <>
+            Iniciemos conociendo al<br />
+            <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.yellow500 }}>
+              titular del crédito
+            </span>
+          </>
+        )}
       </Text>
       <Text
         color={theme.colors.white}
@@ -141,7 +154,7 @@ export const UserForm = ({
             value={formInfo.name}
             onChange={handleChange}
             inputProps={{ maxLength: 50 }}
-            helper={"Escribe el nombre como aparece en la cédula"}
+            helper={"Escribe el nombre como aparecen en la cédula"}
             helperColor={theme.colors.white}
             inputRef={secondInputRef}
             onKeyPress={(event) => handleKeyPress(event, thirdInputRef)}
@@ -177,7 +190,7 @@ export const UserForm = ({
         <Grid item md={8} xs={8}>
           <TextField
             {...inputProps}
-            label={"Número de telefono*"}
+            label={"Número de teléfono*"}
             id="phone"
             value={formInfo.phone}
             onChange={handleChange}

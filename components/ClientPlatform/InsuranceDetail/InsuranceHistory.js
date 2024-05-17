@@ -66,7 +66,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
         return {
           background: theme.colors.yellow100,
           color: theme.colors.yellow600,
-          label: "Presta una novedad",
+          label: "Presenta una novedad",
           icon: alertIcon,
         };
       case 2:

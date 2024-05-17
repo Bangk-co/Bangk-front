@@ -643,7 +643,7 @@ export const Record = ({
         return {
           background: theme.colors.yellow100,
           color: theme.colors.yellow600,
-          label: "Presta una novedad",
+          label: "Presenta una novedad",
           icon: alertIcon,
         };
       case 2:
@@ -1020,27 +1020,29 @@ export const Record = ({
                   )}
                 {(ele.validationClientResult === 1 ||
                   ele.validationClientResult === 4) && (
-                  <Button
-                    background={theme.colors.green900}
-                    hover={theme.colors.green900}
-                    borderHover={theme.colors.green900}
-                    font={theme.fonts.family.primaryBold}
-                    width={"200px"}
-                    height={"40px"}
-                    onClick={
-                      ele.validationClientResult === 1
-                        ? () => handleResolve(ele.status)
-                        : () => handleRetry(ele.status)
-                    }
-                    disabled={
-                      ele.validationClientResult === 4 &&
-                      (validationSBS.isLoading || validationSarlaft.isLoading)
-                    }
-                  >
-                    {ele.validationClientResult === 1
-                      ? "Resolver novedad"
-                      : "Reintentar"}
-                  </Button>
+                  <Div height="100%" justify="end" align="center">
+                    <Button
+                      background={theme.colors.green900}
+                      hover={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      font={theme.fonts.family.primaryBold}
+                      width={"200px"}
+                      height={"40px"}
+                      onClick={
+                        ele.validationClientResult === 1
+                          ? () => handleResolve(ele.status)
+                          : () => handleRetry(ele.status)
+                      }
+                      disabled={
+                        ele.validationClientResult === 4 &&
+                        (validationSBS.isLoading || validationSarlaft.isLoading)
+                      }
+                    >
+                      {ele.validationClientResult === 1
+                        ? "Resolver novedad"
+                        : "Reintentar"}
+                    </Button>
+                  </Div>
                 )}
               </Grid>
             </Grid>

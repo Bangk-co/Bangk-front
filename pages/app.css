@@ -30,4 +30,20 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 2000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+  };
+
+  .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root {
+    align-content: center !important;
+  }
+
+  .MuiInputAdornment-root {
+    margin-top: -2px !important;
+  }
 }

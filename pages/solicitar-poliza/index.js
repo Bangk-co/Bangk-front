@@ -212,7 +212,7 @@ const RequestPolicy = ({ isMobile }) => {
     if (isSuccessEconomicActivity)
       setEconomicActivityOptions(
         dataEconomicActivity?.data?.groupSettings.map((ele) => ({
-          name: ele.name,
+          label: ele.name,
           id: ele.id,
         }))
       );

@@ -101,7 +101,7 @@ export const Calculator = ({ isMobile, info, insurance, handleBack, handleWapp, 
         tu entidad y resulta indispensable para que el endoso sea aceptado.
         <br></br>
         <br></br>
-        **La presente cotización se expide para efectos de informar a quien la solicita los
+          La presente cotización se expide para efectos de informar a quien la solicita los
           posibles costos del seguro en ella relacionados (valor de la prima), pero no implica
           ni supone en ningún caso, consentimiento o asunción del riesgo por parte de sbs seguros
           Colombia s.a.; por lo tanto, la aceptación del contrato de seguro queda condicionada a

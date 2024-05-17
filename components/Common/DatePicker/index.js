@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CustomDatePicker } from "./styles";
 import { CustomCalendarIcon } from "./styles";
+import 'dayjs/locale/es';
 
 export const DatePicker = ({
   placeholder,
@@ -42,7 +43,7 @@ export const DatePicker = ({
       >
         {label}
       </Text>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"es"}>
         <CustomDatePicker
           placeholder={placeholder}
           suffix={suffix}

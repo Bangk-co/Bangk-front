@@ -62,13 +62,15 @@ const Sale = ({ isMobile, isTablet }) => {
 
   const formatBirthdate = (birthdate) => {
     if (!birthdate) return "";
-
-    const formattedDate = new Date(birthdate).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).replace(/(\w+) (\d+), (\d+)/, "$1. $2, $3");
-
+  
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    let formattedDate = new Date(birthdate).toLocaleDateString("es-ES", options);
+  
+    formattedDate = formattedDate.replace(/^(\d{1,2}) (\w{3}) (\d{4})$/, (match, p1, p2, p3) => {
+      const capitalizedMonth = p2.charAt(0).toUpperCase() + p2.slice(1);
+      return `${capitalizedMonth}. ${p1}, ${p3}`;
+    });
+  
     return formattedDate;
   };
 

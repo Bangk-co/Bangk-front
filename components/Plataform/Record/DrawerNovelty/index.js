@@ -52,7 +52,7 @@ export const DrawerNovelty = ({
                 font={theme.fonts.family.primaryMedium}
                 size={theme.fonts.size.sm}
               >
-                Presta una novedad
+                Presenta una novedad
               </Text>
             </Row>
           </Div>

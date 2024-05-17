@@ -127,6 +127,7 @@ export const InitForm = ({
         }
         onChange={handleChangeDate}
         value={formInfo.birthdate}
+        localeText={"es"}
       />
       <Text
         size={theme.fonts.size.xs}

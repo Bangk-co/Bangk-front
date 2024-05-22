@@ -3,27 +3,36 @@ import { theme } from "@/styles/theme";
 import { WrapperImage } from "./styles";
 import handQuote from "@/assets/img/hand-quote.png";
 import { Text, Div } from "@/styles/Common";
-import logo from "@/assets/icons/white-logo.png"
+import logo from "@/assets/icons/white-logo.png";
 import { Button } from "../Common/Button";
 
 const Banner = ({ isMobile, handleGo }) => {
   return (
     <WrapperImage>
-      {isMobile &&
+      {isMobile && (
         <Div height="80px" justify="center" align="center">
           <Image alt="logo" src={logo} width={85} height={32} />
         </Div>
-      }
-      <Image alt="hand" src={handQuote} width={isMobile ? 330 : 606} height={isMobile ? 396 : 776} />
+      )}
+      <Image
+        alt="hand"
+        src={handQuote}
+        width={isMobile ? 330 : 606}
+        height={isMobile ? 396 : 776}
+      />
       <Div width="100%" justify="center">
         <Text
           font={theme.fonts.family.primaryBold}
           color={theme.colors.white}
           size={isMobile ? theme.fonts.size.h4s : theme.fonts.size.h1s}
           lineHeight={isMobile ? "36px" : "52px"}
-          style={{ alignItems: "center", width: "584px", textAlign: isMobile && "center" }}
+          style={{
+            alignItems: "center",
+            width: "584px",
+            textAlign: isMobile && "center",
+          }}
         >
-          ¡Tu cotización está lista!<br></br> No esperes más y empeza ahorrar
+          ¡Tu cotización está lista!<br></br> No esperes más y empieza ahorrar
           con{" "}
           <span
             style={{
@@ -35,7 +44,7 @@ const Banner = ({ isMobile, handleGo }) => {
           </span>
         </Text>
       </Div>
-      {isMobile &&
+      {isMobile && (
         <Div m="50px 0 20px 0" width="100%" justify="center">
           <Button
             labelColor={theme.colors.green900}
@@ -51,7 +60,7 @@ const Banner = ({ isMobile, handleGo }) => {
             Conocer cotización
           </Button>
         </Div>
-      }
+      )}
     </WrapperImage>
   );
 };

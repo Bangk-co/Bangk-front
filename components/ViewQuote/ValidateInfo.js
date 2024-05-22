@@ -17,19 +17,14 @@ export const ValidateInfo = ({ email, handleSend, reSendCode }) => {
 
         <WrapperInfo p="96px 48px 48px 48px">
           <Div width="100%" justify="center" p="24px 0">
-            <Image
-              alt="logo"
-              src={logo}
-              height={45}
-              width={120}
-            />
+            <Image alt="logo" src={logo} height={45} width={120} />
           </Div>
           <Text
             size={theme.fonts.size.h3}
             color={theme.colors.white}
             font={theme.fonts.family.primaryBold}
           >
-            ¿Quién solicito la cotización?
+            ¿Quién solicitó la cotización?
           </Text>
           <Div m="26px 0 0 0" direction="column" gap="46px">
             <TextField
@@ -70,7 +65,7 @@ export const ValidateInfo = ({ email, handleSend, reSendCode }) => {
             </Div>
           </Div>
         </WrapperInfo>
-    </Div>
-  </WrapperQuote>
-  )
-}
+      </Div>
+    </WrapperQuote>
+  );
+};

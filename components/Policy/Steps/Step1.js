@@ -70,8 +70,6 @@ export const Step1 = ({
     width: "100%",
   };
 
-  console.log("formInfo", formInfo);
-
   const handleSelect = (event) => {
     const { name, value } = event.target;
     const newInfo = { ...formInfo };

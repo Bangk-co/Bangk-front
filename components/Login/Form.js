@@ -16,9 +16,9 @@ import useLogin from "@/hooks/Login/useLogin";
 import { setLocalUser } from "../../hooks/services/axiosInstance";
 import CircularProgress from "@mui/material/CircularProgress";
 import { encrypt } from "@/utilities/helpers";
-import eye from '@/assets/icons/eye.svg';
-import eyeoff from '@/assets/icons/eyeoff.svg';
-import { IconButton } from '@mui/material';
+import eye from "@/assets/icons/eye.svg";
+import eyeoff from "@/assets/icons/eyeoff.svg";
+import { IconButton } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 
 const Form = ({ isMobile, isTablet }) => {
@@ -42,14 +42,14 @@ const Form = ({ isMobile, isTablet }) => {
     },
   });
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };  
+  };
 
   const handleChange = (event) => {
     const { value, id } = event.target;
@@ -96,7 +96,7 @@ const Form = ({ isMobile, isTablet }) => {
         { email: loginForm.email, password: encrypt(loginForm.password) },
         {
           onSuccess: (res) => {
-            const { role } = jwtDecode(res.data.token);            
+            const { role } = jwtDecode(res.data.token);
             setLocalUser(res.data.token);
             if (role === "client") {
               router.push("/plataforma-cliente/home");
@@ -115,10 +115,10 @@ const Form = ({ isMobile, isTablet }) => {
   };
 
   const handleCreate = () => {
-    router.push("/crear-cuenta")
-  }
+    router.push("/crear-cuenta");
+  };
 
-  const isValid = Object.values(loginForm).every((value) => value !== "")
+  const isValid = Object.values(loginForm).every((value) => value !== "");
 
   return (
     <WrapperForm>
@@ -132,7 +132,15 @@ const Form = ({ isMobile, isTablet }) => {
               weight={theme.fonts.weight.bold}
               color={theme.colors.gray900}
             >
-              Inicia <span style={{ color: theme.colors.orange, fontFamily: theme.fonts.family.primaryBold }}>sesión</span>
+              Inicia{" "}
+              <span
+                style={{
+                  color: theme.colors.orange,
+                  fontFamily: theme.fonts.family.primaryBold,
+                }}
+              >
+                sesión
+              </span>
             </Text>
           </Row>
           <Row width="100%" justify="center" m="16px 0 0 0">
@@ -146,6 +154,7 @@ const Form = ({ isMobile, isTablet }) => {
               prefixIcon={
                 <Image alt="email" src={email} width={16} height={16} />
               }
+              autoComplete="off"
               onChange={handleChange}
               value={loginForm.email}
               error={errorForm.email.error}
@@ -177,6 +186,7 @@ const Form = ({ isMobile, isTablet }) => {
               prefixIcon={
                 <Image alt="password" src={lock} width={16} height={16} />
               }
+              autoComplete="off"
               onChange={handleChange}
               value={loginForm.password}
               error={errorForm.password.error}
@@ -222,34 +232,46 @@ const Form = ({ isMobile, isTablet }) => {
           </Button>
         </Div>
         <Div align="center" gap="6px" width="100%" m="30px 0 40px 0">
-          <hr style={{ height: "1px", width: "45%", background: theme.colors.gray300 }} />
-          <Text 
+          <hr
+            style={{
+              height: "1px",
+              width: "45%",
+              background: theme.colors.gray300,
+            }}
+          />
+          <Text
             color={theme.colors.gray300}
             size={theme.fonts.size.sm}
             font={theme.fonts.family.secondary}
           >
             O
           </Text>
-          <hr style={{ height: "1px", width: "45%", background: theme.colors.gray300 }} />
+          <hr
+            style={{
+              height: "1px",
+              width: "45%",
+              background: theme.colors.gray300,
+            }}
+          />
         </Div>
         <Div direction={isMobile ? "column" : "row"} align="center" gap="8px">
-            <Text 
-              color={theme.colors.neutralGray900}
-              size={theme.fonts.size.default2}
-              weight={theme.fonts.weight.bold}
-            >
-              ¿No tienes cuenta?
-            </Text>
-            <Link
-              color={theme.colors.green}
-              family={theme.fonts.family.primary}
-              weight={theme.fonts.weight.medium}
-              size={theme.fonts.size.default2}
-              onClick={handleCreate}
-              style={{ textDecoration: "underline" }}
-            >
-              Crear cuenta
-            </Link>
+          <Text
+            color={theme.colors.neutralGray900}
+            size={theme.fonts.size.default2}
+            weight={theme.fonts.weight.bold}
+          >
+            ¿No tienes cuenta?
+          </Text>
+          <Link
+            color={theme.colors.green}
+            family={theme.fonts.family.primary}
+            weight={theme.fonts.weight.medium}
+            size={theme.fonts.size.default2}
+            onClick={handleCreate}
+            style={{ textDecoration: "underline" }}
+          >
+            Crear cuenta
+          </Link>
         </Div>
       </LoginCard>
     </WrapperForm>

@@ -124,7 +124,7 @@ export const Record = ({
     Number(loanInfo?.loanBalance),
     Number(quoteRate)
   );
-  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
+  const insuranceAnnualFinal = insuranceAnnual.toFixed();
   const insuranceMonthly = _.divide(insuranceAnnual, 12);
   const insuranceMonthlyFinal = insuranceMonthly.toFixed();
   const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);

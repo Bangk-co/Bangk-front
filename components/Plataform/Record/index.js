@@ -124,8 +124,8 @@ export const Record = ({
     Number(loanInfo?.loanBalance),
     Number(quoteRate)
   );
-  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
-  const insuranceMonthly = _.divide(insuranceAnnual, 12);
+  const insuranceAnnualFinal = insuranceAnnual.toFixed();
+  const insuranceMonthly = Number(_.divide(insuranceAnnual, 12).toFixed());
   const insuranceMonthlyFinal = insuranceMonthly.toFixed();
   const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);
   const monthlyCostInsurance2 = Number(
@@ -181,7 +181,9 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(bangkYearlyFee, 12).toFixed())
+              )}`,
             }
           : {
               label: "Seguro mensual",
@@ -212,11 +214,15 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(bangkYearlyFee, 12).toFixed())
+              )}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(yearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(yearlyFee, 12).toFixed())
+              )}`,
             },
         Object.keys(loanInfo).length === 0
           ? {

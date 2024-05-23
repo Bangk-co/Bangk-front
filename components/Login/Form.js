@@ -154,7 +154,7 @@ const Form = ({ isMobile, isTablet }) => {
               prefixIcon={
                 <Image alt="email" src={email} width={16} height={16} />
               }
-              autoComplete="off"
+              autoComplete="email"
               onChange={handleChange}
               value={loginForm.email}
               error={errorForm.email.error}

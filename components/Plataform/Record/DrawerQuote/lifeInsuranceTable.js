@@ -10,9 +10,6 @@ export const LifeInsuranceTable = ({
   subtitleProps,
   saveValue,
 }) => {
-  console.log("currentInsuranceData", currentInsuranceData);
-  console.log("bangkInsuranceData", bangkInsuranceData);
-  console.log("saveValue", saveValue);
   const textValueProps = {
     color: theme.colors.primary900,
     font: theme.fonts.family.primaryBold,

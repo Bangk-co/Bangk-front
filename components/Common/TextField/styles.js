@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 export const CustomTextField = styled(TextField)`
   .MuiOutlinedInput-root {
-    background: ${({ background, customError }) => customError ? theme.colors.error100 : background};
+    background: ${({ background, customError }) =>
+      customError ? theme.colors.error100 : background};
     border-radius: ${({ radius }) => radius || "43px"};
     width: ${({ width }) => width || "90%"};
     height: ${({ height }) => height || "44px"};
@@ -13,7 +14,7 @@ export const CustomTextField = styled(TextField)`
     font-size: ${({ size }) => size || theme.fonts.size.sm};
     color: ${({ fontColor }) => fontColor};
     &.Mui-focused fieldset {
-      border: 1px solid 
+      border: 1px solid
         ${(props) =>
           props.error
             ? theme.colors.red
@@ -22,15 +23,21 @@ export const CustomTextField = styled(TextField)`
             : theme.colors.orange} !important;
     }
     .MuiOutlinedInput-notchedOutline {
-      border-color: ${({ border }) => border || theme.colors.gray500} !important;
+      border-color: ${({ border }) =>
+        border || theme.colors.gray500} !important;
     }
     &.Mui-disabled fieldset {
-      border-color: ${({ border }) => border || theme.colors.gray500} !important; 
+      border-color: ${({ border }) =>
+        border || theme.colors.gray500} !important;
     }
     & input::placeholder {
       color: ${({ placeholderColor }) => placeholderColor};
       font-family: ${({ font }) => font || theme.fonts.family.secondary};
       font-size: ${({ size }) => size || theme.fonts.size.sm};
+    }
+
+    input:-webkit-autofill {
+      -webkit-text-fill-color: #333 !important;
     }
   }
 

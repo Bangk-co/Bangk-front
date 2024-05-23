@@ -118,7 +118,7 @@ export const DrawerQuote = ({
           </MenuItem>
         ))}
       </Select>
-      <Div m="16px 0 0 0" direction="column">
+      <Div m="16px 0 0 0" direction="column" height="100%">
         {insurer === 114 ? (
           <>
             <SbsInsurer

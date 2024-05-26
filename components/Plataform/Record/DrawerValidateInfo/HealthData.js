@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import { Div, Text, Row, Col } from "@/styles/Common";
+import Image from "next/image";
+import { Div, Text, Row, Col, Placeholder } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { TextField } from "@/components/Common/TextField";
 import { Radio } from "@/components/Common/Radio";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Button } from "@/components/Common/Button";
+import { Checkbox } from "@/components/Common/Checkbox";
 import { validateEditHealthInfo } from "@/utilities/validations";
 import CircularProgress from "@mui/material/CircularProgress";
 import useGetDiseases from "@/hooks/Common/useGetDiseases";
-import { MenuItem } from "@mui/material";
+import { MenuItem, Box } from "@mui/material";
 import { Select } from "@/components/Common/Select";
+import { getDiseasesIds, getDiseasesNames } from "@/utilities/helpers";
+import { WrapperDisease } from "./styles";
+import close from "@/assets/icons/close-2.svg";
 
 export const HealtData = ({
   assessorConcept,
@@ -40,6 +45,11 @@ export const HealtData = ({
       );
   }, [dataDiseases, isSuccessDiseases]);
 
+  const [diseases, setDiseases] = useState([]);
+  useEffect(() => {
+    setDiseases(getDiseasesNames(healthInfo.diseases, diseasesOptions));
+  }, [healthInfo.diseases, diseasesOptions]);
+
   const getLabelFromValue = (value, options, id, name) => {
     const selectedOption = options.find(
       (option) => Number(option[id]) === Number(value)
@@ -66,9 +76,14 @@ export const HealtData = ({
     {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
-      description:
-        getLabelFromValue(healthInfo.diseases, diseasesOptions, "id", "name") ||
-        "--",
+      description: healthInfo.diseases
+        .split(",")
+        .map(
+          (disease) =>
+            getLabelFromValue(Number(disease), diseasesOptions, "id", "name") ||
+            "--"
+        )
+        .join(", "),
     },
     {
       title:
@@ -109,7 +124,7 @@ export const HealtData = ({
     }
   };
 
-  const handleSelect = (event) => {
+  const handleChangeDiseases = (event) => {
     const { value, name } = event.target;
     const newErrorForm = { ...errorsHealthInfo };
     newErrorForm[name].error = false;
@@ -117,8 +132,22 @@ export const HealtData = ({
     setErrorsHealthInfo(newErrorForm);
 
     const newHealthInfo = { ...healthInfo };
-    newHealthInfo[name] = String(value);
+    newHealthInfo[name] = getDiseasesIds(value, diseasesOptions);
+    setHealthInfo(newHealthInfo);
+  };
 
+  const handleDelete = (value) => {
+    const newErrorForm = { ...errorsHealthInfo };
+    newErrorForm["diseases"].error = false;
+    newErrorForm["diseases"].message = "";
+    setErrorsHealthInfo(newErrorForm);
+
+    const newHealthInfo = { ...healthInfo };
+    const deletedDiseaseId = getDiseasesIds(value, diseasesOptions);
+    newHealthInfo["diseases"] = newHealthInfo.diseases
+      .split(",")
+      .filter((ele) => ele !== deletedDiseaseId)
+      .join(",");
     setHealthInfo(newHealthInfo);
   };
 
@@ -406,7 +435,7 @@ export const HealtData = ({
             name="diseases"
             radius="4px"
             width="100%"
-            height="40px"
+            height={diseases.length === 0 ? "40px" : "max-content"}
             size={theme.fonts.size.sm}
             labelSize={theme.fonts.size.sm}
             labelColor={theme.colors.neutralGray900}
@@ -415,17 +444,55 @@ export const HealtData = ({
             border={theme.colors.neutralGray500}
             notFocused={true}
             placeholderColor={theme.colors.neutralGray500}
-            value={healthInfo?.diseases}
-            onChange={handleSelect}
+            fontColor={theme.colors.neutralGray900}
+            multiple
+            value={diseases}
+            onChange={handleChangeDiseases}
+            displayEmpty
             error={errorsHealthInfo.diseases.error}
             helper={
               errorsHealthInfo.diseases.error
                 ? errorsHealthInfo.diseases.message
                 : ""
             }
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return <Placeholder>Selecciona opciones</Placeholder>;
+              } else {
+                return (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {selected.map((value, indx) => (
+                      <WrapperDisease key={indx}>
+                        <Text
+                          color={theme.colors.white}
+                          font={theme.fonts.primaryMedium}
+                          size={theme.fonts.size.sm}
+                        >
+                          {value}
+                        </Text>
+                        <span
+                          onMouseDown={(event) => {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            handleDelete(value);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Image alt="delete" src={close} />
+                        </span>
+                      </WrapperDisease>
+                    ))}
+                  </Box>
+                );
+              }
+            }}
           >
             {diseasesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id}>
+              <MenuItem key={indx} value={ele.name}>
+                <Checkbox
+                  borderColor={theme.colors.neutralGray500}
+                  checked={diseases.indexOf(ele.name) > -1}
+                />
                 {ele.name}
               </MenuItem>
             ))}

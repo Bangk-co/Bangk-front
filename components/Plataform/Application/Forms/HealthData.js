@@ -42,8 +42,15 @@ export const HealthData = ({ healthInfo }) => {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
       description:
-        healthInfo.hivActive !== null
-          ? getLabelFromValue(healthInfo.diseases, diseasesOptions) || "Ninguna"
+        healthInfo.diseases !== null
+          ? healthInfo.diseases
+              .split(",")
+              .map(
+                (disease) =>
+                  getLabelFromValue(Number(disease), diseasesOptions) ||
+                  "Ninguna"
+              )
+              .join(", ")
           : "--",
     },
     {

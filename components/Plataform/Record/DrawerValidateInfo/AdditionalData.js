@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Grid } from "@mui/material";
+import _ from "lodash";
 import { Div, Text, Row, Col } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { TextField } from "@/components/Common/TextField";
@@ -14,6 +16,8 @@ import useGetRelationships from "@/hooks/Common/useGetRelationships";
 import { validateEditAdditionalInfo } from "@/utilities/validations";
 import CircularProgress from "@mui/material/CircularProgress";
 import { documentTypeAbbreviation } from "@/utilities/helpers";
+import { WrapperAlert } from "./styles";
+import infoError from "@/assets/icons/info-error.svg";
 
 export const AdditionalData = ({
   assessorConcept,
@@ -141,6 +145,12 @@ export const AdditionalData = ({
       ],
     }));
   };
+  const deleteBeneficiary = (index) => {
+    const newBeneficiaryArray = [...additionalInfo.beneficiary];
+    newBeneficiaryArray.splice(index, 1);
+    setAdditionalInfo({ ...additionalInfo, beneficiary: newBeneficiaryArray });
+  };
+
   const handleRadio = (event, name) => {
     const { value } = event.target;
     switch (name) {
@@ -175,12 +185,20 @@ export const AdditionalData = ({
             ...prevState,
             beneficiary: [],
           }));
-        } else {
+        } else if (additionalInfo.beneficiary.length === 0) {
           addBeneficiary();
         }
         break;
     }
   };
+
+  const percentageValue = _.sumBy(
+    additionalInfo.beneficiary,
+    (obj) => Number(obj.percentInherit) || 0
+  );
+  const percentageError = additionalInfo.beneficiaries
+    ? percentageValue !== 100
+    : additionalInfo.beneficiaries;
 
   return (
     <Col gap="16px" m="24px 0 0 0">
@@ -206,67 +224,68 @@ export const AdditionalData = ({
             </Col>
           ))}
 
-          {additionalInfo.beneficiary.length > 0 && (
-            <Grid container spacing={2}>
-              {additionalInfo.beneficiary.map((benefic, index) => (
-                <Grid item xs={6} key={index}>
-                  <Col>
-                    <Text
-                      font={theme.fonts.family.primaryBold}
-                      size={theme.fonts.size.default2}
-                      color={theme.colors.neutralGray900}
-                    >
-                      {`Heredero ${index + 1}`}
-                    </Text>
-                    <Text
-                      font={theme.fonts.family.primary}
-                      size={theme.fonts.size.default2}
-                      weight={theme.fonts.weight.regular}
-                      color={theme.colors.neutralGray900}
-                    >
-                      {benefic.name}
-                    </Text>
-                    <Text
-                      font={theme.fonts.family.primary}
-                      size={theme.fonts.size.default2}
-                      weight={theme.fonts.weight.regular}
-                      color={theme.colors.neutralGray900}
-                    >
-                      {`${documentTypeAbbreviation(
-                        getLabelFromValue(
-                          benefic.identificationTypeId,
-                          documentTypeOptions,
+          {additionalInfo.beneficiaries &&
+            additionalInfo.beneficiary.length > 0 && (
+              <Grid container spacing={2}>
+                {additionalInfo.beneficiary.map((benefic, index) => (
+                  <Grid item xs={6} key={index}>
+                    <Col>
+                      <Text
+                        font={theme.fonts.family.primaryBold}
+                        size={theme.fonts.size.default2}
+                        color={theme.colors.neutralGray900}
+                      >
+                        {`Heredero ${index + 1}`}
+                      </Text>
+                      <Text
+                        font={theme.fonts.family.primary}
+                        size={theme.fonts.size.default2}
+                        weight={theme.fonts.weight.regular}
+                        color={theme.colors.neutralGray900}
+                      >
+                        {benefic.name}
+                      </Text>
+                      <Text
+                        font={theme.fonts.family.primary}
+                        size={theme.fonts.size.default2}
+                        weight={theme.fonts.weight.regular}
+                        color={theme.colors.neutralGray900}
+                      >
+                        {`${documentTypeAbbreviation(
+                          getLabelFromValue(
+                            benefic.identificationTypeId,
+                            documentTypeOptions,
+                            "id",
+                            "name"
+                          )
+                        )} ${benefic.identificationNumber}`}
+                      </Text>
+                      <Text
+                        font={theme.fonts.family.primary}
+                        size={theme.fonts.size.default2}
+                        weight={theme.fonts.weight.regular}
+                        color={theme.colors.neutralGray900}
+                      >
+                        {`Parentesco: ${getLabelFromValue(
+                          benefic.relationshipId,
+                          relationshipOptions,
                           "id",
                           "name"
-                        )
-                      )} ${benefic.identificationNumber}`}
-                    </Text>
-                    <Text
-                      font={theme.fonts.family.primary}
-                      size={theme.fonts.size.default2}
-                      weight={theme.fonts.weight.regular}
-                      color={theme.colors.neutralGray900}
-                    >
-                      {`Parentesco: ${getLabelFromValue(
-                        benefic.relationshipId,
-                        relationshipOptions,
-                        "id",
-                        "name"
-                      )}`}
-                    </Text>
-                    <Text
-                      font={theme.fonts.family.primary}
-                      size={theme.fonts.size.default2}
-                      weight={theme.fonts.weight.regular}
-                      color={theme.colors.neutralGray900}
-                    >
-                      {`Porcentaje a heredar: ${benefic.percentInherit}%`}
-                    </Text>
-                  </Col>
-                </Grid>
-              ))}
-            </Grid>
-          )}
+                        )}`}
+                      </Text>
+                      <Text
+                        font={theme.fonts.family.primary}
+                        size={theme.fonts.size.default2}
+                        weight={theme.fonts.weight.regular}
+                        color={theme.colors.neutralGray900}
+                      >
+                        {`Porcentaje a heredar: ${benefic.percentInherit}%`}
+                      </Text>
+                    </Col>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
 
           <Div
             width="100%"
@@ -477,38 +496,98 @@ export const AdditionalData = ({
             <Radio label="Mis herederos legales" value={false} />
             <Radio label="Designado por mi" value={true} />
           </RadioGroup>
-          {additionalInfo.beneficiary.map((benefic, index) => (
-            <Col gap="8px" key={index}>
-              <Text
-                font={theme.fonts.family.primaryBold}
-                size={theme.fonts.size.default2}
-                color={theme.colors.neutralGray900}
-              >
-                {`Heredero ${index + 1}`}
-              </Text>
-              <TextField
-                label={"Nombre completo*"}
-                placeholder={"Nombre completo"}
-                id="name"
-                radius="4px"
-                width="100%"
-                height="40px"
-                labelFont={theme.fonts.family.primaryMedium}
-                labelSize={theme.fonts.size.sm}
-                font={theme.fonts.family.primary}
-                size={theme.fonts.size.default2}
-                border={theme.colors.neutralGray500}
-                value={benefic.name}
-                onChange={(event) => handleChange(event, index)}
-              />
 
-              <Row gap="16px">
-                <Div width="150px">
-                  <Select
-                    label={"Tipo de documento*"}
-                    name="identificationTypeId"
+          {percentageError &&
+            additionalInfo.beneficiaries &&
+            additionalInfo.beneficiary.length > 0 && (
+              <WrapperAlert background={theme.colors.error100}>
+                <Image alt="info" src={infoError} />
+                <Text
+                  size={theme.fonts.size.sm}
+                  color={theme.colors.neutralGray900}
+                  font={theme.fonts.family.primaryMedium}
+                >
+                  La sumatoria de los porcentaje de los herederos debe ser igual
+                  a 100%
+                </Text>
+              </WrapperAlert>
+            )}
+
+          {additionalInfo.beneficiaries &&
+            additionalInfo.beneficiary.map((benefic, index) => (
+              <Col gap="8px" key={index}>
+                <Text
+                  font={theme.fonts.family.primaryBold}
+                  size={theme.fonts.size.default2}
+                  color={theme.colors.neutralGray900}
+                >
+                  {`Heredero ${index + 1}`}
+                </Text>
+                <TextField
+                  label={"Nombre completo*"}
+                  placeholder={"Nombre completo"}
+                  id="name"
+                  radius="4px"
+                  width="100%"
+                  height="40px"
+                  labelFont={theme.fonts.family.primaryMedium}
+                  labelSize={theme.fonts.size.sm}
+                  font={theme.fonts.family.primary}
+                  size={theme.fonts.size.default2}
+                  border={theme.colors.neutralGray500}
+                  value={benefic.name}
+                  onChange={(event) => handleChange(event, index)}
+                />
+
+                <Row gap="16px">
+                  <Div width="150px">
+                    <Select
+                      label={"Tipo de documento*"}
+                      name="identificationTypeId"
+                      radius="4px"
+                      width="150px"
+                      height="40px"
+                      size={theme.fonts.size.sm}
+                      labelSize={theme.fonts.size.sm}
+                      labelColor={theme.colors.neutralGray900}
+                      labelFont={theme.fonts.family.primaryMedium}
+                      font={theme.fonts.family.primary}
+                      border={theme.colors.neutralGray500}
+                      notFocused={true}
+                      placeholderColor={theme.colors.neutralGray500}
+                      value={benefic.identificationTypeId}
+                      onChange={(event) => handleSelect(event, index)}
+                    >
+                      {documentTypeOptions.map((ele, indx) => (
+                        <MenuItem key={indx} value={ele.id}>
+                          {ele.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Div>
+                  <TextField
+                    label={"Número de documento*"}
+                    placeholder={"Número de documento"}
+                    id="identificationNumber"
+                    type="number"
                     radius="4px"
-                    width="150px"
+                    width="100%"
+                    height="40px"
+                    labelFont={theme.fonts.family.primaryMedium}
+                    labelSize={theme.fonts.size.sm}
+                    font={theme.fonts.family.primary}
+                    size={theme.fonts.size.default2}
+                    border={theme.colors.neutralGray500}
+                    value={benefic.identificationNumber}
+                    onChange={(event) => handleChange(event, index)}
+                  />
+                </Row>
+                <Row gap="16px">
+                  <Select
+                    label={"Parentesco*"}
+                    name="relationshipId"
+                    radius="4px"
+                    width="100%"
                     height="40px"
                     size={theme.fonts.size.sm}
                     labelSize={theme.fonts.size.sm}
@@ -518,77 +597,57 @@ export const AdditionalData = ({
                     border={theme.colors.neutralGray500}
                     notFocused={true}
                     placeholderColor={theme.colors.neutralGray500}
-                    value={benefic.identificationTypeId}
+                    value={benefic.relationshipId}
                     onChange={(event) => handleSelect(event, index)}
                   >
-                    {documentTypeOptions.map((ele, indx) => (
+                    {relationshipOptions.map((ele, indx) => (
                       <MenuItem key={indx} value={ele.id}>
                         {ele.name}
                       </MenuItem>
                     ))}
                   </Select>
-                </Div>
-                <TextField
-                  label={"Número de documento*"}
-                  placeholder={"Número de documento"}
-                  id="identificationNumber"
-                  type="number"
-                  radius="4px"
-                  width="100%"
-                  height="40px"
-                  labelFont={theme.fonts.family.primaryMedium}
-                  labelSize={theme.fonts.size.sm}
-                  font={theme.fonts.family.primary}
-                  size={theme.fonts.size.default2}
-                  border={theme.colors.neutralGray500}
-                  value={benefic.identificationNumber}
-                  onChange={(event) => handleChange(event, index)}
-                />
-              </Row>
-              <Row gap="16px">
-                <Select
-                  label={"Parentesco*"}
-                  name="relationshipId"
-                  radius="4px"
-                  width="100%"
-                  height="40px"
-                  size={theme.fonts.size.sm}
-                  labelSize={theme.fonts.size.sm}
-                  labelColor={theme.colors.neutralGray900}
-                  labelFont={theme.fonts.family.primaryMedium}
-                  font={theme.fonts.family.primary}
-                  border={theme.colors.neutralGray500}
-                  notFocused={true}
-                  placeholderColor={theme.colors.neutralGray500}
-                  value={benefic.relationshipId}
-                  onChange={(event) => handleSelect(event, index)}
-                >
-                  {relationshipOptions.map((ele, indx) => (
-                    <MenuItem key={indx} value={ele.id}>
-                      {ele.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <TextField
-                  label={"Porcentaje a heredar (1% a 100%)*"}
-                  placeholder={"Porcentaje a heredar"}
-                  id="percentInherit"
-                  type="number"
-                  radius="4px"
-                  width="100%"
-                  height="40px"
-                  labelFont={theme.fonts.family.primaryMedium}
-                  labelSize={theme.fonts.size.sm}
-                  font={theme.fonts.family.primary}
-                  size={theme.fonts.size.default2}
-                  border={theme.colors.neutralGray500}
-                  value={benefic.percentInherit}
-                  onChange={(event) => handleChange(event, index)}
-                />
-              </Row>
-            </Col>
-          ))}
-          {additionalInfo.beneficiary.length > 0 &&
+                  <TextField
+                    label={"Porcentaje a heredar (1% a 100%)*"}
+                    placeholder={"Porcentaje a heredar"}
+                    id="percentInherit"
+                    type="number"
+                    radius="4px"
+                    width="100%"
+                    height="40px"
+                    labelFont={theme.fonts.family.primaryMedium}
+                    labelSize={theme.fonts.size.sm}
+                    font={theme.fonts.family.primary}
+                    size={theme.fonts.size.default2}
+                    border={
+                      percentageError
+                        ? theme.colors.red
+                        : theme.colors.neutralGray500
+                    }
+                    value={benefic.percentInherit}
+                    onChange={(event) => handleChange(event, index)}
+                    error={percentageError}
+                    helper={
+                      percentageError
+                        ? "El valor de la sumatoria debe ser 100%"
+                        : ""
+                    }
+                  />
+                </Row>
+                <Row justify="right">
+                  <Link
+                    font={theme.fonts.family.primary}
+                    color={theme.colors.orange}
+                    size={theme.fonts.size.default2}
+                    onClick={() => deleteBeneficiary(index)}
+                    style={{ borderBottom: `1px solid ${theme.colors.orange}` }}
+                  >
+                    Eliminar heredero
+                  </Link>
+                </Row>
+              </Col>
+            ))}
+          {additionalInfo.beneficiaries &&
+            additionalInfo.beneficiary.length > 0 &&
             additionalInfo.beneficiary.length < 7 && (
               <Row justify="right">
                 <Link
@@ -640,6 +699,7 @@ export const AdditionalData = ({
                   />
                 ) : null
               }
+              disabled={isLoadingSave || percentageError}
             >
               Guardar cambios
             </Button>

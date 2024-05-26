@@ -18,10 +18,6 @@ export const UserForm = ({
   documentTypeOptions,
   indicativesOptions,
   formInfo,
-  openModal,
-  setOpenModal,
-  handleClose,
-  handleAccept,
   handleSelect,
   handleChange,
   terms,
@@ -82,13 +78,6 @@ export const UserForm = ({
 
   return (
     <Col m={"12px 0 0 0"}>
-      <Modal open={openModal}>
-        <ModalTerms
-          isMobile={isMobile}
-          handleClose={handleClose}
-          handleAccept={handleAccept}
-        />
-      </Modal>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
@@ -275,7 +264,12 @@ export const UserForm = ({
               cursor: "pointer",
               textDecoration: "underline",
             }}
-            onClick={() => setOpenModal(true)}
+            onClick={() =>
+              window.open(
+                "https://www.bangk.co/legales/?section=policy",
+                "_blank"
+              )
+            }
           >
             tratamiento de mis datos
           </span>

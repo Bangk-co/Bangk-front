@@ -293,7 +293,23 @@ const CreateAccount = ({ isMobile, isTablet }) => {
                 color={theme.colors.neutralGray900}
                 size={theme.fonts.size.sm}
               >
-                He leído y acepto la política de tratamiento de datos de Bangk
+                He leído y acepto la{" "}
+                <span
+                  style={{
+                    fontFamily: theme.fonts.family.primaryBold,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                  onClick={() =>
+                    window.open(
+                      "https://www.bangk.co/legales/?section=policy",
+                      "_blank"
+                    )
+                  }
+                >
+                  política de tratamiento de datos
+                </span>{" "}
+                de Bangk
               </Text>
             </Row>
             <Row width="100%" justify="center">

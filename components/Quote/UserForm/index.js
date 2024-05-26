@@ -9,7 +9,6 @@ import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
 import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import { Checkbox } from "@/components/Common/Checkbox";
-import { ModalTerms } from "@/components/Common/ModalTerms";
 import { Col, WrapperWappCal } from "@/styles/Quote";
 import wappIcon from "@/assets/icons/whatsapp-original.svg";
 

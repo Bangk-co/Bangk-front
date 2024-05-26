@@ -119,7 +119,7 @@ export const validateEditPropertyInfo = Joi.object({
 export const validateEditHealthInfo = Joi.object({
   weight: Joi.number().required(),
   height: Joi.number().required(),
-  diseases: Joi.number().allow(null),
+  diseases: Joi.string().allow(null),
   diseasesMoreInfo: Joi.string().allow("", null),
   hivActive: Joi.bool().required(),
   plannedMedicalProcidure: Joi.bool().required(),

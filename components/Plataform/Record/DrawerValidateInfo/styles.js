@@ -35,3 +35,14 @@ export const WrapperDisease = styled.div`
   gap: 4px;
   background: ${theme.colors.green900};
 `;
+
+export const WrapperAlert = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%
+  height: 44px;
+  padding: 12px 16px 12px 16px;
+  border-radius: 8px;
+  gap: 8px;
+  background: ${(props) => props.background};
+`;

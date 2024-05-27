@@ -79,13 +79,19 @@ export const HealtData = ({
     {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
-      description: diseasesInfo
-        .map(
-          (disease) =>
-            getLabelFromValue(Number(disease), diseasesOptions, "id", "name") ||
-            "--"
-        )
-        .join(", "),
+      description:
+        healthInfo.diseases !== null
+          ? diseasesInfo
+              .map((disease) =>
+                getLabelFromValue(
+                  Number(disease),
+                  diseasesOptions,
+                  "id",
+                  "name"
+                )
+              )
+              .join(", ")
+          : "Ninguna",
     },
     {
       title:

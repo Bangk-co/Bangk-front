@@ -47,13 +47,11 @@ export const HealthData = ({ healthInfo }) => {
       description:
         healthInfo.diseases !== null
           ? diseasesInfo
-              .map(
-                (disease) =>
-                  getLabelFromValue(Number(disease), diseasesOptions) ||
-                  "Ninguna"
+              .map((disease) =>
+                getLabelFromValue(Number(disease), diseasesOptions)
               )
               .join(", ")
-          : "--",
+          : "Ninguna",
     },
     {
       title:

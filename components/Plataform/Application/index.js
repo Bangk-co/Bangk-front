@@ -163,6 +163,7 @@ const Application = ({ isMobile, isTablet }) => {
             observations: "",
             validationClientResult: null,
             statusCard: "Pending",
+            historicalLoanApplicationId: null,
           },
           {
             status: historyStatus[info[0].stateName],
@@ -170,6 +171,7 @@ const Application = ({ isMobile, isTablet }) => {
             observations: info[0].observations,
             validationClientResult: info[0].validationClientResult,
             statusCard: "Success",
+            historicalLoanApplicationId: info[0].id,
           },
         ]);
       } else {
@@ -184,6 +186,7 @@ const Application = ({ isMobile, isTablet }) => {
               ele.validationClientResult,
               indx
             ),
+            historicalLoanApplicationId: ele.id,
           }))
         );
       }

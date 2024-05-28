@@ -71,6 +71,10 @@ export const Record = ({
   const [showDrawerNovelty, setShowDrawerNovelty] = useState(false);
   const [statusName, setStatusName] = useState("");
   const [comments, setComments] = useState("");
+  const [
+    selectedHistoricalLoanApplicationId,
+    setSelectedHistoricalLoanApplicationId,
+  ] = useState(null);
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -713,12 +717,14 @@ export const Record = ({
     }
   };
 
-  const handleResolve = (status) => {
+  const handleResolve = (status, historicalLoanApplicationId) => {
+    setSelectedHistoricalLoanApplicationId(historicalLoanApplicationId);
     setShowDrawerNovelty(true);
     setStatusName(status);
   };
 
   const handleCloseDrawerNovelty = () => {
+    setSelectedHistoricalLoanApplicationId(null);
     setShowDrawerNovelty(false);
     setStatusName("");
     setComments("");
@@ -731,7 +737,7 @@ export const Record = ({
 
   const handleSaveComments = () => {
     const formData = {
-      loanApplicationId: applications?.selectedApplication?.loanApplicationId,
+      historicalLoanApplicationId: selectedHistoricalLoanApplicationId,
       comments: comments,
     };
 
@@ -741,6 +747,7 @@ export const Record = ({
         queryClient.invalidateQueries(["historyList"]);
         queryClient.invalidateQueries(["LoanInformation"]);
         setShowDrawerNovelty(false);
+        setSelectedHistoricalLoanApplicationId(null);
         setStatusName("");
         setComments("");
       },
@@ -1036,7 +1043,11 @@ export const Record = ({
                       height={"40px"}
                       onClick={
                         ele.validationClientResult === 1
-                          ? () => handleResolve(ele.status)
+                          ? () =>
+                              handleResolve(
+                                ele.status,
+                                ele.historicalLoanApplicationId
+                              )
                           : () => handleRetry(ele.status)
                       }
                       disabled={

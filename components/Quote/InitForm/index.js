@@ -19,6 +19,7 @@ export const InitForm = ({
   handleNext,
   handleWapp,
   errorDate,
+  errorDateOlder,
   errorBalance,
   genderButtons,
   emptyValidation,
@@ -29,7 +30,7 @@ export const InitForm = ({
     if (firstInputRef.current) {
       firstInputRef.current.focus();
     }
-  }, []); 
+  }, []);
 
   const inputProps = {
     radius: "4px",
@@ -45,7 +46,7 @@ export const InitForm = ({
     border: theme.colors.primary25,
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
-  }
+  };
 
   return (
     <Col m={"92px 0 0 0"} justifyMobile={"center"}>
@@ -121,9 +122,13 @@ export const InitForm = ({
         placeholder={"dd/mm/aaaa"}
         id="birthdate"
         label="Fecha de nacimiento*"
-        error={errorDate}
+        error={errorDate || errorDateOlder}
         helper={
-          errorDate ? "Debes ser mayor de edad para cotizar tu ahorro" : ""
+          errorDate
+            ? "Debes ser mayor de edad para cotizar tu ahorro"
+            : errorDateOlder
+            ? "Debes ser menor de 74 años para cotizar tu ahorro"
+            : ""
         }
         onChange={handleChangeDate}
         value={formInfo.birthdate}

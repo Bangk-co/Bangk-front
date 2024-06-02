@@ -11,7 +11,8 @@ export const CustomSelect = styled(Select)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-weight: ${theme.fonts.weight.regular};
     font-size: ${({ size }) => size || theme.fonts.size.sm};
-    text-align: center;
+    align-items: center;
+    display: flex;
     &.Mui-focused fieldset {
       border: 1px solid
         ${(props) =>

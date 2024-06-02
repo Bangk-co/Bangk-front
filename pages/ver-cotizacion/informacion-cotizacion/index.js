@@ -17,6 +17,7 @@ import { ModalAccept } from "@/components/ViewQuote/ModalAccept";
 import { ModalDecline } from "@/components/ViewQuote/ModalDecline";
 import dayjs from "dayjs";
 import { setOtpDate } from "@/store/balance";
+import { downloadFile } from "@/utilities/helpers";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -58,6 +59,18 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     setOpenModalAccept(true);
   };
 
+  const handleDownload = async (insuranceName) => {
+    let link;
+    if (insuranceName === "SBS") {
+      link =
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/26072023";
+    } else {
+      link =
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/Condicionado-General-Vida-Deudores";
+    }
+    downloadFile(link, `"Terminos y condiciones "${insuranceName}`);
+  };
+
   const handleTerms = (event) => {
     const { checked } = event.target;
     const currentDate = new Date();
@@ -77,7 +90,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     setOpenModalTerms(false);
     const currentDate = new Date();
     setTerms(true);
-    setTermsDate(currentDate);  
+    setTermsDate(currentDate);
   };
 
   const handleDecline = () => {
@@ -93,22 +106,25 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleAccept = () => {
     acceptLoanQuote.reset();
-    acceptLoanQuote.mutate({ 
-      loanApplicationId: requests?.selectedRequest,
-      terms: dayjs(termsDate),
-      otpDate: dayjs(otpDate)
-    }, {
-      onSuccess: () => {
-        handleClose();
-        router.push("/ver-cotizacion/aceptacion-exitosa");
-        dispatch(setOtpDate(null));
+    acceptLoanQuote.mutate(
+      {
+        loanApplicationId: requests?.selectedRequest,
+        terms: dayjs(termsDate),
+        otpDate: dayjs(otpDate),
       },
-      onError: (err) => {
-        err.response.data.map((error) => {
-          toast.error(error);
-        });
-      },
-    });
+      {
+        onSuccess: () => {
+          handleClose();
+          router.push("/ver-cotizacion/aceptacion-exitosa");
+          dispatch(setOtpDate(null));
+        },
+        onError: (err) => {
+          err.response.data.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   const handleReject = () => {
@@ -171,6 +187,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
             handleWapp={handleWapp}
             handleNext={handleNext}
             setOpenModal={setOpenModalTerms}
+            handleDownload={handleDownload}
             terms={terms}
             handleTerms={handleTerms}
             handleDecline={handleDecline}

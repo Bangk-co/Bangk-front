@@ -462,7 +462,6 @@ export const DrawerValidateInfo = ({
     setExpandedCardIndex(indx === expandedCardIndex ? null : indx);
   };
 
-  console.log("additionalInfo", additionalInfo);
   const handleSave = (validate, form, errors, setError) => {
     const validation = validate.validate(form, {
       abortEarly: false,

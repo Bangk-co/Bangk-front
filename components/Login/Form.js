@@ -254,7 +254,8 @@ const Form = ({ isMobile, isTablet }) => {
             }}
           />
         </Div>
-        <Div direction={isMobile ? "column" : "row"} align="center" gap="8px">
+        {/*  MVP commit
+       <Div direction={isMobile ? "column" : "row"} align="center" gap="8px">
           <Text
             color={theme.colors.neutralGray900}
             size={theme.fonts.size.default2}
@@ -272,7 +273,7 @@ const Form = ({ isMobile, isTablet }) => {
           >
             Crear cuenta
           </Link>
-        </Div>
+        </Div> */}
       </LoginCard>
     </WrapperForm>
   );

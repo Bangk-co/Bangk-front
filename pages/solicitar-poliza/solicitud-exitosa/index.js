@@ -2,8 +2,8 @@ import React from "react";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import Image from "next/image";
-import woman from "@/assets/img/woman-success-policy.svg"
-import woman2 from "@/assets/img/woman-accept.svg"
+import woman from "@/assets/img/woman-success-policy.svg";
+import woman2 from "@/assets/img/woman-accept.svg";
 import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
 import { useRouter } from "next/router";
@@ -21,7 +21,7 @@ const RequestSuccess = ({ isMobile }) => {
   };
 
   const handleCreate = () => {
-    router.push("/establecer-contrasena?source=continue")
+    router.push("/establecer-contrasena?source=continue");
   };
 
   return (
@@ -31,7 +31,12 @@ const RequestSuccess = ({ isMobile }) => {
         <Div justify="center" width="100%">
           <ColForm align="center">
             {isMobile ? (
-              <Image alt="success-mobile" src={woman2} width={303} height={343.66} />
+              <Image
+                alt="success-mobile"
+                src={woman2}
+                width={303}
+                height={343.66}
+              />
             ) : (
               <Image alt="success" src={woman} width={369.33} height={420} />
             )}
@@ -42,7 +47,8 @@ const RequestSuccess = ({ isMobile }) => {
               weight={theme.fonts.weight.bold}
               mt="24px"
             >
-              ¡Felicitaciones!<br/>
+              ¡Felicitaciones!
+              <br />
               Haz completado tu solicitud para la póliza con Bangk
             </Text>
             <Text
@@ -51,9 +57,15 @@ const RequestSuccess = ({ isMobile }) => {
               mt="16px"
               mb="46px"
             >
-              Te estaremos contactando para informarte el estado de tu solicitud.
+              Te estaremos contactando para informarte el estado de tu
+              solicitud.
             </Text>
-            <Div gap="10px" direction={"column"} align={"center"} justify={"center"}>
+            <Div
+              gap="10px"
+              direction={"column"}
+              align={"center"}
+              justify={"center"}
+            >
               <Button
                 font={theme.fonts.family.primaryBold}
                 background={theme.colors.yellow500}
@@ -69,18 +81,19 @@ const RequestSuccess = ({ isMobile }) => {
               >
                 Ver más ofertas Bangk
               </Button>
-              <Link
+              {/* MVP commit
+               <Link
                 color={theme.colors.yellow500}
                 onClick={handleCreate}
               >
                 Establece una contraseña
-              </Link>
+              </Link> */}
             </Div>
           </ColForm>
         </Div>
       </WrapperPolicy>
     </Container>
-  )
-}
+  );
+};
 
 export default RequestSuccess;

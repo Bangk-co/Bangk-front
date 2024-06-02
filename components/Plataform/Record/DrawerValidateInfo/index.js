@@ -484,10 +484,7 @@ export const DrawerValidateInfo = ({
             ...personalInfo,
             ...financialInfo,
             ...healthInfo,
-            beneficiaries: false,
-            beneficiary: [],
-            convicted: false,
-            lifeEnsure: false,
+            ...additionalInfo,
           },
         },
         {

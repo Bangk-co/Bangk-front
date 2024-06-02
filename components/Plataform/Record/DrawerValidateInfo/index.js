@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import _ from "lodash";
+import _, { add } from "lodash";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -290,7 +290,9 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
-        beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
+        beneficiary: data?.data?.loanInsurancePolicies.beneficiaries
+          ? data?.data?.loanInsurancePolicies.beneficiary
+          : [],
       });
     }
   }, [data, isLoading, cancelEdit]);

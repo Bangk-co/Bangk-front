@@ -17,6 +17,7 @@ export const Calculation = ({
   handleWapp,
   handleNext,
   setOpenModal,
+  handleDownload,
   terms,
   handleTerms,
   handleDecline,
@@ -287,7 +288,9 @@ export const Calculation = ({
               cursor: "pointer",
               textDecoration: "underline",
             }}
-            onClick={() => setOpenModal(true)}
+            onClick={() =>
+              handleDownload(loanApplicationInfo?.insuraceCurrierName)
+            }
           >
             términos y condiciones
           </span>

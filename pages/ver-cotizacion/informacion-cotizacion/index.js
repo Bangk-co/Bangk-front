@@ -63,10 +63,10 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     let link;
     if (insuranceName === "SBS") {
       link =
-        "https://storageaccountbangk.blob.core.windows.net/internalfiles/26072023";
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/26072023%201322%20P34%20VIDA%20GRUPO%20GRAL4%20D00I%2010.pdf";
     } else {
       link =
-        "https://storageaccountbangk.blob.core.windows.net/internalfiles/Condicionado-General-Vida-Deudores";
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/Condicionado-General-Vida-Deudores%20ALLIANZ.pdf";
     }
     downloadFile(link, `"Terminos y condiciones "${insuranceName}`);
   };

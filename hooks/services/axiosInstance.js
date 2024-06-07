@@ -8,7 +8,6 @@ const axiosClient = axios.create({
 
 const getLocalUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
   return user;
 };
 

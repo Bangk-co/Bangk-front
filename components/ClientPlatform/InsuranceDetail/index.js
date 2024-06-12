@@ -143,11 +143,14 @@ const InsuranceDetail = ({ isMobile }) => {
     },
     {
       label: "Fecha de vencimiento",
-      content: formattedDate(
-        new Date(application?.creationDate).setFullYear(
-          new Date(application?.creationDate).getFullYear() + 1
-        )
-      ),
+      content:
+        policy?.selectedPolicy?.policyId === null
+          ? "--"
+          : formattedDate(
+              new Date(application?.creationDate).setFullYear(
+                new Date(application?.creationDate).getFullYear() + 1
+              )
+            ),
       width: isMobile ? "135px" : "150px",
     },
     {
@@ -370,7 +373,9 @@ const InsuranceDetail = ({ isMobile }) => {
             ))}
           </Tabs>
         </Row>
-        {selectedTab === 0 && <InsuranceHistory historyInfo={historyInfo} />}
+        {selectedTab === 0 && (
+          <InsuranceHistory isMobile={isMobile} historyInfo={historyInfo} />
+        )}
         {selectedTab === 1 && <Text>Formulario</Text>}
         {selectedTab === 2 && <Text>Pagos</Text>}
         {selectedTab === 3 && <Text>Documentos</Text>}

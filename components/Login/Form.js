@@ -231,6 +231,7 @@ const Form = ({ isMobile, isTablet }) => {
             Iniciar sesión
           </Button>
         </Div>
+        {/*  MVP commit
         <Div align="center" gap="6px" width="100%" m="30px 0 40px 0">
           <hr
             style={{
@@ -254,7 +255,7 @@ const Form = ({ isMobile, isTablet }) => {
             }}
           />
         </Div>
-        {/*  MVP commit
+       
        <Div direction={isMobile ? "column" : "row"} align="center" gap="8px">
           <Text
             color={theme.colors.neutralGray900}

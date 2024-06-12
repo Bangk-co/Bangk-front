@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 import { Document, Page } from "react-pdf";
+import { height } from "@mui/system";
 
 export const WraperInsurance = styled.div`
   display: flex;
@@ -33,7 +34,7 @@ export const Card = styled.div`
 
 export const DashedLine = styled.div`
   border-left: ${(props) => `2px dashed ${props.color}`};
-  height: 185px;
+  height: ${(props) => (props.isMobile ? `${props.heightRef}px` : "185px")};
 `;
 
 export const WrapperClose = styled.div`

@@ -9,7 +9,7 @@ import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
 import addCircle from "@/assets/icons/addCircleOutline.svg";
-import womanIcon from "@/assets/img/create-insurance.svg"
+import womanIcon from "@/assets/img/create-insurance.svg";
 import useGetClientInsurances from "@/hooks/Customers/useGetClientInsurances";
 import { setSelectedPolicyInformation } from "@/store/policy";
 import { LinearProgress } from "@/components/Common/LinearProgress";
@@ -56,7 +56,7 @@ const Insurance = ({ isMobile }) => {
     const oneYearLater = new Date(applicationDate);
     oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
     const differenceMs = oneYearLater - currentDate;
-    const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+    const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24) - 1);
 
     const elapsedMs = currentDate - applicationDate;
     const progress = (elapsedMs / differenceMs) * 100;
@@ -69,7 +69,7 @@ const Insurance = ({ isMobile }) => {
   };
 
   const handleCreateEndorsement = () => {
-    router.push("/cotiza-tu-ahorro/tu-credito?source=create")
+    router.push("/cotiza-tu-ahorro/tu-credito?source=create");
   };
 
   return (
@@ -123,7 +123,11 @@ const Insurance = ({ isMobile }) => {
         {insuranceList.length === 0 ? (
           <WrapperCard>
             <Div>
-              <Image alt="woman" src={womanIcon} width={isMobile ? "137px" : "167px"} />
+              <Image
+                alt="woman"
+                src={womanIcon}
+                width={isMobile ? "137px" : "167px"}
+              />
             </Div>
             <Div direction="column" width="318px">
               <Text
@@ -133,7 +137,7 @@ const Insurance = ({ isMobile }) => {
                 lineHeight={"20px"}
                 mb="4px"
               >
-                Aún no tienes Solicitudes de Endoso con Bankg. 
+                Aún no tienes Solicitudes de Endoso con Bankg.
               </Text>
               <Text
                 color={theme.colors.green900}
@@ -142,7 +146,8 @@ const Insurance = ({ isMobile }) => {
                 lineHeight={"20px"}
                 mb="22px"
               >
-                ¡Haz tu solicitud hoy mismo y descubre todo lo que tenemos para ti!
+                ¡Haz tu solicitud hoy mismo y descubre todo lo que tenemos para
+                ti!
               </Text>
               <Button
                 background={theme.colors.green900}
@@ -220,7 +225,7 @@ const Insurance = ({ isMobile }) => {
                     </Text>
                     {renderDocumentStateDiv(insurance.stateName)}
                   </Col>
-                  <Col justify="center" gap="8px">
+                  <Col justify="center" gap="8px" width={!isMobile && "152px"}>
                     <Text
                       size={theme.fonts.size.xs}
                       color={theme.colors.gray300}
@@ -258,7 +263,8 @@ const Insurance = ({ isMobile }) => {
                   height="10px"
                   value={
                     insurance?.creationDatePolicy
-                      ? calculateDaysRemaning(insurance.creationDatePolicy).progress
+                      ? calculateDaysRemaning(insurance.creationDatePolicy)
+                          .progress
                       : 0
                   }
                   sx={{ width: "100%" }}
@@ -282,7 +288,7 @@ const Insurance = ({ isMobile }) => {
                   width="100%"
                   height="1px"
                   background={theme.colors.gray50}
-                  m="16px 0"
+                  m="16px 0 0 0"
                 />
                 <Row width="100%" justify="center" gap="16px">
                   <Button
@@ -294,13 +300,24 @@ const Insurance = ({ isMobile }) => {
                     hover={theme.colors.gray100}
                     background={theme.colors.white}
                     font={theme.fonts.family.primaryBold}
-                    size={theme.fonts.size.default2}
                     radius={"40px"}
                     onClick={() =>
-                      handleDetail(insurance.policyId, insurance.loanApplicationId)
+                      handleDetail(
+                        insurance.policyId,
+                        insurance.loanApplicationId
+                      )
                     }
                   >
-                    Ver Detalle
+                    <Text
+                      size={theme.fonts.size.default2}
+                      color={theme.colors.green900}
+                      font={theme.fonts.family.primaryBold}
+                      style={{
+                        borderBottom: `2px solid ${theme.colors.green900}`,
+                      }}
+                    >
+                      Ver Detalle
+                    </Text>
                   </Button>
                   {/* <Button
                   width={"174px"}

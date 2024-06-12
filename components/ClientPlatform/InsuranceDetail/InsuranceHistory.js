@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import _ from "lodash";
 import { Col, Div, Row, Text } from "@/styles/Common";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Card, DashedLine, SaveSuccess } from "./styles";
 import { Grid } from "@mui/material";
 import { theme } from "@/styles/theme";
@@ -16,7 +16,7 @@ import cancelIcon from "@/assets/icons/cancel-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
 
-export const InsuranceHistory = ({ historyInfo }) => {
+export const InsuranceHistory = ({ isMobile, historyInfo }) => {
   const dispatch = useDispatch();
   const { policy } = useSelector((state) => state);
 
@@ -44,6 +44,8 @@ export const InsuranceHistory = ({ historyInfo }) => {
       });
     }
   }, [dataAssesorConcept, isLoadingAssessorConcept]);
+
+  const cardsRefs = useRef([]);
 
   const designStepper = (status) => {
     switch (status) {
@@ -100,14 +102,23 @@ export const InsuranceHistory = ({ historyInfo }) => {
           <Div key={indx} direction="column" align="center">
             <Image alt="icon" src={designStepper(ele.statusCard)?.icon} />
             {indx < historyInfo.length - 1 && (
-              <DashedLine color={designStepper(ele.statusCard)?.lineColor} />
+              <DashedLine
+                color={designStepper(ele.statusCard)?.lineColor}
+                isMobile={isMobile}
+                heightRef={cardsRefs.current[indx]?.offsetHeight}
+              />
             )}
           </Div>
         ))}
       </Div>
       <Col gap="16px">
         {historyInfo.map((ele, indx) => (
-          <Card key={indx} style={{ flexDirection: "column" }} height="auto">
+          <Card
+            key={indx}
+            style={{ flexDirection: "column" }}
+            height="auto"
+            ref={(ref) => (cardsRefs.current[indx] = ref)}
+          >
             {((ele.status === "Formularios diligenciados" &&
               formsConcept.concept) ||
               ele.status === "Cliente no asegurable") && (
@@ -154,9 +165,9 @@ export const InsuranceHistory = ({ historyInfo }) => {
                   </Row>
                 </Div>
               )}
-            <Grid container>
+            <Grid container spacing={2}>
               <Grid item md={2.5}>
-                <Col gap="16px">
+                <Col gap="16px" width="244px" m="0 0 16px 0">
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}
@@ -175,7 +186,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
                 </Col>
               </Grid>
               <Grid item md={2}>
-                <Col gap="16px">
+                <Col gap="16px" width="244px" m="0 0 16px 0">
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}
@@ -194,7 +205,7 @@ export const InsuranceHistory = ({ historyInfo }) => {
                 </Col>
               </Grid>
               <Grid item md={5}>
-                <Col gap="16px">
+                <Col gap="16px" width="244px" m="0 0 16px 0">
                   <Text
                     color={theme.colors.neutralGray900}
                     font={theme.fonts.family.primaryBold}

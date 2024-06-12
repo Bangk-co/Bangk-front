@@ -287,7 +287,7 @@ const RequestPolicy = ({ isMobile }) => {
               ...financialInfo,
               ...newHealthInfo,
               ...newAdditionalInfo,
-              aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+              acceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
                 ? dayjs(aceptanceOriginOfFundsDate)
                 : null,
               otpDateForms: dayjs(otpDate),
@@ -295,12 +295,12 @@ const RequestPolicy = ({ isMobile }) => {
           },
           {
             onSuccess: () => {
-              dispatch(setOtpDate(null));
               updateStatus.reset();
               updateStatus.mutate(
                 { loanApplicationId: requestInfo.loanApplicationId },
                 {
                   onSuccess: () => {
+                    dispatch(setOtpDate(null));
                     router.push("/solicitar-poliza/solicitud-exitosa");
                   },
                   onError: (err) => {
@@ -329,7 +329,7 @@ const RequestPolicy = ({ isMobile }) => {
             ...financialInfo,
             ...newHealthInfo,
             ...newAdditionalInfo,
-            aceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+            acceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
               ? dayjs(aceptanceOriginOfFundsDate)
               : null,
             otpDateForms: dayjs(otpDate),
@@ -337,7 +337,6 @@ const RequestPolicy = ({ isMobile }) => {
         },
         {
           onSuccess: (data) => {
-            dispatch(setOtpDate(null));
             dispatch(setRequestInfo(data?.data.result));
             setActiveStep(activeStep + 1);
           },

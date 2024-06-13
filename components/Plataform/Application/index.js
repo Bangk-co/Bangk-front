@@ -142,7 +142,7 @@ const Application = ({ isMobile, isTablet }) => {
   const statusCard = (status, validation, index) => {
     if (status === "ClienteNoAsegurable" || validation === 1) {
       return "Alert";
-    } else if (validation === 2 || validation === 3) {
+    } else if (validation === 2 || validation === 3 || validation === 4) {
       return "Error";
     } else if (index === 0) {
       return "Pending";

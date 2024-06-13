@@ -765,6 +765,12 @@ export const Record = ({
     });
   };
 
+  const sbsConnectionFail = historyInfo.findIndex(item => item.status === "Estudio lista restrictiva SBS" && item.validationClientResult === 4);
+  const sarlaftConnectionFail = historyInfo.findIndex(item => item.status === "Estudio Sarlaft" && item.validationClientResult === 4);
+  
+  const lastSbsCardIndex = historyInfo.findIndex(item => item.status === "Estudio lista restrictiva SBS");
+  const lastSarlaftCardIndex = historyInfo.findIndex(item => item.status === "Estudio Sarlaft");
+
   return (
     <Row m="24px 0 0 0" gap="16px">
       <DrawerAllInfo
@@ -1038,7 +1044,8 @@ export const Record = ({
                     </Div>
                   )}
                 {(ele.validationClientResult === 1 ||
-                  ele.validationClientResult === 4) && (
+                  (indx === sbsConnectionFail && indx === lastSbsCardIndex) || 
+                  (indx === sarlaftConnectionFail && indx === lastSarlaftCardIndex)) && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       background={theme.colors.green900}

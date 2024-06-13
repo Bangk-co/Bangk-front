@@ -287,6 +287,8 @@ export const historyStatus = {
   CotizaciónRechazada: "Cotización rechazada",
   CotizaciónNoRespondida: "Cotización no respondida",
   ClienteNoAsegurable: "Cliente no asegurable",
+  SolicitudEmisionPoliza: "Solicitud emisión de póliza",
+  PagoRechazado: "Pago rechazado"
 };
 
 export const getFileType = (url) => {

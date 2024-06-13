@@ -19,6 +19,7 @@ import {
   formattedDate,
 } from "@/utilities/helpers";
 import { WraperInsurance } from "./styles";
+import article from "../../../assets/icons/article-green.svg";
 
 const Insurance = ({ isMobile }) => {
   const router = useRouter();
@@ -70,6 +71,10 @@ const Insurance = ({ isMobile }) => {
 
   const handleCreateEndorsement = () => {
     router.push("/cotiza-tu-ahorro/tu-credito?source=create");
+  };
+
+  const handleViewQuote = (loanApplicationId) => {
+    router.push(`/ver-cotizacion/informacion-cotizacion/?requestId=${loanApplicationId}`)
   };
 
   return (
@@ -319,6 +324,26 @@ const Insurance = ({ isMobile }) => {
                       Ver Detalle
                     </Text>
                   </Button>
+                  {insurance.stateName === "Cotización enviada" && (
+                    <Button
+                      width={"167px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      startIcon={
+                        <Image alt="article" src={article} width={16} height={16} />
+                      }
+                      onClick={() => handleViewQuote(insurance.loanApplicationId)}
+                    >
+                      Ver Cotización
+                    </Button>
+                  )}
                   {/* <Button
                   width={"174px"}
                   padding="0px"

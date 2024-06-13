@@ -32,7 +32,7 @@ const Banner = ({ isMobile, handleGo }) => {
             textAlign: isMobile && "center",
           }}
         >
-          ¡Tu cotización está lista!<br></br> No esperes más y empieza ahorrar
+          ¡Tu cotización está lista!<br></br> No esperes más y empieza a ahorrar
           con{" "}
           <span
             style={{

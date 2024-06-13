@@ -21,6 +21,7 @@ import { downloadFile } from "@/utilities/helpers";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { requestId } = router.query;
   const dispatch = useDispatch();
   const { requests } = useSelector((state) => state);
   const { otpDate } = useSelector((state) => state)?.balance;
@@ -108,7 +109,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate(
       {
-        loanApplicationId: requests?.selectedRequest,
+        loanApplicationId: requestId || requests?.selectedRequest,
         terms: dayjs(termsDate),
         otpDate: dayjs(otpDate),
       },
@@ -131,7 +132,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     rejectLoanQuote.reset();
     rejectLoanQuote.mutate(
       {
-        loanApplicationId: requests?.selectedRequest,
+        loanApplicationId: requestId || requests?.selectedRequest,
         observations: reasonToReject,
       },
       {

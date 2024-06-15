@@ -294,18 +294,18 @@ const Application = ({ isMobile, isTablet }) => {
 
       const ageCalulate = () => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
         const birthDate = new Date(birthdate);
-        birthDate.setHours(0, 0, 0, 0);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
 
-        const ageMilliseconds = today - birthDate;
-        const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
-        const age = Math.floor(ageMilliseconds / millisecondsPerYear);
-
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+          age--;
+        }
         return age;
       };
 
-      if (ageCalulate() < 50) {
+      if (ageCalulate() <= 50) {
         annualRate = dataQuoteRate?.data?.groupSettings.find(
           (ele) => ele.name === "AnnualRate1"
         )?.code;

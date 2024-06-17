@@ -8,7 +8,6 @@ import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
-import addCircle from "@/assets/icons/addCircleOutline.svg";
 import megaphone from "@/assets/img/megaphone.svg";
 import useGetClientInsurances from "@/hooks/Customers/useGetClientInsurances";
 import { setSelectedPolicyInformation } from "@/store/policy";
@@ -20,6 +19,7 @@ import {
 } from "@/utilities/helpers";
 import { WraperInsurance } from "./styles";
 import article from "../../../assets/icons/article-green.svg";
+import editNote from "@/assets/icons/editNote.svg";
 
 const Insurance = ({ isMobile }) => {
   const router = useRouter();
@@ -328,23 +328,26 @@ const Insurance = ({ isMobile }) => {
                   </Button>
                   {insurance.stateName === "Cotización enviada" && (
                     <Button
-                      width={"167px"}
+                      width={isMobile ? "145px" : "167px"}
                       height={"40px"}
                       labelColor={theme.colors.green900}
                       borderHover={theme.colors.green900}
                       border={theme.colors.green900}
+                      borderHeight={"3px solid"}
                       hover={theme.colors.white}
                       background={theme.colors.white}
                       font={theme.fonts.family.primaryBold}
                       size={theme.fonts.size.default2}
                       radius={"40px"}
                       startIcon={
-                        <Image
-                          alt="article"
-                          src={article}
-                          width={16}
-                          height={16}
-                        />
+                        isMobile ? null : (
+                          <Image
+                            alt="article"
+                            src={article}
+                            width={16}
+                            height={16}
+                          />
+                        )
                       }
                       onClick={() =>
                         handleViewQuote(insurance.loanApplicationId)
@@ -353,12 +356,90 @@ const Insurance = ({ isMobile }) => {
                       Ver Cotización
                     </Button>
                   )}
+                  {(insurance.stateName === "Poliza Emitida" ||
+                    insurance.stateName === "Pago Rechazado") && (
+                    <Button
+                      width={isMobile ? "130px" : "167px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      startIcon={
+                        isMobile ? null : (
+                          <Text
+                            size={theme.fonts.size.default2}
+                            color={theme.colors.green900}
+                            font={theme.fonts.family.primaryBold}
+                          >
+                            $
+                          </Text>
+                        )
+                      }
+                      onClick={() => {}}
+                    >
+                      Pagar Póliza
+                    </Button>
+                  )}
+                  {insurance.stateName === "Poliza Pagada" && (
+                    <Button
+                      width={isMobile ? "auto" : "205px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      startIcon={
+                        isMobile ? null : (
+                          <Image
+                            alt="editNote"
+                            src={editNote}
+                            width={16}
+                            height={16}
+                          />
+                        )
+                      }
+                      onClick={() => {}}
+                    >
+                      {isMobile ? "Firmar" : "Firmar Documentos"}
+                    </Button>
+                  )}
+                  {insurance.stateName === "Cotización aceptada" && (
+                    <Button
+                      width={isMobile ? "auto" : "205px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      onClick={() => {}}
+                    >
+                      {isMobile ? "Formularios" : "Diligenciar formularios"}
+                    </Button>
+                  )}
+
                   {/* <Button
-                  width={"174px"}
+                  width={isMobile ? "auto" : "174px"}
                   padding="0px"
                   labelColor={theme.colors.white}
                   borderHover={theme.colors.green900}
                   border={theme.colors.green900}
+                  borderHeight={"3px solid"}
                   hover={theme.colors.green900}
                   background={theme.colors.green900}
                   font={theme.fonts.family.primaryBold}

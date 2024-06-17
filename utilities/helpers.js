@@ -214,6 +214,7 @@ export const renderDocumentStateDiv = (stateName) => {
     case "Rechazado":
     case "Vencido":
     case "Cliente no asegurable":
+    case "Pago Rechazado":
       borderColor = theme.colors.red500;
       color = theme.colors.red500;
       break;
@@ -288,7 +289,7 @@ export const historyStatus = {
   CotizaciónNoRespondida: "Cotización no respondida",
   ClienteNoAsegurable: "Cliente no asegurable",
   SolicitudEmisionPoliza: "Solicitud emisión de póliza",
-  PagoRechazado: "Pago rechazado"
+  PagoRechazado: "Pago rechazado",
 };
 
 export const getFileType = (url) => {

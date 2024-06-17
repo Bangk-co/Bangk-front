@@ -29,7 +29,7 @@ export const BackButton = ({ isHovered, setIsHovered }) => {
         onClick={handleBack}
       >
         <Image alt="arrow-back" src={isHovered ? arrowGreen : arrow} style={{ marginRight: "10px" }} />
-        Volver a Bangk.com
+        Volver al Home
       </LinkButton>
     </Div>
   )

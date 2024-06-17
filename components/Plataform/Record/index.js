@@ -461,7 +461,8 @@ export const Record = ({
                 "clientInfo",
                 application?.clientId,
               ]);
-              queryClient.invalidateQueries["clientInfo"];
+              queryClient.invalidateQueries(["clientInfo"]);
+              queryClient.invalidateQueries(["LoanInformation"]);
             },
             onError: (err) => {
               err.response.data.errors.map((error) => {
@@ -484,6 +485,7 @@ export const Record = ({
                 { duration: 1000 }
               );
               setShowDrawer(false);
+              queryClient.invalidateQueries(["clientInfo"]);
               queryClient.invalidateQueries(["historyList"]);
               queryClient.invalidateQueries(["LoanInformation"]);
             } else {
@@ -765,11 +767,22 @@ export const Record = ({
     });
   };
 
-  const sbsConnectionFail = historyInfo.findIndex(item => item.status === "Estudio lista restrictiva SBS" && item.validationClientResult === 4);
-  const sarlaftConnectionFail = historyInfo.findIndex(item => item.status === "Estudio Sarlaft" && item.validationClientResult === 4);
-  
-  const lastSbsCardIndex = historyInfo.findIndex(item => item.status === "Estudio lista restrictiva SBS");
-  const lastSarlaftCardIndex = historyInfo.findIndex(item => item.status === "Estudio Sarlaft");
+  const sbsConnectionFail = historyInfo.findIndex(
+    (item) =>
+      item.status === "Estudio lista restrictiva SBS" &&
+      item.validationClientResult === 4
+  );
+  const sarlaftConnectionFail = historyInfo.findIndex(
+    (item) =>
+      item.status === "Estudio Sarlaft" && item.validationClientResult === 4
+  );
+
+  const lastSbsCardIndex = historyInfo.findIndex(
+    (item) => item.status === "Estudio lista restrictiva SBS"
+  );
+  const lastSarlaftCardIndex = historyInfo.findIndex(
+    (item) => item.status === "Estudio Sarlaft"
+  );
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -1044,8 +1057,9 @@ export const Record = ({
                     </Div>
                   )}
                 {(ele.validationClientResult === 1 ||
-                  (indx === sbsConnectionFail && indx === lastSbsCardIndex) || 
-                  (indx === sarlaftConnectionFail && indx === lastSarlaftCardIndex)) && (
+                  (indx === sbsConnectionFail && indx === lastSbsCardIndex) ||
+                  (indx === sarlaftConnectionFail &&
+                    indx === lastSarlaftCardIndex)) && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       background={theme.colors.green900}

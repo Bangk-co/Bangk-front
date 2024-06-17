@@ -8,8 +8,7 @@ import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
 import backIcon from "@/assets/icons/backArrow.svg";
-import addCircle from "@/assets/icons/addCircleOutline.svg";
-import womanIcon from "@/assets/img/create-insurance.svg";
+import megaphone from "@/assets/img/megaphone.svg";
 import useGetClientInsurances from "@/hooks/Customers/useGetClientInsurances";
 import { setSelectedPolicyInformation } from "@/store/policy";
 import { LinearProgress } from "@/components/Common/LinearProgress";
@@ -20,6 +19,7 @@ import {
 } from "@/utilities/helpers";
 import { WraperInsurance } from "./styles";
 import article from "../../../assets/icons/article-green.svg";
+import editNote from "@/assets/icons/editNote.svg";
 
 const Insurance = ({ isMobile }) => {
   const router = useRouter();
@@ -74,7 +74,9 @@ const Insurance = ({ isMobile }) => {
   };
 
   const handleViewQuote = (loanApplicationId) => {
-    router.push(`/ver-cotizacion/informacion-cotizacion/?requestId=${loanApplicationId}`)
+    router.push(
+      `/ver-cotizacion/informacion-cotizacion/?requestId=${loanApplicationId}`
+    );
   };
 
   return (
@@ -124,17 +126,17 @@ const Insurance = ({ isMobile }) => {
         direction={isMobile ? "column" : "row"}
         align="center"
         gap={isMobile ? "20px" : "16px"}
+        width="100%"
+        p={isMobile ? "0 16px" : "0"}
       >
         {insuranceList.length === 0 ? (
-          <WrapperCard>
-            <Div>
-              <Image
-                alt="woman"
-                src={womanIcon}
-                width={isMobile ? "137px" : "167px"}
-              />
-            </Div>
-            <Div direction="column" width="318px">
+          <WrapperCard isMobile={isMobile}>
+            <Image
+              alt="megaphone"
+              src={megaphone}
+              width={isMobile ? "137px" : "167px"}
+            />
+            <Col align="center" gap="4px">
               <Text
                 color={theme.colors.green900}
                 font={theme.fonts.family.primaryBold}
@@ -142,7 +144,7 @@ const Insurance = ({ isMobile }) => {
                 lineHeight={"20px"}
                 mb="4px"
               >
-                Aún no tienes Solicitudes de Endoso con Bankg.
+                ¡Completa tus seguros!
               </Text>
               <Text
                 color={theme.colors.green900}
@@ -151,20 +153,20 @@ const Insurance = ({ isMobile }) => {
                 lineHeight={"20px"}
                 mb="22px"
               >
-                ¡Haz tu solicitud hoy mismo y descubre todo lo que tenemos para
-                ti!
+                Solicita hoy mismo un nuevo endoso y descubre los beneficios que
+                Bangk tiene para tí!
               </Text>
-              <Button
-                background={theme.colors.green900}
-                hover={theme.colors.green900}
-                borderHover={theme.colors.green900}
-                width={isMobile ? "282px" : "300px"}
-                style={{ alignSelf: "center" }}
-                onClick={handleCreateEndorsement}
-              >
-                Nueva solicitud de endoso
-              </Button>
-            </Div>
+            </Col>
+            <Button
+              background={theme.colors.green900}
+              hover={theme.colors.green900}
+              borderHover={theme.colors.green900}
+              width={isMobile ? "282px" : "300px"}
+              style={{ alignSelf: "center" }}
+              onClick={handleCreateEndorsement}
+            >
+              Nueva solicitud de endoso
+            </Button>
           </WrapperCard>
         ) : (
           <>
@@ -326,30 +328,118 @@ const Insurance = ({ isMobile }) => {
                   </Button>
                   {insurance.stateName === "Cotización enviada" && (
                     <Button
-                      width={"167px"}
+                      width={isMobile ? "145px" : "167px"}
                       height={"40px"}
                       labelColor={theme.colors.green900}
                       borderHover={theme.colors.green900}
                       border={theme.colors.green900}
+                      borderHeight={"3px solid"}
                       hover={theme.colors.white}
                       background={theme.colors.white}
                       font={theme.fonts.family.primaryBold}
                       size={theme.fonts.size.default2}
                       radius={"40px"}
                       startIcon={
-                        <Image alt="article" src={article} width={16} height={16} />
+                        isMobile ? null : (
+                          <Image
+                            alt="article"
+                            src={article}
+                            width={16}
+                            height={16}
+                          />
+                        )
                       }
-                      onClick={() => handleViewQuote(insurance.loanApplicationId)}
+                      onClick={() =>
+                        handleViewQuote(insurance.loanApplicationId)
+                      }
                     >
                       Ver Cotización
                     </Button>
                   )}
+                  {(insurance.stateName === "Poliza Emitida" ||
+                    insurance.stateName === "Pago Rechazado") && (
+                    <Button
+                      width={isMobile ? "130px" : "167px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      startIcon={
+                        isMobile ? null : (
+                          <Text
+                            size={theme.fonts.size.default2}
+                            color={theme.colors.green900}
+                            font={theme.fonts.family.primaryBold}
+                          >
+                            $
+                          </Text>
+                        )
+                      }
+                      onClick={() => {}}
+                    >
+                      Pagar Póliza
+                    </Button>
+                  )}
+                  {insurance.stateName === "Poliza Pagada" && (
+                    <Button
+                      width={isMobile ? "auto" : "205px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      startIcon={
+                        isMobile ? null : (
+                          <Image
+                            alt="editNote"
+                            src={editNote}
+                            width={16}
+                            height={16}
+                          />
+                        )
+                      }
+                      onClick={() => {}}
+                    >
+                      {isMobile ? "Firmar" : "Firmar Documentos"}
+                    </Button>
+                  )}
+                  {insurance.stateName === "Cotización aceptada" && (
+                    <Button
+                      width={isMobile ? "auto" : "205px"}
+                      height={"40px"}
+                      labelColor={theme.colors.green900}
+                      borderHover={theme.colors.green900}
+                      border={theme.colors.green900}
+                      borderHeight={"3px solid"}
+                      hover={theme.colors.white}
+                      background={theme.colors.white}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      radius={"40px"}
+                      onClick={() => {}}
+                    >
+                      {isMobile ? "Formularios" : "Diligenciar formularios"}
+                    </Button>
+                  )}
+
                   {/* <Button
-                  width={"174px"}
+                  width={isMobile ? "auto" : "174px"}
                   padding="0px"
                   labelColor={theme.colors.white}
                   borderHover={theme.colors.green900}
                   border={theme.colors.green900}
+                  borderHeight={"3px solid"}
                   hover={theme.colors.green900}
                   background={theme.colors.green900}
                   font={theme.fonts.family.primaryBold}
@@ -366,29 +456,48 @@ const Insurance = ({ isMobile }) => {
               </Card>
             ))}
 
-            <Card
-              gap="4px"
-              p="0 16px"
-              width={isMobile ? "90%" : "176px"}
-              height={isMobile ? "123px" : "100%"}
-              background={theme.colors.primary25}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
+            <WrapperCard
+              isMobile={isMobile}
+              width={isMobile ? "90%" : "560px"}
+              padding={isMobile ? "53px 16px" : "53px 29px"}
             >
-              <Image alt="addCircle" src={addCircle} width={24} height={24} />
-              <Text
-                size={theme.fonts.size.default2}
-                color={theme.colors.green900}
-                font={theme.fonts.family.primaryBold}
-                style={{ padding: isMobile ? "0 60px" : "0 10px" }}
+              <Image
+                alt="megaphone"
+                src={megaphone}
+                width={isMobile ? "137px" : "167px"}
+              />
+              <Col align="center" gap="4px">
+                <Text
+                  color={theme.colors.green900}
+                  font={theme.fonts.family.primaryBold}
+                  size={theme.fonts.size.default}
+                  lineHeight={"20px"}
+                  mb="4px"
+                >
+                  ¡Completa tus seguros!
+                </Text>
+                <Text
+                  color={theme.colors.green900}
+                  font={theme.fonts.family.primaryMedium}
+                  size={theme.fonts.size.sm}
+                  lineHeight={"20px"}
+                  mb="22px"
+                >
+                  Solicita hoy mismo un nuevo endoso y descubre los beneficios
+                  que Bangk tiene para tí!
+                </Text>
+              </Col>
+              <Button
+                background={theme.colors.green900}
+                hover={theme.colors.green900}
+                borderHover={theme.colors.green900}
+                width={isMobile ? "250px" : "300px"}
+                style={{ alignSelf: "center" }}
                 onClick={handleCreateEndorsement}
               >
-                Nueva Solicitud de endoso
-              </Text>
-            </Card>
+                Nueva solicitud de endoso
+              </Button>
+            </WrapperCard>
           </>
         )}
       </Div>

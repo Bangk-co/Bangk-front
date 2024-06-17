@@ -14,7 +14,10 @@ export const Header = ({ isMobile }) => {
 
   const validRoute = [
     "/ver-cotizacion/aceptacion-exitosa",
-    "/ver-cotizacion/cotizacion-rechazada"
+    "/ver-cotizacion/cotizacion-rechazada",
+    "/solicitar-poliza/confirma-tus-datos",
+    "/solicitar-poliza",
+    "/solicitar-poliza/solicitud-exitosa"
   ];
 
   const handleLogout = () => {

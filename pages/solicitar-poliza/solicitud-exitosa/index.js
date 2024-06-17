@@ -1,6 +1,7 @@
 import React from "react";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 import woman from "@/assets/img/woman-success-policy.svg";
 import woman2 from "@/assets/img/woman-accept.svg";
@@ -13,6 +14,7 @@ import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleBangk = () => {

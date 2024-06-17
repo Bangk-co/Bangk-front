@@ -44,7 +44,7 @@ const InsuranceDetail = ({ isMobile }) => {
 
   useEffect(() => {
     if (
-      !policy?.selectedPolicy?.loanApplicationId ||
+      !policy?.selectedPolicy?.loanApplicationId &&
       !policy?.selectedPolicy?.policyId
     ) {
       router.push("/plataforma-cliente/seguros");

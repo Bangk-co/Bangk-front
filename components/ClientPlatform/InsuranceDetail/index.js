@@ -16,13 +16,6 @@ import downIcon from "@/assets/icons/expand_circle_down.svg";
 import upIcon from "@/assets/icons/expand_circle_up.svg";
 import flagIconBold from "../../../assets/icons/flag-bold.svg";
 import flagIcon from "../../../assets/icons/flag.svg";
-import moneyIcon from "../../../assets/icons/money-gray.svg";
-import moneyIconBold from "../../../assets/icons/money-bold.svg";
-import formIcon from "../../../assets/icons/form.svg";
-import formIconBold from "../../../assets/icons/form-bold.svg";
-import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
-import folderIcon from "../../../assets/icons/folder-gray.svg";
-import useGetBanks from "@/hooks/Common/useGetBanks";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import useGetLoanApplicationInfo from "@/hooks/Customers/useGetLoanApplicationInfo";
 import {
@@ -116,20 +109,6 @@ const InsuranceDetail = ({ isMobile }) => {
     }
   }, [isSuccessHistory, dataHistory]);
 
-  const banks = useGetBanks();
-  const { data: dataBanks, isSuccess: isSuccessBanks } = banks;
-  const [banksOptions, setBanksOptions] = useState([]);
-  useEffect(() => {
-    if (isSuccessBanks) {
-      setBanksOptions(
-        dataBanks?.data.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
-      );
-    }
-  }, [isSuccessBanks, dataBanks]);
-
   const insuranceData = [
     {
       label: "Estado de solicitud",
@@ -155,12 +134,16 @@ const InsuranceDetail = ({ isMobile }) => {
     },
     {
       label: "Monto del crédito",
-      content: formattedPrice(application?.loanBalance),
+      content: application?.loanBalance
+        ? formattedPrice(application?.loanBalance)
+        : "--",
       width: isMobile ? "135px" : "150px",
     },
     {
       label: "Monto prima anual de Bangk",
-      content: formattedPrice(application?.yearlyFee),
+      content: application?.loanBalance
+        ? formattedPrice(application?.yearlyFee)
+        : "--",
       width: isMobile ? "135px" : "165px",
     },
     {
@@ -196,6 +179,7 @@ const InsuranceDetail = ({ isMobile }) => {
             size={theme.fonts.size.sm}
             font={theme.fonts.family.primary}
             weight={theme.fonts.weight.regular}
+            align="left"
             mt="8px"
             mb="8px"
           >
@@ -218,39 +202,6 @@ const InsuranceDetail = ({ isMobile }) => {
         />
       ),
       label: "Historial",
-    },
-    {
-      icon: (
-        <Image
-          alt="back"
-          src={selectedTab === 1 ? formIconBold : formIcon}
-          width={24}
-          height={24}
-        />
-      ),
-      label: "Formularios",
-    },
-    {
-      icon: (
-        <Image
-          alt="back"
-          src={selectedTab === 2 ? moneyIconBold : moneyIcon}
-          width={24}
-          height={24}
-        />
-      ),
-      label: "Pagos",
-    },
-    {
-      icon: (
-        <Image
-          alt="back"
-          src={selectedTab === 3 ? folderIconBold : folderIcon}
-          width={24}
-          height={24}
-        />
-      ),
-      label: "Documentos",
     },
   ];
 
@@ -376,9 +327,6 @@ const InsuranceDetail = ({ isMobile }) => {
         {selectedTab === 0 && (
           <InsuranceHistory isMobile={isMobile} historyInfo={historyInfo} />
         )}
-        {selectedTab === 1 && <Text>Formulario</Text>}
-        {selectedTab === 2 && <Text>Pagos</Text>}
-        {selectedTab === 3 && <Text>Documentos</Text>}
       </Col>
     </WraperInsurance>
   );

@@ -3,7 +3,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { Text, Card, Div, Row, Col } from "@/styles/Common";
-import { HeaderInsurace, HeaderInsuranceMobile, WrapperCard } from "./styles";
+import {
+  HeaderInsurace,
+  HeaderInsuranceMobile,
+  WrapperCard,
+  WrapperSmallCard,
+} from "./styles";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import endorsement from "@/assets/icons/endorsement.svg";
@@ -81,7 +86,9 @@ const Insurance = ({ isMobile }) => {
   };
 
   const handleViewPolicy = (loanApplicationId) => {
-    router.push(`/solicitar-poliza/confirma-tus-datos/?loanApplicationId=${loanApplicationId}`);
+    router.push(
+      `/solicitar-poliza/confirma-tus-datos/?loanApplicationId=${loanApplicationId}`
+    );
   };
 
   return (
@@ -175,14 +182,18 @@ const Insurance = ({ isMobile }) => {
           </WrapperCard>
         ) : (
           <>
-            <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3 }} columnSpacing={{ xs: 2, sm: 2, md: 4 }}>
+            <Grid
+              container
+              rowSpacing={{ xs: 2, sm: 2, md: 3 }}
+              columnSpacing={{ xs: 2, sm: 2, md: 4 }}
+            >
               {insuranceList.map((insurance, index) => (
                 <Grid item key={index} md={6} xs={12}>
                   <Card
+                    m={isMobile ? "20px 0 10px 0" : "0"}
                     gap="8px"
-                    m={isMobile ? "20px 16px 0 16px" : "0"}
                     p="16px 24px"
-                    width={isMobile ? "90%" : "100%"}
+                    width={"100%"}
                   >
                     <Row justify="center" gap="8px">
                       <Image
@@ -238,7 +249,11 @@ const Insurance = ({ isMobile }) => {
                         </Text>
                         {renderDocumentStateDiv(insurance.stateName)}
                       </Col>
-                      <Col justify="center" gap="8px" width={!isMobile && "152px"}>
+                      <Col
+                        justify="center"
+                        gap="8px"
+                        width={!isMobile && "152px"}
+                      >
                         <Text
                           size={theme.fonts.size.xs}
                           color={theme.colors.gray300}
@@ -253,7 +268,9 @@ const Insurance = ({ isMobile }) => {
                           font={theme.fonts.family.primary}
                         >
                           {insurance?.creationDateLoanApplication
-                            ? formattedDate(insurance.creationDateLoanApplication)
+                            ? formattedDate(
+                                insurance.creationDateLoanApplication
+                              )
                             : "--"}
                         </Text>
                       </Col>
@@ -291,8 +308,9 @@ const Insurance = ({ isMobile }) => {
                       {`Vence: ${
                         insurance?.creationDatePolicy
                           ? formattedDate(
-                              calculateDaysRemaning(insurance.creationDatePolicy)
-                                .dueDate
+                              calculateDaysRemaning(
+                                insurance.creationDatePolicy
+                              ).dueDate
                             )
                           : "--"
                       }`}
@@ -433,7 +451,9 @@ const Insurance = ({ isMobile }) => {
                           font={theme.fonts.family.primaryBold}
                           size={theme.fonts.size.default2}
                           radius={"40px"}
-                          onClick={() => handleViewPolicy(insurance.loanApplicationId)}
+                          onClick={() =>
+                            handleViewPolicy(insurance.loanApplicationId)
+                          }
                         >
                           {isMobile ? "Formularios" : "Diligenciar formularios"}
                         </Button>
@@ -463,7 +483,7 @@ const Insurance = ({ isMobile }) => {
                 </Grid>
               ))}
               <Grid item md={6} xs={12}>
-                <WrapperCard
+                <WrapperSmallCard
                   isMobile={isMobile}
                   width={isMobile ? "90%" : "100%"}
                   padding={isMobile ? "53px 16px" : "53px 29px"}
@@ -490,8 +510,8 @@ const Insurance = ({ isMobile }) => {
                       lineHeight={"20px"}
                       mb="22px"
                     >
-                      Solicita hoy mismo un nuevo endoso y descubre los beneficios
-                      que Bangk tiene para tí!
+                      Solicita hoy mismo un nuevo endoso y descubre los
+                      beneficios que Bangk tiene para tí!
                     </Text>
                   </Col>
                   <Button
@@ -504,7 +524,7 @@ const Insurance = ({ isMobile }) => {
                   >
                     Nueva solicitud de endoso
                   </Button>
-                </WrapperCard>
+                </WrapperSmallCard>
               </Grid>
             </Grid>
           </>

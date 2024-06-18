@@ -55,6 +55,7 @@ const ValidateUser = ({ isMobile, isTablet }) => {
   const [isCodeSuccess, setIsCodeSuccess] = useState(null);
   const [timeLeft, setTimeLeft] = useState(180);
   const [showResendButton, setShowResendButton] = useState(false);
+  const [sendCodeConfirmInfo, setSendCodeConfirmInfo] = useState(true);
   const [isReSend, setIsResend] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false);
   const [currentEmail, setCurrentEmail] = useState("");
@@ -75,6 +76,15 @@ const ValidateUser = ({ isMobile, isTablet }) => {
         setCurrentEmail(newUserInfo.email);
         break;
       case "confirmInfo":
+        if (sendCodeConfirmInfo) {
+          reSendCode.reset();
+          reSendCode.mutate(data?.data.loanInsurancePolicies.email, {
+            onSuccess: (res) => {
+              dispatch(setValidCode(res.data.code));
+              setSendCodeConfirmInfo(false);
+            },
+          });
+        }
         setCurrentEmail(data?.data.loanInsurancePolicies.email);
         break;
       default:

@@ -204,43 +204,6 @@ export const InsuranceHistory = ({ isMobile, historyInfo }) => {
                   </Text>
                 </Col>
               </Grid>
-              <Grid item md={5}>
-                <Col gap="16px" width="244px" m="0 0 16px 0">
-                  <Text
-                    color={theme.colors.neutralGray900}
-                    font={theme.fonts.family.primaryBold}
-                    weight={theme.fonts.weight.bold}
-                    size={theme.fonts.size.xs}
-                  >
-                    Observaciones
-                  </Text>
-                  {ele.status === "Formularios diligenciados" &&
-                  formsConcept.concept ? (
-                    <Col>
-                      {formsConcept.comments
-                        .split(",")
-                        .map((comment, index) => (
-                          <Text
-                            key={index}
-                            color={theme.colors.neutralGray900}
-                            font={theme.fonts.family.primary}
-                            size={theme.fonts.size.md}
-                          >{`\u2022 ${comment.trim()}`}</Text>
-                        ))}
-                    </Col>
-                  ) : (
-                    <Text
-                      color={theme.colors.neutralGray900}
-                      font={theme.fonts.family.primary}
-                      size={theme.fonts.size.md}
-                    >
-                      {ele.status === "Cotización rechazada"
-                        ? `Motivo de rechazo: ${ele.observations}`
-                        : ele.observations}
-                    </Text>
-                  )}
-                </Col>
-              </Grid>
             </Grid>
           </Card>
         ))}

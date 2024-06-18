@@ -12,7 +12,7 @@ import {
   ArticleCard,
   WrapperSmallCard,
 } from "./styles";
-import { getUserInfo } from "@/utilities/helpers";
+import { formattedDate, getUserInfo } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
 import backIcon from "@/assets/icons/arrow-down.svg";
 import megaphone from "@/assets/img/megaphone.svg";
@@ -91,6 +91,29 @@ export const Home = ({ isMobile }) => {
     },
   ];
 
+  const calculateDaysRemaning = (date) => {
+    const applicationDate = new Date(date);
+    const currentDate = new Date();
+
+    const oneYearLater = new Date(applicationDate);
+    oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+    const differenceMs = oneYearLater - currentDate;
+    const daysRemaining = Math.ceil(differenceMs / (1000 * 60 * 60 * 24) - 1);
+
+    const elapsedMs = currentDate - applicationDate;
+    const progress = (elapsedMs / differenceMs) * 100;
+
+    return {
+      dueDate: oneYearLater,
+      daysRemaining: daysRemaining,
+      progress: progress,
+    };
+  };
+
+  const handleCreateEndorsement = () => {
+    router.push("/cotiza-tu-ahorro/tu-credito?source=create");
+  };
+
   const handleDetail = (policyId, loanApplicationId) => {
     dispatch(
       setSelectedPolicyInformation({
@@ -99,6 +122,18 @@ export const Home = ({ isMobile }) => {
       })
     );
     router.push("/plataforma-cliente/seguros/detalle-seguro");
+  };
+
+  const handleViewQuote = (loanApplicationId) => {
+    router.push(
+      `/ver-cotizacion/informacion-cotizacion/?requestId=${loanApplicationId}`
+    );
+  };
+
+  const handleViewPolicy = (loanApplicationId) => {
+    router.push(
+      `/solicitar-poliza/confirma-tus-datos/?loanApplicationId=${loanApplicationId}`
+    );
   };
 
   return (
@@ -521,7 +556,7 @@ export const Home = ({ isMobile }) => {
                     borderHover={theme.colors.green900}
                     width={isMobile ? "250px" : "300px"}
                     style={{ alignSelf: "center" }}
-                    /* onClick={handleCreateEndorsement} */
+                    onClick={handleCreateEndorsement}
                   >
                     Nueva solicitud de endoso
                   </Button>

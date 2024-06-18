@@ -134,12 +134,16 @@ const InsuranceDetail = ({ isMobile }) => {
     },
     {
       label: "Monto del crédito",
-      content: formattedPrice(application?.loanBalance),
+      content: application?.loanBalance
+        ? formattedPrice(application?.loanBalance)
+        : "--",
       width: isMobile ? "135px" : "150px",
     },
     {
       label: "Monto prima anual de Bangk",
-      content: formattedPrice(application?.yearlyFee),
+      content: application?.loanBalance
+        ? formattedPrice(application?.yearlyFee)
+        : "--",
       width: isMobile ? "135px" : "165px",
     },
     {
@@ -175,6 +179,7 @@ const InsuranceDetail = ({ isMobile }) => {
             size={theme.fonts.size.sm}
             font={theme.fonts.family.primary}
             weight={theme.fonts.weight.regular}
+            align="left"
             mt="8px"
             mb="8px"
           >

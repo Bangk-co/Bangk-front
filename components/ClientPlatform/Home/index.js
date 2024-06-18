@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Text, Row, Col, Div } from "@/styles/Common";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { Text, Row, Col, Div, Card } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import {
   WraperHome,
@@ -8,21 +10,44 @@ import {
   HeaderHome,
   WrapperCard,
   ArticleCard,
+  WrapperSmallCard,
 } from "./styles";
 import { getUserInfo } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
 import backIcon from "@/assets/icons/arrow-down.svg";
 import megaphone from "@/assets/img/megaphone.svg";
+import endorsement from "@/assets/icons/endorsement.svg";
 import article1 from "@/assets/img/article1.svg";
 import article2 from "@/assets/img/article2.svg";
 import article3 from "@/assets/img/article3.svg";
+import article4 from "@/assets/img/article4.svg";
 import article1Mobile from "@/assets/img/article1Mobile.svg";
 import article2Mobile from "@/assets/img/article2Mobile.svg";
 import article3Mobile from "@/assets/img/article3Mobile.svg";
+import article4Mobile from "@/assets/img/article4Mobile.svg";
 import logo from "@/assets/img/logoRounded.svg";
+import useGetLastThreeApplication from "@/hooks/Customers/useGetLastThreeApplication";
+import { Grid } from "@mui/material";
+import { LinearProgress } from "@/components/Common/LinearProgress";
+import { renderDocumentStateDiv } from "@/utilities/helpers";
+import { setSelectedPolicyInformation } from "@/store/policy";
 
 export const Home = ({ isMobile }) => {
-  const { unique_name: name } = getUserInfo();
+  const { unique_name: name, ClientId } = getUserInfo();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const threeApplication = useGetLastThreeApplication(ClientId);
+  const { data: dataApplications, isSuccess: isSuccessApplications } =
+    threeApplication;
+  const [applicationList, setApplicationsList] = useState([]);
+
+  useEffect(() => {
+    if (isSuccessApplications) {
+      setApplicationsList(dataApplications?.data?.loanApplications);
+    }
+  }, [isSuccessApplications, dataApplications]);
+
   const articles = [
     {
       photo: isMobile ? article1Mobile : article1,
@@ -55,7 +80,7 @@ export const Home = ({ isMobile }) => {
       url: "https://www.bangk.co/blog/articulo/3/",
     },
     {
-      photo: isMobile ? article1Mobile : article1,
+      photo: isMobile ? article4Mobile : article4,
       title: "¡Buena suerte!",
       description: isMobile
         ? "El dinero debe seguirte, estarás en problemas si lo haces al revés… Cuando emprendemos, consumimos ..."
@@ -65,6 +90,17 @@ export const Home = ({ isMobile }) => {
       url: "https://www.bangk.co/blog/articulo/4/",
     },
   ];
+
+  const handleDetail = (policyId, loanApplicationId) => {
+    dispatch(
+      setSelectedPolicyInformation({
+        policyId: policyId,
+        loanApplicationId: loanApplicationId,
+      })
+    );
+    router.push("/plataforma-cliente/seguros/detalle-seguro");
+  };
+
   return (
     <WraperHome>
       {isMobile ? (
@@ -89,7 +125,12 @@ export const Home = ({ isMobile }) => {
         </HeaderHome>
       )}
       <Col p={isMobile ? "0 16px" : "0"}>
-        <Row width="100%" justify="space-between" align="center">
+        <Row
+          width="100%"
+          justify="space-between"
+          align="center"
+          m={isMobile ? "0 0 24px 0" : "0 0 32px 0"}
+        >
           <Text
             size={theme.fonts.size.ft}
             color={theme.colors.neutralGray900}
@@ -132,47 +173,368 @@ export const Home = ({ isMobile }) => {
             </Row>
           </Button>
         </Row>
-        <WrapperCard isMobile={isMobile}>
-          <Image
-            alt="megaphone"
-            src={megaphone}
-            width={isMobile ? "137px" : "167px"}
-          />
-          <Col align="center" gap="4px">
-            <Text
-              color={theme.colors.green900}
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.default}
-              lineHeight={"20px"}
-              mb="4px"
+        {applicationList.length === 0 ? (
+          <WrapperCard isMobile={isMobile}>
+            <Image
+              alt="megaphone"
+              src={megaphone}
+              width={isMobile ? "137px" : "167px"}
+            />
+            <Col align="center" gap="4px">
+              <Text
+                color={theme.colors.green900}
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.default}
+                lineHeight={"20px"}
+                mb="4px"
+              >
+                ¡Completa tus seguros!
+              </Text>
+              <Text
+                color={theme.colors.green900}
+                font={theme.fonts.family.primaryMedium}
+                size={theme.fonts.size.sm}
+                lineHeight={"20px"}
+                mb="22px"
+              >
+                Solicita hoy mismo un nuevo endoso y descubre los beneficios que
+                Bangk tiene para tí!
+              </Text>
+            </Col>
+            <Button
+              background={theme.colors.green900}
+              hover={theme.colors.green900}
+              borderHover={theme.colors.green900}
+              width={isMobile ? "282px" : "300px"}
+              style={{ alignSelf: "center" }}
             >
-              ¡Completa tus seguros!
-            </Text>
-            <Text
-              color={theme.colors.green900}
-              font={theme.fonts.family.primaryMedium}
-              size={theme.fonts.size.sm}
-              lineHeight={"20px"}
-              mb="22px"
+              Nueva solicitud de endoso
+            </Button>
+          </WrapperCard>
+        ) : (
+          <>
+            <Grid
+              container
+              rowSpacing={{ xs: 2, sm: 2, md: 3 }}
+              columnSpacing={{ xs: 2, sm: 2, md: 4 }}
             >
-              Solicita hoy mismo un nuevo endoso y descubre los beneficios que
-              Bangk tiene para tí!
-            </Text>
-          </Col>
-          <Button
-            background={theme.colors.green900}
-            hover={theme.colors.green900}
-            borderHover={theme.colors.green900}
-            width={isMobile ? "282px" : "300px"}
-            style={{ alignSelf: "center" }}
-          >
-            Nueva solicitud de endoso
-          </Button>
-        </WrapperCard>
+              {applicationList.map((insurance, index) => (
+                <Grid item key={index} md={6} xs={12}>
+                  <Card gap="8px" p="16px 24px" width={"100%"}>
+                    <Row justify="center" gap="8px">
+                      <Image
+                        alt="endorsement"
+                        src={endorsement}
+                        width={40}
+                        height={40}
+                      />
+                      <Col justify="center" align="left">
+                        <Text
+                          size={theme.fonts.size.xs}
+                          color={theme.colors.neutralGray500}
+                          font={theme.fonts.family.primary}
+                          weight={theme.fonts.weight.semibold}
+                        >
+                          {insurance.policyId === null
+                            ? `Numero de solicitud ${insurance.loanApplicationId}`
+                            : `Numero de póliza ${insurance.policyId}`}
+                        </Text>
+                        <Text
+                          size={
+                            isMobile
+                              ? theme.fonts.size.default2
+                              : theme.fonts.size.default
+                          }
+                          color={theme.colors.gray900}
+                          font={theme.fonts.family.primaryBold}
+                        >
+                          {`Credito ${insurance.loanType}`}
+                        </Text>
+                      </Col>
+                    </Row>
+                    <Div
+                      width="100%"
+                      height="1px"
+                      background={theme.colors.gray50}
+                      m="16px 0"
+                    />
+                    <Row
+                      width="100%"
+                      justify="space-between"
+                      align="start"
+                      m="0 0 20px 0"
+                    >
+                      <Col justify="center" gap="8px">
+                        <Text
+                          size={theme.fonts.size.xs}
+                          color={theme.colors.gray300}
+                          font={theme.fonts.family.primary}
+                          weight={theme.fonts.weight.semibold}
+                        >
+                          Estado de solicitud
+                        </Text>
+                        {renderDocumentStateDiv(insurance.stateName)}
+                      </Col>
+                      <Col
+                        justify="center"
+                        gap="8px"
+                        width={!isMobile && "152px"}
+                      >
+                        <Text
+                          size={theme.fonts.size.xs}
+                          color={theme.colors.gray300}
+                          font={theme.fonts.family.primary}
+                          weight={theme.fonts.weight.semibold}
+                        >
+                          Fecha de solicitud
+                        </Text>
+                        <Text
+                          size={theme.fonts.size.xs}
+                          color={theme.colors.gray900}
+                          font={theme.fonts.family.primary}
+                        >
+                          {insurance?.creationDateLoanApplication
+                            ? formattedDate(
+                                insurance.creationDateLoanApplication
+                              )
+                            : "--"}
+                        </Text>
+                      </Col>
+                    </Row>
+                    <Text
+                      size={theme.fonts.size.xs}
+                      color={theme.colors.gray300}
+                      font={theme.fonts.family.primary}
+                      weight={theme.fonts.weight.semibold}
+                    >
+                      {`Días restantes: ${
+                        insurance?.creationDatePolicy
+                          ? calculateDaysRemaning(insurance.creationDatePolicy)
+                              .daysRemaining
+                          : "--"
+                      }`}
+                    </Text>
+                    <LinearProgress
+                      variant="determinate"
+                      height="10px"
+                      value={
+                        insurance?.creationDatePolicy
+                          ? calculateDaysRemaning(insurance.creationDatePolicy)
+                              .progress
+                          : 0
+                      }
+                      sx={{ width: "100%" }}
+                    />
+                    <Text
+                      size={theme.fonts.size.xxs}
+                      color={theme.colors.gray300}
+                      font={theme.fonts.family.primary}
+                      weight={theme.fonts.weight.regular}
+                    >
+                      {`Vence: ${
+                        insurance?.creationDatePolicy
+                          ? formattedDate(
+                              calculateDaysRemaning(
+                                insurance.creationDatePolicy
+                              ).dueDate
+                            )
+                          : "--"
+                      }`}
+                    </Text>
+                    <Div
+                      width="100%"
+                      height="1px"
+                      background={theme.colors.gray50}
+                      m="16px 0 0 0"
+                    />
+                    <Row width="100%" justify="center" gap="16px">
+                      <Button
+                        width={"auto"}
+                        padding="0px 16px"
+                        labelColor={theme.colors.green900}
+                        borderHover={"#F0F0F0"}
+                        border={theme.colors.white}
+                        hover={theme.colors.gray100}
+                        background={theme.colors.white}
+                        font={theme.fonts.family.primaryBold}
+                        radius={"40px"}
+                        onClick={() =>
+                          handleDetail(
+                            insurance.policyId,
+                            insurance.loanApplicationId
+                          )
+                        }
+                      >
+                        <Text
+                          size={theme.fonts.size.default2}
+                          color={theme.colors.green900}
+                          font={theme.fonts.family.primaryBold}
+                          style={{
+                            borderBottom: `2px solid ${theme.colors.green900}`,
+                          }}
+                        >
+                          Ver Detalle
+                        </Text>
+                      </Button>
+                      {insurance.stateName === "Cotización enviada" && (
+                        <Button
+                          width={isMobile ? "145px" : "167px"}
+                          height={"40px"}
+                          labelColor={theme.colors.green900}
+                          borderHover={theme.colors.green900}
+                          border={theme.colors.green900}
+                          borderHeight={"3px solid"}
+                          hover={theme.colors.white}
+                          background={theme.colors.white}
+                          font={theme.fonts.family.primaryBold}
+                          size={theme.fonts.size.default2}
+                          radius={"40px"}
+                          startIcon={
+                            isMobile ? null : (
+                              <Image
+                                alt="article"
+                                src={article}
+                                width={16}
+                                height={16}
+                              />
+                            )
+                          }
+                          onClick={() =>
+                            handleViewQuote(insurance.loanApplicationId)
+                          }
+                        >
+                          Ver Cotización
+                        </Button>
+                      )}
+                      {(insurance.stateName === "Poliza Emitida" ||
+                        insurance.stateName === "Pago Rechazado") && (
+                        <Button
+                          width={isMobile ? "130px" : "167px"}
+                          height={"40px"}
+                          labelColor={theme.colors.green900}
+                          borderHover={theme.colors.green900}
+                          border={theme.colors.green900}
+                          borderHeight={"3px solid"}
+                          hover={theme.colors.white}
+                          background={theme.colors.white}
+                          font={theme.fonts.family.primaryBold}
+                          size={theme.fonts.size.default2}
+                          radius={"40px"}
+                          startIcon={
+                            isMobile ? null : (
+                              <Text
+                                size={theme.fonts.size.default2}
+                                color={theme.colors.green900}
+                                font={theme.fonts.family.primaryBold}
+                              >
+                                $
+                              </Text>
+                            )
+                          }
+                          onClick={() => {}}
+                        >
+                          Pagar Póliza
+                        </Button>
+                      )}
+                      {insurance.stateName === "Poliza Pagada" && (
+                        <Button
+                          width={isMobile ? "auto" : "205px"}
+                          height={"40px"}
+                          labelColor={theme.colors.green900}
+                          borderHover={theme.colors.green900}
+                          border={theme.colors.green900}
+                          borderHeight={"3px solid"}
+                          hover={theme.colors.white}
+                          background={theme.colors.white}
+                          font={theme.fonts.family.primaryBold}
+                          size={theme.fonts.size.default2}
+                          radius={"40px"}
+                          startIcon={
+                            isMobile ? null : (
+                              <Image
+                                alt="editNote"
+                                src={editNote}
+                                width={16}
+                                height={16}
+                              />
+                            )
+                          }
+                          onClick={() => {}}
+                        >
+                          {isMobile ? "Firmar" : "Firmar Documentos"}
+                        </Button>
+                      )}
+                      {insurance.stateName === "Cotización aceptada" && (
+                        <Button
+                          width={isMobile ? "auto" : "205px"}
+                          height={"40px"}
+                          labelColor={theme.colors.green900}
+                          borderHover={theme.colors.green900}
+                          border={theme.colors.green900}
+                          borderHeight={"3px solid"}
+                          hover={theme.colors.white}
+                          background={theme.colors.white}
+                          font={theme.fonts.family.primaryBold}
+                          size={theme.fonts.size.default2}
+                          radius={"40px"}
+                          onClick={() =>
+                            handleViewPolicy(insurance.loanApplicationId)
+                          }
+                        >
+                          {isMobile ? "Formularios" : "Diligenciar formularios"}
+                        </Button>
+                      )}
+                    </Row>
+                  </Card>
+                </Grid>
+              ))}
+              <Grid item md={6} xs={12}>
+                <WrapperSmallCard isMobile={isMobile} width={"100%"}>
+                  <Image
+                    alt="megaphone"
+                    src={megaphone}
+                    width={isMobile ? "137px" : "167px"}
+                  />
+                  <Col align="center" gap="4px">
+                    <Text
+                      color={theme.colors.green900}
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default}
+                      lineHeight={"20px"}
+                      mb="4px"
+                    >
+                      ¡Completa tus seguros!
+                    </Text>
+                    <Text
+                      color={theme.colors.green900}
+                      font={theme.fonts.family.primaryMedium}
+                      size={theme.fonts.size.sm}
+                      lineHeight={"20px"}
+                    >
+                      Solicita hoy mismo un nuevo endoso y descubre los
+                      beneficios que Bangk tiene para tí!
+                    </Text>
+                  </Col>
+                  <Button
+                    background={theme.colors.green900}
+                    hover={theme.colors.green900}
+                    borderHover={theme.colors.green900}
+                    width={isMobile ? "250px" : "300px"}
+                    style={{ alignSelf: "center" }}
+                    /* onClick={handleCreateEndorsement} */
+                  >
+                    Nueva solicitud de endoso
+                  </Button>
+                </WrapperSmallCard>
+              </Grid>
+            </Grid>
+          </>
+        )}
         <Text
           size={theme.fonts.size.ft}
           color={theme.colors.neutralGray900}
           font={theme.fonts.family.primaryBold}
+          style={{ margin: "24px 0 0 0" }}
         >
           Puede interesarte...
         </Text>
@@ -201,10 +563,8 @@ export const Home = ({ isMobile }) => {
               />
               <Col p={isMobile ? "16px 16px 5px 16px" : "16px"} gap="16px">
                 <Text
-                  color={
-                    isMobile ? theme.colors.green : theme.colors.neutralGray100
-                  }
-                  font={theme.fonts.family.primaryMedium}
+                  color={theme.colors.green}
+                  font={theme.fonts.family.primaryBold}
                   size={theme.fonts.size.default}
                 >
                   {article.title}

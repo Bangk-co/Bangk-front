@@ -24,6 +24,9 @@ export const CreditForm = ({
     handleDelete,
     handleCreate,
     loading,
+    source,
+    handleCreateInLogin,
+    loadingInLogin
   }) => {
   
   const isFormValid = Object.values(creditInfo).every(value => value !== null && value !== "") && documents.every(item => item.value !== null);
@@ -240,8 +243,8 @@ export const CreditForm = ({
           mobileWidth={"224px"}
           height={"40px"}
           radius={"40px"}
-          onClick={handleCreate}
-          disabled={!isFormValid || loading}
+          onClick={source === 'create' ? handleCreateInLogin : handleCreate}
+          disabled={!isFormValid || loading || loadingInLogin}
           id={"buttonRef"}
         >
           Cotizar

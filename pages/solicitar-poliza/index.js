@@ -287,7 +287,7 @@ const RequestPolicy = ({ isMobile }) => {
               ...financialInfo,
               ...newHealthInfo,
               ...newAdditionalInfo,
-              acceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+              acceptanceOriginOfFunds: aceptanceOriginOfFundsDate
                 ? dayjs(aceptanceOriginOfFundsDate)
                 : null,
               otpDateForms: dayjs(otpDate),
@@ -329,7 +329,7 @@ const RequestPolicy = ({ isMobile }) => {
             ...financialInfo,
             ...newHealthInfo,
             ...newAdditionalInfo,
-            acceptanceOriginOfFundsDate: aceptanceOriginOfFundsDate
+            acceptanceOriginOfFunds: aceptanceOriginOfFundsDate
               ? dayjs(aceptanceOriginOfFundsDate)
               : null,
             otpDateForms: dayjs(otpDate),

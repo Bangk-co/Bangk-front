@@ -17,7 +17,9 @@ export const Header = ({ isMobile }) => {
     "/ver-cotizacion/cotizacion-rechazada",
     "/solicitar-poliza/confirma-tus-datos",
     "/solicitar-poliza",
-    "/solicitar-poliza/solicitud-exitosa"
+    "/solicitar-poliza/solicitud-exitosa",
+    "/cotiza-tu-ahorro/tu-credito",
+    "/cotiza-tu-ahorro/creacion-exitosa"
   ];
 
   const handleLogout = () => {

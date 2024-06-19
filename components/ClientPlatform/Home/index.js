@@ -23,7 +23,7 @@ import article3 from "@/assets/img/article3.svg";
 import article4 from "@/assets/img/article4.svg";
 import article1Mobile from "@/assets/img/article1Mobile.svg";
 import article2Mobile from "@/assets/img/article2Mobile.svg";
-import article3Mobile from "@/assets/img/article3Mobile.svg";
+import article3Mobile from "@/assets/img/article3mobile.svg";
 import article4Mobile from "@/assets/img/article4Mobile.svg";
 import logo from "@/assets/img/logoRounded.svg";
 import useGetLastThreeApplication from "@/hooks/Customers/useGetLastThreeApplication";

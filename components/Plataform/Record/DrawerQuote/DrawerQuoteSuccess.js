@@ -19,6 +19,9 @@ export const DrawerQuoteSuccess = ({
 }) => {
   const [loanData, setLoanData] = useState([]);
 
+  console.log("currentInsuranceData", currentInsuranceData);
+  console.log("bangkInsuranceData", bangkInsuranceData);
+
   useEffect(() => {
     setLoanData([
       { label: "Tipo de crédito", value: loanInfo?.loanType },

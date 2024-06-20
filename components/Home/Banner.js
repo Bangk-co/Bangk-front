@@ -21,8 +21,8 @@ const Banner = ({ isMobile }) => {
   const router = useRouter();
 
   const handleQuote = () => {
-    router.push("/cotiza-tu-ahorro")
-  }
+    router.push("/cotiza-tu-ahorro");
+  };
 
   return (
     <Wrapper>
@@ -53,8 +53,8 @@ const Banner = ({ isMobile }) => {
             <Image
               alt="surprised-man"
               src={man}
-              width={isMobile ? 167 : 467}
-              height={isMobile ? 167 : 466}
+              width={isMobile ? 167 : 413}
+              height={isMobile ? 167 : 412}
             />
           </WrapperImage>
         </Col>

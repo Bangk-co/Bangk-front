@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Header from "@/components/ClientPlatform/Header";
 import { Layout } from "@/components/ClientPlatform/Layout";
 import { useAuth } from "@/hooks/useAuth";
-import { Text } from "@/styles/Common";
 import { FooterNav } from "@/components/ClientPlatform/FooterNav";
 import { Home } from "@/components/ClientPlatform/Home";
 

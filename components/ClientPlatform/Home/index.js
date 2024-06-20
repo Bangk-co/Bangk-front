@@ -17,6 +17,7 @@ import { Button } from "@/components/Common/Button";
 import backIcon from "@/assets/icons/arrow-down.svg";
 import megaphone from "@/assets/img/megaphone.svg";
 import endorsement from "@/assets/icons/endorsement.svg";
+import article from "@/assets/icons/article-green.svg";
 import article1 from "@/assets/img/article1.svg";
 import article2 from "@/assets/img/article2.svg";
 import article3 from "@/assets/img/article3.svg";

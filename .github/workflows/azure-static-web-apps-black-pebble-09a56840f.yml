@@ -36,7 +36,7 @@ jobs:
           IS_STATIC_EXPORT: true
           NEXT_PUBLIC_CRYPT_KEY: ${{secrets.NEXT_PUBLIC_CRYPT_KEY }}
           NEXT_PUBLIC_CRYPT_IV: ${{secrets.NEXT_PUBLIC_CRYPT_IV}}
-          NEXT_PUBLIC_API_URL: ${{secrets.NEXT_PUBLIC_API_URL_STAGING}}
+          NEXT_PUBLIC_API_URL: ${{vars.NEXT_PUBLIC_API_URL_STG}}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

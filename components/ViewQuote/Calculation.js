@@ -26,11 +26,11 @@ export const Calculation = ({
   const info = [
     {
       label: "Tipo de crédito:",
-      value: `${loanApplicationInfo?.loanTypeName}`,
+      value: `${loanApplicationInfo?.loanTypeName}` || 0,
     },
     {
       label: "Saldo del crédito:",
-      value: `${formattedPrice(loanApplicationInfo?.loanBalance)} COP`,
+      value: `${formattedPrice(loanApplicationInfo?.loanBalance) || 0} COP`,
     },
   ];
 
@@ -40,12 +40,12 @@ export const Calculation = ({
     {
       key: 1,
       label: "Seguro Mensual",
-      value: BangkInsuranceMonthly,
+      value: BangkInsuranceMonthly || 0,
     },
     {
       key: 2,
       label: "Seguro Anual",
-      value: BangkInsuranceAnnual,
+      value: BangkInsuranceAnnual || 0,
     },
   ];
 
@@ -55,16 +55,16 @@ export const Calculation = ({
     {
       key: 1,
       label: "Seguro Mensual",
-      value: InsuranceMonthly,
+      value: InsuranceMonthly || 0,
     },
     {
       key: 2,
       label: "Seguro Anual",
-      value: InsuranceAnnual,
+      value: InsuranceAnnual || 0,
     },
   ];
 
-  const anualSaving = InsuranceAnnual - BangkInsuranceAnnual;
+  const anualSaving = (InsuranceAnnual - BangkInsuranceAnnual) || 0;
 
   return (
     <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">

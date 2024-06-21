@@ -10,13 +10,15 @@ import { useDispatch } from "react-redux";
 import { resetInitData } from "@/store/balance";
 
 export const BackButton = ({ isHovered, setIsHovered }) => {
-  const dispatch = useDispatch()
-  const router = useRouter()
-
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const isAuth = !!localStorage.getItem("user");
+  
   const handleBack = () => {
-    router.push("/")
-    dispatch(resetInitData())
-  }
+    const homeRoute = isAuth ? "/plataforma-cliente/home" : "/";
+    router.push(homeRoute);
+    dispatch(resetInitData());
+  };
 
   return (
     <Div height="42px">

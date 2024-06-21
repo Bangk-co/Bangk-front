@@ -54,7 +54,7 @@ export const Number = styled.div`
   font-size: ${theme.fonts.size.h1};
   line-height: 56px;
   text-align: right;
-  color: ${theme.colors.orange};
+  color: ${theme.colors.orange100};
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.h6};

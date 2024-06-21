@@ -26,7 +26,10 @@ const Bangk = ({ isMobile }) => {
         <TitleBangk>
           BAAN
           <span
-            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold " }}
+            style={{
+              color: theme.colors.orange100,
+              fontFamily: "Gilroy Bold ",
+            }}
           >
             GGGGG<br></br>GGKKKKK!!!!
           </span>

@@ -42,7 +42,7 @@ const BlogSection = ({ isTablet, isMobile }) => {
                 <span
                   onClick={handleBlog}
                   style={{
-                    color: theme.colors.orange,
+                    color: theme.colors.orange100,
                     fontFamily: "Gilroy Bold",
                     textDecoration: "underline",
                     cursor: "pointer",

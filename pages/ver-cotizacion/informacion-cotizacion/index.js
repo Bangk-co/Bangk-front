@@ -25,12 +25,11 @@ const ViewQuote = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   const { requests } = useSelector((state) => state);
   const { otpDate } = useSelector((state) => state)?.balance;
-
   const acceptLoanQuote = useAcceptLoanQuote();
   const rejectLoanQuote = useRejectLoanQuote();
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    requests?.selectedRequest
+    requestId || requests?.selectedRequest
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();

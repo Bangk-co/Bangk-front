@@ -17,7 +17,7 @@ import BlogTablet from "./BlogTablet";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 
-const BlogSection = ({ isTablet }) => {
+const BlogSection = ({ isTablet, isMobile }) => {
   const router = useRouter();
 
   const handleBlog = () => {
@@ -42,7 +42,7 @@ const BlogSection = ({ isTablet }) => {
                 <span
                   onClick={handleBlog}
                   style={{
-                    color: theme.colors.orange,
+                    color: theme.colors.orange100,
                     fontFamily: "Gilroy Bold",
                     textDecoration: "underline",
                     cursor: "pointer",
@@ -53,12 +53,22 @@ const BlogSection = ({ isTablet }) => {
                 en nuestro
               </Text2Blog>
               <WrapperIcon>
-                <Image alt="blog" src={blog} />
+                <Image
+                  alt="blog"
+                  src={blog}
+                  width={isMobile ? 92 : 392}
+                  height={isMobile ? 25 : 110}
+                />
               </WrapperIcon>
             </Col5>
             <Col6>
               <WrapperPhone>
-                <Image alt="phone" src={phone} />
+                <Image
+                  alt="phone"
+                  src={phone}
+                  width={isMobile ? 126 : 293}
+                  height={isMobile ? 192 : 445}
+                />
               </WrapperPhone>
             </Col6>
           </WrapperRow>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Div } from "@/styles/Common";
@@ -7,22 +8,28 @@ import WhyWeDoIt from "@/components/Home/WhyWeDoIt";
 import Bangk from "@/components/Home/Bangk";
 import BlogSection from "@/components/Home/BlogSection";
 import Reviews from "@/components/Home/Reviews";
+import { useDispatch } from "react-redux";
+import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
+import { setRequestInfo } from "@/store/requests";
 
 const Home = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch()
   const router = useRouter();
+
   useEffect(() => {
     if (window.location.pathname !== router.pathname) {
       router.push(`/${window.location.pathname}`);
-    }
+    };
+    dispatch(setRequestInfo(initDataLoanInsurancePolicy));
   }, []);
 
   return (
     <Div direction="column">
-      <Banner />
+      <Banner isMobile={isMobile} />
       <Stepper isHome={true} isMobile={isMobile} isTablet={isTablet} />
-      <WhyWeDoIt />
-      <Bangk />
-      <BlogSection isTablet={isTablet} />
+      <WhyWeDoIt isMobile={isMobile} />
+      <Bangk isMobile={isMobile} />
+      <BlogSection isTablet={isTablet} isMobile={isMobile} />
       <Reviews isMobile={isMobile} isTablet={isTablet} />
     </Div>
   );

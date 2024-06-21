@@ -16,7 +16,7 @@ import { Col, Row } from "antd";
 import { infoList, phone, wappLink } from "@/utilities/options";
 import { theme } from "@/styles/theme";
 
-const FormInfo = () => {
+const FormInfo = ({ isMobile }) => {
   return (
     <WrapperInfo>
       <Text1>Para ayudarte de manera más personalizada </Text1>
@@ -42,14 +42,24 @@ const FormInfo = () => {
               style={{ display: "flex", flexDirection: "row", gap: "16px" }}
             >
               <WrapperStarInfo>
-                <Image alt="star" src={star} />
+                <Image
+                  alt="star"
+                  src={star}
+                  width={isMobile ? 11 : 24}
+                  height={isMobile ? 11 : 24}
+                />
               </WrapperStarInfo>
               <Text2>{ele}</Text2>
             </Col>
           ))}
         </Row>
         <WrapperImgInfo>
-          <Image alt="info" src={info} />
+          <Image
+            alt="info"
+            src={info}
+            width={isMobile ? 75 : 248}
+            height={isMobile ? 42 : 139}
+          />
         </WrapperImgInfo>
         <Text3>
           También podemos ayudarte vía{" "}

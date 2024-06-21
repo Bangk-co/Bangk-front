@@ -59,7 +59,12 @@ const ForUs = ({ isMobile }) => {
         </Button>
       </WrapperTextForUs>
       <WrapperIcon>
-        <Image alt="coin" src={coins} />
+        <Image
+          alt="coin"
+          src={coins}
+          width={isMobile ? 195 : 756}
+          height={isMobile ? 215 : 832}
+        />
       </WrapperIcon>
     </WrapperForUs>
   );

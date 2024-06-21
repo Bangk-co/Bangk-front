@@ -14,7 +14,7 @@ import star from "../../assets/icons/orange-star.svg";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
 
-const WhyWeDoIt = () => {
+const WhyWeDoIt = ({ isMobile }) => {
   const router = useRouter();
 
   const goInsurance = () => {
@@ -24,14 +24,24 @@ const WhyWeDoIt = () => {
   return (
     <WrapperWhy>
       <Col1>
-        <Image alt="man" src={man} />
+        <Image
+          alt="man"
+          src={man}
+          width={isMobile ? 412 : 960}
+          height={isMobile ? 411 : 747}
+        />
       </Col1>
       <Col2>
         <TitleWhy>
           ¿Por qué lo <br></br> hacemos?
         </TitleWhy>
         <WrapperStarWhy>
-          <Image alt="star" src={star} />
+          <Image
+            alt="star"
+            src={star}
+            width={isMobile ? 19 : 41}
+            height={isMobile ? 20 : 43}
+          />
         </WrapperStarWhy>
         <TextWhy>
           Cuando pides un crédito, dentro del valor de las cuotas, pagas además

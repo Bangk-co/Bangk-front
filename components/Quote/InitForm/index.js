@@ -1,0 +1,205 @@
+import React, { useEffect, useRef } from "react";
+import { DatePicker } from "@/components/Common/DatePicker";
+import { TextField } from "@/components/Common/TextField";
+import { Div, Row, Text } from "@/styles/Common";
+import { CardButton, Col, WrapperWapp } from "@/styles/Quote";
+import { theme } from "@/styles/theme";
+import Image from "next/image";
+import pesosIcon from "@/assets/icons/pesos.svg";
+import { Button } from "@/components/Common/Button";
+import wappIcon from "@/assets/icons/whatsapp-original.svg";
+import { numberFormat } from "@/utilities/helpers";
+
+export const InitForm = ({
+  isMobile,
+  formInfo,
+  handleChange,
+  handleChangeDate,
+  handleSelect,
+  handleNext,
+  handleWapp,
+  errorDate,
+  errorDateOlder,
+  errorBalance,
+  genderButtons,
+  emptyValidation,
+}) => {
+  const firstInputRef = useRef(null);
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
+
+  const inputProps = {
+    radius: "4px",
+    width: "100%",
+    height: "40px",
+    font: theme.fonts.family.primary,
+    size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
+    labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
+    labelColor: theme.colors.white,
+    labelFont: theme.fonts.family.primary,
+    labelWeight: theme.fonts.weight.medium,
+    background: theme.colors.primary25,
+    border: theme.colors.primary25,
+    notFocused: true,
+    placeholderColor: theme.colors.neutralGray500,
+  };
+
+  return (
+    <Col m={"92px 0 0 0"} justifyMobile={"center"}>
+      <Text
+        color={theme.colors.white}
+        size={isMobile ? theme.fonts.default2 : theme.fonts.size.ft}
+      >
+        Con Bangk puedes lograr{" "}
+        <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
+          ahorros entre el 20% y hasta el 70%
+        </span>{" "}
+        en los seguros de tus préstamos desde $30 millones en adelante
+      </Text>
+      <Text
+        color={theme.colors.white}
+        size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
+        font={theme.fonts.family.primaryBold}
+        mt="24px"
+      >
+        Calculemos{" "}
+        <span
+          style={{
+            fontFamily: theme.fonts.family.primaryBold,
+            color: theme.colors.yellow,
+          }}
+        >
+          tu ahorro
+        </span>
+      </Text>
+      <Text
+        color={theme.colors.white}
+        size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+        mt="6px"
+        mb="28px"
+      >
+        Diligencia los siguientes datos
+      </Text>
+      <TextField
+        {...inputProps}
+        placeholder={"Ingresa el saldo del crédito"}
+        id="balance"
+        label="Saldo actual de tu crédito*"
+        prefixIcon={
+          <Image alt="pesos" src={pesosIcon} width={16} height={16} />
+        }
+        onChange={handleChange}
+        value={
+          formInfo.balance === "" ? "" : numberFormat(Number(formInfo.balance))
+        }
+        inputProps={{
+          pattern: "\\d*",
+          inputMode: "numeric",
+        }}
+        error={errorBalance}
+        helper={
+          errorBalance
+            ? "El saldo mínimo de tu crédito debe ser de $30.000.000"
+            : ""
+        }
+        inputRef={firstInputRef}
+      />
+      <Text
+        size={isMobile ? theme.fonts.size.xs : theme.fonts.size.sm}
+        color={theme.colors.white}
+        mt="2px"
+        mb="18px"
+        align="left"
+      >
+        Por favor, verifica el valor en tu extracto o app en línea
+      </Text>
+      <DatePicker
+        {...inputProps}
+        placeholder={"dd/mm/aaaa"}
+        id="birthdate"
+        label="Fecha de nacimiento*"
+        error={errorDate || errorDateOlder}
+        helper={
+          errorDate
+            ? "Debes ser mayor de edad para cotizar tu ahorro"
+            : errorDateOlder
+            ? "Debes ser menor de 74 años para cotizar tu ahorro"
+            : ""
+        }
+        onChange={handleChangeDate}
+        value={formInfo.birthdate}
+        localeText={"es"}
+      />
+      <Text
+        size={theme.fonts.size.xs}
+        color={theme.colors.white}
+        weight={theme.fonts.weight.medium}
+        mt="18px"
+        mb="3px"
+        align="left"
+      >
+        Selecciona tu género*
+      </Text>
+      <Row gap="5px">
+        {genderButtons.map((ele, indx) => (
+          <CardButton
+            key={indx}
+            onClick={() => handleSelect(ele.value)}
+            style={{
+              border:
+                formInfo.gender === ele.value
+                  ? `3px solid ${theme.colors.yellow500}`
+                  : `3px solid ${theme.colors.primary25}`,
+              background:
+                formInfo.gender === ele.value
+                  ? theme.colors.terciary50
+                  : theme.colors.primary25,
+            }}
+          >
+            <Image alt="genderIcon" src={ele.icon} />
+            <Text
+              size={theme.fonts.size.default2}
+              color={theme.colors.green900}
+              weight={theme.fonts.weight.bold}
+            >
+              {ele.label}
+            </Text>
+          </CardButton>
+        ))}
+      </Row>
+
+      {isMobile && (
+        <WrapperWapp>
+          <Image
+            alt="wapp-icon"
+            src={wappIcon}
+            onClick={handleWapp}
+            style={{ cursor: "pointer" }}
+          />
+        </WrapperWapp>
+      )}
+
+      <Div m={isMobile ? "8px 0 0 0" : "52px 0 0 0"} justify="center">
+        <Button
+          font={theme.fonts.family.primaryBold}
+          mobileWidth={"100%"}
+          width={"300px"}
+          height={"40px"}
+          background={theme.colors.yellow500}
+          radius={"40px"}
+          labelColor={theme.colors.green900}
+          hover={theme.colors.yellow500}
+          borderHover={theme.colors.yellow500}
+          disabled={!emptyValidation}
+          onClick={handleNext}
+        >
+          Continuar
+        </Button>
+      </Div>
+    </Col>
+  );
+};

@@ -6,14 +6,14 @@ import styles from "./Layout.module.css";
 import Header from "../Header";
 import Footer from "../Footer";
 
-const Layout = ({ children, isMobile, isTablet }) => {
+const Layout = ({ children, isMobile, isTablet, showHeaderAndAnimation }) => {
   const [showTransition, setShowTransition] = useState(true);
   const [contentLoaded, setContentLoaded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const handleComplete = () => {
-      setShowTransition(true);
+      setShowTransition(showHeaderAndAnimation);
       setContentLoaded(false);
     };
 
@@ -49,9 +49,13 @@ const Layout = ({ children, isMobile, isTablet }) => {
           onAnimationEnd={handleAnimationEnd}
         />
       )}
-      <Header isMobile={isMobile} isTablet={isTablet} />
+      {showHeaderAndAnimation && (
+        <Header isMobile={isMobile} isTablet={isTablet} />
+      )}
       <div className={styles.contentContainer}>{children}</div>
-      <Footer isMobile={isMobile} isTablet={isTablet} />
+      {showHeaderAndAnimation && (
+        <Footer isMobile={isMobile} isTablet={isTablet} />
+      )}
     </Div>
   );
 };

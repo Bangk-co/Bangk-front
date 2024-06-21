@@ -15,11 +15,22 @@ import star from "../../assets/icons/yellow-star.svg";
 import StepperTitleHome from "../Home/StepperTitle";
 import StepperTitle from "../Insurance/StepperTitle";
 import { theme } from "@/styles/theme";
+import { useRouter } from "next/router";
 
 const Stepper = ({ isHome, isMobile, isTablet }) => {
+  const router = useRouter();
+
+  const handleQuote = () => {
+    router.push("/cotiza-tu-ahorro")
+  }
+
   return (
     <Wrapper>
-      {isHome ? <StepperTitleHome /> : <StepperTitle />}
+      {isHome ? (
+        <StepperTitleHome isMobile={isMobile} />
+      ) : (
+        <StepperTitle isMobile={isMobile} />
+      )}
       <Row
         style={{ width: "100%", justifyContent: "space-around" }}
         gutter={isTablet && [30, 30]}
@@ -32,13 +43,13 @@ const Stepper = ({ isHome, isMobile, isTablet }) => {
                 <Image
                   alt="logo"
                   src={star}
-                  width={isMobile ? "13.77px" : isTablet ? "16.94px" : "31px"}
-                  height={isMobile ? "12.64px" : isTablet ? "15.55px" : "31px"}
+                  width={isMobile ? 14 : isTablet ? 17 : 31}
+                  height={isMobile ? 13 : isTablet ? 16 : 31}
                 />
               </WrapperStar>
               {indx === 0 ? (
                 <a
-                  href={`${wappLink}`}
+                  onClick={handleQuote}
                   target="_blank"
                   rel="noreferrer"
                   style={{

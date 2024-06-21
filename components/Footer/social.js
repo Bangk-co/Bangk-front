@@ -12,32 +12,32 @@ const Social = () => {
   const social = [
     {
       icon: whatsapp,
-      width: "30.81px",
-      height: "31px",
+      width: 30.81,
+      height: 31,
       url: wappLink,
     },
     {
       icon: instagram,
-      width: "29.04px",
-      height: "29.04px",
+      width: 29.04,
+      height: 29.04,
       url: "https://instagram.com/bangk.la?igshid=YmMyMTA2M2Y=",
     },
     {
       icon: youtube,
-      width: "36.65px",
-      height: "28.87px",
+      width: 36.65,
+      height: 28.87,
       url: "https://www.youtube.com/channel/UCjSLd2vGNAYXOe3bEP95r3w",
     },
     {
       icon: facebook,
-      width: "28.84px",
-      height: "28.84",
+      width: 28.84,
+      height: 28.84,
       url: "https://www.facebook.com/profile.php?id=100088206895839",
     },
     {
       icon: linkedin,
-      width: "24px",
-      height: "24px",
+      width: 24,
+      height: 24,
       url: "https://www.linkedin.com/company/91508522/admin/?feedType=following",
     },
   ];

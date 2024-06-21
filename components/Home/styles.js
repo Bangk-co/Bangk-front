@@ -41,7 +41,7 @@ export const WrapperImage = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 90%;
     height: 90%;
-    margin-left: 30px;
+    margin-left: 10px;
   }
 `;
 
@@ -444,7 +444,7 @@ export const Text2Blog = styled.div`
   font-family: Gilroy Bold;
   font-size: ${theme.fonts.size.h4};
   line-height: 36px;
-  color: ${theme.colors.orange};
+  color: ${theme.colors.orange100};
   margin: 90px 0px 23px 30px;
 
   @media (max-width: ${theme.breakpoints.sm}) {

@@ -35,13 +35,18 @@ const Cards = ({ isMobile, isTablet }) => {
             <WrapperCard onClick={() => handleGo(ele.id)}>
               <WrapperImage image={ele.photo}>
                 <WrapperMessage>
-                  <Image alt="" src={message} />
+                  <Image
+                    alt=""
+                    src={message}
+                    width={isMobile ? 50 : 110}
+                    height={isMobile ? 19 : 43}
+                  />
                 </WrapperMessage>
                 <BlogNumber>
                   BLOG{" "}
                   <span
                     style={{
-                      color: theme.colors.orange,
+                      color: theme.colors.orange100,
                       fontFamily: "Gilroy Bold",
                     }}
                   >
@@ -61,7 +66,12 @@ const Cards = ({ isMobile, isTablet }) => {
                   <span style={{ color: ele.color2 }}>{ele.text2}</span>
                 </TextCard>
                 <WrapperCardLogo>
-                  <Image alt="logo" src={logo} />
+                  <Image
+                    alt="logo"
+                    src={logo}
+                    width={isMobile ? 42 : 102}
+                    height={isMobile ? 16 : 39}
+                  />
                 </WrapperCardLogo>
               </WrapperFooter>
             </WrapperCard>

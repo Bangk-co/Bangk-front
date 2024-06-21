@@ -12,21 +12,23 @@ import logo from "../../assets/icons/single-green-logo.svg";
 import star from "../../assets/icons/orange-star.svg";
 import { theme } from "@/styles/theme";
 
-const KnowUsSection = () => {
+const KnowUsSection = ({ isMobile }) => {
   return (
     <WrapperKnowUs>
       <WrapperText>
         <TitleKnowUs>
           Conócenos
           <span
-            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+            style={{ color: theme.colors.orange100, fontFamily: "Gilroy Bold" }}
           >
             !
           </span>
         </TitleKnowUs>
-        <WrapperStar>
-          <Image alt="star" src={star} />
-        </WrapperStar>
+        {isMobile && (
+          <WrapperStar>
+            <Image alt="star" src={star} width={15} height={15} />
+          </WrapperStar>
+        )}
         <TextKnowUs>
           Somos un equipo de nerds que combinaron sus conocimientos en
           tecnología, pólizas de seguros, y finanzas para revolucionar la forma
@@ -39,7 +41,7 @@ const KnowUsSection = () => {
         </TextKnowUs>
       </WrapperText>
       <WrapperLogo>
-        <Image alt="logo" src={logo} />
+        <Image alt="logo" src={logo} width={293} height={465} />
       </WrapperLogo>
     </WrapperKnowUs>
   );

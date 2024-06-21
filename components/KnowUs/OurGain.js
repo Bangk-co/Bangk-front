@@ -11,16 +11,21 @@ import {
 import phone from "../../assets/img/phone-man.svg";
 import star from "../../assets/icons/white-star.svg";
 
-const OurGain = () => {
+const OurGain = ({ isMobile }) => {
   return (
     <WrapperOurain>
       <WrapperPhone>
-        <Image alt="phone" src={phone} />
+        <Image
+          alt="phone"
+          src={phone}
+          width={isMobile ? 120 : 247}
+          height={isMobile ? 142 : 374}
+        />
       </WrapperPhone>
       <WrapperTextOurGain>
         <TitleOurGain>¿Nuestra ganancia?</TitleOurGain>
         <WrapperStarOurGain>
-          <Image alt="star" src={star} />
+          <Image alt="star" src={star} width={53} height={50} />
         </WrapperStarOurGain>
         <TextOurGain>
           Las <strong>aseguradoras nos pagan una comisión</strong> sobre la

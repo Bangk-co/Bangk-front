@@ -35,7 +35,7 @@ const BlogTablet = () => {
           <span
             onClick={handleBlog}
             style={{
-              color: theme.colors.orange,
+              color: theme.colors.orange100,
               fontFamily: "Gilroy Bold",
               textDecoration: "underline",
               cursor: "pointer",
@@ -46,12 +46,12 @@ const BlogTablet = () => {
           en nuestro
         </Text2Blog>
         <WrapperIcon>
-          <Image alt="blog" src={blog} />
+          <Image alt="blog" src={blog} width={92} height={25} />
         </WrapperIcon>
       </Col5Tablet>
       <Col6Tablet>
         <WrapperPhone>
-          <Image alt="phone" src={phone} />
+          <Image alt="phone" src={phone} width={126} height={192} />
         </WrapperPhone>
       </Col6Tablet>
     </WrapperBlogTablet>

@@ -15,7 +15,7 @@ import whatsapp from "../../assets/icons/orange-whatsapp.svg";
 import { email, wappLink } from "@/utilities/options";
 import { theme } from "@/styles/theme";
 
-const Banner = () => {
+const Banner = ({ isMobile }) => {
   const handleWapp = () => {
     const a = document.createElement("a");
     a.href = `${wappLink}`;
@@ -35,7 +35,12 @@ const Banner = () => {
   return (
     <WrapperBanner>
       <WrapperHalfStar>
-        <Image alt="half-star" src={star} />
+        <Image
+          alt="half-star"
+          src={star}
+          width={isMobile ? 39 : 302}
+          height={isMobile ? 43 : 334}
+        />
       </WrapperHalfStar>
       <TitleBanner>Contáctanos</TitleBanner>
       <TextBanner>
@@ -67,6 +72,8 @@ const Banner = () => {
             src={mail}
             style={{ cursor: "pointer" }}
             onClick={handleMail}
+            width={isMobile ? 15 : 60}
+            height={isMobile ? 11 : 48}
           />
         </WrapperMail>
         <WrapperWhatsapp>
@@ -75,6 +82,8 @@ const Banner = () => {
             src={whatsapp}
             style={{ cursor: "pointer" }}
             onClick={handleWapp}
+            width={isMobile ? 15 : 60}
+            height={isMobile ? 11 : 48}
           />
         </WrapperWhatsapp>
       </WrapperSocial>

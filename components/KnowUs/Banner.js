@@ -17,7 +17,9 @@ const Banner = () => {
           <strong>Bangk! Mejoras tú flujo de caja mensual</strong> <br></br>
           <br></br> Buscamos el mejor aliado y...{" "}
           <strong>
-            <span style={{ color: theme.colors.orange }}>Bangk! Es Bangk!</span>
+            <span style={{ color: theme.colors.orange100 }}>
+              Bangk! Es Bangk!
+            </span>
           </strong>
         </Text>
       </Div>

@@ -15,20 +15,19 @@ import text from "../../assets/icons/text.png";
 import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { wappLink } from "@/utilities/options";
+import { useRouter } from "next/router";
 
-const Banner = () => {
-  const handleWapp = () => {
-    const a = document.createElement("a");
-    a.href = `${wappLink}`;
-    document.body.appendChild(a);
-    a.target = "_blank";
-    a.click();
+const Banner = ({ isMobile }) => {
+  const router = useRouter();
+
+  const handleQuote = () => {
+    router.push("/cotiza-tu-ahorro");
   };
 
   return (
     <Wrapper>
       <Row style={{ width: "100%" }}>
-        <Col lg={16} md={14} xs={11}>
+        <Col lg={16} md={14} xs={12}>
           <Title>Misma cobertura</Title>
           <Title color={theme.colors.yellow}>Menos cuota!</Title>
           <Message>
@@ -37,16 +36,26 @@ const Banner = () => {
             que pagas al banco sin cambiar la cobertura
           </Message>
           <WrapperText>
-            <Image alt="text" src={text} />
+            <Image
+              alt="text"
+              src={text}
+              width={isMobile ? 178 : 560}
+              height={isMobile ? 14 : 44}
+            />
           </WrapperText>
-          <Button onClick={handleWapp}>Ahorra ya!</Button>
+          <Button onClick={handleQuote}>Ahorra ya!</Button>
         </Col>
-        <Col lg={8} md={10} xs={12} style={{ alignSelf: "center" }}>
+        <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
           <WrapperStar>
-            <Image alt="star" src={star} width="48px" height="48px" />
+            <Image alt="star" src={star} width={48} height={48} />
           </WrapperStar>
           <WrapperImage>
-            <Image alt="surprised-man" src={man} />
+            <Image
+              alt="surprised-man"
+              src={man}
+              width={isMobile ? 167 : 413}
+              height={isMobile ? 167 : 412}
+            />
           </WrapperImage>
         </Col>
       </Row>

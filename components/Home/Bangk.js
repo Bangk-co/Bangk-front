@@ -13,7 +13,7 @@ import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
 
-const Bangk = () => {
+const Bangk = ({ isMobile }) => {
   const router = useRouter();
 
   const goInsurance = () => {
@@ -26,7 +26,10 @@ const Bangk = () => {
         <TitleBangk>
           BAAN
           <span
-            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold " }}
+            style={{
+              color: theme.colors.orange100,
+              fontFamily: "Gilroy Bold ",
+            }}
           >
             GGGGG<br></br>GGKKKKK!!!!
           </span>
@@ -49,7 +52,12 @@ const Bangk = () => {
         <Button onClick={goInsurance}>Conoce más</Button>
       </Col3>
       <Col4>
-        <Image alt="coin" src={greenCoin} />
+        <Image
+          alt="coin"
+          src={greenCoin}
+          width={isMobile ? 336 : 511}
+          height={isMobile ? 321 : 562}
+        />
       </Col4>
     </WrapperBangk>
   );

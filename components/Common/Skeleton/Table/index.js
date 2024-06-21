@@ -1,0 +1,26 @@
+import React from "react";
+import { Skeleton } from "@mui/material";
+import { Div } from "@/styles/Common";
+export const SkeletonTable = ({ columns, rows }) => {
+  return (
+    <Div gap={16}>
+      {[...Array(columns)].map((v, idx) => (
+        <Skeleton
+          key={idx}
+          title={false}
+          loading
+          active
+          paragraph={{
+            rows,
+            width: "100%",
+          }}
+        />
+      ))}
+    </Div>
+  );
+};
+
+SkeletonTable.defaultProps = {
+  columns: 8,
+  rows: 10,
+};

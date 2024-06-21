@@ -20,6 +20,8 @@ const WhatsappButton = () => {
         src={whatsapp}
         style={{ cursor: "pointer" }}
         onClick={handleWapp}
+        width={60}
+        height={48}
       />
     </WrapperButton>
   );

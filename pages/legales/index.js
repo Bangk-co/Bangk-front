@@ -67,8 +67,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -95,8 +95,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text style={{ marginBottom: "25px" }}>
@@ -121,8 +121,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -138,8 +138,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -207,8 +207,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -233,8 +233,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -288,8 +288,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -344,8 +344,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -393,8 +393,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -424,8 +424,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -460,8 +460,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -483,8 +483,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -500,8 +500,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -518,8 +518,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -538,8 +538,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -564,8 +564,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -585,8 +585,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -606,8 +606,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -622,8 +622,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -638,8 +638,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -659,8 +659,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>
@@ -680,8 +680,8 @@ const Legales = ({ isMobile, isTablet }) => {
         <Image
           alt="arrow"
           src={arrow}
-          width={isMobile ? "15px" : "30px"}
-          height={isMobile ? "15px" : "30px"}
+          width={isMobile ? 15 : 30}
+          height={isMobile ? 15 : 30}
         />
       </Title>
       <Text>

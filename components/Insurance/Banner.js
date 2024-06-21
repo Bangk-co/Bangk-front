@@ -4,15 +4,13 @@ import { BannerCard, BannerText, Col1, Col2, WrapperBanner } from "./styles";
 import { theme } from "@/styles/theme";
 import woman from "../../assets/img/green-woman.svg";
 import { Button } from "../Button";
-import { wappLink } from "@/utilities/options";
+import { useRouter } from "next/router";
 
-const Banner = () => {
-  const handleWapp = () => {
-    const a = document.createElement("a");
-    a.href = `${wappLink}`;
-    document.body.appendChild(a);
-    a.target = "_blank";
-    a.click();
+const Banner = ({ isMobile }) => {
+  const router = useRouter();
+
+  const handleQuote = () => {
+    router.push("/cotiza-tu-ahorro");
   };
 
   return (
@@ -22,15 +20,23 @@ const Banner = () => {
           <BannerText>
             Poder aliviar<br></br> tu bolsillo sin perder tranquilidad <br></br>
             <span
-              style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+              style={{
+                color: theme.colors.orange100,
+                fontFamily: "Gilroy Bold",
+              }}
             >
               Eso es Bangk
             </span>
           </BannerText>
-          <Button onClick={handleWapp}>Ahorra ya!</Button>
+          <Button onClick={handleQuote}>Ahorra ya!</Button>
         </Col1>
         <Col2>
-          <Image alt="woman" src={woman} />
+          <Image
+            alt="woman"
+            src={woman}
+            width={isMobile ? 191 : 753}
+            height={isMobile ? 160 : 630}
+          />
         </Col2>
       </BannerCard>
     </WrapperBanner>

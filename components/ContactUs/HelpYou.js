@@ -16,7 +16,7 @@ import { contactInfoList } from "@/utilities/options";
 import star from "../../assets/icons/orange-star.svg";
 import { theme } from "@/styles/theme";
 
-const HelpYou = () => {
+const HelpYou = ({ isMobile }) => {
   return (
     <WrapperHelpYou>
       <WrapperText>
@@ -31,7 +31,12 @@ const HelpYou = () => {
         {contactInfoList.map((ele, indx) => (
           <WrapperInfo key={indx}>
             <WrapperSmallStar>
-              <Image alt="star" src={star} />
+              <Image
+                alt="star"
+                src={star}
+                width={isMobile ? 13 : 19}
+                height={isMobile ? 13 : 19}
+              />
             </WrapperSmallStar>
             <Info>{ele}</Info>
           </WrapperInfo>

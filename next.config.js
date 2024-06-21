@@ -1,22 +1,29 @@
 module.exports = {
+  output: "export",
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
-
+  crossOrigin: "anonymous",
   async headers() {
     return [
       {
-        source: "/(.*)?", // Matches all pages
+        source: "/(.*)?",
         headers: [
           {
             key: "X-Frame-Options",
             value: "ALLOW",
           },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
           {
-            key: "Content-Security-Policy",
+            key: "Access-Control-Allow-Methods",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'",
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         ],
       },

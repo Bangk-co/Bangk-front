@@ -184,6 +184,7 @@ export const Home = ({ isMobile }) => {
             background={isMobile ? theme.colors.white : theme.colors.light4}
             font={theme.fonts.family.primaryBold}
             radius={"40px"}
+            onClick={() => router.push("/plataforma-cliente/seguros")}
           >
             <Row
               align="center"

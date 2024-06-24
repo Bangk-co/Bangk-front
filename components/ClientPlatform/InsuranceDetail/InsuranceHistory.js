@@ -2,9 +2,11 @@
 import _ from "lodash";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import React, { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
 import { Card, DashedLine, SaveSuccess } from "./styles";
 import { Grid } from "@mui/material";
 import { theme } from "@/styles/theme";
+import { Button } from "@/components/Common/Button";
 import Image from "next/image";
 import pending from "@/assets/icons/pendingStepper.svg";
 import success from "@/assets/icons/successStepper.svg";
@@ -15,9 +17,11 @@ import alertIconError from "@/assets/icons/alert-red.svg";
 import cancelIcon from "@/assets/icons/cancel-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import useGetLoanFormAssessorConcept from "@/hooks/Customers/useGetLoanFormAssessorConcept";
+import article from "@/assets/icons/article-green.svg";
 
 export const InsuranceHistory = ({ isMobile, historyInfo }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { policy } = useSelector((state) => state);
 
   const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
@@ -95,6 +99,110 @@ export const InsuranceHistory = ({ isMobile, historyInfo }) => {
     }
   };
 
+  const handleCreateEndorsement = () => {
+    router.push("/cotiza-tu-ahorro/tu-credito?source=create");
+  };
+
+  const handleViewQuote = () => {
+    router.push(
+      `/ver-cotizacion/informacion-cotizacion/?requestId=${policy?.selectedPolicy?.loanApplicationId}`
+    );
+  };
+
+  const handleViewPolicy = () => {
+    router.push(
+      `/solicitar-poliza/confirma-tus-datos/?loanApplicationId=${policy?.selectedPolicy?.loanApplicationId}`
+    );
+  };
+
+  const butttonProps = {
+    width: "244px",
+    height: "40px",
+    labelColor: theme.colors.green900,
+    borderHover: theme.colors.green900,
+    border: theme.colors.green900,
+    borderHeight: "3px solid",
+    hover: theme.colors.white,
+    background: theme.colors.white,
+    font: theme.fonts.family.primaryBold,
+    size: theme.fonts.size.default2,
+    radius: "40px",
+  };
+
+  const optionsButtons = (status, indx) => {
+    switch (status) {
+      case "Cotización enviada":
+        if (indx === 0) {
+          return (
+            <Button
+              {...butttonProps}
+              startIcon={
+                <Image alt="article" src={article} width={16} height={16} />
+              }
+              onClick={handleViewQuote}
+            >
+              Ver Cotización
+            </Button>
+          );
+        } else {
+          return;
+        }
+      case "Cotización aceptada":
+        if (indx === 0) {
+          return (
+            <Button {...butttonProps} onClick={handleViewPolicy}>
+              {isMobile ? "Formularios" : "Diligenciar formularios"}
+            </Button>
+          );
+        } else {
+          return;
+        }
+      case "Póliza emitida":
+      case "Pago Rechazado":
+        if (indx === 0) {
+          return (
+            <Button
+              {...butttonProps}
+              startIcon={
+                <Text
+                  size={theme.fonts.size.default2}
+                  color={theme.colors.green900}
+                  font={theme.fonts.family.primaryBold}
+                >
+                  $
+                </Text>
+              }
+              onClick={() => {}}
+            >
+              Pagar Póliza
+            </Button>
+          );
+        } else {
+          return;
+        }
+      case "Poliza Pagada":
+        if (indx === 0) {
+          return (
+            <Button
+              {...butttonProps}
+              startIcon={
+                isMobile ? null : (
+                  <Image alt="editNote" src={editNote} width={16} height={16} />
+                )
+              }
+              onClick={() => {}}
+            >
+              {isMobile ? "Firmar" : "Firmar Documentos"}
+            </Button>
+          );
+        } else {
+          return;
+        }
+      default:
+        break;
+    }
+  };
+
   return (
     <Row m="24px 0 0 0" gap="16px">
       <Div width="24px" direction="column">
@@ -165,7 +273,7 @@ export const InsuranceHistory = ({ isMobile, historyInfo }) => {
                   </Row>
                 </Div>
               )}
-            <Grid container spacing={2}>
+            <Grid container spacing={2} justifyItems="flex-end">
               <Grid item md={2.5}>
                 <Col gap="16px" width="244px" m="0 0 16px 0">
                   <Text
@@ -203,6 +311,9 @@ export const InsuranceHistory = ({ isMobile, historyInfo }) => {
                     {ele.date}
                   </Text>
                 </Col>
+              </Grid>
+              <Grid item md={7.5} style={{ textAlign: "right" }}>
+                {optionsButtons(ele.status, indx)}
               </Grid>
             </Grid>
           </Card>

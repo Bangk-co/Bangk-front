@@ -45,7 +45,7 @@ const Sale = ({ isMobile, isTablet }) => {
       let annualRate = 0;
       let monthRate = 0;
 
-      if (ageCalulate() < 50) {
+      if (ageCalulate() <= 50) {
         annualRate = data?.data?.groupSettings.find(
           (ele) => ele.name === "AnnualRatePercentage1"
         )?.code;
@@ -120,14 +120,8 @@ const Sale = ({ isMobile, isTablet }) => {
   const insuranceMonthly = formInfo?.balance * insuranceMonthlyPercentage;
   const insuranceAnnual = formInfo?.balance * insuranceAnnualPercentage;
 
-  const insuranceMonthlyFinal =
-    insuranceMonthly % 1 !== 0
-      ? insuranceMonthly.toFixed(2).toString()
-      : insuranceMonthly.toString();
-  const insuranceAnnualFinal =
-    insuranceAnnual % 1 !== 0
-      ? insuranceAnnual.toFixed(2).toString()
-      : insuranceAnnual.toString();
+  const insuranceMonthlyFinal = Math.round(insuranceMonthly).toString();
+  const insuranceAnnualFinal = Math.round(insuranceAnnual).toString();
 
   const insurance = [
     {

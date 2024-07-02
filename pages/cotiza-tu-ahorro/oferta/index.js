@@ -39,7 +39,7 @@ const Sale = ({ isMobile, isTablet }) => {
 
     return age;
   };
-  console.log("ageCalulate()", ageCalulate());
+
   useEffect(() => {
     if (isSuccess) {
       let annualRate = 0;

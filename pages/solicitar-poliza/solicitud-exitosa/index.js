@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleBangk = () => {
     router.push("/");

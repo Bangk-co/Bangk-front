@@ -10,7 +10,7 @@ import BlogSection from "@/components/Home/BlogSection";
 import Reviews from "@/components/Home/Reviews";
 import { useDispatch } from "react-redux";
 import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
-import { setRequestInfo } from "@/store/requests";
+import { setRequestInfo, setSelectedRequestInformation } from "@/store/requests";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch()
@@ -21,6 +21,7 @@ const Home = ({ isMobile, isTablet }) => {
       router.push(`/${window.location.pathname}`);
     };
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+    dispatch(setSelectedRequestInformation({}));
   }, []);
 
   return (

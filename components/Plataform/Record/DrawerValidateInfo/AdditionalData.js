@@ -79,7 +79,7 @@ export const AdditionalData = ({
     },
     {
       title:
-        "¿Tienes algún seguro de vida individual o de accidentes personales con Allianz o con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
+        "¿Tienes algún seguro de vida individual o de accidentes personales con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
       description: additionalInfo.lifeEnsure ? "Si" : "No",
     },
     {
@@ -465,7 +465,7 @@ export const AdditionalData = ({
             name="lifeEnsure "
             direction="row"
             label={
-              "¿Tienes algún seguro de vida individual o de accidentes personales con Allianz o con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?"
+              "¿Tienes algún seguro de vida individual o de accidentes personales con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?"
             }
             labelSize={theme.fonts.size.sm}
             value={additionalInfo.lifeEnsure}

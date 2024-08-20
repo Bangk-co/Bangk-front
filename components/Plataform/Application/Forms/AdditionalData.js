@@ -55,7 +55,7 @@ export const AdditionalData = ({ additionalInfo }) => {
     },
     {
       title:
-        "¿Tienes algún seguro de vida individual o de accidentes personales con Allianz o con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
+        "¿Tienes algún seguro de vida individual o de accidentes personales aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
       description:
         additionalInfo.lifeEnsure !== null
           ? additionalInfo.lifeEnsure

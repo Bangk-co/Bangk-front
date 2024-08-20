@@ -36,13 +36,21 @@ export const HealtData = ({
   const { data: dataDiseases, isSuccess: isSuccessDiseases } = diseasesList;
   const [diseasesOptions, setDiseasesOptions] = useState([]);
   useEffect(() => {
-    if (isSuccessDiseases)
+    if (isSuccessDiseases) {
+      const diseasesArray = dataDiseases?.data?.groupSettings;
+      const index = diseasesArray.findIndex(item => item.name === "Ninguna de las anteriores");
+      if (index !== -1) {
+        const [removedItem] = diseasesArray.splice(index, 1);    
+        diseasesArray.push(removedItem);
+      };
+
       setDiseasesOptions(
-        dataDiseases?.data?.groupSettings.map((ele) => ({
+        diseasesArray.map((ele) => ({
           name: ele.name,
           id: ele.id,
         }))
       );
+    }
   }, [dataDiseases, isSuccessDiseases]);
 
   const [diseases, setDiseases] = useState([]);

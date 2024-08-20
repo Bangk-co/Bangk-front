@@ -22,6 +22,9 @@ export const Calculation = ({
   handleTerms,
   handleDecline,
   loanApplicationInfo,
+  handleSBS,
+  termsSBS,
+  handleTermsSBS,
 }) => {
   const info = [
     {
@@ -65,6 +68,8 @@ export const Calculation = ({
   ];
 
   const anualSaving = InsuranceAnnual - BangkInsuranceAnnual;
+
+  const validAccept = loanApplicationInfo?.insuraceCurrierName === "SBS Seguros Colombia" ? (!terms || !termsSBS) : !terms; 
 
   return (
     <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">
@@ -294,9 +299,32 @@ export const Calculation = ({
           >
             términos y condiciones
           </span>
-          &nbsp;de la propuesta de Bangk
+          &nbsp;de la propuesta del seguro cotizado por Bangk
         </Text>
       </Row>
+      {loanApplicationInfo?.insuraceCurrierName === "SBS Seguros Colombia" && (
+        <Row m="10px 0 0 0">
+          <Checkbox checked={termsSBS} onChange={handleTermsSBS} />
+          <Text
+            color={theme.colors.white}
+            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+            mt="7px"
+          >
+            Autorizo las &nbsp;
+            <span
+              style={{
+                fontFamily: theme.fonts.family.primaryBold,
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={handleSBS}
+            >
+              Políticas de Privacidad de Datos
+            </span>
+            &nbsp;de SBS Seguros.
+          </Text>
+        </Row>
+      )}
 
       {isMobile && (
         <WrapperWappCal>
@@ -343,7 +371,7 @@ export const Calculation = ({
           height={"40px"}
           radius={"40px"}
           onClick={handleNext}
-          disabled={!terms}
+          disabled={validAccept}
         >
           Aceptar
         </Button>

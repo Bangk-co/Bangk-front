@@ -41,6 +41,8 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const [terms, setTerms] = useState(false);
   const [termsDate, setTermsDate] = useState(null);
+  const [termsSBS, setTermsSBS] = useState(false);
+  const [termsSBSDate, setTermsSBSDate] = useState(null);
   const [openModalTerms, setOpenModalTerms] = useState(false);
   const [openModalAccept, setOpenModalAccept] = useState(false);
   const [openModalDecline, setOpenModalDecline] = useState(false);
@@ -61,7 +63,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleDownload = async (insuranceName) => {
     let link;
-    if (insuranceName === "SBS") {
+    if (insuranceName === "SBS Seguros Colombia") {
       link =
         "https://storageaccountbangk.blob.core.windows.net/internalfiles/26072023%201322%20P34%20VIDA%20GRUPO%20GRAL4%20D00I%2010.pdf";
     } else {
@@ -77,6 +79,14 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
     setTerms(checked);
     setTermsDate(currentDate);
+  };
+
+  const handleTermsSBS = (event) => {
+    const { checked } = event.target;
+    const currentDate = new Date();
+
+    setTermsSBS(checked);
+    setTermsSBSDate(currentDate);
   };
 
   const handleClose = () => {
@@ -111,6 +121,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
         loanApplicationId: requests?.selectedRequest,
         terms: dayjs(termsDate),
         otpDate: dayjs(otpDate),
+        sbsPrivacyPolicies: dayjs(termsSBSDate),
       },
       {
         onSuccess: () => {
@@ -146,6 +157,10 @@ const ViewQuote = ({ isMobile, isTablet }) => {
         },
       }
     );
+  };
+
+  const handleSBS = () => {
+    window.open('https://www.sbseguros.co/politica-privacidad', '_blank');
   };
 
   return (
@@ -192,6 +207,9 @@ const ViewQuote = ({ isMobile, isTablet }) => {
             handleTerms={handleTerms}
             handleDecline={handleDecline}
             loanApplicationInfo={loanApplicationInfo}
+            handleSBS={handleSBS}
+            termsSBS={termsSBS}
+            handleTermsSBS={handleTermsSBS}
           />
         </Div>
       </WrapperQuote>

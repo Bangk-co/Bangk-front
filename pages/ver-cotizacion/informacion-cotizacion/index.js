@@ -11,13 +11,13 @@ import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByA
 import useAcceptLoanQuote from "@/hooks/ViewQuote/useAcceptLoanQuote";
 import useRejectLoanQuote from "@/hooks/ViewQuote/useRejectLoanQuote";
 import { Calculation } from "@/components/ViewQuote/Calculation";
-import Banner from "@/components/ViewQuote/Banner";
 import { ModalTerms } from "@/components/Common/ModalTerms";
 import { ModalAccept } from "@/components/ViewQuote/ModalAccept";
 import { ModalDecline } from "@/components/ViewQuote/ModalDecline";
 import dayjs from "dayjs";
 import { setOtpDate } from "@/store/balance";
 import { downloadFile } from "@/utilities/helpers";
+import BannerCalc from "@/components/ViewQuote/BannerCalc";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -195,7 +195,9 @@ const ViewQuote = ({ isMobile, isTablet }) => {
       </Modal>
       <WrapperQuote isMobile={isMobile}>
         <Div justify={isMobile && "center"} height="100%">
-          {!isMobile && !isTablet && <Banner />}
+          {!isMobile && !isTablet && 
+            <BannerCalc insuranceName={loanApplicationInfo?.insuraceCurrierName} />
+          }
 
           <Calculation
             isMobile={isMobile}

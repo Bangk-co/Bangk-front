@@ -387,8 +387,8 @@ export const Calculation = ({
           <Image
             alt="logo"
             src={logo}
-            height={46}
-            style={{ alignSelf: "flex-end" }}
+            height={42}
+            style={{ alignSelf: "flex-end", marginBottom: "0.8vh" }}
           />
         </Div>
       ) : (

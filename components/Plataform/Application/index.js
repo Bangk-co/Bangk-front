@@ -37,6 +37,7 @@ import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { loanApplicationId } = router.query;
   const documentsType = useGetDocumentType();
   const { selectedClient } = useSelector((state) => state)?.clients;
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
@@ -58,13 +59,11 @@ const Application = ({ isMobile, isTablet }) => {
 
   const { applications } = useSelector((state) => state);
 
-  const history = useGetHistory(
-    applications?.selectedApplication?.loanApplicationId
-  );
+  const loanAppId = applications?.selectedApplication?.loanApplicationId || (loanApplicationId.endsWith('/') ? loanApplicationId.slice(0, -1) : loanApplicationId);
+
+  const history = useGetHistory(loanAppId);
   const { data, isSuccess } = history;
-  const loanInfo = useGetLoanInfo(
-    applications?.selectedApplication?.loanApplicationId
-  );
+  const loanInfo = useGetLoanInfo(loanAppId);
 
   const {
     data: dataLoanInfo,
@@ -73,7 +72,7 @@ const Application = ({ isMobile, isTablet }) => {
   } = loanInfo;
 
   useEffect(() => {
-    if (!applications?.selectedApplication?.loanApplicationId) {
+    if (!loanAppId) {
       router.push("/plataforma/clientes/cliente");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -393,9 +392,7 @@ const Application = ({ isMobile, isTablet }) => {
         )}
         {selectedTab === 1 && (
           <Forms
-            loanApplicationId={
-              applications?.selectedApplication?.loanApplicationId
-            }
+            loanApplicationId={loanAppId}
           />
         )}
         {selectedTab === 2 && <Text>Pagos</Text>}

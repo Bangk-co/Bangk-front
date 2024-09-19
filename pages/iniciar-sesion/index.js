@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@/components/Login/styles";
 import Banner from "@/components/Login/Banner";
 import Form from "@/components/Login/Form";
@@ -10,12 +11,17 @@ const Login = ({ isMobile, isTablet }) => {
   const { loanApplicationId } = router.query;
   const { isAuth } = useAuth();
 
+  console.log("---------------loanApp-isAuth", loanApplicationId, isAuth);
+
   useEffect(() => {
     if (loanApplicationId && isAuth) {
+      console.log("----------entra 1");
       router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`); 
     } else if (loanApplicationId && !isAuth) {
+      console.log("----------entra 2");
       router.push(`/iniciar-sesion?loanApplicationId=${loanApplicationId}`);
     } else {
+      console.log("----------entra 3");
       router.push(`/iniciar-sesion`);
     }
   }, [isAuth, loanApplicationId]);

@@ -28,7 +28,7 @@ const Layout = ({ children, isMobile, isTablet, showHeaderAndAnimation }) => {
       router.events.off("routeChangeStart", handleComplete);
       router.events.off("routeChangeComplete", handleContentLoaded);
     };
-  }, [router]);
+  }, [router, showHeaderAndAnimation]);
 
   const handleAnimationEnd = () => {
     setShowTransition(false);

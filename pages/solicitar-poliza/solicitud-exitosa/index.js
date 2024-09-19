@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
-import { useDispatch } from "react-redux";
 import Image from "next/image";
 import woman from "@/assets/img/woman-success-policy.svg";
 import woman2 from "@/assets/img/woman-accept.svg";
@@ -12,12 +11,10 @@ import { useRouter } from "next/router";
 import { ColForm, Container, WrapperPolicy } from "@/styles/Policy";
 import { setRequestInfo, setSelectedRequestInformation } from "@/store/requests";
 import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
-import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const handleBangk = () => {
     router.push("/");

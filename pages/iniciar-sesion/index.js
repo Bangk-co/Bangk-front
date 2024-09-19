@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@/components/Login/styles";
 import Banner from "@/components/Login/Banner";
 import Form from "@/components/Login/Form";

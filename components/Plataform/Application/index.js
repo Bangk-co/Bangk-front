@@ -21,8 +21,6 @@ import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import { Record } from "../Record";
 import { Forms } from "./Forms";
-import pending from "@/assets/icons/pendingStepper.svg";
-import success from "@/assets/icons/successStepper.svg";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import { formattedDate, historyStatus } from "@/utilities/helpers";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
@@ -34,10 +32,11 @@ import useGetLoanInfo from "@/hooks/Customers/useGetLoanInfo";
 import useGetQuoteRate from "@/hooks/Common/useGetQuoteRate";
 import useGetInsurers from "@/hooks/Common/useGetInsurers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetLoanApplicationInfo from "@/hooks/Customers/useGetLoanApplicationInfo";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
-  const { loanApplicationId } = router.query;
+  const { id } = router.query;
   const documentsType = useGetDocumentType();
   const { selectedClient } = useSelector((state) => state)?.clients;
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
@@ -57,13 +56,14 @@ const Application = ({ isMobile, isTablet }) => {
     selectedClient.idClient
   );
 
-  const { applications } = useSelector((state) => state);
+  const loanApplicationId = id;
 
-  const loanAppId = applications?.selectedApplication?.loanApplicationId || (loanApplicationId.endsWith('/') ? loanApplicationId.slice(0, -1) : loanApplicationId);
+  const { data: dataLoanAppInfo, isSuccess: isSuccessLoanAppInfo } = useGetLoanApplicationInfo(loanApplicationId);
+  const [loanAppInfo, setLoanAppInfo] = useState({});
 
-  const history = useGetHistory(loanAppId);
+  const history = useGetHistory(loanApplicationId);
   const { data, isSuccess } = history;
-  const loanInfo = useGetLoanInfo(loanAppId);
+  const loanInfo = useGetLoanInfo(loanApplicationId);
 
   const {
     data: dataLoanInfo,
@@ -72,11 +72,11 @@ const Application = ({ isMobile, isTablet }) => {
   } = loanInfo;
 
   useEffect(() => {
-    if (!loanAppId) {
+    if (!loanApplicationId) {
       router.push("/plataforma/clientes/cliente");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applications?.selectedApplication]);
+  }, [loanApplicationId]);
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [historyInfo, setHistoryInfo] = useState([]);
@@ -149,6 +149,12 @@ const Application = ({ isMobile, isTablet }) => {
       return "Success";
     }
   };
+
+  useEffect(() => {
+    if (isSuccessLoanAppInfo) {
+      setLoanAppInfo(dataLoanAppInfo?.data?.result[0]);
+    }
+  }, [isSuccessLoanAppInfo, dataLoanAppInfo]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -351,7 +357,8 @@ const Application = ({ isMobile, isTablet }) => {
           </Text>
         </Row>
         <ApplicationInfo
-          application={applications?.selectedApplication}
+          loanApplicationId={loanApplicationId}
+          application={loanAppInfo}
           dataLoanInfo={dataLoanInfo?.data?.loanApplication}
           banksOptions={banksOptions}
         />
@@ -386,13 +393,13 @@ const Application = ({ isMobile, isTablet }) => {
             isSuccess={isSuccessLoanInfo}
             insurersOptions={insurersOptions}
             quoteRate={quoteRate}
-            application={applications?.selectedApplication}
+            loanApplicationId={loanApplicationId}
             allianzRule={allianzRule}
           />
         )}
         {selectedTab === 1 && (
           <Forms
-            loanApplicationId={loanAppId}
+            loanApplicationId={loanApplicationId}
           />
         )}
         {selectedTab === 2 && <Text>Pagos</Text>}

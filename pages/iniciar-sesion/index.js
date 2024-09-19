@@ -12,14 +12,14 @@ const Login = ({ isMobile, isTablet }) => {
   const { isAuth } = useAuth();
 
   useEffect(() => {
-    if (loanApplicationId && isAuth) {
-      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`); 
-    } else if (loanApplicationId && !isAuth) {
-      router.push(`/iniciar-sesion?loanApplicationId=${loanApplicationId}`);
-    } else {
-      router.push(`/iniciar-sesion`);
+    if (loanApplicationId === undefined) {
+      return;
     }
-  }, [isAuth, loanApplicationId]);
+
+    if (loanApplicationId && isAuth) {
+      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
+    }
+  }, [isAuth, loanApplicationId, router]);
 
   return (
     <Container>

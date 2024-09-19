@@ -100,10 +100,8 @@ const Form = ({ isMobile, isTablet, loanApplicationId }) => {
             setLocalUser(res.data.token);
 
             if (loanApplicationId) {
-              router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`) 
-            }
-
-            if (role === "client") {
+              router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
+            } else if (role === "client") {
               router.push("/plataforma-cliente/home");
             } else {
               router.push("/plataforma/home");

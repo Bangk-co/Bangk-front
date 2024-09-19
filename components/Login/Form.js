@@ -22,7 +22,6 @@ import { IconButton } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 
 const Form = ({ isMobile, isTablet, loanApplicationId }) => {
-  console.log("-----id form", loanApplicationId)
   const router = useRouter();
   const authentication = useLogin();
   const { isLoading } = authentication;
@@ -101,11 +100,8 @@ const Form = ({ isMobile, isTablet, loanApplicationId }) => {
             setLocalUser(res.data.token);
 
             if (loanApplicationId) {
-              console.log("----entra al loguear")
-              router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`) 
-            }
-
-            if (role === "client") {
+              router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
+            } else if (role === "client") {
               router.push("/plataforma-cliente/home");
             } else {
               router.push("/plataforma/home");

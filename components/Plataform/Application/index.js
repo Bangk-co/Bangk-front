@@ -59,7 +59,14 @@ const Application = ({ isMobile, isTablet }) => {
   const loanApplicationId = id;
 
   const { data: dataLoanAppInfo, isSuccess: isSuccessLoanAppInfo } = useGetLoanApplicationInfo(loanApplicationId);
-  const [loanAppInfo, setLoanAppInfo] = useState({});
+  const [loanAppInfo, setLoanAppInfo] = useState({
+    loanTypeName: "",
+    creationDate: Date(),
+    stateName: "",
+    iconsBanksUrl: "",
+    loanBalance: null,
+    reviewerName: ""
+  });
 
   const history = useGetHistory(loanApplicationId);
   const { data, isSuccess } = history;

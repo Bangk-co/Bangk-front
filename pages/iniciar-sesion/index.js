@@ -12,7 +12,7 @@ const Login = ({ isMobile, isTablet }) => {
 
   useEffect(() => {
     if (loanApplicationId && isAuth) {
-      router.push(`/plataforma/clientes/solicitud?loanApplicationId=${loanApplicationId}`);
+      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`); 
     } else if (loanApplicationId && !isAuth) {
       router.push(`/iniciar-sesion?loanApplicationId=${loanApplicationId}`);
     } else {

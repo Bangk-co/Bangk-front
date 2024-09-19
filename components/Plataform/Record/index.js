@@ -50,12 +50,11 @@ export const Record = ({
   isSuccess,
   insurersOptions,
   quoteRate,
-  application,
+  loanApplicationId,
   allianzRule,
 }) => {
   const dispatch = useDispatch();
   const { loanInfo } = useSelector((state) => state)?.clients;
-  const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan();
@@ -108,7 +107,7 @@ export const Record = ({
   const [yearlyFee, setYearlyFee] = useState("");
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    applications?.selectedApplication?.loanApplicationId
+    loanApplicationId
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();
@@ -305,7 +304,7 @@ export const Record = ({
   }, [isSuccess, data]);
 
   const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
-    applications?.selectedApplication?.loanApplicationId
+    loanApplicationId
   );
   const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
     loanFormAssesorConcept;
@@ -688,7 +687,7 @@ export const Record = ({
     if (status === "Estudio lista restrictiva SBS") {
       validationSBS.reset();
       validationSBS.mutate(
-        applications?.selectedApplication?.loanApplicationId,
+        loanApplicationId,
         {
           onSuccess: (data) => {
             queryClient.invalidateQueries(["historyList"]);
@@ -704,7 +703,7 @@ export const Record = ({
     } else {
       validationSarlaft.reset();
       validationSarlaft.mutate(
-        applications?.selectedApplication?.loanApplicationId,
+        loanApplicationId,
         {
           onSuccess: (data) => {
             queryClient.invalidateQueries(["historyList"]);
@@ -841,7 +840,7 @@ export const Record = ({
       <DrawerValidateInfo
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
-        loanApplicationId={applications?.selectedApplication?.loanApplicationId}
+        loanApplicationId={loanApplicationId}
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios validados"
         )}

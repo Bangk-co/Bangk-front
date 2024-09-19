@@ -8,6 +8,7 @@ import arrowGreen from "@/assets/icons/arrow-back-green.svg"
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { resetInitData } from "@/store/balance";
+import { setSelectedRequestInformation } from "@/store/requests";
 
 export const BackButton = ({ isHovered, setIsHovered }) => {
   const dispatch = useDispatch();

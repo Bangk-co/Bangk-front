@@ -21,7 +21,7 @@ import eyeoff from "@/assets/icons/eyeoff.svg";
 import { IconButton } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 
-const Form = ({ isMobile, isTablet }) => {
+const Form = ({ isMobile, isTablet, loanApplicationId }) => {
   const router = useRouter();
   const authentication = useLogin();
   const { isLoading } = authentication;
@@ -98,6 +98,11 @@ const Form = ({ isMobile, isTablet }) => {
           onSuccess: (res) => {
             const { role } = jwtDecode(res.data.token);
             setLocalUser(res.data.token);
+
+            if (loanApplicationId) {
+              router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`) 
+            }
+
             if (role === "client") {
               router.push("/plataforma-cliente/home");
             } else {

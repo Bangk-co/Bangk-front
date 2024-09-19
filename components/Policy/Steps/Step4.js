@@ -202,7 +202,7 @@ export const Step4 = ({
             ))}
           </Select>
         </Grid>
-        {diseases.length > 0 && (
+        {diseases.length > 0 && !diseases.includes('Ninguna de las anteriores') && (
           <Grid item md={12} xs={12}>
             <TextField
               {...inputsProps}

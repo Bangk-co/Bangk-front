@@ -152,15 +152,19 @@ const UserData = ({ isMobile, isTablet }) => {
             });
           },
           onError: (err) => {
-            err.response.data.map((error) => {
-              toast.custom(<ToastErrorClient message={`${error}`} />, {
-                duration: 1000,
-              });
-            });
+            const existingClient = err.response.data.includes('El cliente ingresado ya existe');
+            !existingClient && (
+              err.response.data.map((error) => {
+                toast.custom(<ToastErrorClient message={`${error}`} />, {
+                  duration: 1000,
+                });
+              })
+            )
             setErrorEmail({
               error: false,
               message: "",
             });
+            {existingClient && router.push("/cotiza-tu-ahorro/continua")}
           },
         }
       );

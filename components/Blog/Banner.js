@@ -34,13 +34,13 @@ const Banner = ({ isMobile }) => {
   return (
     <Wrapper>
       <WrapperButtons>
-        <Button width={"113px"} background={theme.colors.orange}>
+        <Button width={"113px"} background={theme.colors.orange100}>
           BLOG
         </Button>
         <Button
           width={"113px"}
           background={theme.colors.white}
-          border={theme.colors.orange}
+          border={theme.colors.orange100}
           onClick={handleYoutube}
         >
           Youtube

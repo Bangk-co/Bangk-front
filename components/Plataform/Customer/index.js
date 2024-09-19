@@ -225,7 +225,7 @@ const Customer = ({ isMobile, isTablet }) => {
       clientLastName: clientInfo?.lastName,
     };
     dispatch(setSelectedApplicationInformation(updatedApplicationInfo));
-    router.push("/plataforma/clientes/solicitud");
+    router.push(`/plataforma/clientes/solicitud/${applicationInfo.loanApplicationId}`); 
   };
 
   return (

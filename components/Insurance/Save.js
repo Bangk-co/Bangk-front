@@ -46,7 +46,7 @@ const Save = ({ isMobile, isTablet }) => {
               Ahorra dinero endosando los{" "}
               <span
                 style={{
-                  color: theme.colors.orange,
+                  color: theme.colors.orange100,
                   fontFamily: "Gilroy Bold",
                 }}
               >

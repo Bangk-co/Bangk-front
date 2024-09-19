@@ -68,9 +68,7 @@ export const Calculator = ({
             font={theme.fonts.family.primaryBold}
             weight={theme.fonts.weight.bold}
           >
-            {`Póliza con nuestra aseguradora ${
-              insuranceRule ? "Allianz" : "SBS"
-            }`}
+            Póliza de vida deudor con una de nuestras aseguradoras aliadas
           </Text>
         </Div>
         <Row height="60px" width="100%">
@@ -123,14 +121,10 @@ export const Calculator = ({
         La presente cotización se expide para efectos de informar a quien la
         solicita los posibles costos del seguro en ella relacionados (valor de
         la prima), pero no implica ni supone en ningún caso, consentimiento o
-        asunción del riesgo por parte de {insuranceRule
-          ? "Allianz"
-          : "SBS"}{" "}
-        seguros Colombia s.a.; por lo tanto, la aceptación del contrato de
+        asunción del riesgo por parte de la aseguradora; por lo tanto, la aceptación del contrato de
         seguro queda condicionada a la evaluación de la información contenida en
         la respectiva solicitud y al cumplimiento de los requisitos de
-        asegurabilidad exigidos por {insuranceRule ? "Allianz" : "SBS"} seguros
-        Colombia.
+        asegurabilidad exigidos por la aseguradora.
       </Text>
 
       {isMobile && (

@@ -219,13 +219,21 @@ const RequestPolicy = ({ isMobile }) => {
   }, [dataEconomicActivity, isSuccessEconomicActivity]);
 
   useEffect(() => {
-    if (isSuccessDiseases)
+    if (isSuccessDiseases) {
+      const diseasesArray = dataDiseases?.data?.groupSettings;
+      const index = diseasesArray.findIndex(item => item.name === "Ninguna de las anteriores");
+      if (index !== -1) {
+        const [removedItem] = diseasesArray.splice(index, 1);    
+        diseasesArray.push(removedItem);
+      };
+
       setDiseasesOptions(
-        dataDiseases?.data?.groupSettings.map((ele) => ({
+        diseasesArray.map((ele) => ({
           name: ele.name,
           id: ele.id,
         }))
       );
+    }
   }, [dataDiseases, isSuccessDiseases]);
 
   useEffect(() => {
@@ -365,9 +373,10 @@ const RequestPolicy = ({ isMobile }) => {
       hivActive: healthInfo.hivActive,
       plannedMedicalProcidure: healthInfo.plannedMedicalProcidure,
       disability: healthInfo.disability,
+      diseases: getDiseasesIds(diseases, diseasesOptions),
     };
 
-    if (diseases.length > 0) {
+    if (diseases.length > 0 && !diseases.includes("Ninguna de las anteriores")) {
       HealthData.diseasesMoreInfo = healthInfo.diseasesMoreInfo;
     }
 

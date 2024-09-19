@@ -14,17 +14,18 @@ const Login = ({ isMobile, isTablet }) => {
   console.log("---------------loanApp-isAuth", loanApplicationId, isAuth);
 
   useEffect(() => {
-    if (loanApplicationId && isAuth) {
-      console.log("----------entra 1");
-      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`); 
-    } else if (loanApplicationId && !isAuth) {
-      console.log("----------entra 2");
-      router.push(`/iniciar-sesion?loanApplicationId=${loanApplicationId}`);
-    } else {
-      console.log("----------entra 3");
-      router.push(`/iniciar-sesion`);
+    console.log("Estado actual:", { loanApplicationId, isAuth });
+
+    if (loanApplicationId === undefined) {
+      console.log("loanApplicationId aún no está disponible");
+      return; // Salir temprano si loanApplicationId aún no está definido
     }
-  }, [isAuth, loanApplicationId]);
+
+    if (loanApplicationId && isAuth) {
+      console.log("Redirigiendo a la plataforma de clientes");
+      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
+    }
+  }, [isAuth, loanApplicationId, router]);
 
   return (
     <Container>

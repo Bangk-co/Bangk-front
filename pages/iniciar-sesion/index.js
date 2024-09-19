@@ -11,18 +11,12 @@ const Login = ({ isMobile, isTablet }) => {
   const { loanApplicationId } = router.query;
   const { isAuth } = useAuth();
 
-  console.log("---------------loanApp-isAuth", loanApplicationId, isAuth);
-
   useEffect(() => {
-    console.log("Estado actual:", { loanApplicationId, isAuth });
-
     if (loanApplicationId === undefined) {
-      console.log("loanApplicationId aún no está disponible");
-      return; // Salir temprano si loanApplicationId aún no está definido
+      return;
     }
 
     if (loanApplicationId && isAuth) {
-      console.log("Redirigiendo a la plataforma de clientes");
       router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
     }
   }, [isAuth, loanApplicationId, router]);

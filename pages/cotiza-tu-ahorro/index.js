@@ -109,8 +109,6 @@ const Quote = ({ isMobile, isTablet }) => {
     !errorDateOlder &&
     !errorBalance;
 
-  console.log("------age", age)
-
   const handleNext = () => {
     dispatch(setInitData(formInfo));
     if (formInfo.balance > 600000000 || age > 64) {

@@ -27,6 +27,7 @@ const Quote = ({ isMobile, isTablet }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [errorDateOlder, setErrorDateOlder] = useState(false);
+  const [age, setAge] = useState(null);
   const [errorBalance, setErrorBalance] = useState(false);
   const [formInfo, setFormInfo] = useState({
     balance: "",
@@ -80,6 +81,8 @@ const Quote = ({ isMobile, isTablet }) => {
     const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
     const age = Math.floor(ageMilliseconds / millisecondsPerYear);
 
+    setAge(age);
+
     if (age < 18) {
       setErrorDate(true);
       setErrorDateOlder(false);
@@ -106,9 +109,15 @@ const Quote = ({ isMobile, isTablet }) => {
     !errorDateOlder &&
     !errorBalance;
 
+  console.log("------age", age)
+
   const handleNext = () => {
     dispatch(setInitData(formInfo));
-    router.push("/cotiza-tu-ahorro/oferta");
+    if (formInfo.balance > 600000000 || age > 64) {
+      router.push("/cotiza-tu-ahorro/continua");
+    } else {
+      router.push("/cotiza-tu-ahorro/oferta");
+    }
   };
 
   const handleWapp = () => {

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { getFileType } from "@/utilities/helpers";
 import { pdfjs } from "react-pdf";
 import { theme } from "@/styles/theme";
-import downloadIcon from "../../../../assets/icons/download.svg"
+import downloadIcon from "../../../../assets/icons/download-2.svg"
 
 export const DocumentsPanel = ({
   bankStatementInfo,

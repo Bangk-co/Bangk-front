@@ -85,6 +85,7 @@ const RequestPolicy = ({ isMobile }) => {
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
+    residenceAddress: null,
   });
   const [financialInfo, setFinancialInfo] = useState({
     monthlyIncome: null,
@@ -148,6 +149,7 @@ const RequestPolicy = ({ isMobile }) => {
       residenceCountryId: requestInfo.residenceCountryId,
       residenceStateId: requestInfo.residenceStateId,
       residenceCityId: requestInfo.residenceCityId,
+      residenceAddress: requestInfo.residenceAddress,
     });
     setFinancialInfo({
       monthlyIncome: requestInfo.monthlyIncome,

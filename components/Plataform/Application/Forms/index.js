@@ -24,6 +24,7 @@ export const Forms = ({ loanApplicationId }) => {
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
+    residenceAddress: null,
   });
 
   const [financialInfo, setFinancialInfo] = useState({
@@ -78,6 +79,7 @@ export const Forms = ({ loanApplicationId }) => {
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
         residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
+        residenceAddress: data?.data?.loanInsurancePolicies.residenceAddress,
       });
 
       setFinancialInfo({

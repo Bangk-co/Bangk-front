@@ -530,6 +530,16 @@ export const Step1 = ({
             ))}
           </Select>
         </Grid>
+        <Grid item md={12} xs={12}>
+          <TextField
+            {...inputsProps}
+            label={"Dirección de residencia*"}
+            width={"100%"}
+            id="residenceAddress"
+            value={formInfo.residenceAddress}
+            onChange={handleChangeText}
+          />
+        </Grid>
       </Grid>
     </ColForm>
   );

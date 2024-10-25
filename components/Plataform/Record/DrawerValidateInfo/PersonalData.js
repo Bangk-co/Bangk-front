@@ -34,8 +34,6 @@ export const PersonalData = ({
   handleContinue,
   isValidated,
 }) => {
-  console.log("-----per", personalInfo)
-
   const statesList = useGetStates(personalInfo.birthCountryId);
   const { data: dataStates, isSuccess: isSuccessStates } = statesList;
   const [statesOptions, setStatesOptions] = useState([]);

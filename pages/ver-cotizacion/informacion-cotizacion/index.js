@@ -121,7 +121,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
         loanApplicationId: requestId || requests?.selectedRequest,
         terms: dayjs(termsDate),
         otpDate: dayjs(otpDate),
-        sbsPrivacyPolicies: dayjs(termsSBSDate),
+        sbsPrivacyPolicies: termsSBS ? dayjs(termsSBSDate) : null,
       },
       {
         onSuccess: () => {

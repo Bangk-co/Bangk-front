@@ -102,6 +102,10 @@ export const Record = ({
     bankStatementName: "",
     bankStatementUrl: "",
   });
+  const [identificationInfo, setIdentificationInfo] = useState({
+    identificationNameUrl: "",
+    identificationUrl: "",
+  });
   const [clientId, setClientId] = useState(null);
   const [insurer, setInsurer] = useState(allianzRule ? 115 : 114);
   const [yearlyFee, setYearlyFee] = useState("");
@@ -300,6 +304,10 @@ export const Record = ({
         bankStatementName: info.bankStatementName,
         bankStatementUrl: info.bankStatementUrl,
       });
+      setIdentificationInfo({
+        identificationNameUrl: info?.identificationNameUrl,
+        identificationUrl: info?.identificationUrl,
+      })
     }
   }, [isSuccess, data]);
 
@@ -505,10 +513,10 @@ export const Record = ({
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = (url, name) => {
     const a = document.createElement("a");
-    a.href = bankStatementInfo?.bankStatementUrl;
-    a.setAttribute("download", `${bankStatementInfo?.bankStatementName}`);
+    a.href = url;
+    a.setAttribute("download", `${name}`);
     document.body.appendChild(a);
     a.target = "_blank";
     a.click();
@@ -801,6 +809,7 @@ export const Record = ({
         handleSave={handleSave}
         disabledButtons={disabledButtons}
         bankStatementInfo={bankStatementInfo}
+        identificationInfo={identificationInfo}
         handleDownload={handleDownload}
         isLoading={updateLoan.isLoading}
         savedBankStatStatement={savedBankStatStatement}

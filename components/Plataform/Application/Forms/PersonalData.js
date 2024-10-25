@@ -219,6 +219,10 @@ export const PersonalData = ({ personalInfo }) => {
         "name"
       ),
     },
+    {
+      title: "Dirección de residencia",
+      description: personalInfo.residenceAddress,
+    },
   ];
 
   return (

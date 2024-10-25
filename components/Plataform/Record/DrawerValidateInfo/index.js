@@ -78,6 +78,7 @@ export const DrawerValidateInfo = ({
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
+    residenceAddress: null,
   });
   const initialErrorPersonalInfo = {
     name: {
@@ -136,6 +137,10 @@ export const DrawerValidateInfo = ({
       error: false,
       message: "",
     },
+    residenceAddress: {
+      error: false,
+      message: "",
+    }
   };
   const [errorsPersonalInfo, setErrorsPersonalInfo] = useState(
     initialErrorPersonalInfo
@@ -264,6 +269,7 @@ export const DrawerValidateInfo = ({
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
         residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
+        residenceAddress: data?.data?.loanInsurancePolicies.residenceAddress
       });
       setFinancialInfo({
         monthlyIncome: data?.data?.loanInsurancePolicies.monthlyIncome,

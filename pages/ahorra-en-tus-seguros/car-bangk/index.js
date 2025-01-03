@@ -4,6 +4,7 @@ import { Div } from "@/styles/Common";
 import OurInsurances from "@/components/CarBangk/OurInsurances";
 import PadlockInfo from "@/components/CarBangk/PadlockInfo";
 import WealthInfo from "@/components/CarBangk/WealthInfo";
+import LogosInfo from "@/components/CarBangk/LogosInfo";
 
 const CarBangk = ({ isMobile, isTablet }) => {
   return (
@@ -12,6 +13,7 @@ const CarBangk = ({ isMobile, isTablet }) => {
       <OurInsurances isMobile={isMobile} />
       <PadlockInfo isMobile={isMobile} />
       <WealthInfo isMobile={isMobile} />
+      <LogosInfo isMobile={isMobile} />
     </Div>
   );
 };

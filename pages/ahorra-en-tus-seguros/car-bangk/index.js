@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "@/components/CarBangk/Banner";
 import { Div } from "@/styles/Common";
 import OurInsurances from "@/components/CarBangk/OurInsurances";
-import PadlockInfo from "@/components/CarBangk/padlockInfo";
+import PadlockInfo from "@/components/CarBangk/PadlockInfo";
 
 const CarBangk = ({ isMobile, isTablet }) => {
   return (

@@ -52,7 +52,7 @@ export const WrapperPadlock = styled.div`
   align-items: center;
   justify-content: center;
   background: ${theme.colors.green};
-  width: 50%;
+  width: ${(props) => (props.isMobile ? "100%" : "50%")};
   padding: 70px 72px 70px 72px;
 
   @media (max-width: ${theme.breakpoints.sm}) {

@@ -8,21 +8,26 @@ import star from "@/assets/img/starOrange.png";
 
 const PadlockInfo = ({ isMobile }) => {
   return (
-    <Div background={theme.colors.light4}>
-      <WrapperPadlock>
+    <Div
+      background={theme.colors.light4}
+      direction={isMobile ? "column" : "row"}
+    >
+      <WrapperPadlock isMobile={isMobile}>
         <Image
           alt="padlock"
           src={padlock}
-          width={isMobile ? 200 : "100%"}
-          height={isMobile ? 200 : "100%"}
+          width={isMobile ? 300 : "100%"}
+          height={isMobile ? 300 : "100%"}
         />
       </WrapperPadlock>
-      <Col p={"80px 110px"}>
+
+      <Col p={isMobile ? "60px 40px" : "80px 100px"}>
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.lg : theme.fonts.size.xl}
+          size={isMobile ? theme.fonts.size.lg : theme.fonts.size.xxl}
           font={theme.fonts.family.primaryBold}
           mb="20px"
+          style={{ lineHeight: 1.1 }}
         >
           Importancia<br></br> de Estar<br></br> Asegurado
         </Text>

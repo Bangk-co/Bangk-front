@@ -46,3 +46,23 @@ export const WrapperInsurance = styled.div`
     align-items: center;
   }
 `;
+
+export const WrapperPadlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${theme.colors.green};
+  width: 50%;
+  padding: 70px 72px 70px 72px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 22px 40px 22px;
+    align-items: center;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 50px 40px 50px 40px;
+    align-items: center;
+  }
+`;

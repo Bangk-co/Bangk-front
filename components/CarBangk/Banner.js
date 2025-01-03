@@ -2,33 +2,24 @@ import React from "react";
 import Image from "next/image";
 import { theme } from "@/styles/theme";
 import motoCar from "@/assets/img/moto-car.png";
-import carBangkBackground from "@/assets/img/carBangkBanner.png";
-import { Div, Text } from "@/styles/Common";
+import { Text } from "@/styles/Common";
+import { WrapperBanner } from "./styles";
 
 const Banner = ({ isMobile }) => {
-  const backgroundImageUrl = carBangkBackground.src;
   return (
-    <Div
-      p={"70px 72px 70px 72px"}
-      direction="column"
-      align="center"
-      style={{
-        backgroundImage: `url(${backgroundImageUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <WrapperBanner>
       <Image
         alt="motoCar"
         src={motoCar}
-        width={isMobile ? 191 : 846}
-        height={isMobile ? 160 : 375}
+        width={isMobile ? 370 : 846}
+        height={isMobile ? 165 : 375}
       />
       <Text
         color={theme.colors.white}
-        size={theme.fonts.size.xxxl}
+        size={isMobile ? theme.fonts.size.xl : theme.fonts.size.xxxl}
         font={theme.fonts.family.primaryBold}
+        mb="10px"
+        align="center"
       >
         CAR-
         <span
@@ -42,8 +33,9 @@ const Banner = ({ isMobile }) => {
       </Text>
       <Text
         color={theme.colors.green}
-        size={theme.fonts.size.ft}
+        size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.ft}
         font={theme.fonts.family.primary}
+        align="center"
         style={{ width: "80%" }}
       >
         En Bangk queremos revolucionarlo todo. ¡Incluso la forma en que te{" "}
@@ -64,7 +56,7 @@ const Banner = ({ isMobile }) => {
           Seguros de Vehículos de SBS.
         </span>
       </Text>
-    </Div>
+    </WrapperBanner>
   );
 };
 

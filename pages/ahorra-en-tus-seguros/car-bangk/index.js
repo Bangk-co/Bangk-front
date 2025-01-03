@@ -3,6 +3,7 @@ import Banner from "@/components/CarBangk/Banner";
 import { Div } from "@/styles/Common";
 import OurInsurances from "@/components/CarBangk/OurInsurances";
 import PadlockInfo from "@/components/CarBangk/PadlockInfo";
+import WealthInfo from "@/components/CarBangk/WealthInfo";
 
 const CarBangk = ({ isMobile, isTablet }) => {
   return (
@@ -10,6 +11,7 @@ const CarBangk = ({ isMobile, isTablet }) => {
       <Banner isMobile={isMobile} />
       <OurInsurances isMobile={isMobile} />
       <PadlockInfo isMobile={isMobile} />
+      <WealthInfo isMobile={isMobile} />
     </Div>
   );
 };

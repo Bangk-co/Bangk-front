@@ -35,7 +35,7 @@ const PadlockInfo = ({ isMobile }) => {
           color={theme.colors.green}
           size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
           font={theme.fonts.family.primary}
-          mb="80px"
+          mb="70px"
         >
           Asegura tu Futuro Financiero
         </Text>

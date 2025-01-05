@@ -32,6 +32,7 @@ import useGetRelationships from "@/hooks/Common/useGetRelationships";
 import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import dayjs from "dayjs";
 import { setOtpDate } from "@/store/balance";
+import useGetSMMLV from "@/hooks/Common/useGetSMMLV";
 
 const RequestPolicy = ({ isMobile }) => {
   const dispatch = useDispatch();
@@ -66,6 +67,8 @@ const RequestPolicy = ({ isMobile }) => {
     relationship;
   const [relationshipsOptions, setRelationshipsOptions] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
+  const { data: dataSmmlv, isSuccess: isSuccessSmmlv } = useGetSMMLV();
+  const [smmlv, setSmmlv] = useState(0);
   const [checks, setChecks] = useState({
     check1: false,
     check2: false,
@@ -132,6 +135,11 @@ const RequestPolicy = ({ isMobile }) => {
     "Datos de tu salud",
     "Datos adicionales",
   ];
+
+  useEffect(() => {
+    if (isSuccessSmmlv)
+      setSmmlv(dataSmmlv?.data?.groupSettings[0].code);
+  }, [dataSmmlv, isSuccessSmmlv]);
 
   useEffect(() => {
     setLoanTypeId(requestInfo.loanTypeId);
@@ -419,6 +427,9 @@ const RequestPolicy = ({ isMobile }) => {
   };
 
   const validationFinancial = () => {
+    const minLoan = 135 * smmlv;
+    const minMonthlyCost = 6 * smmlv;
+
     const financialData = {
       monthlyIncome: financialInfo.monthlyIncome,
       monthlyExpenses: financialInfo.monthlyExpenses,
@@ -426,8 +437,8 @@ const RequestPolicy = ({ isMobile }) => {
       liabilitiesValue: financialInfo.liabilitiesValue,
     };
     if (
-      requestInfo.loanBalance > 137227300 ||
-      requestInfo.monthlyCostInsurance > 6089880
+      requestInfo.loanBalance >= minLoan ||
+      requestInfo.monthlyCostInsurance >= minMonthlyCost
     ) {
       financialData.incomeOrigin = financialInfo.incomeOrigin;
       financialData.check1 = checks.check1;
@@ -530,6 +541,7 @@ const RequestPolicy = ({ isMobile }) => {
             monthlyCostInsurance={requestInfo.monthlyCostInsurance}
             focusButton={focusButton}
             setAceptanceOriginOfFundsDate={setAceptanceOriginOfFundsDate}
+            smmlv={smmlv}
           />
         )}
         {activeStep === 2 && (

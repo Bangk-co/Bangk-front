@@ -92,3 +92,23 @@ export const WrapperAssistance = styled.div`
     align-items: center;
   }
 `;
+
+export const WrapperQuote = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: ${theme.colors.gray100};
+  padding: 80px 90px;
+  border-radius: 50px;
+  margin: 40px 60px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 22px 40px 22px;
+    margin: 20px 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 50px 40px 50px 40px;
+    margin: 20px 30px;
+  }
+`;

@@ -23,9 +23,11 @@ export const WrapperBanner = styled.div`
 
 export const WrapperCoverage = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 80px 72px 80px 72px;
   border-radius: 50px;
   margin: 40px 60px;
+  align-items: center;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 40px 22px 40px 22px;

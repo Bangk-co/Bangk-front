@@ -140,10 +140,10 @@ const Coverage = ({ isMobile }) => {
         m="50px 0 20px 0"
         gap="20px"
         style={{
-          display: "grid", // Usamos CSS Grid
-          gridTemplateColumns: "1fr 1fr", // Definimos dos columnas
-          gridAutoRows: "minmax(50px, auto)", // Cada fila tiene un alto mínimo y se ajusta según el contenido
-          gap: "20px", // Espacio entre los elementos en el grid
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gridAutoRows: "minmax(50px, auto)",
+          gap: "20px",
         }}
       >
         {stepText.map((step, index) => (

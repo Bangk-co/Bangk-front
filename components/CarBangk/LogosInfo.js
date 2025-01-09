@@ -7,7 +7,7 @@ import logo from "@/assets/icons/green-logo.svg";
 
 const LogosInfo = ({ isMobile }) => {
   return (
-    <Div p={isMobile ? "50px 20px" : "50px 200px"} direction="column">
+    <Div p={isMobile ? "50px 20px" : "50px 150px"} direction="column">
       <Div
         align="center"
         justify="space-between"
@@ -16,7 +16,7 @@ const LogosInfo = ({ isMobile }) => {
         <Image
           alt="star"
           src={sbs}
-          width={isMobile ? 350 : 700}
+          width={isMobile ? 300 : 550}
           height={isMobile ? 163 : 325}
         />
         <Image

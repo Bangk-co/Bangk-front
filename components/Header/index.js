@@ -38,7 +38,6 @@ const Header = ({ isMobile, isTablet }) => {
     setOptionSelected(null);
     setOpenMenu(false);
   };
-  console.log("pathname", pathname);
   return (
     <WrapperHeader>
       {isMobile ? (

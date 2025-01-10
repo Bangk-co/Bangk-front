@@ -122,8 +122,8 @@ export const WrapperFaqs = styled.div`
   align-items: center;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 40px 22px 40px 22px;
-    margin: 20px 30px;
+    padding: 30px 22px;
+    margin: 10px 30px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -141,8 +141,8 @@ export const WrapperClause = styled.div`
   align-items: center;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 40px 22px 40px 22px;
-    margin: 20px 30px;
+    padding: 20px 22px;
+    margin: 10px 30px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme

@@ -66,6 +66,17 @@ const Clause = ({ isMobile }) => {
           style={{ transform: "rotate(180deg)" }}
         />
       </Div>
+      <Text
+        color={theme.colors.green}
+        size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.ft}
+        font={theme.fonts.family.primary}
+        align="center"
+        style={{ lineHeight: 1.1 }}
+        mt={isMobile ? "20px" : "40px"}
+      >
+        Condicionado: <br />
+        26082021-1322-P-03-POLIZAAUTOSXKM02-DRCI
+      </Text>
     </WrapperClause>
   );
 };

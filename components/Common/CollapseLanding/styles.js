@@ -16,6 +16,7 @@ export const CustomCollapse = styled(Collapse)`
       border: 1px solid ${theme.colors.white};
       background-color: ${theme.colors.white};
       font-family: ${theme.fonts.family.primaryBold};
+      text-align: ${({ textAlign }) => textAlign};
       width: 100%;
       height: min-content;
       max-height: min-content;

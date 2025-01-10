@@ -86,7 +86,7 @@ export const CollapseLanding = ({
                 style={{ margin: "0px", background: theme.colors.gray100 }}
               />
             )}
-            {ele.panel}
+            <div dangerouslySetInnerHTML={{ __html: ele.panel }} />
           </Panel>
           <Divider
             style={{ margin: "10px 0", background: theme.colors.green }}

@@ -82,7 +82,7 @@ const OurInsurances = ({ isMobile }) => {
         {insuranceCards.map((insurance, index) => (
           <Div
             key={index}
-            width={isMobile ? "90%" : "320px"}
+            width={isMobile ? "90%" : "300px"}
             height={isMobile ? "auto" : "400px"}
             p="30px 40px"
             background={insurance.background}

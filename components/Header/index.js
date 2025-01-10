@@ -8,6 +8,7 @@ import greenLogo from "../../assets/icons/green-logo.svg";
 import menu from "../../assets/icons/menu.svg";
 import { useRouter } from "next/router";
 import MenuMobile from "./MenuMobile";
+import { Button } from "../Common/Button";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const Header = ({ isMobile, isTablet }) => {
     setOptionSelected(null);
     setOpenMenu(false);
   };
-
+  console.log("pathname", pathname);
   return (
     <WrapperHeader>
       {isMobile ? (
@@ -79,13 +80,33 @@ const Header = ({ isMobile, isTablet }) => {
               style={{ cursor: "pointer" }}
             />
           </Div>
+
           <Div gap={isTablet ? "63px" : "98px"}>
+            {pathname ===
+              "/ahorra-en-tus-seguros/car-bangk/seguro-por-kilometro" && (
+              <Button
+                height={"40px"}
+                font={theme.fonts.family.primaryBold}
+                size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
+                background={theme.colors.orange}
+                labelColor={theme.colors.green}
+                border={"transparent"}
+                hover={theme.colors.orange}
+                borderHover={theme.colors.orange}
+                onClick={() =>
+                  (window.location.href =
+                    "https://sxkm.co/?intermediaro:202699")
+                }
+              >
+                Cotiza ya!
+              </Button>
+            )}
             {headerButtons.map((ele, indx) => (
               <Link
                 key={indx}
                 size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
                 color={
-                  ele.url === pathname
+                  pathname.includes(ele.url)
                     ? theme.colors.orange
                     : theme.colors.black
                 }

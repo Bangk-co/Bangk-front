@@ -6,6 +6,7 @@ import BenefitsInfo from "@/components/InsurancePerKm/BenefitsInfo";
 import AssistanceInfo from "@/components/InsurancePerKm/AssistanceInfo";
 import Quote from "@/components/InsurancePerKm/Quote";
 import LogosInfo from "@/components/CarBangk/LogosInfo";
+import FAQs from "@/components/InsurancePerKm/FAQs";
 
 const InsurancePerKm = ({ isMobile, isTablet }) => {
   return (
@@ -15,6 +16,7 @@ const InsurancePerKm = ({ isMobile, isTablet }) => {
       <BenefitsInfo isMobile={isMobile} />
       <AssistanceInfo isMobile={isMobile} />
       <Quote isMobile={isMobile} />
+      <FAQs isMobile={isMobile} />
       <LogosInfo isMobile={isMobile} />
     </Div>
   );

@@ -57,9 +57,19 @@ export const CollapseLanding = ({
             key={ele.key}
             header={
               <>
-                <Div style={{ justifySelf: textAlign }}>{ele.header}</Div>
+                <Div
+                  style={{
+                    justifySelf: textAlign,
+                    textAlign: textAlign || "left",
+                  }}
+                >
+                  {ele.header}
+                </Div>
                 {ele.summary && !activeKey.includes(ele.key) && (
-                  <Div direction="column" style={{ textAlign: textAlign }}>
+                  <Div
+                    direction="column"
+                    style={{ textAlign: textAlign || "left" }}
+                  >
                     <Text
                       color={theme.colors.green}
                       font={theme.fonts.family.primary}

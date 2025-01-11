@@ -5,6 +5,7 @@ import { WrapperHeader } from "./styles";
 import { Link } from "../Link";
 import { theme } from "@/styles/theme";
 import greenLogo from "../../assets/icons/green-logo.svg";
+import petLogo from "../../assets/img/petBangkLogo.png";
 import menu from "../../assets/icons/menu.svg";
 import { useRouter } from "next/router";
 import MenuMobile from "./MenuMobile";
@@ -43,14 +44,25 @@ const Header = ({ isMobile, isTablet }) => {
       {isMobile ? (
         <>
           <Div>
-            <Image
-              alt="logo"
-              src={greenLogo}
-              width={93}
-              height={34}
-              onClick={handleHome}
-              style={{ cursor: "pointer" }}
-            />
+            {pathname.includes("pet-bangk") ? (
+              <Image
+                alt="logo"
+                src={petLogo}
+                width={123}
+                height={37}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <Image
+                alt="logo"
+                src={greenLogo}
+                width={93}
+                height={34}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            )}
           </Div>
           <Div
             m="0 30px 0 0"
@@ -70,14 +82,25 @@ const Header = ({ isMobile, isTablet }) => {
       ) : (
         <>
           <Div>
-            <Image
-              alt="logo"
-              src={greenLogo}
-              width={isTablet ? 139 : 163}
-              height={isTablet ? 51 : 60}
-              onClick={handleHome}
-              style={{ cursor: "pointer" }}
-            />
+            {pathname.includes("pet-bangk") ? (
+              <Image
+                alt="logo"
+                src={petLogo}
+                width={isTablet ? 169 : 246}
+                height={isTablet ? 54 : 63}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <Image
+                alt="logo"
+                src={greenLogo}
+                width={isTablet ? 139 : 163}
+                height={isTablet ? 51 : 60}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            )}
           </Div>
           <Div gap={isTablet ? "63px" : "98px"}>
             {headerButtons.map((ele, indx) => (

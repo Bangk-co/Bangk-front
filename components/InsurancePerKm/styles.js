@@ -112,3 +112,42 @@ export const WrapperQuote = styled.div`
     margin: 20px 30px;
   }
 `;
+
+export const WrapperFaqs = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 72px;
+  border-radius: 50px;
+  margin: 20px 60px;
+  align-items: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 30px 22px;
+    margin: 10px 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 50px 40px 50px 40px;
+    margin: 20px 30px;
+  }
+`;
+
+export const WrapperClause = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 40px 72px;
+  border-radius: 50px;
+  align-items: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 20px 22px;
+    margin: 10px 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 50px 40px 50px 40px;
+    margin: 20px 30px;
+  }
+`;

@@ -8,35 +8,38 @@ import { WrapperCoverage } from "./styles";
 import { CollapseLanding } from "../Common/CollapseLanding";
 
 const Coverage = ({ isMobile }) => {
-  const [activeKey, setActiveKey] = useState(["1"]);
+  const [activeKey, setActiveKey] = useState(["0"]);
   const panels = [
     {
       key: "1",
       header: `Cobertura`,
       summary:
-        "• Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida total, y deducible de 1 SMMLV para pérdida parcial.",
+        "1. Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida tota...",
       panel:
-        "• Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida total, y deducible de 1 SMMLV para pérdida parcial.",
+        "1. Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida total, y deducible de 1 SMMLV para pérdida parcial.<br />2. Si tienes un accidente automovilístico, contarás con asistencia jurídica, si la necesitas.<br />3. Si causas daños a otras personas o sus bienes te cubrimos hasta 4 mil millones de pesos.<br />4. Cobertura de Accidentes personales para ti y los ocupantes del auto.",
     },
     {
       key: "2",
       header: `Coberturas adicionales`,
       summary:
-        "• Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar.",
+        "1. Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.",
       panel:
-        "• Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar.",
+        "1. Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.<br />2. Asistencias como grúa, cambio de llanta y más beneficios. ",
     },
     {
       key: "3",
       header: `Valores Agregados`,
-      summary: "",
-      panel: "",
+      summary: "1. Reemplazo de llantas estalladas y rectificación de rines.",
+      panel:
+        "1. Reemplazo de llantas estalladas y rectificación de rines.<br />2. Reemplazo de pequeños accesorios como tapas de gasolina, espejos, lunas de espejo, entre otros.<br />3. Conductor elegido ilimitado.",
     },
     {
       key: "4",
       header: `Beneficios por hábitos de conducción`,
-      summary: "",
-      panel: "",
+      summary:
+        "1. Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como:",
+      panel:
+        "1. Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como: <br />• Trasporte o traslado al aeropuerto.<br />• Eliminación del deducible en pérdida parcial por hurto. <br />• Pequeños rayones o golpes leves. <br />• Disminución de deducible en la cobertura de pérdida parcial por daños, entre otros.",
     },
   ];
 

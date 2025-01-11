@@ -8,10 +8,35 @@ import Quote from "@/components/InsurancePerKm/Quote";
 import LogosInfo from "@/components/CarBangk/LogosInfo";
 import FAQs from "@/components/InsurancePerKm/FAQs";
 import Clause from "@/components/InsurancePerKm/Clause";
+import Breadcrumbs from "@/components/Common/Breadcrumbs";
 
 const InsurancePerKm = ({ isMobile, isTablet }) => {
+
+  const breadcrumbs = [
+    {
+      label: "Bangk",
+      href: "/",
+      type: "link"
+    },
+    {
+      label: "Seguros",
+      href: "/ahorra-en-tus-seguros",
+      type: "link"
+    },
+    {
+      label: "Car-bangk",
+      href: "/ahorra-en-tus-seguros/car-bangk",
+      type: "link"
+    },
+    {
+      label: "Seguro por KM",
+      type: "text"
+    }
+  ];
+
   return (
     <Div direction="column">
+      <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
       <Banner isMobile={isMobile} />
       <Coverage isMobile={isMobile} />
       <BenefitsInfo isMobile={isMobile} />

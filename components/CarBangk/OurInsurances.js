@@ -1,10 +1,12 @@
 import React from "react";
 import { theme } from "@/styles/theme";
 import { WrapperInsurance } from "./styles";
-import { Div, Row, Text } from "@/styles/Common";
+import { Div, Text } from "@/styles/Common";
 import { Button } from "../Common/Button";
+import { useRouter } from "next/router";
 
 const OurInsurances = ({ isMobile }) => {
+  const router = useRouter();
   const insuranceCards = [
     {
       secureColor: theme.colors.gray100,
@@ -15,7 +17,9 @@ const OurInsurances = ({ isMobile }) => {
       descriptionColor: theme.colors.white,
       buttonColor: theme.colors.yellow,
       buttonText: theme.colors.green,
-      onClick: null,
+      onClick: () => {
+        router.push("/ahorra-en-tus-seguros/car-bangk/seguro-por-kilometro");
+      },
     },
     {
       secureColor: theme.colors.gray100,
@@ -78,7 +82,7 @@ const OurInsurances = ({ isMobile }) => {
         {insuranceCards.map((insurance, index) => (
           <Div
             key={index}
-            width={isMobile ? "90%" : "320px"}
+            width={isMobile ? "90%" : "300px"}
             height={isMobile ? "auto" : "400px"}
             p="30px 40px"
             background={insurance.background}
@@ -124,6 +128,7 @@ const OurInsurances = ({ isMobile }) => {
               border={"transparent"}
               hover={insurance.buttonColor}
               borderHover={insurance.buttonColor}
+              onClick={insurance.onClick}
             >
               Conoce más
             </Button>

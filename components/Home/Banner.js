@@ -16,6 +16,7 @@ import { theme } from "@/styles/theme";
 import { Button } from "../Button";
 import { wappLink } from "@/utilities/options";
 import { useRouter } from "next/router";
+import { Div } from "@/styles/Common";
 
 const Banner = ({ isMobile }) => {
   const router = useRouter();
@@ -26,8 +27,12 @@ const Banner = ({ isMobile }) => {
 
   return (
     <Wrapper>
-      <Row style={{ width: "100%" }}>
-        <Col lg={16} md={14} xs={12}>
+      <Div
+        style={{ width: "100%" }}
+        direction={isMobile ? "column" : "row"}
+        justify={!isMobile && "space-between"}
+      >
+        <Div direction="column">
           <Title>Misma cobertura</Title>
           <Title color={theme.colors.yellow}>Menos cuota!</Title>
           <Message>
@@ -39,12 +44,12 @@ const Banner = ({ isMobile }) => {
             <Image
               alt="text"
               src={text}
-              width={isMobile ? 178 : 560}
-              height={isMobile ? 14 : 44}
+              width={isMobile ? 250 : 560}
+              height={isMobile ? 19 : 44}
             />
           </WrapperText>
           <Button onClick={handleQuote}>Ahorra ya!</Button>
-        </Col>
+        </Div>
         <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
           <WrapperStar>
             <Image alt="star" src={star} width={48} height={48} />
@@ -58,7 +63,7 @@ const Banner = ({ isMobile }) => {
             />
           </WrapperImage>
         </Col>
-      </Row>
+      </Div>
     </Wrapper>
   );
 };

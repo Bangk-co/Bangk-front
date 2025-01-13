@@ -126,7 +126,7 @@ const Header = ({ isMobile, isTablet }) => {
             {headerButtons.map((ele, indx) => (
               <Link
                 key={indx}
-                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.ft}
                 color={
                   pathname.includes(ele.url)
                     ? theme.colors.orange

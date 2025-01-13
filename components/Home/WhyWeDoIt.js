@@ -27,8 +27,8 @@ const WhyWeDoIt = ({ isMobile }) => {
         <Image
           alt="man"
           src={man}
-          width={isMobile ? 412 : 960}
-          height={isMobile ? 411 : 747}
+          width={isMobile ? 350 : 960}
+          height={isMobile ? 350 : 747}
         />
       </Col1>
       <Col2>

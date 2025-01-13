@@ -31,7 +31,7 @@ export const Title = styled.h6`
   text-align: ${(props) => props.align};
 
   @media (max-width: ${theme.breakpoints.md}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5};
     line-height: 23px;
   }
 `;
@@ -39,7 +39,7 @@ export const Title = styled.h6`
 export const MessageText = styled.h6`
   font-family: Gilroy Medium;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 29px;
   text-align: ${(props) => props.align};
   width: 202px;

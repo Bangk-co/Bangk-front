@@ -53,7 +53,7 @@ export const footerList = [
   },
   {
     title: "Contáctanos",
-    width: "64px",
+    width: "90px",
     list: [
       {
         label: "Déjanos un mensaje.",
@@ -73,7 +73,7 @@ export const footerList = [
 export const footerListResponsive = [
   {
     title: "Nosotros",
-    width: "108px",
+    width: "200px",
     height: "25px",
     list: [
       { label: "Queremos Hacer Bangk!", link: "/conocenos", isExtern: false },
@@ -81,7 +81,7 @@ export const footerListResponsive = [
   },
   {
     title: "Seguros",
-    width: "80px",
+    width: "200px",
     height: "25px",
     list: [
       {
@@ -93,7 +93,7 @@ export const footerListResponsive = [
   },
   {
     title: "Legales",
-    width: "110px",
+    width: "200px",
     height: "37.5px",
     list: [
       {
@@ -115,7 +115,7 @@ export const footerListResponsive = [
   },
   {
     title: "Contáctanos",
-    width: "64px",
+    width: "200px",
     height: "50px",
     list: [
       {

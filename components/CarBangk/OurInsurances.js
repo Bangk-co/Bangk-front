@@ -41,7 +41,9 @@ const OurInsurances = ({ isMobile }) => {
       descriptionColor: theme.colors.green,
       buttonColor: theme.colors.orange500,
       buttonText: theme.colors.green,
-      onClick: null,
+      onClick: () => {
+        router.push("/ahorra-en-tus-seguros/car-bangk/danos-a-terceros");
+      },
     },
     {
       secureColor: theme.colors.green,

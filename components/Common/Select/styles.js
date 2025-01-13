@@ -11,9 +11,16 @@ export const CustomSelect = styled(Select)`
     font-family: ${({ font }) => font || theme.fonts.family.secondary};
     font-weight: ${theme.fonts.weight.regular};
     font-size: ${({ size }) => size || theme.fonts.size.sm};
+    align-items: center;
+    display: flex;
     &.Mui-focused fieldset {
       border: 1px solid
-        ${(props) => (props.error ? theme.colors.red : props.notFocused ? props.border : theme.colors.orange)} !important;
+        ${(props) =>
+          props.error
+            ? theme.colors.red
+            : props.notFocused
+            ? props.border
+            : theme.colors.orange} !important;
     }
     .MuiOutlinedInput-notchedOutline {
       border-color: ${({ border }) => border || theme.colors.gray500};
@@ -37,4 +44,3 @@ export const CustomSelect = styled(Select)`
     width: 100%;
   }
 `;
-

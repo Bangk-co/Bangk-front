@@ -50,12 +50,11 @@ export const Record = ({
   isSuccess,
   insurersOptions,
   quoteRate,
-  application,
+  loanApplicationId,
   allianzRule,
 }) => {
   const dispatch = useDispatch();
   const { loanInfo } = useSelector((state) => state)?.clients;
-  const { applications } = useSelector((state) => state);
   const queryClient = useQueryClient();
   const updateClient = useUpdateClientInfo();
   const updateLoan = useUpdateLoan();
@@ -71,6 +70,10 @@ export const Record = ({
   const [showDrawerNovelty, setShowDrawerNovelty] = useState(false);
   const [statusName, setStatusName] = useState("");
   const [comments, setComments] = useState("");
+  const [
+    selectedHistoricalLoanApplicationId,
+    setSelectedHistoricalLoanApplicationId,
+  ] = useState(null);
 
   const [prevUserForm, setPrevUserForm] = useState({
     name: "",
@@ -99,12 +102,16 @@ export const Record = ({
     bankStatementName: "",
     bankStatementUrl: "",
   });
+  const [identificationInfo, setIdentificationInfo] = useState({
+    identificationNameUrl: "",
+    identificationUrl: "",
+  });
   const [clientId, setClientId] = useState(null);
   const [insurer, setInsurer] = useState(allianzRule ? 115 : 114);
   const [yearlyFee, setYearlyFee] = useState("");
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    applications?.selectedApplication?.loanApplicationId
+    loanApplicationId
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();
@@ -124,8 +131,8 @@ export const Record = ({
     Number(loanInfo?.loanBalance),
     Number(quoteRate)
   );
-  const insuranceAnnualFinal = insuranceAnnual.toFixed(2);
-  const insuranceMonthly = _.divide(insuranceAnnual, 12);
+  const insuranceAnnualFinal = insuranceAnnual.toFixed();
+  const insuranceMonthly = Number(_.divide(insuranceAnnual, 12).toFixed());
   const insuranceMonthlyFinal = insuranceMonthly.toFixed();
   const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);
   const monthlyCostInsurance2 = Number(
@@ -181,7 +188,9 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(bangkYearlyFee, 12).toFixed())
+              )}`,
             }
           : {
               label: "Seguro mensual",
@@ -212,11 +221,15 @@ export const Record = ({
         Object.keys(loanInfo).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(bangkYearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(bangkYearlyFee, 12).toFixed())
+              )}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(_.divide(yearlyFee, 12))}`,
+              value: `$ ${numberFormat(
+                Number(_.divide(yearlyFee, 12).toFixed())
+              )}`,
             },
         Object.keys(loanInfo).length === 0
           ? {
@@ -291,11 +304,15 @@ export const Record = ({
         bankStatementName: info.bankStatementName,
         bankStatementUrl: info.bankStatementUrl,
       });
+      setIdentificationInfo({
+        identificationNameUrl: info?.identificationNameUrl,
+        identificationUrl: info?.identificationUrl,
+      })
     }
   }, [isSuccess, data]);
 
   const loanFormAssesorConcept = useGetLoanFormAssessorConcept(
-    applications?.selectedApplication?.loanApplicationId
+    loanApplicationId
   );
   const { data: dataAssesorConcept, isLoading: isLoadingAssessorConcept } =
     loanFormAssesorConcept;
@@ -322,10 +339,8 @@ export const Record = ({
   const handleCloseQuoteSuccess = () => {
     setShowQuoteSuccess(false);
     dispatch(setLoanInfo({}));
-    queryClient.refetchQueries("historyList");
-    queryClient.invalidateQueries[
-      ("loanQuote", applications?.selectedApplication?.loanApplicationId)
-    ];
+    queryClient.refetchQueries(["historyList"]);
+    queryClient.invalidateQueries[["loanQuote"]];
     if (Object.keys(loanInfo).length > 0) {
       toast.custom(<ToastSuccess message={"Cotización enviada con éxito"} />, {
         duration: 1000,
@@ -376,7 +391,13 @@ export const Record = ({
   const handleChangeDate = (event, id) => {
     const today = new Date();
     const birthDate = new Date(event);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
 
     if (id === "birthDate") {
       if (age < 18) {
@@ -441,11 +462,8 @@ export const Record = ({
           },
           {
             onSuccess: () => {
-              queryClient.invalidateQueries([
-                "clientInfo",
-                application?.clientId,
-              ]);
-              queryClient.invalidateQueries["clientInfo"];
+              queryClient.invalidateQueries(["clientInfo", application?.clientId]);
+              queryClient.invalidateQueries(["LoanInformation"]);
             },
             onError: (err) => {
               err.response.data.errors.map((error) => {
@@ -468,6 +486,7 @@ export const Record = ({
                 { duration: 1000 }
               );
               setShowDrawer(false);
+              queryClient.invalidateQueries(["clientInfo"]);
               queryClient.invalidateQueries(["historyList"]);
               queryClient.invalidateQueries(["LoanInformation"]);
             } else {
@@ -494,10 +513,10 @@ export const Record = ({
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = (url, name) => {
     const a = document.createElement("a");
-    a.href = bankStatementInfo?.bankStatementUrl;
-    a.setAttribute("download", `${bankStatementInfo?.bankStatementName}`);
+    a.href = url;
+    a.setAttribute("download", `${name}`);
     document.body.appendChild(a);
     a.target = "_blank";
     a.click();
@@ -532,6 +551,7 @@ export const Record = ({
       },
       {
         onSuccess: (data) => {
+          queryClient.invalidateQueries(["loanQuote"]);
           setShowDrawerQuote(false);
           setShowQuoteSuccess(true);
         },
@@ -675,7 +695,7 @@ export const Record = ({
     if (status === "Estudio lista restrictiva SBS") {
       validationSBS.reset();
       validationSBS.mutate(
-        applications?.selectedApplication?.loanApplicationId,
+        loanApplicationId,
         {
           onSuccess: (data) => {
             queryClient.invalidateQueries(["historyList"]);
@@ -691,7 +711,7 @@ export const Record = ({
     } else {
       validationSarlaft.reset();
       validationSarlaft.mutate(
-        applications?.selectedApplication?.loanApplicationId,
+        loanApplicationId,
         {
           onSuccess: (data) => {
             queryClient.invalidateQueries(["historyList"]);
@@ -707,12 +727,14 @@ export const Record = ({
     }
   };
 
-  const handleResolve = (status) => {
+  const handleResolve = (status, historicalLoanApplicationId) => {
+    setSelectedHistoricalLoanApplicationId(historicalLoanApplicationId);
     setShowDrawerNovelty(true);
     setStatusName(status);
   };
 
   const handleCloseDrawerNovelty = () => {
+    setSelectedHistoricalLoanApplicationId(null);
     setShowDrawerNovelty(false);
     setStatusName("");
     setComments("");
@@ -725,7 +747,7 @@ export const Record = ({
 
   const handleSaveComments = () => {
     const formData = {
-      loanApplicationId: applications?.selectedApplication?.loanApplicationId,
+      historicalLoanApplicationId: selectedHistoricalLoanApplicationId,
       comments: comments,
     };
 
@@ -735,6 +757,7 @@ export const Record = ({
         queryClient.invalidateQueries(["historyList"]);
         queryClient.invalidateQueries(["LoanInformation"]);
         setShowDrawerNovelty(false);
+        setSelectedHistoricalLoanApplicationId(null);
         setStatusName("");
         setComments("");
       },
@@ -745,6 +768,23 @@ export const Record = ({
       },
     });
   };
+
+  const sbsConnectionFail = historyInfo.findIndex(
+    (item) =>
+      item.status === "Estudio lista restrictiva SBS" &&
+      item.validationClientResult === 4
+  );
+  const sarlaftConnectionFail = historyInfo.findIndex(
+    (item) =>
+      item.status === "Estudio Sarlaft" && item.validationClientResult === 4
+  );
+
+  const lastSbsCardIndex = historyInfo.findIndex(
+    (item) => item.status === "Estudio lista restrictiva SBS"
+  );
+  const lastSarlaftCardIndex = historyInfo.findIndex(
+    (item) => item.status === "Estudio Sarlaft"
+  );
 
   return (
     <Row m="24px 0 0 0" gap="16px">
@@ -769,6 +809,7 @@ export const Record = ({
         handleSave={handleSave}
         disabledButtons={disabledButtons}
         bankStatementInfo={bankStatementInfo}
+        identificationInfo={identificationInfo}
         handleDownload={handleDownload}
         isLoading={updateLoan.isLoading}
         savedBankStatStatement={savedBankStatStatement}
@@ -808,7 +849,7 @@ export const Record = ({
       <DrawerValidateInfo
         showDrawer={showDrawerValidateInfo}
         setShowDrawerValidateInfo={setShowDrawerValidateInfo}
-        loanApplicationId={applications?.selectedApplication?.loanApplicationId}
+        loanApplicationId={loanApplicationId}
         isValidated={historyInfo.some(
           (item) => item.status === "Formularios validados"
         )}
@@ -1019,7 +1060,9 @@ export const Record = ({
                     </Div>
                   )}
                 {(ele.validationClientResult === 1 ||
-                  ele.validationClientResult === 4) && (
+                  (indx === sbsConnectionFail && indx === lastSbsCardIndex) ||
+                  (indx === sarlaftConnectionFail &&
+                    indx === lastSarlaftCardIndex)) && (
                   <Div height="100%" justify="end" align="center">
                     <Button
                       background={theme.colors.green900}
@@ -1030,7 +1073,11 @@ export const Record = ({
                       height={"40px"}
                       onClick={
                         ele.validationClientResult === 1
-                          ? () => handleResolve(ele.status)
+                          ? () =>
+                              handleResolve(
+                                ele.status,
+                                ele.historicalLoanApplicationId
+                              )
                           : () => handleRetry(ele.status)
                       }
                       disabled={

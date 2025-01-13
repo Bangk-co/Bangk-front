@@ -68,7 +68,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
         <TitleDetail>
           {blogInfo?.title1}{" "}
           <span
-            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+            style={{ color: theme.colors.orange100, fontFamily: "Gilroy Bold" }}
           >
             {blogInfo?.title2}
           </span>

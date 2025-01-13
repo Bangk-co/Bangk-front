@@ -24,3 +24,25 @@ export const CardButton = styled.div`
   background: ${theme.colors.white};
   cursor: pointer;
 `;
+
+export const WrapperDisease = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  padding: 8px;
+  border-radius: 16px;
+  gap: 4px;
+  background: ${theme.colors.green900};
+`;
+
+export const WrapperAlert = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%
+  height: 44px;
+  padding: 12px 16px 12px 16px;
+  border-radius: 8px;
+  gap: 8px;
+  background: ${(props) => props.background};
+`;

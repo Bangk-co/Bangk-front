@@ -7,10 +7,7 @@ import Image from "next/image";
 import { Toaster, ToastBar, toast } from "react-hot-toast";
 import Head from "next/head";
 import PropTypes from "prop-types";
-import {
-  createTheme,
-  ThemeProvider as MUIThemeProvider,
-} from '@mui/material';
+import { createTheme, ThemeProvider as MUIThemeProvider } from "@mui/material";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
 import "./app.css";
@@ -34,8 +31,8 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
         defaultProps: {
           localeText: {
             cancelButtonLabel: "Cancelar",
-          }
-        }
+          },
+        },
       },
     },
   });
@@ -67,10 +64,13 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
   const routesWithHeaderAndFooter = [
     "/",
     "/ahorra-en-tus-seguros",
+    "/ahorra-en-tus-seguros/car-bangk",
+    "/ahorra-en-tus-seguros/car-bangk/seguro-por-kilometro",
     "/conocenos",
     "/blog",
     "/contacto",
     "/legales",
+    "/pet-bangk",
   ];
 
   const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(
@@ -85,7 +85,10 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
             <MUIThemeProvider theme={MUICssTheme}>
               <Head>
                 <title>Bangk</title>
-                <meta content="width=device-width, initial-scale=1" name="viewport" />
+                <meta
+                  content="width=device-width, initial-scale=1"
+                  name="viewport"
+                />
                 <meta name="description" content="Ahorra tiempo y dinero" />
                 <link rel="icon" href="/favicon.png" />
               </Head>
@@ -95,7 +98,11 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
                 isTablet={isTablet}
                 showHeaderAndAnimation={showHeaderAndAnimation}
               >
-                <Component {...pageProps} isMobile={isMobile} isTablet={isTablet} />
+                <Component
+                  {...pageProps}
+                  isMobile={isMobile}
+                  isTablet={isTablet}
+                />
               </Layout>
               <Toaster
                 position="bottom-right"
@@ -105,7 +112,12 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
                   duration: 8000,
                   success: {
                     icon: (
-                      <Image alt="check" src={checkSuccess} width={16} height={16} />
+                      <Image
+                        alt="check"
+                        src={checkSuccess}
+                        width={16}
+                        height={16}
+                      />
                     ),
                     style: {
                       background: theme.colors.green,
@@ -113,7 +125,12 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
                   },
                   error: {
                     icon: (
-                      <Image alt="check" src={errorToast} width={20} height={20} />
+                      <Image
+                        alt="check"
+                        src={errorToast}
+                        width={20}
+                        height={20}
+                      />
                     ),
 
                     style: {
@@ -148,7 +165,10 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
                         {icon}
                         {message}
                         {t.type !== "loading" && (
-                          <Link height="100%" onClick={() => toast.dismiss(t.id)} />
+                          <Link
+                            height="100%"
+                            onClick={() => toast.dismiss(t.id)}
+                          />
                         )}
                       </>
                     )}

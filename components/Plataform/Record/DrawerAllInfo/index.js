@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import closeIcon from "../../../assets/icons/close.svg";
+import React from "react";
+import closeIcon from "../../../../assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import { StyledDocument, StyledPage, WrapperClose } from "./styles";
+import { WrapperClose } from "../styles";
 import { Grid, MenuItem } from "@mui/material";
 import { TextField } from "@/components/Common/TextField";
 import { Select } from "@/components/Common/Select";
@@ -13,10 +13,9 @@ import { Button } from "@/components/Common/Button";
 import { LinkButton } from "@/components/Common/LinkButton";
 import { RadioGroup } from "@/components/Common/Radio/Group";
 import { Radio } from "@/components/Common/Radio";
-import { getFileType, numberFormat } from "@/utilities/helpers";
+import { numberFormat } from "@/utilities/helpers";
 import pesosIcon from "@/assets/icons/pesos.svg";
-import downloadIcon from "@/assets/icons/download-2.svg";
-import { pdfjs } from "react-pdf";
+import { DocumentsPanel } from "./DocumentsPanel";
 
 export const DrawerAllInfo = ({
   showDrawer,
@@ -39,15 +38,11 @@ export const DrawerAllInfo = ({
   handleSave,
   disabledButtons,
   bankStatementInfo,
+  identificationInfo,
   handleDownload,
   isLoading,
   savedBankStatStatement,
 }) => {
-  const [numPages, setNumPages] = useState(null);
-
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
 
   const textFieldProps = {
     labelColor: theme.colors.neutralGray900,
@@ -72,10 +67,6 @@ export const DrawerAllInfo = ({
     color: theme.colors.neutralGray800,
   };
 
-  useEffect(() => {
-    pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-  }, []);
-
   return (
     <Drawer
       open={showDrawer}
@@ -91,53 +82,11 @@ export const DrawerAllInfo = ({
           style={{ background: theme.colors.primary100, overflowY: "auto" }}
           minheight="100vh"
         >
-          <Div justify="space-between" align="center" mb="16px">
-            <Text
-              color={theme.colors.primary900}
-              font={theme.fonts.family.primaryMedium}
-              weight={theme.fonts.weight.medium}
-              size={theme.fonts.size.default2}
-              lineHeight={"24px"}
-            >
-              {bankStatementInfo?.bankStatementName}
-            </Text>
-            <Image
-              alt="download"
-              src={downloadIcon}
-              onClick={handleDownload}
-              style={{ cursor: "pointer" }}
-            />
-          </Div>
-          {getFileType(bankStatementInfo?.bankStatementUrl) === "pdf" ? (
-            <StyledDocument
-              file={bankStatementInfo?.bankStatementUrl}
-              onLoadSuccess={onDocumentLoadSuccess}
-            >
-              {Array.from(new Array(numPages), (el, index) => (
-                <StyledPage
-                  key={`page_${index + 1}`}
-                  pageNumber={index + 1}
-                  renderTextLayer={false}
-                  renderAnnotationLayer={false}
-                />
-              ))}
-            </StyledDocument>
-          ) : (
-            <Div
-              m="16px 0 0 0"
-              p="10px"
-              width="100%"
-              height="100%"
-              justify="center"
-            >
-              <Image
-                alt="bankStatement"
-                src={bankStatementInfo?.bankStatementUrl}
-                width={682}
-                height={909}
-              />
-            </Div>
-          )}
+          <DocumentsPanel 
+            bankStatementInfo={bankStatementInfo} 
+            identificationInfo={identificationInfo}
+            handleDownload={handleDownload}
+          />
         </Div>
         <Div
           width="414px"

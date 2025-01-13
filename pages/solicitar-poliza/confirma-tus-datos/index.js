@@ -22,9 +22,8 @@ const UserInfoConfirmation = ({ isMobile }) => {
   const router = useRouter();
   const { loanApplicationId } = router.query;
   const { selectedRequest } = useSelector((state) => state)?.requests;
-  const requestId = loanApplicationId || selectedRequest
-  const loanInsurancePolicyData =
-    useGetLoanInsurancePolicyInfo(requestId);
+  const requestId = loanApplicationId ? loanApplicationId : selectedRequest;
+  const loanInsurancePolicyData = useGetLoanInsurancePolicyInfo(requestId);
   const { data, isSuccess } = loanInsurancePolicyData;
   const documentType = useGetDocumentType();
   const indicatives = useGetIndicatives();

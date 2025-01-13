@@ -11,24 +11,25 @@ import useGetLoanQuoteByApplicationId from "@/hooks/ViewQuote/useGetLoanQuoteByA
 import useAcceptLoanQuote from "@/hooks/ViewQuote/useAcceptLoanQuote";
 import useRejectLoanQuote from "@/hooks/ViewQuote/useRejectLoanQuote";
 import { Calculation } from "@/components/ViewQuote/Calculation";
-import Banner from "@/components/ViewQuote/Banner";
 import { ModalTerms } from "@/components/Common/ModalTerms";
 import { ModalAccept } from "@/components/ViewQuote/ModalAccept";
 import { ModalDecline } from "@/components/ViewQuote/ModalDecline";
 import dayjs from "dayjs";
 import { setOtpDate } from "@/store/balance";
+import { downloadFile } from "@/utilities/helpers";
+import BannerCalc from "@/components/ViewQuote/BannerCalc";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { requestId } = router.query;
   const dispatch = useDispatch();
   const { requests } = useSelector((state) => state);
   const { otpDate } = useSelector((state) => state)?.balance;
-
   const acceptLoanQuote = useAcceptLoanQuote();
   const rejectLoanQuote = useRejectLoanQuote();
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    requests?.selectedRequest
+    requestId || requests?.selectedRequest
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();
@@ -40,6 +41,8 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const [terms, setTerms] = useState(false);
   const [termsDate, setTermsDate] = useState(null);
+  const [termsSBS, setTermsSBS] = useState(false);
+  const [termsSBSDate, setTermsSBSDate] = useState(null);
   const [openModalTerms, setOpenModalTerms] = useState(false);
   const [openModalAccept, setOpenModalAccept] = useState(false);
   const [openModalDecline, setOpenModalDecline] = useState(false);
@@ -58,12 +61,32 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     setOpenModalAccept(true);
   };
 
+  const handleDownload = async (insuranceName) => {
+    let link;
+    if (insuranceName === "SBS Seguros Colombia") {
+      link =
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/26072023%201322%20P34%20VIDA%20GRUPO%20GRAL4%20D00I%2010.pdf";
+    } else {
+      link =
+        "https://storageaccountbangk.blob.core.windows.net/internalfiles/Condicionado-General-Vida-Deudores%20ALLIANZ.pdf";
+    }
+    downloadFile(link, `"Terminos y condiciones "${insuranceName}`);
+  };
+
   const handleTerms = (event) => {
     const { checked } = event.target;
     const currentDate = new Date();
 
     setTerms(checked);
     setTermsDate(currentDate);
+  };
+
+  const handleTermsSBS = (event) => {
+    const { checked } = event.target;
+    const currentDate = new Date();
+
+    setTermsSBS(checked);
+    setTermsSBSDate(currentDate);
   };
 
   const handleClose = () => {
@@ -77,7 +100,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     setOpenModalTerms(false);
     const currentDate = new Date();
     setTerms(true);
-    setTermsDate(currentDate);  
+    setTermsDate(currentDate);
   };
 
   const handleDecline = () => {
@@ -93,29 +116,33 @@ const ViewQuote = ({ isMobile, isTablet }) => {
 
   const handleAccept = () => {
     acceptLoanQuote.reset();
-    acceptLoanQuote.mutate({ 
-      loanApplicationId: requests?.selectedRequest,
-      terms: dayjs(termsDate),
-      otpDate: dayjs(otpDate)
-    }, {
-      onSuccess: () => {
-        handleClose();
-        router.push("/ver-cotizacion/aceptacion-exitosa");
-        dispatch(setOtpDate(null));
+    acceptLoanQuote.mutate(
+      {
+        loanApplicationId: requestId || requests?.selectedRequest,
+        terms: dayjs(termsDate),
+        otpDate: dayjs(otpDate),
+        sbsPrivacyPolicies: termsSBS ? dayjs(termsSBSDate) : null,
       },
-      onError: (err) => {
-        err.response.data.map((error) => {
-          toast.error(error);
-        });
-      },
-    });
+      {
+        onSuccess: () => {
+          handleClose();
+          router.push("/ver-cotizacion/aceptacion-exitosa");
+          dispatch(setOtpDate(null));
+        },
+        onError: (err) => {
+          err.response.data.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   const handleReject = () => {
     rejectLoanQuote.reset();
     rejectLoanQuote.mutate(
       {
-        loanApplicationId: requests?.selectedRequest,
+        loanApplicationId: requestId || requests?.selectedRequest,
         observations: reasonToReject,
       },
       {
@@ -130,6 +157,10 @@ const ViewQuote = ({ isMobile, isTablet }) => {
         },
       }
     );
+  };
+
+  const handleSBS = () => {
+    window.open('https://www.sbseguros.co/politica-privacidad', '_blank');
   };
 
   return (
@@ -164,17 +195,23 @@ const ViewQuote = ({ isMobile, isTablet }) => {
       </Modal>
       <WrapperQuote isMobile={isMobile}>
         <Div justify={isMobile && "center"} height="100%">
-          {!isMobile && !isTablet && <Banner />}
+          {!isMobile && !isTablet && 
+            <BannerCalc insuranceName={loanApplicationInfo?.insuraceCurrierName} />
+          }
 
           <Calculation
             isMobile={isMobile}
             handleWapp={handleWapp}
             handleNext={handleNext}
             setOpenModal={setOpenModalTerms}
+            handleDownload={handleDownload}
             terms={terms}
             handleTerms={handleTerms}
             handleDecline={handleDecline}
             loanApplicationInfo={loanApplicationInfo}
+            handleSBS={handleSBS}
+            termsSBS={termsSBS}
+            handleTermsSBS={handleTermsSBS}
           />
         </Div>
       </WrapperQuote>

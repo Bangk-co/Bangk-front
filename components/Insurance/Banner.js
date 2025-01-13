@@ -10,8 +10,8 @@ const Banner = ({ isMobile }) => {
   const router = useRouter();
 
   const handleQuote = () => {
-    router.push("/cotiza-tu-ahorro")
-  }
+    router.push("/cotiza-tu-ahorro");
+  };
 
   return (
     <WrapperBanner>
@@ -20,7 +20,10 @@ const Banner = ({ isMobile }) => {
           <BannerText>
             Poder aliviar<br></br> tu bolsillo sin perder tranquilidad <br></br>
             <span
-              style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold" }}
+              style={{
+                color: theme.colors.orange100,
+                fontFamily: "Gilroy Bold",
+              }}
             >
               Eso es Bangk
             </span>

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import _ from "lodash";
+import _, { add } from "lodash";
 import closeIcon from "@/assets/icons/close.svg";
 import { Drawer } from "@/components/Common/Drawer";
 import Image from "next/image";
@@ -78,6 +78,7 @@ export const DrawerValidateInfo = ({
     residenceCountryId: null,
     residenceStateId: null,
     residenceCityId: null,
+    residenceAddress: null,
   });
   const initialErrorPersonalInfo = {
     name: {
@@ -136,6 +137,10 @@ export const DrawerValidateInfo = ({
       error: false,
       message: "",
     },
+    residenceAddress: {
+      error: false,
+      message: "",
+    }
   };
   const [errorsPersonalInfo, setErrorsPersonalInfo] = useState(
     initialErrorPersonalInfo
@@ -264,6 +269,7 @@ export const DrawerValidateInfo = ({
           data?.data?.loanInsurancePolicies.residenceCountryId,
         residenceStateId: data?.data?.loanInsurancePolicies.residenceStateId,
         residenceCityId: data?.data?.loanInsurancePolicies.residenceCityId,
+        residenceAddress: data?.data?.loanInsurancePolicies.residenceAddress
       });
       setFinancialInfo({
         monthlyIncome: data?.data?.loanInsurancePolicies.monthlyIncome,
@@ -290,7 +296,9 @@ export const DrawerValidateInfo = ({
         convicted: data?.data?.loanInsurancePolicies.convicted,
         lifeEnsure: data?.data?.loanInsurancePolicies.lifeEnsure,
         beneficiaries: data?.data?.loanInsurancePolicies.beneficiaries,
-        beneficiary: data?.data?.loanInsurancePolicies.beneficiary,
+        beneficiary: data?.data?.loanInsurancePolicies.beneficiaries
+          ? data?.data?.loanInsurancePolicies.beneficiary
+          : [],
       });
     }
   }, [data, isLoading, cancelEdit]);

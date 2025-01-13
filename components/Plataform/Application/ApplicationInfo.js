@@ -7,7 +7,7 @@ import {
   renderDocumentStateDiv,
 } from "@/utilities/helpers";
 
-const ApplicationInfo = ({ application, dataLoanInfo, banksOptions }) => {
+const ApplicationInfo = ({ loanApplicationId, application, dataLoanInfo, banksOptions }) => {
   return (
     <Col width="100%" height="100%">
       <Row>
@@ -16,7 +16,7 @@ const ApplicationInfo = ({ application, dataLoanInfo, banksOptions }) => {
           size={theme.fonts.size.h5}
           font={theme.fonts.family.primaryBold}
         >
-          {`${application.loanApplicationId} - Crédito ${application.loanTypeName}`}
+          {`${loanApplicationId} - Crédito ${application.loanTypeName}`}
         </Text>
       </Row>
       <Row m="24px 0 0 0" gap="16px">
@@ -92,7 +92,7 @@ const ApplicationInfo = ({ application, dataLoanInfo, banksOptions }) => {
             >
               {application.iconsBanksUrl && (
                 <Image
-                  src={dataLoanInfo?.iconsBanksUrl}
+                  src={application?.iconsBanksUrl}
                   alt="bankLogo"
                   width={24}
                   height={24}
@@ -130,7 +130,7 @@ const ApplicationInfo = ({ application, dataLoanInfo, banksOptions }) => {
             mt="8px"
             mb="8px"
           >
-            {formattedPrice(dataLoanInfo?.loanBalance)}
+            {formattedPrice(application?.loanBalance)}
           </Text>
         </Col>
         <Col width="400px" align="left" gap="8px">

@@ -1,32 +1,30 @@
-import { useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/router";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@/components/Login/styles";
 import Banner from "@/components/Login/Banner";
 import Form from "@/components/Login/Form";
-import { getUserInfo } from "@/utilities/helpers";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = ({ isMobile, isTablet }) => {
   const router = useRouter();
-
-  const { role } = getUserInfo();
-
+  const { loanApplicationId } = router.query;
   const { isAuth } = useAuth();
 
   useEffect(() => {
-    if (isAuth) {
-      if (role === "client") {
-        router.push("/plataforma-cliente/home");
-      } else {
-        router.push("/plataforma/home");
-      }
+    if (loanApplicationId === undefined) {
+      return;
     }
-  }, [isAuth, router, role]);
+
+    if (loanApplicationId && isAuth) {
+      router.push(`/plataforma/clientes/solicitud/${loanApplicationId}`);
+    }
+  }, [isAuth, loanApplicationId, router]);
 
   return (
     <Container>
       {!isMobile && !isTablet && <Banner />}
-      <Form isMobile={isMobile} isTablet={isTablet} />
+      <Form isMobile={isMobile} isTablet={isTablet} loanApplicationId={loanApplicationId} />
     </Container>
   );
 };

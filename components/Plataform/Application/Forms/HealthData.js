@@ -37,14 +37,21 @@ export const HealthData = ({ healthInfo }) => {
     },
   ];
 
+  const diseasesInfo = healthInfo?.diseases
+    ? healthInfo.diseases.split(",")
+    : [];
   const RowInfo2 = [
     {
       title:
         "¿Te han diagnosticado alguna(s) de estas enfermedades, circunstancias o eventos?",
       description:
-        healthInfo.hivActive !== null
-          ? getLabelFromValue(healthInfo.diseases, diseasesOptions) || "Ninguna"
-          : "--",
+        healthInfo.diseases !== null
+          ? diseasesInfo
+              .map((disease) =>
+                getLabelFromValue(Number(disease), diseasesOptions)
+              )
+              .join(", ")
+          : "Ninguna",
     },
     {
       title:

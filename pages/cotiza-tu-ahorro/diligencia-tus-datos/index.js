@@ -30,7 +30,6 @@ const UserData = ({ isMobile, isTablet }) => {
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
   const [indicativesOptions, setIndicativesOptions] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const [formInfo, setFormInfo] = useState({
     documentType: 76,
     identificationNumber: "",
@@ -43,7 +42,7 @@ const UserData = ({ isMobile, isTablet }) => {
   const [terms, setTerms] = useState(false);
   const [errorEmail, setErrorEmail] = useState({
     error: false,
-    message: ""
+    message: "",
   });
   const [forceUpdate, setForceUpdate] = useState(false);
 
@@ -98,8 +97,8 @@ const UserData = ({ isMobile, isTablet }) => {
     if (id === "email") {
       setErrorEmail({
         error: false,
-        message: ""
-      })
+        message: "",
+      });
     }
 
     setFormInfo(newInfo);
@@ -121,18 +120,6 @@ const UserData = ({ isMobile, isTablet }) => {
     a.click();
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-
-  const handleAccept = () => {
-    setOpenModal(false);
-    const currentDate = new Date();
-    setTerms(true);
-    dispatch(setTermsDate(currentDate));
-    setForceUpdate(!forceUpdate);
-  };
-
   const handleBack = () => {
     router.push("/cotiza-tu-ahorro/oferta");
   };
@@ -145,8 +132,8 @@ const UserData = ({ isMobile, isTablet }) => {
     if (validation.error) {
       setErrorEmail({
         error: true,
-        message: "Formato inválido"
-      })
+        message: "Formato inválido",
+      });
     } else {
       dispatch(setUserInfo(formInfo));
       sendCode.reset();
@@ -161,19 +148,23 @@ const UserData = ({ isMobile, isTablet }) => {
             router.push(`/validacion-identidad`);
             setErrorEmail({
               error: false,
-              message: ""
-            })
+              message: "",
+            });
           },
           onError: (err) => {
-            err.response.data.map((error) => {
-              toast.custom(<ToastErrorClient message={`${error}`} />, {
-                duration: 1000,
-              });
-            });
+            const existingClient = err.response.data.includes('El cliente ingresado ya existe');
+            !existingClient && (
+              err.response.data.map((error) => {
+                toast.custom(<ToastErrorClient message={`${error}`} />, {
+                  duration: 1000,
+                });
+              })
+            )
             setErrorEmail({
               error: false,
-              message: ""
-            })
+              message: "",
+            });
+            {existingClient && router.push("/cotiza-tu-ahorro/continua")}
           },
         }
       );
@@ -193,10 +184,6 @@ const UserData = ({ isMobile, isTablet }) => {
             documentTypeOptions={documentTypeOptions}
             indicativesOptions={indicativesOptions}
             formInfo={formInfo}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            handleClose={handleClose}
-            handleAccept={handleAccept}
             handleSelect={handleSelect}
             handleChange={handleChange}
             terms={terms}

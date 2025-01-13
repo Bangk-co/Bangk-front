@@ -8,15 +8,18 @@ import arrowGreen from "@/assets/icons/arrow-back-green.svg"
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { resetInitData } from "@/store/balance";
+import { setSelectedRequestInformation } from "@/store/requests";
 
 export const BackButton = ({ isHovered, setIsHovered }) => {
-  const dispatch = useDispatch()
-  const router = useRouter()
-
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const isAuth = !!localStorage.getItem("user");
+  
   const handleBack = () => {
-    router.push("/")
-    dispatch(resetInitData())
-  }
+    const homeRoute = isAuth ? "/plataforma-cliente/home" : "/";
+    router.push(homeRoute);
+    dispatch(resetInitData());
+  };
 
   return (
     <Div height="42px">
@@ -29,7 +32,7 @@ export const BackButton = ({ isHovered, setIsHovered }) => {
         onClick={handleBack}
       >
         <Image alt="arrow-back" src={isHovered ? arrowGreen : arrow} style={{ marginRight: "10px" }} />
-        Volver a Bangk.com
+        Volver al Home
       </LinkButton>
     </Div>
   )

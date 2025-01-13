@@ -9,37 +9,35 @@ import { Button } from "../Common/Button";
 import { theme } from "@/styles/theme";
 import emailIcon from "../../assets/icons/email.svg";
 
-export const ValidateInfoMobile = ({ isMobile, email, handleSend, reSendCode }) => {
-  const [currentView, setCurrentView] = useState(1)
+export const ValidateInfoMobile = ({
+  isMobile,
+  email,
+  handleSend,
+  reSendCode,
+}) => {
+  const [currentView, setCurrentView] = useState(1);
 
   const handleGo = () => {
-    setCurrentView(2)
-  }
+    setCurrentView(2);
+  };
 
   return (
     <>
-      {currentView === 1 && (
-        <Banner isMobile={isMobile} handleGo={handleGo} />
-      )}
+      {currentView === 1 && <Banner isMobile={isMobile} handleGo={handleGo} />}
 
       {currentView === 2 && (
         <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">
           <Div direction="column" height="100%" justify="space-between">
             <Div direction="column">
               <Div width="100%" justify="center" p="24px 0">
-                <Image
-                  alt="logo"
-                  src={logo}
-                  height={32}
-                  width={85}
-                />
+                <Image alt="logo" src={logo} height={32} width={85} />
               </Div>
               <Text
                 size={theme.fonts.size.h5}
                 color={theme.colors.white}
                 font={theme.fonts.family.primaryBold}
               >
-                ¿Quién solicito la cotización?
+                ¿Quién solicitó la cotización?
               </Text>
               <TextField
                 label={"Correo electrónico*"}
@@ -83,5 +81,5 @@ export const ValidateInfoMobile = ({ isMobile, email, handleSend, reSendCode }) 
         </WrapperInfo>
       )}
     </>
-  )
-}
+  );
+};

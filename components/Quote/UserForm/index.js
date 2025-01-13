@@ -3,36 +3,31 @@ import { TextField } from "@/components/Common/TextField";
 import { Div, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem, Modal } from "@mui/material";
-import email from "@/assets/icons/email.svg"
+import email from "@/assets/icons/email.svg";
 import Image from "next/image";
 import { Select } from "@/components/Common/Select";
 import { Button } from "@/components/Common/Button";
-import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg"
+import arrowBack from "@/assets/icons/big-arrow-back-yellow.svg";
 import { Checkbox } from "@/components/Common/Checkbox";
-import { ModalTerms } from "@/components/Common/ModalTerms";
 import { Col, WrapperWappCal } from "@/styles/Quote";
-import wappIcon from "@/assets/icons/whatsapp-original.svg"
+import wappIcon from "@/assets/icons/whatsapp-original.svg";
 
 export const UserForm = ({
-    isMobile,
-    documentTypeOptions,
-    indicativesOptions,
-    formInfo,
-    openModal,
-    setOpenModal,
-    handleClose,
-    handleAccept,
-    handleSelect,
-    handleChange,
-    terms,
-    handleTerms,
-    handleBack,
-    handleContinue,
-    handleWapp,
-    errorEmail,
-    
-  }) => {
-  const isFormValid = Object.values(formInfo).every((value) => value !== "") && terms;
+  isMobile,
+  documentTypeOptions,
+  indicativesOptions,
+  formInfo,
+  handleSelect,
+  handleChange,
+  terms,
+  handleTerms,
+  handleBack,
+  handleContinue,
+  handleWapp,
+  errorEmail,
+}) => {
+  const isFormValid =
+    Object.values(formInfo).every((value) => value !== "") && terms;
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
   const thirdInputRef = useRef(null);
@@ -44,7 +39,7 @@ export const UserForm = ({
     if (firstInputRef.current) {
       firstInputRef.current.focus();
     }
-  }, []); 
+  }, []);
 
   const inputProps = {
     width: "100%",
@@ -61,7 +56,7 @@ export const UserForm = ({
     border: theme.colors.primary25,
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
-  }
+  };
 
   const handleKeyPress = (event, nextRef) => {
     if (event.key === "Enter" && nextRef.current) {
@@ -74,17 +69,14 @@ export const UserForm = ({
     if (event.key === "Enter") {
       const button = document.getElementById("buttonRef");
       if (button) {
-          event.preventDefault();
-          button.focus();
+        event.preventDefault();
+        button.focus();
       }
     }
   };
 
   return (
     <Col m={"12px 0 0 0"}>
-      <Modal open={openModal}>
-        <ModalTerms isMobile={isMobile} handleClose={handleClose} handleAccept={handleAccept} />
-      </Modal>
       <Text
         color={theme.colors.white}
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
@@ -95,14 +87,25 @@ export const UserForm = ({
         {isMobile ? (
           <>
             Iniciemos conociendo al{" "}
-            <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.yellow500 }}>
+            <span
+              style={{
+                fontFamily: theme.fonts.family.primaryBold,
+                color: theme.colors.yellow500,
+              }}
+            >
               titular del crédito
             </span>
           </>
         ) : (
           <>
-            Iniciemos conociendo al<br />
-            <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.yellow500 }}>
+            Iniciemos conociendo al
+            <br />
+            <span
+              style={{
+                fontFamily: theme.fonts.family.primaryBold,
+                color: theme.colors.yellow500,
+              }}
+            >
               titular del crédito
             </span>
           </>
@@ -116,7 +119,12 @@ export const UserForm = ({
       >
         Diligencia la información del titular del crédito
       </Text>
-      <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3  }} columnSpacing={{ xs: 2, sm: 2, md: 2 }} style={{ marginTop: "8px" }}>
+      <Grid
+        container
+        rowSpacing={{ xs: 2, sm: 2, md: 3 }}
+        columnSpacing={{ xs: 2, sm: 2, md: 2 }}
+        style={{ marginTop: "8px" }}
+      >
         <Grid item md={4} xs={4}>
           <Select
             {...inputProps}
@@ -126,11 +134,22 @@ export const UserForm = ({
             onChange={handleSelect}
           >
             {documentTypeOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.value}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.label}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
-        <Grid item md={8} xs={8} style={{ marginTop: isMobile ? "14px" : "0px" }}>
+        <Grid
+          item
+          md={8}
+          xs={8}
+          style={{ marginTop: isMobile ? "14px" : "0px" }}
+        >
           <TextField
             {...inputProps}
             label={"Número de documento*"}
@@ -140,7 +159,7 @@ export const UserForm = ({
             inputProps={{
               maxLength: 15,
               pattern: formInfo.documentType !== 78 && "\\d*",
-              inputMode: formInfo.documentType !== 78 && "numeric"
+              inputMode: formInfo.documentType !== 78 && "numeric",
             }}
             inputRef={firstInputRef}
             onKeyPress={(event) => handleKeyPress(event, secondInputRef)}
@@ -154,7 +173,7 @@ export const UserForm = ({
             value={formInfo.name}
             onChange={handleChange}
             inputProps={{ maxLength: 50 }}
-            helper={"Escribe el nombre como aparecen en la cédula"}
+            helper={"Escribe el nombre como aparece en la cédula"}
             helperColor={theme.colors.white}
             inputRef={secondInputRef}
             onKeyPress={(event) => handleKeyPress(event, thirdInputRef)}
@@ -168,7 +187,7 @@ export const UserForm = ({
             value={formInfo.lastname}
             onChange={handleChange}
             inputProps={{ maxLength: 50 }}
-            helper={"Escribe los apellidos como aparece en la cédula"}
+            helper={"Escribe los apellidos como aparecen en la cédula"}
             helperColor={theme.colors.white}
             inputRef={thirdInputRef}
             onKeyPress={(event) => handleKeyPress(event, fourInputRef)}
@@ -183,7 +202,13 @@ export const UserForm = ({
             onChange={handleSelect}
           >
             {indicativesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.value} style={{ fontFamily: theme.fonts.family.primary }}>{ele.label}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.value}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.label}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -197,7 +222,7 @@ export const UserForm = ({
             inputProps={{
               maxLength: 10,
               pattern: "\\d*",
-              inputMode: "numeric"
+              inputMode: "numeric",
             }}
             inputRef={fourInputRef}
             onKeyPress={(event) => handleKeyPress(event, fiveInputRef)}
@@ -207,9 +232,7 @@ export const UserForm = ({
           <TextField
             {...inputProps}
             label={"Correo electrónico*"}
-            prefixIcon={
-              <Image alt="mail" src={email} width={16} height={16} />
-            }
+            prefixIcon={<Image alt="mail" src={email} width={16} height={16} />}
             id="email"
             value={formInfo.email}
             onChange={handleChange}
@@ -222,9 +245,9 @@ export const UserForm = ({
         </Grid>
       </Grid>
       <Row m="22px 0 0 0">
-        <Checkbox 
-          checked={terms} 
-          onChange={handleTerms}             
+        <Checkbox
+          checked={terms}
+          onChange={handleTerms}
           inputRef={firstCheckRef}
           onKeyPress={focusButton}
         />
@@ -238,9 +261,14 @@ export const UserForm = ({
             style={{
               fontFamily: theme.fonts.family.primaryBold,
               cursor: "pointer",
-              textDecoration: "underline"
+              textDecoration: "underline",
             }}
-            onClick={() => setOpenModal(true)}
+            onClick={() =>
+              window.open(
+                "https://www.bangk.co/legales/?section=policy",
+                "_blank"
+              )
+            }
           >
             tratamiento de mis datos
           </span>
@@ -249,7 +277,12 @@ export const UserForm = ({
       </Row>
       {isMobile && (
         <WrapperWappCal>
-          <Image alt="wapp-icon" src={wappIcon} onClick={handleWapp} style={{ cursor: "pointer" }} />
+          <Image
+            alt="wapp-icon"
+            src={wappIcon}
+            onClick={handleWapp}
+            style={{ cursor: "pointer" }}
+          />
         </WrapperWappCal>
       )}
       <Div m="46px 0 0 0" justify="space-between">
@@ -290,5 +323,5 @@ export const UserForm = ({
         </Button>
       </Div>
     </Col>
-  )
-}
+  );
+};

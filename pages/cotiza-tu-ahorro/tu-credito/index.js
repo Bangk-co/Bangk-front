@@ -12,11 +12,16 @@ import { useRouter } from "next/router";
 import useCreateClient from "@/hooks/QuoteSavings/useCreateUser";
 import { resetInitData, setOtpDate } from "@/store/balance";
 import toast from "react-hot-toast";
+import useCreateLoanApplication from "@/hooks/Customers/useCreateLoanApplication";
+import { getUserInfo } from "@/utilities/helpers";
 
 const CreditData = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { source } = router.query;
+  const { ClientId } = getUserInfo();
   const create = useCreateClient();
+  const createLoan = useCreateLoanApplication();
   const { userInfo, initData, termsDate, otpDate } = useSelector(
     (state) => state
   )?.balance;
@@ -118,7 +123,42 @@ const CreditData = ({ isMobile, isTablet }) => {
   };
 
   const handleBack = () => {
-    router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+    if (source === "create") {
+      router.push("/plataforma-cliente/seguros");
+    } else {
+      router.push("/cotiza-tu-ahorro/diligencia-tus-datos");
+    }
+  };
+
+  const handleCreateInLogin = () => {
+    const bankStatementFile = documents.find(
+      (ele) => ele.id === "bankStatementFile"
+    )?.value;
+    const identificationFile = documents.find(
+      (ele) => ele.id === "identificationFile"
+    )?.value;
+
+    createLoan.reset();
+    createLoan.mutate(
+      {
+        ...creditInfo,
+        bankStatementFile: bankStatementFile,
+        identificationFile: identificationFile,
+        clientId: ClientId
+      },
+      {
+        onSuccess: (res) => {
+          dispatch(resetInitData());
+          dispatch(setOtpDate(null));
+          router.push("/cotiza-tu-ahorro/creacion-exitosa");
+        },
+        onError: (err) => {
+          err.response.data.map((error) => {
+            toast.error(error);
+          });
+        },
+      }
+    );
   };
 
   const handleCreate = () => {
@@ -178,6 +218,9 @@ const CreditData = ({ isMobile, isTablet }) => {
             handleDelete={handleDelete}
             handleCreate={handleCreate}
             loading={create.isLoading}
+            source={source}
+            handleCreateInLogin={handleCreateInLogin}
+            loadingInLogin={createLoan.isLoading}
           />
         </Div>
       </WrapperQuote>

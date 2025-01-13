@@ -350,7 +350,7 @@ export const WrapperTitle = styled.div`
   display: flex;
   width: 627px;
   height: 92px;
-  background: ${theme.colors.orange};
+  background: ${theme.colors.orange100};
   border-radius: 20px;
   padding: 30px 0px 17px 43px;
   position: absolute;

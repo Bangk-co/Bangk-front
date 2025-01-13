@@ -46,4 +46,8 @@
   .MuiInputAdornment-root {
     margin-top: -2px !important;
   }
+
+  .MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-input {
+    margin-top: -7px;
+  }
 }

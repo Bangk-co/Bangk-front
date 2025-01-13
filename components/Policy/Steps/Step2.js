@@ -20,10 +20,9 @@ export const Step2 = ({
   loanBalance,
   monthlyCostInsurance,
   focusButton,
-  setAceptanceOriginOfFundsDate
+  setAceptanceOriginOfFundsDate,
+  smmlv
 }) => {
-  const { data, isSuccess } = useGetSMMLV();
-  const [smmlv, setSmmlv] = useState(0);
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
   const thirdInputRef = useRef(null);
@@ -32,11 +31,6 @@ export const Step2 = ({
   const secondCheckRef = useRef(null);
   const thirdCheckRef = useRef(null);
   const fiveInputRef = useRef(null);
-
-  useEffect(() => {
-    if (isSuccess)
-      setSmmlv(data?.data?.groupSettings[0].code);
-  }, [data, isSuccess]);
 
   useEffect(() => {
     if (firstInputRef.current) {

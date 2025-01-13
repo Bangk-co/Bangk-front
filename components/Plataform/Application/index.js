@@ -21,8 +21,6 @@ import folderIconBold from "../../../assets/icons/folder_copy-bold.svg";
 import folderIcon from "../../../assets/icons/folder-gray.svg";
 import { Record } from "../Record";
 import { Forms } from "./Forms";
-import pending from "@/assets/icons/pendingStepper.svg";
-import success from "@/assets/icons/successStepper.svg";
 import useGetHistory from "@/hooks/Customers/useGetHistory";
 import { formattedDate, historyStatus } from "@/utilities/helpers";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
@@ -34,9 +32,11 @@ import useGetLoanInfo from "@/hooks/Customers/useGetLoanInfo";
 import useGetQuoteRate from "@/hooks/Common/useGetQuoteRate";
 import useGetInsurers from "@/hooks/Common/useGetInsurers";
 import useGetClientInfo from "@/hooks/Customers/useGetClientInfo";
+import useGetLoanApplicationInfo from "@/hooks/Customers/useGetLoanApplicationInfo";
 
 const Application = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { id } = router.query;
   const documentsType = useGetDocumentType();
   const { selectedClient } = useSelector((state) => state)?.clients;
   const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
@@ -56,15 +56,21 @@ const Application = ({ isMobile, isTablet }) => {
     selectedClient.idClient
   );
 
-  const { applications } = useSelector((state) => state);
+  const loanApplicationId = id;
 
-  const history = useGetHistory(
-    applications?.selectedApplication?.loanApplicationId
-  );
+  const { data: dataLoanAppInfo, isSuccess: isSuccessLoanAppInfo } = useGetLoanApplicationInfo(loanApplicationId);
+  const [loanAppInfo, setLoanAppInfo] = useState({
+    loanTypeName: "",
+    creationDate: Date(),
+    stateName: "",
+    iconsBanksUrl: "",
+    loanBalance: null,
+    reviewerName: ""
+  });
+
+  const history = useGetHistory(loanApplicationId);
   const { data, isSuccess } = history;
-  const loanInfo = useGetLoanInfo(
-    applications?.selectedApplication?.loanApplicationId
-  );
+  const loanInfo = useGetLoanInfo(loanApplicationId);
 
   const {
     data: dataLoanInfo,
@@ -73,11 +79,11 @@ const Application = ({ isMobile, isTablet }) => {
   } = loanInfo;
 
   useEffect(() => {
-    if (!applications?.selectedApplication?.loanApplicationId) {
+    if (!loanApplicationId) {
       router.push("/plataforma/clientes/cliente");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [applications?.selectedApplication]);
+  }, [loanApplicationId]);
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [historyInfo, setHistoryInfo] = useState([]);
@@ -142,7 +148,7 @@ const Application = ({ isMobile, isTablet }) => {
   const statusCard = (status, validation, index) => {
     if (status === "ClienteNoAsegurable" || validation === 1) {
       return "Alert";
-    } else if (validation === 2 || validation === 3) {
+    } else if (validation === 2 || validation === 3 || validation === 4) {
       return "Error";
     } else if (index === 0) {
       return "Pending";
@@ -150,6 +156,12 @@ const Application = ({ isMobile, isTablet }) => {
       return "Success";
     }
   };
+
+  useEffect(() => {
+    if (isSuccessLoanAppInfo) {
+      setLoanAppInfo(dataLoanAppInfo?.data?.result[0]);
+    }
+  }, [isSuccessLoanAppInfo, dataLoanAppInfo]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -163,6 +175,7 @@ const Application = ({ isMobile, isTablet }) => {
             observations: "",
             validationClientResult: null,
             statusCard: "Pending",
+            historicalLoanApplicationId: null,
           },
           {
             status: historyStatus[info[0].stateName],
@@ -170,6 +183,7 @@ const Application = ({ isMobile, isTablet }) => {
             observations: info[0].observations,
             validationClientResult: info[0].validationClientResult,
             statusCard: "Success",
+            historicalLoanApplicationId: info[0].id,
           },
         ]);
       } else {
@@ -184,6 +198,7 @@ const Application = ({ isMobile, isTablet }) => {
               ele.validationClientResult,
               indx
             ),
+            historicalLoanApplicationId: ele.id,
           }))
         );
       }
@@ -291,18 +306,18 @@ const Application = ({ isMobile, isTablet }) => {
 
       const ageCalulate = () => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
         const birthDate = new Date(birthdate);
-        birthDate.setHours(0, 0, 0, 0);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
 
-        const ageMilliseconds = today - birthDate;
-        const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
-        const age = Math.floor(ageMilliseconds / millisecondsPerYear);
-
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+          age--;
+        }
         return age;
       };
 
-      if (ageCalulate() < 50) {
+      if (ageCalulate() <= 50) {
         annualRate = dataQuoteRate?.data?.groupSettings.find(
           (ele) => ele.name === "AnnualRate1"
         )?.code;
@@ -349,7 +364,8 @@ const Application = ({ isMobile, isTablet }) => {
           </Text>
         </Row>
         <ApplicationInfo
-          application={applications?.selectedApplication}
+          loanApplicationId={loanApplicationId}
+          application={loanAppInfo}
           dataLoanInfo={dataLoanInfo?.data?.loanApplication}
           banksOptions={banksOptions}
         />
@@ -384,15 +400,13 @@ const Application = ({ isMobile, isTablet }) => {
             isSuccess={isSuccessLoanInfo}
             insurersOptions={insurersOptions}
             quoteRate={quoteRate}
-            application={applications?.selectedApplication}
+            loanApplicationId={loanApplicationId}
             allianzRule={allianzRule}
           />
         )}
         {selectedTab === 1 && (
           <Forms
-            loanApplicationId={
-              applications?.selectedApplication?.loanApplicationId
-            }
+            loanApplicationId={loanApplicationId}
           />
         )}
         {selectedTab === 2 && <Text>Pagos</Text>}

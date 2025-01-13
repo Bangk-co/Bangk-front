@@ -11,25 +11,30 @@ import wappIcon from "@/assets/icons/whatsapp-original.svg";
 import logo from "@/assets/icons/white-logo.png";
 import { formattedPrice } from "@/utilities/helpers";
 import { Checkbox } from "@/components/Common/Checkbox";
+import logoSbs from "@/assets/img/logo-sbs.png";
 
 export const Calculation = ({
   isMobile,
   handleWapp,
   handleNext,
   setOpenModal,
+  handleDownload,
   terms,
   handleTerms,
   handleDecline,
   loanApplicationInfo,
+  handleSBS,
+  termsSBS,
+  handleTermsSBS,
 }) => {
   const info = [
     {
       label: "Tipo de crédito:",
-      value: `${loanApplicationInfo?.loanTypeName}`,
+      value: `${loanApplicationInfo?.loanTypeName}` || 0,
     },
     {
       label: "Saldo del crédito:",
-      value: `${formattedPrice(loanApplicationInfo?.loanBalance)} COP`,
+      value: `${formattedPrice(loanApplicationInfo?.loanBalance) || 0} COP`,
     },
   ];
 
@@ -39,12 +44,12 @@ export const Calculation = ({
     {
       key: 1,
       label: "Seguro Mensual",
-      value: BangkInsuranceMonthly,
+      value: BangkInsuranceMonthly || 0,
     },
     {
       key: 2,
       label: "Seguro Anual",
-      value: BangkInsuranceAnnual,
+      value: BangkInsuranceAnnual || 0,
     },
   ];
 
@@ -54,28 +59,22 @@ export const Calculation = ({
     {
       key: 1,
       label: "Seguro Mensual",
-      value: InsuranceMonthly,
+      value: InsuranceMonthly || 0,
     },
     {
       key: 2,
       label: "Seguro Anual",
-      value: InsuranceAnnual,
+      value: InsuranceAnnual || 0,
     },
   ];
 
-  const anualSaving = InsuranceAnnual - BangkInsuranceAnnual;
+  const anualSaving = (InsuranceAnnual - BangkInsuranceAnnual) || 0;
+  const sbs = loanApplicationInfo?.insuraceCurrierName === "SBS Seguros Colombia";
+
+  const validAccept = sbs ? (!terms || !termsSBS) : !terms; 
 
   return (
-    <WrapperInfo justifyMobile={"center"} p="96px 48px 48px 48px">
-      <Div width="100%" justify="center" p="24px 0">
-        <Image
-          alt="logo"
-          src={logo}
-          height={isMobile ? 32 : 45}
-          width={isMobile ? 85 : 120}
-        />
-      </Div>
-
+    <WrapperInfo justifyMobile={"center"} p="96px 48px 0px 48px" style={{ position: "relative" }}>
       <Text
         size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
         color={theme.colors.white}
@@ -287,13 +286,38 @@ export const Calculation = ({
               cursor: "pointer",
               textDecoration: "underline",
             }}
-            onClick={() => setOpenModal(true)}
+            onClick={() =>
+              handleDownload(loanApplicationInfo?.insuraceCurrierName)
+            }
           >
             términos y condiciones
           </span>
-          &nbsp;de la propuesta de Bangk
+          &nbsp;de la propuesta del seguro cotizado por Bangk
         </Text>
       </Row>
+      {sbs && (
+        <Row m="10px 0 0 0">
+          <Checkbox checked={termsSBS} onChange={handleTermsSBS} />
+          <Text
+            color={theme.colors.white}
+            size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
+            mt="7px"
+          >
+            Autorizo las &nbsp;
+            <span
+              style={{
+                fontFamily: theme.fonts.family.primaryBold,
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={handleSBS}
+            >
+              Políticas de Privacidad de Datos
+            </span>
+            &nbsp;de SBS Seguros.
+          </Text>
+        </Row>
+      )}
 
       {isMobile && (
         <WrapperWappCal>
@@ -340,11 +364,44 @@ export const Calculation = ({
           height={"40px"}
           radius={"40px"}
           onClick={handleNext}
-          disabled={!terms}
+          disabled={validAccept}
         >
           Aceptar
         </Button>
       </Row>
+
+      {isMobile ? (
+        <Div 
+          width="100%" 
+          justify={sbs ? "space-between" : "end"} 
+          m={sbs ? "12px 0 0 0" : "24px 0 0 0"}
+        >
+          {sbs && (
+            <Image
+              alt="logo"
+              src={logoSbs}
+              height={100}
+            />
+          )}
+          <Image
+            alt="logo"
+            src={logo}
+            height={42}
+            style={{ alignSelf: "flex-end", marginBottom: "0.8vh" }}
+          />
+        </Div>
+      ) : (
+        <Image
+          alt="logo"
+          src={logo}
+          height={140}
+          style={{ 
+            position: "absolute",
+            bottom: "6vh",
+            right: "48px"
+          }}
+        />
+      )}
     </WrapperInfo>
   );
 };

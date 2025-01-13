@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 import { Document, Page } from "react-pdf";
+import { height } from "@mui/system";
 
 export const WraperInsurance = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ export const HeaderInsuranceDetail = styled.div`
 export const Card = styled.div`
   display: flex;
   width: 80vw;
-  min-height: 193px;
+  min-height: 106px;
   padding: 24px;
   border-radius: 10px;
   background: ${theme.colors.white};
@@ -33,7 +34,7 @@ export const Card = styled.div`
 
 export const DashedLine = styled.div`
   border-left: ${(props) => `2px dashed ${props.color}`};
-  height: ${(props) => (props.isMobile ? "205px" : "185px")};
+  height: ${(props) => `${props.heightRef}px`};
 `;
 
 export const WrapperClose = styled.div`

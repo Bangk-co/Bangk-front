@@ -26,6 +26,8 @@ const Quote = ({ isMobile, isTablet }) => {
   const [genderOptions, setGenderOptions] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
+  const [errorDateOlder, setErrorDateOlder] = useState(false);
+  const [age, setAge] = useState(null);
   const [errorBalance, setErrorBalance] = useState(false);
   const [formInfo, setFormInfo] = useState({
     balance: "",
@@ -34,7 +36,10 @@ const Quote = ({ isMobile, isTablet }) => {
   });
 
   useEffect(() => {
-    setFormInfo({ ...initData, birthdate: initData.birthdate === null ? null : dayjs(initData.birthdate) });
+    setFormInfo({
+      ...initData,
+      birthdate: initData.birthdate === null ? null : dayjs(initData.birthdate),
+    });
   }, [initData]);
 
   useEffect(() => {
@@ -71,15 +76,22 @@ const Quote = ({ isMobile, isTablet }) => {
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(event);
     birthDate.setHours(0, 0, 0, 0);
-    
+
     const ageMilliseconds = today - birthDate;
     const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
     const age = Math.floor(ageMilliseconds / millisecondsPerYear);
 
+    setAge(age);
+
     if (age < 18) {
       setErrorDate(true);
+      setErrorDateOlder(false);
+    } else if (age > 74) {
+      setErrorDateOlder(true);
+      setErrorDate(false);
     } else {
       setErrorDate(false);
+      setErrorDateOlder(false);
       setFormInfo({ ...formInfo, birthdate: event });
     }
   };
@@ -94,11 +106,16 @@ const Quote = ({ isMobile, isTablet }) => {
     formInfo.birthdate !== null &&
     formInfo.gender !== "" &&
     !errorDate &&
+    !errorDateOlder &&
     !errorBalance;
 
   const handleNext = () => {
     dispatch(setInitData(formInfo));
-    router.push("/cotiza-tu-ahorro/oferta");
+    if (formInfo.balance > 600000000 || age > 64) {
+      router.push("/cotiza-tu-ahorro/continua");
+    } else {
+      router.push("/cotiza-tu-ahorro/oferta");
+    }
   };
 
   const handleWapp = () => {
@@ -128,6 +145,7 @@ const Quote = ({ isMobile, isTablet }) => {
             handleNext={handleNext}
             handleWapp={handleWapp}
             errorDate={errorDate}
+            errorDateOlder={errorDateOlder}
             errorBalance={errorBalance}
             genderButtons={genderOptions}
             emptyValidation={emptyValidation}

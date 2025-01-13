@@ -55,7 +55,7 @@ export const AdditionalData = ({ additionalInfo }) => {
     },
     {
       title:
-        "¿Tienes algún seguro de vida individual o de accidentes personales con Allianz o con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
+        "¿Tienes algún seguro de vida individual o de accidentes personales con cualquier aseguradora diferentes a aquellos que respaldan deudas en entidades financieras?",
       description:
         additionalInfo.lifeEnsure !== null
           ? additionalInfo.lifeEnsure
@@ -99,70 +99,71 @@ export const AdditionalData = ({ additionalInfo }) => {
         ))}
       </Row>
 
-      {additionalInfo.beneficiary.length > 0 && (
-        <>
-          <Div
-            width="100%"
-            height="1px"
-            background={theme.colors.neutralGray200}
-          />
-          <Grid container spacing={2}>
-            {additionalInfo.beneficiary.map((benefic, index) => (
-              <Grid item xs={3} key={index}>
-                <Col>
-                  <Text
-                    font={theme.fonts.family.primaryBold}
-                    size={theme.fonts.size.default2}
-                    color={theme.colors.neutralGray900}
-                  >
-                    {`Heredero ${index + 1}`}
-                  </Text>
-                  <Text
-                    font={theme.fonts.family.primary}
-                    size={theme.fonts.size.default2}
-                    weight={theme.fonts.weight.regular}
-                    color={theme.colors.neutralGray900}
-                  >
-                    {benefic.name}
-                  </Text>
-                  <Text
-                    font={theme.fonts.family.primary}
-                    size={theme.fonts.size.default2}
-                    weight={theme.fonts.weight.regular}
-                    color={theme.colors.neutralGray900}
-                  >
-                    {`${documentTypeAbbreviation(
-                      getLabelFromValue(
-                        benefic.identificationTypeId,
-                        documentTypeOptions
-                      )
-                    )} ${benefic.identificationNumber}`}
-                  </Text>
-                  <Text
-                    font={theme.fonts.family.primary}
-                    size={theme.fonts.size.default2}
-                    weight={theme.fonts.weight.regular}
-                    color={theme.colors.neutralGray900}
-                  >
-                    {`Parentesco: ${getLabelFromValue(
-                      benefic.relationshipId,
-                      relationshipOptions
-                    )}`}
-                  </Text>
-                  <Text
-                    font={theme.fonts.family.primary}
-                    size={theme.fonts.size.default2}
-                    weight={theme.fonts.weight.regular}
-                    color={theme.colors.neutralGray900}
-                  >
-                    {`Porcentaje a heredar: ${benefic.percentInherit}%`}
-                  </Text>
-                </Col>
-              </Grid>
-            ))}
-          </Grid>
-        </>
-      )}
+      {additionalInfo.beneficiaries &&
+        additionalInfo.beneficiary.length > 0 && (
+          <>
+            <Div
+              width="100%"
+              height="1px"
+              background={theme.colors.neutralGray200}
+            />
+            <Grid container spacing={2}>
+              {additionalInfo.beneficiary.map((benefic, index) => (
+                <Grid item xs={3} key={index}>
+                  <Col>
+                    <Text
+                      font={theme.fonts.family.primaryBold}
+                      size={theme.fonts.size.default2}
+                      color={theme.colors.neutralGray900}
+                    >
+                      {`Heredero ${index + 1}`}
+                    </Text>
+                    <Text
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.default2}
+                      weight={theme.fonts.weight.regular}
+                      color={theme.colors.neutralGray900}
+                    >
+                      {benefic.name}
+                    </Text>
+                    <Text
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.default2}
+                      weight={theme.fonts.weight.regular}
+                      color={theme.colors.neutralGray900}
+                    >
+                      {`${documentTypeAbbreviation(
+                        getLabelFromValue(
+                          benefic.identificationTypeId,
+                          documentTypeOptions
+                        )
+                      )} ${benefic.identificationNumber}`}
+                    </Text>
+                    <Text
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.default2}
+                      weight={theme.fonts.weight.regular}
+                      color={theme.colors.neutralGray900}
+                    >
+                      {`Parentesco: ${getLabelFromValue(
+                        benefic.relationshipId,
+                        relationshipOptions
+                      )}`}
+                    </Text>
+                    <Text
+                      font={theme.fonts.family.primary}
+                      size={theme.fonts.size.default2}
+                      weight={theme.fonts.weight.regular}
+                      color={theme.colors.neutralGray900}
+                    >
+                      {`Porcentaje a heredar: ${benefic.percentInherit}%`}
+                    </Text>
+                  </Col>
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
     </Col>
   );
 };

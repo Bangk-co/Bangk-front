@@ -21,14 +21,16 @@ export const Step1 = ({
   statesOptions,
   citiesOptions,
   economicActivityOptions,
-  userName
+  userName,
 }) => {
-  const residenceStatesList = useGetStates(formInfo.residenceCountryId)
-  const { data: dataResidenceStates, isSuccess: isSuccessResidenceStates } = residenceStatesList
-  const [residenceStatesOptions, setResidenceStatesOptions] = useState([])
-  const residenceCitiesList = useGetCities(formInfo.residenceStateId)
-  const { data: dataResidenceCities, isSuccess: isSuccessResidenceCities } = residenceCitiesList
-  const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([])
+  const residenceStatesList = useGetStates(formInfo.residenceCountryId);
+  const { data: dataResidenceStates, isSuccess: isSuccessResidenceStates } =
+    residenceStatesList;
+  const [residenceStatesOptions, setResidenceStatesOptions] = useState([]);
+  const residenceCitiesList = useGetCities(formInfo.residenceStateId);
+  const { data: dataResidenceCities, isSuccess: isSuccessResidenceCities } =
+    residenceCitiesList;
+  const [residenceCitiesOptions, setResidenceCitiesOptions] = useState([]);
   const [forceUpdate, setForceUpdate] = useState(false);
   const firstInputRef = useRef(null);
   const secondInputRef = useRef(null);
@@ -41,15 +43,15 @@ export const Step1 = ({
 
   useEffect(() => {
     if (isSuccessResidenceStates) {
-      setResidenceStatesOptions(dataResidenceStates?.data.states)
+      setResidenceStatesOptions(dataResidenceStates?.data.states);
     }
-  }, [isSuccessResidenceStates, dataResidenceStates])
+  }, [isSuccessResidenceStates, dataResidenceStates]);
 
   useEffect(() => {
     if (isSuccessResidenceCities) {
-      setResidenceCitiesOptions(dataResidenceCities?.data.cities)
+      setResidenceCitiesOptions(dataResidenceCities?.data.cities);
     }
-  }, [isSuccessResidenceCities, dataResidenceCities])
+  }, [isSuccessResidenceCities, dataResidenceCities]);
 
   const inputsProps = {
     labelSize: isMobile ? theme.fonts.size.xs : theme.fonts.size.sm,
@@ -65,32 +67,38 @@ export const Step1 = ({
     border: theme.colors.primary25,
     notFocused: true,
     placeholderColor: theme.colors.neutralGray500,
-    width:"100%"
-  }
+    width: "100%",
+  };
 
   const handleSelect = (event) => {
-    const { name, value } = event.target
-    const newInfo = { ...formInfo }
+    const { name, value } = event.target;
+    const newInfo = { ...formInfo };
 
-    newInfo[name] = value
-    setFormInfo(newInfo)
-  }
+    if (name === "birthCountryId") {
+      newInfo["birthStateId"] = null;
+      newInfo["birthCityId"] = null;
+    } else if (name === "birthStateId") {
+      newInfo["birthCityId"] = null;
+    }
+    newInfo[name] = value;
+    setFormInfo(newInfo);
+  };
 
   const handleChangeText = (event) => {
-    const { id, value } = event.target
-    const newInfo = { ...formInfo }
+    const { id, value } = event.target;
+    const newInfo = { ...formInfo };
 
-    newInfo[id] = value
-    setFormInfo(newInfo)
-  }
+    newInfo[id] = value;
+    setFormInfo(newInfo);
+  };
 
   const handleChangeNumber = (event) => {
-    const { id, value } = event.target
-    const newInfo = { ...formInfo }
+    const { id, value } = event.target;
+    const newInfo = { ...formInfo };
 
     newInfo[id] = value.replace(/\D/g, "");
-    setFormInfo(newInfo)
-  }
+    setFormInfo(newInfo);
+  };
 
   const handleChangeRadio = (event, id) => {
     const { defaultValue } = event.target;
@@ -118,9 +126,21 @@ export const Step1 = ({
         mt={isMobile ? "24px" : "12px"}
       >
         Cuentanos más de ti, <br></br>
-        <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>{userName}</span>
+        <span
+          style={{
+            fontFamily: theme.fonts.family.primaryBold,
+            color: theme.colors.yellow500,
+          }}
+        >
+          {userName}
+        </span>
       </Text>
-      <Grid container rowSpacing={{ xs: 2, sm: 2, md: 3  }} columnSpacing={{ xs: 2, sm: 2, md: 2 }} style={{ marginTop: "8px" }}>
+      <Grid
+        container
+        rowSpacing={{ xs: 2, sm: 2, md: 3 }}
+        columnSpacing={{ xs: 2, sm: 2, md: 2 }}
+        style={{ marginTop: "8px" }}
+      >
         <Grid item md={12} xs={12}>
           <Select
             {...inputsProps}
@@ -131,17 +151,23 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona un país</Placeholder>
+                return <Placeholder>Selecciona un país</Placeholder>;
               } else {
                 return countriesOptions.find((ele) => ele.id === selected)
                   ? countriesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {countriesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -156,17 +182,25 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona un departamento/estado</Placeholder>
+                return (
+                  <Placeholder>Selecciona un departamento/estado</Placeholder>
+                );
               } else {
                 return statesOptions.find((ele) => ele.id === selected)
                   ? statesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {statesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -181,17 +215,23 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona una ciudad</Placeholder>
+                return <Placeholder>Selecciona una ciudad</Placeholder>;
               } else {
                 return citiesOptions.find((ele) => ele.id === selected)
                   ? citiesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {citiesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -205,17 +245,24 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona tu nacionalidad</Placeholder>
+                return <Placeholder>Selecciona tu nacionalidad</Placeholder>;
               } else {
                 return nationalityOptions.find((ele) => ele.id === selected)
-                  ? nationalityOptions.find((ele) => ele.id === selected).nationality
-                  : null
+                  ? nationalityOptions.find((ele) => ele.id === selected)
+                      .nationality
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {nationalityOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.nationality}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.nationality}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -229,17 +276,23 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona tu estado</Placeholder>
+                return <Placeholder>Selecciona tu estado</Placeholder>;
               } else {
                 return civilStatusOptions.find((ele) => ele.id === selected)
                   ? civilStatusOptions.find((ele) => ele.id === selected).name
-                  : null
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {civilStatusOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -288,18 +341,25 @@ export const Step1 = ({
             label="Actividad económica*"
             options={economicActivityOptions}
             getOptionLabel={(option) => `${option.label}`}
-            value={economicActivityOptions.find((ele) => ele.id === formInfo.occupationActivityId)}
+            value={economicActivityOptions.find(
+              (ele) => ele.id === formInfo.occupationActivityId
+            )}
             onInputChange={(event, value) => {
-              setFormInfo({...formInfo, occupationActivityId: economicActivityOptions.find((ele) => ele.label === value)?.id});
+              setFormInfo({
+                ...formInfo,
+                occupationActivityId: economicActivityOptions.find(
+                  (ele) => ele.label === value
+                )?.id,
+              });
               setForceUpdate(!forceUpdate);
             }}
-            renderInput={(params) => 
-              <TextField 
-                {...params} 
-                {...inputsProps} 
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                {...inputsProps}
                 value={formInfo.occupationActivityId}
               />
-            }
+            )}
           />
         </Grid>
         <Grid item md={12} xs={12}>
@@ -329,7 +389,12 @@ export const Step1 = ({
             />
           </RadioGroup>
         </Grid>
-        <Grid item md={12} xs={12} style={{ borderBottom: `1px solid ${theme.colors.primary25}` }}>
+        <Grid
+          item
+          md={12}
+          xs={12}
+          style={{ borderBottom: `1px solid ${theme.colors.primary25}` }}
+        >
           <RadioGroup
             gap="5px"
             name="hasBondPublicPerson"
@@ -340,7 +405,9 @@ export const Step1 = ({
             labelColor={theme.colors.white}
             color={theme.colors.white}
             value={formInfo.hasBondPublicPerson}
-            onChange={(event) => handleChangeRadio(event, "hasBondPublicPerson")}
+            onChange={(event) =>
+              handleChangeRadio(event, "hasBondPublicPerson")
+            }
           >
             <Radio
               label="Si"
@@ -379,17 +446,23 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona un país</Placeholder>
+                return <Placeholder>Selecciona un país</Placeholder>;
               } else {
                 return countriesOptions.find((ele) => ele.id === selected)
                   ? countriesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {countriesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -404,17 +477,24 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona un departamento</Placeholder>
+                return <Placeholder>Selecciona un departamento</Placeholder>;
               } else {
                 return residenceStatesOptions.find((ele) => ele.id === selected)
-                  ? residenceStatesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  ? residenceStatesOptions.find((ele) => ele.id === selected)
+                      .name
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {residenceStatesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
@@ -429,21 +509,38 @@ export const Step1 = ({
             displayEmpty
             renderValue={(selected) => {
               if (selected === null) {
-                return <Placeholder>Selecciona una ciudad</Placeholder>
+                return <Placeholder>Selecciona una ciudad</Placeholder>;
               } else {
                 return residenceCitiesOptions.find((ele) => ele.id === selected)
-                  ? residenceCitiesOptions.find((ele) => ele.id === selected).name
-                  : null
+                  ? residenceCitiesOptions.find((ele) => ele.id === selected)
+                      .name
+                  : null;
               }
             }}
             onChange={handleSelect}
           >
             {residenceCitiesOptions.map((ele, indx) => (
-              <MenuItem key={indx} value={ele.id} style={{ fontFamily: theme.fonts.family.primary }}>{ele.name}</MenuItem>
+              <MenuItem
+                key={indx}
+                value={ele.id}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.name}
+              </MenuItem>
             ))}
           </Select>
         </Grid>
+        <Grid item md={12} xs={12}>
+          <TextField
+            {...inputsProps}
+            label={"Dirección de residencia*"}
+            width={"100%"}
+            id="residenceAddress"
+            value={formInfo.residenceAddress}
+            onChange={handleChangeText}
+          />
+        </Grid>
       </Grid>
     </ColForm>
-  )
-}
+  );
+};

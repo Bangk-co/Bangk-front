@@ -26,7 +26,10 @@ const Bangk = ({ isMobile }) => {
         <TitleBangk>
           BAAN
           <span
-            style={{ color: theme.colors.orange, fontFamily: "Gilroy Bold " }}
+            style={{
+              color: theme.colors.orange100,
+              fontFamily: "Gilroy Bold ",
+            }}
           >
             GGGGG<br></br>GGKKKKK!!!!
           </span>
@@ -52,7 +55,7 @@ const Bangk = ({ isMobile }) => {
         <Image
           alt="coin"
           src={greenCoin}
-          width={isMobile ? 336 : 592}
+          width={isMobile ? 336 : 511}
           height={isMobile ? 321 : 562}
         />
       </Col4>

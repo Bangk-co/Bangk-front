@@ -52,7 +52,14 @@ export const AllianzInsurer = ({
           }}
         />
         {viewQuote && (
-          <Div width="100%" m="240px 0 0 0">
+          <Div
+            width="100%"
+            m="240px 0 0 0"
+            style={{
+              position: "sticky",
+              bottom: "0",
+            }}
+          >
             <Button
               width={"100%"}
               height={"40px"}

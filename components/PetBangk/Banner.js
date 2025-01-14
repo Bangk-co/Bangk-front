@@ -5,8 +5,10 @@ import img from "@/assets/img/footprintCat.png";
 import Image from "next/image";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
+import { useRouter } from "next/router";
 
 const Banner = ({ isMobile, isTablet }) => {
+  const router = useRouter();
 
   const returnWidthButton = () => {
     if (isMobile) return "120px";
@@ -71,6 +73,7 @@ const Banner = ({ isMobile, isTablet }) => {
             hover={theme.colors.orange500}
             border={theme.colors.orange500}
             borderHover={theme.colors.orange500}
+            onClick={() => router.push("/pet-bangk/info-petbangk")}
           >
             Más info
           </Button>

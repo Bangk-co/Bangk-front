@@ -24,6 +24,8 @@ import ReactPlayer from "react-player/lazy";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Link } from "../Common/Link";
+import marcela from "../../assets/img/marcela.jpg";
+
 
 const Reviews = ({ isMobile, isTablet }) => {
   const [showPlayer, setShowPlayer] = useState(false);
@@ -53,13 +55,13 @@ const Reviews = ({ isMobile, isTablet }) => {
               <Line />
               <WrapperPerson>
                 <WrapperAvatar>
-                  {/* <Image
-                    alt="samuel"
-                    src={samuel}
+                  <Image
+                    alt="marcela"
+                    src={marcela}
                     style={{ borderRadius: "100%" }}
                     width={69}
                     height={69}
-                  /> */}
+                  />
                 </WrapperAvatar>
                 <WrapperNameText>
                   <NameText>Samuel Valencia</NameText>
@@ -80,7 +82,7 @@ const Reviews = ({ isMobile, isTablet }) => {
                 {showPlayer ? (
                   <ReactPlayer
                     url={
-                      ""
+                      "https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"
                     }
                     width={isTablet ? 309 : 656}
                     height={isTablet ? 199 : 422}

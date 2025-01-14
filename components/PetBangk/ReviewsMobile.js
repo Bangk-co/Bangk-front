@@ -13,6 +13,7 @@ import {
 } from "./styles";
 import message from "../../assets/img/message.png";
 import ReactPlayer from "react-player/lazy";
+import marcela from "../../assets/img/marcela.jpg";
 
 const ReviewsMobile = () => {
   const [showPlayer, setShowPlayer] = useState(false);
@@ -35,7 +36,7 @@ const ReviewsMobile = () => {
       >
         {showPlayer ? (
           <ReactPlayer
-            url={""}
+            url={"https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"}
             width={219}
             height={142}
             controls
@@ -53,13 +54,13 @@ const ReviewsMobile = () => {
       </CommentText>
       <WrapperPerson>
         <WrapperAvatar>
-          {/* <Image
-            alt="samuel"
-            src={samuel}
+          <Image
+            alt="marcela"
+            src={marcela}
             style={{ borderRadius: "100%" }}
             width={22}
             height={22}
-          /> */}
+          />
         </WrapperAvatar>
         <WrapperNameText>
           <NameText>Samuel Valencia</NameText>

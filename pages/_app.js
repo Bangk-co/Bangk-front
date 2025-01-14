@@ -71,6 +71,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     "/contacto",
     "/legales",
     "/pet-bangk",
+    "/pet-bangk/info-petbangk",
   ];
 
   const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(

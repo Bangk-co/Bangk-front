@@ -123,10 +123,32 @@ const Header = ({ isMobile, isTablet }) => {
                 Cotiza ya!
               </Button>
             )}
+            {pathname ===
+              "/ahorra-en-tus-seguros/car-bangk/danos-a-terceros" && (
+              <Button
+                height={"40px"}
+                width={"250px"}
+                font={theme.fonts.family.primaryBold}
+                size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
+                background={theme.colors.orange}
+                labelColor={theme.colors.green}
+                border={"transparent"}
+                hover={theme.colors.orange}
+                borderHover={theme.colors.orange}
+                onClick={() =>
+                  window.open(
+                    " https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar",
+                    "_blank"
+                  )
+                }
+              >
+                Contacta a un asesor
+              </Button>
+            )}
             {headerButtons.map((ele, indx) => (
               <Link
                 key={indx}
-                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.ft}
                 color={
                   pathname.includes(ele.url)
                     ? theme.colors.orange

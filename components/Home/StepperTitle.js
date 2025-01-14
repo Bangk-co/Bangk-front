@@ -9,7 +9,7 @@ const StepperTitleHome = ({ isMobile }) => {
   return (
     <Div direction="column">
       <Title1>Es muy fácil, sigue</Title1>
-      <Title2>
+      <Title2 style={{ marginTop: isMobile && "10px" }}>
         El Paso a{" "}
         <span style={{ color: theme.colors.green, fontFamily: "Gilroy Bold" }}>
           Paso

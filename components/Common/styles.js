@@ -51,19 +51,19 @@ export const Card = styled.div`
 
 export const Number = styled.div`
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.h1};
+  font-size: ${theme.fonts.size.lg};
   line-height: 56px;
   text-align: right;
   color: ${theme.colors.orange100};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 35px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 35px;
   }
 `;
@@ -93,7 +93,7 @@ export const WrapperStar = styled.div`
 `;
 
 export const Message = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.h5s};
   line-height: 23px;
   text-align: right;
   color: ${theme.colors.white};
@@ -101,14 +101,14 @@ export const Message = styled.div`
   width: ${(props) => props.width};
 
   @media (max-width: ${theme.breakpoints.md}) {
-    font-size: ${theme.fonts.size.xs};
+    font-size: ${theme.fonts.size.md};
     line-height: 14px;
     text-align: center;
   }
 `;
 
 export const Message2 = styled.div`
-  font-size: ${theme.fonts.size.xxs};
+  font-size: ${theme.fonts.size.xs};
   line-height: 12px;
   text-align: right;
   color: ${theme.colors.orange};
@@ -117,21 +117,21 @@ export const Message2 = styled.div`
 `;
 
 export const Title1 = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 23px;
   text-align: center;
   color: ${theme.colors.black};
   margin-bottom: 9px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xs};
+    font-size: ${theme.fonts.size.md};
     line-height: 13px;
     margin-bottom: 0;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.default};
+    font-size: ${theme.fonts.size.h6};
     line-height: 21px;
     margin-bottom: 7px;
   }
@@ -140,20 +140,20 @@ export const Title1 = styled.div`
 export const Title2 = styled.div`
   position: relative;
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.lg};
+  font-size: ${theme.fonts.size.xl};
   line-height: 59px;
   color: ${theme.colors.yellow};
   margin-bottom: 130px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.ft};
     line-height: 29px;
     margin-bottom: 38px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h2};
+    font-size: ${theme.fonts.size.h1};
     line-height: 47px;
     margin-bottom: 57px;
   }

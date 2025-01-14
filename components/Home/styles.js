@@ -47,27 +47,27 @@ export const WrapperImage = styled.div`
 
 export const Title = styled.div`
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.xl};
+  font-size: ${theme.fonts.size.xxl};
   line-height: 72px;
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
   height: 65px;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h1};
+    font-size: ${theme.fonts.size.xl};
     height: 57px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
-    height: 60px;
+    font-size: ${theme.fonts.size.h5};
+    height: 35px;
     line-height: 25px;
   }
 `;
 
 export const Message = styled.h6`
   color: ${theme.colors.white};
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   font-weight: ${theme.fonts.weight.regular};
   line-height: 24px;
   margin: 50px 0 30px 0;
@@ -75,15 +75,15 @@ export const Message = styled.h6`
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.default};
+    font-size: ${theme.fonts.size.ft};
     width: 340px;
     margin: 30px 0 20px 0;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
-    width: 200px;
+    width: 320px;
     margin: 0 0 15px 0;
   }
 `;
@@ -144,7 +144,7 @@ export const Col2 = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
-    height: 356px;
+    height: 400px;
     padding: 38px 121px 22px 59.27px;
     order: 1;
   }
@@ -157,19 +157,19 @@ export const Col2 = styled.div`
 
 export const TitleWhy = styled.div`
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.xl};
+  font-size: ${theme.fonts.size.xxl};
   line-height: 60px;
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 30px;
     margin-bottom: 31px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 30px;
   }
 `;
@@ -197,20 +197,20 @@ export const WrapperStarWhy = styled.div`
 `;
 
 export const TextWhy = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 24px;
   color: ${theme.colors.green};
   letter-spacing: -0.05em;
   margin-bottom: 30px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
   }
 `;
@@ -242,8 +242,8 @@ export const Col3 = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
-    height: 405.66px;
-    padding: 29px 130px 15.66px 24px;
+    height: 430px;
+    padding: 29px 87px 15.66px 24px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -278,51 +278,51 @@ export const TitleBangk = styled.div`
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 30px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     line-height: 30px;
   }
 `;
 
 export const Text1Bangk = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 36px;
   color: ${theme.colors.green};
   margin: 60px 0px 56px 0px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.md};
+    font-size: ${theme.fonts.size.default2};
     line-height: 18px;
     margin: 17px 0px 28px 0px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.md};
+    font-size: ${theme.fonts.size.default2};
     line-height: 18px;
     margin: 21px 0px 8px 0px;
   }
 `;
 
 export const Text2Bangk = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 24px;
   color: ${theme.colors.green};
   margin-bottom: 27px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 11px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 11px;
   }
 `;
@@ -406,35 +406,35 @@ export const TitleBlog = styled.div`
   margin-bottom: 47px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.ft};
     line-height: 25px;
     margin-bottom: 7px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.ft};
     line-height: 25px;
     margin-bottom: 14px;
   }
 `;
 
 export const Text1Blog = styled.div`
-  font-size: ${theme.fonts.size.h3};
+  font-size: ${theme.fonts.size.h2};
   line-height: 43px;
   text-align: center;
   color: ${theme.colors.green};
   margin-bottom: 103px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin-bottom: 29px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin-bottom: 40px;
   }
@@ -442,20 +442,20 @@ export const Text1Blog = styled.div`
 
 export const Text2Blog = styled.div`
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.h4};
+  font-size: ${theme.fonts.size.h3};
   line-height: 36px;
   color: ${theme.colors.orange100};
   margin: 90px 0px 23px 30px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin: 0px 0px 11px 0px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin: 0px 0px 9px 0px;
   }
@@ -548,37 +548,37 @@ export const Col8 = styled.div`
 
 export const TitleReviews = styled.div`
   font-family: Gilroy Bold;
-  font-size: ${theme.fonts.size.lg};
+  font-size: ${theme.fonts.size.xl};
   line-height: 86px;
   color: ${theme.colors.green};
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.h5};
+    font-size: ${theme.fonts.size.ft};
     line-height: 28px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.ft};
     line-height: 24px;
     margin-bottom: 15px;
   }
 `;
 
 export const SubTitleReviews = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.ft};
   line-height: 24px;
   color: ${theme.colors.green};
   color: ${theme.colors.green};
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 10px;
     margin-bottom: 6px;
   }
@@ -636,7 +636,7 @@ export const CommentText = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin-bottom: 20px;
     text-align: center;
@@ -700,7 +700,7 @@ export const WrapperNameText = styled.div`
 `;
 
 export const NameText = styled.div`
-  font-size: ${theme.fonts.size.h5};
+  font-size: ${theme.fonts.size.h4};
   line-height: 30px;
   color: ${theme.colors.black};
 
@@ -711,13 +711,13 @@ export const NameText = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
   }
 `;
 
 export const NameText2 = styled.div`
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.h5};
   line-height: 24px;
   color: ${theme.colors.green};
 
@@ -728,7 +728,7 @@ export const NameText2 = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxxs};
+    font-size: ${theme.fonts.size.xs};
     line-height: 10px;
   }
 `;

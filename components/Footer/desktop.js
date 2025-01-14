@@ -50,7 +50,7 @@ const FooterDesktop = () => {
                 {ele.list.map((elem, index) => (
                   <Link
                     key={index}
-                    size={"12px"}
+                    size={theme.fonts.size.sm}
                     color={theme.colors.white}
                     onClick={() => goLink(elem.link, elem.isExtern, elem.email)}
                     style={{

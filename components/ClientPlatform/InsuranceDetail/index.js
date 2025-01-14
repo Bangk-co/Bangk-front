@@ -244,13 +244,12 @@ const InsuranceDetail = ({ isMobile }) => {
         <Row justify="space-between" align="center" gap="8px">
           <Div gap="8px">
             <Image alt="endorsement" src={endorsement} width={40} height={40} />
-            <Col justify="center">
+            <Col justify="center" align="left">
               <Text
                 size={theme.fonts.size.xs}
                 color={theme.colors.neutralGray500}
                 font={theme.fonts.family.primary}
                 weight={theme.fonts.weight.semibold}
-                align="left"
               >
                 {policy?.selectedPolicy?.policyId === null
                   ? `Solicitud # ${application?.loanApplicationId}`

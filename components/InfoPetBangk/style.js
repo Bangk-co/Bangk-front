@@ -79,3 +79,56 @@ export const WrapperAmount = styled.div`
     font-size: ${theme.fonts.size.default};
   }
 `;
+
+export const WrapperPetCare = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 80px 60px;
+  align-items: left;
+  background: ${theme.colors.light4};
+  position: relative;
+`;
+
+export const WrapperAttendanceSummary = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  background-color: ${theme.colors.blue100};
+  padding: 40px;
+  border-radius: 13px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 20px;
+  }
+`;
+
+export const WrapperAssistanceAreas = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 80px 60px;
+  align-items: left;
+  background: ${theme.colors.light4};
+  position: relative;
+`;
+
+export const OrangeCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 200px;
+  background: ${theme.colors.orange500};
+  border-radius: 32px;
+  margin-top: 60px;
+
+  color: ${theme.colors.white};
+  font-size: ${theme.fonts.size.h5};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 100%;
+    height: 130px;
+    font-size: ${theme.fonts.size.h6};
+    margin-top: 30px;
+  }
+`;

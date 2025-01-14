@@ -1,10 +1,13 @@
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import React from "react";
+import React, { useState } from "react";
 import { CardPlan, WrapperAmount } from "./style";
 import { Button } from "../Common/Button";
 
 export const Price = ({ isMobile, isTablet }) => {
+  const [monthlyAmount, setMonthlyAmount] = useState(1);
+  const [semiannualAmount, setSemiannualAmount] = useState(1);
+  const [annualAmount, setAnnualAmount] = useState(1);
 
   const plansList = [
     { 
@@ -16,6 +19,8 @@ export const Price = ({ isMobile, isTablet }) => {
       colorButton: theme.colors.orange500,
       colorText: theme.colors.white,
       colorTextButton: theme.colors.green,
+      amount: monthlyAmount,
+      setAmount: setMonthlyAmount,
     },
     { 
       label: "SEMESTRAL",
@@ -26,6 +31,8 @@ export const Price = ({ isMobile, isTablet }) => {
       colorButton: theme.colors.yellow,
       colorText: theme.colors.white, 
       colorTextButton: theme.colors.green,
+      amount: semiannualAmount,
+      setAmount: setSemiannualAmount,
     },
     { 
       label: "ANUAL" ,
@@ -36,6 +43,8 @@ export const Price = ({ isMobile, isTablet }) => {
       colorButton: theme.colors.blue200,
       colorText: theme.colors.black, 
       colorTextButton: theme.colors.white, 
+      amount: annualAmount,
+      setAmount: setAnnualAmount,
     },
   ];
 
@@ -73,9 +82,9 @@ export const Price = ({ isMobile, isTablet }) => {
               dangerouslySetInnerHTML={{ __html: plan.description }}
             />
             <Div align="center" justify="center" gap="20px" m="0 0 10px 0">
-              <Text size={theme.fonts.size.h1} color={theme.colors.green}>-</Text>
-              <WrapperAmount> 1</WrapperAmount>
-              <Text size={theme.fonts.size.h1} color={theme.colors.green}>+</Text>
+              <Text size={theme.fonts.size.h1} color={theme.colors.green} style={{cursor: "pointer"}} onClick={() => plan.amount > 1 && plan.setAmount(plan.amount - 1)}>-</Text>
+              <WrapperAmount>{plan.amount}</WrapperAmount>
+              <Text size={theme.fonts.size.h1} color={theme.colors.green} style={{cursor: "pointer"}} onClick={() => plan.setAmount(plan.amount + 1)}>+</Text>
             </Div>
             <Button
               background={plan.colorButton}

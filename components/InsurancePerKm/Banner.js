@@ -4,6 +4,7 @@ import { theme } from "@/styles/theme";
 import count from "@/assets/img/count.png";
 import { Row, Text } from "@/styles/Common";
 import { WrapperBanner } from "./styles";
+import { Button } from "../Common/Button";
 
 const Banner = ({ isMobile }) => {
   return (
@@ -44,7 +45,7 @@ const Banner = ({ isMobile }) => {
         inspección de tu auto, puedes comprar 100% en línea y te ayuda a
         ahorrar.
       </Text>
-      <Row width="100%" justify="end">
+      <Row width="100%" justify="end" m="0 0 30px 0">
         <Image
           alt="count"
           src={count}
@@ -52,6 +53,21 @@ const Banner = ({ isMobile }) => {
           height={isMobile ? 80 : 268}
         />
       </Row>
+      <Button
+        height={"40px"}
+        font={theme.fonts.family.primaryBold}
+        size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
+        background={theme.colors.orange}
+        labelColor={theme.colors.green}
+        border={"transparent"}
+        hover={theme.colors.orange}
+        borderHover={theme.colors.orange}
+        onClick={() =>
+          (window.location.href = "https://sxkm.co/?intermediaro:202699")
+        }
+      >
+        Cotiza ya!
+      </Button>
     </WrapperBanner>
   );
 };

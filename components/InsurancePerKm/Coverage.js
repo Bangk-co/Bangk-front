@@ -14,32 +14,61 @@ const Coverage = ({ isMobile }) => {
       key: "1",
       header: `Cobertura`,
       summary:
-        "1. Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida tota...",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida tota...",
       panel:
-        "1. Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida total, y deducible de 1 SMMLV para pérdida parcial.<br />2. Si tienes un accidente automovilístico, contarás con asistencia jurídica, si la necesitas.<br />3. Si causas daños a otras personas o sus bienes te cubrimos hasta 4 mil millones de pesos.<br />4. Cobertura de Accidentes personales para ti y los ocupantes del auto.",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Protegemos tu auto de daños o hurto a nivel nacional, sin deducible para pérdida total, y deducible de 1 SMMLV para pérdida parcial.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Si tienes un accidente automovilístico, contarás con asistencia jurídica, si la necesitas.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Si causas daños a otras personas o sus bienes te cubrimos hasta 4 mil millones de pesos.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Cobertura de Accidentes personales para ti y los ocupantes del auto.",
     },
     {
       key: "2",
       header: `Coberturas adicionales`,
       summary:
-        "1. Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span> Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.",
       panel:
-        "1. Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.<br />2. Asistencias como grúa, cambio de llanta y más beneficios. ",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Vehículo de reemplazo en caso de hurto o accidente, para que puedas continuar desplazándote. 10 días en perdidas parciales y 15 días en pérdidas totales.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Asistencias como grúa, cambio de llanta y más beneficios. ",
     },
     {
       key: "3",
       header: `Valores Agregados`,
-      summary: "1. Reemplazo de llantas estalladas y rectificación de rines.",
+      summary:
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span> Reemplazo de llantas estalladas y rectificación de rines.",
       panel:
-        "1. Reemplazo de llantas estalladas y rectificación de rines.<br />2. Reemplazo de pequeños accesorios como tapas de gasolina, espejos, lunas de espejo, entre otros.<br />3. Conductor elegido ilimitado.",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Reemplazo de llantas estalladas y rectificación de rines.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Reemplazo de pequeños accesorios como tapas de gasolina, espejos, lunas de espejo, entre otros.<br /><span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Conductor elegido ilimitado.",
     },
     {
       key: "4",
       header: `Beneficios por hábitos de conducción`,
       summary:
-        "1. Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como:",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span> Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como:",
       panel:
-        "1. Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como: <br />• Trasporte o traslado al aeropuerto.<br />• Eliminación del deducible en pérdida parcial por hurto. <br />• Pequeños rayones o golpes leves. <br />• Disminución de deducible en la cobertura de pérdida parcial por daños, entre otros.",
+        "<span style='color: " +
+        theme.colors.orange +
+        "'>•</span>  Dependiendo de la forma en que conduzcas, podrás ir subiendo de “nivel” de conducción, y así mismo, tendrás derecho a acceder a coberturas o servicios adicionales tales como: <br />• Trasporte o traslado al aeropuerto.<br />• Eliminación del deducible en pérdida parcial por hurto. <br />• Pequeños rayones o golpes leves. <br />• Disminución de deducible en la cobertura de pérdida parcial por daños, entre otros.",
     },
   ];
 
@@ -144,7 +173,7 @@ const Coverage = ({ isMobile }) => {
         gap="20px"
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
           gridAutoRows: "minmax(50px, auto)",
           gap: "20px",
         }}

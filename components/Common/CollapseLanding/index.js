@@ -75,9 +75,8 @@ export const CollapseLanding = ({
                       font={theme.fonts.family.primary}
                       size={theme.fonts.size.md}
                       mt="10px"
-                    >
-                      {ele.summary}
-                    </Text>
+                      dangerouslySetInnerHTML={{ __html: ele.summary }}
+                    />
                     <Text
                       color={theme.colors.orange}
                       font={theme.fonts.family.primary}

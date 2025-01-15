@@ -9,7 +9,7 @@ export const WrapperButton = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  background: ${theme.colors.whatsapp};
+  background: ${(props) => props.background || theme.colors.whatsapp};
   align-items: center;
   justify-content: center;
   z-index: 5;

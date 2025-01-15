@@ -5,9 +5,11 @@ import dalmatian from "@/assets/img/dalmatian.png";
 import { Text, Title } from "./styles";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
-
+import { useRouter } from "next/router";
+import footprint from "@/assets/img/footprintOrange.png";
 
 const Search = ({ isMobile, isTablet }) => {
+  const router = useRouter();
 
   const returnWidthButton1 = () => {
     if (isMobile) return "120px";
@@ -52,7 +54,8 @@ const Search = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <Div p={returnPadding()} style={{ border: `1px solid ${theme.colors.gray200}` }}>
+    <Div p={returnPadding()} style={{ border: `1px solid ${theme.colors.gray200}`, position: "relative" }}>
+      <Image src={footprint} alt="footprint" width={52} style={{ position: "absolute", top: isMobile ? "30px" : "70px", right: isMobile ? "10px" : "30px" }}/>
       <Div width="50%" align={isMobile || isTablet ? "center" : "flex-start"}>
         <Image 
           src={dalmatian} 
@@ -90,6 +93,7 @@ const Search = ({ isMobile, isTablet }) => {
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
             width={returnWidthButton1()}
+            height={"42.74px"}
           >
             Anunciar a mi mascota perdida
           </Button>
@@ -101,6 +105,7 @@ const Search = ({ isMobile, isTablet }) => {
             borderHover={theme.colors.orange500}
             width={returnWidthButton2()}
             height={isMobile ? "16.53px" : "42.74px"}
+            onClick={() => router.push("/pet-bangk/buscamos-tu-mascota")}
           >
             Más info
           </Button>

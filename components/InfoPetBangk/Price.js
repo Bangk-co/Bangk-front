@@ -3,16 +3,19 @@ import { theme } from "@/styles/theme";
 import React, { useState } from "react";
 import { CardPlan, WrapperAmount } from "./style";
 import { Button } from "../Common/Button";
+import { numberFormat } from "@/utilities/helpers";
 
 export const Price = ({ isMobile, isTablet }) => {
   const [monthlyAmount, setMonthlyAmount] = useState(1);
   const [semiannualAmount, setSemiannualAmount] = useState(1);
   const [annualAmount, setAnnualAmount] = useState(1);
+  const [monthlyPrice, setMonthlyPrice] = useState(100000);
+  const [semiannualPrice, setSemiannualPrice] = useState(100000);
+  const [annualPrice, setAnnualPrice] = useState(100000);
 
   const plansList = [
     { 
       label: "MENSUAL",
-      price: "$ 000.000", 
       description: "La manera más sencilla de tener nuestras asistencias, <span style='font-family: Gilroy Bold'>mes a mes</span> tu suscripción",
       colorCard: theme.colors.blue200,
       colorTitle: theme.colors.yellow,
@@ -21,10 +24,11 @@ export const Price = ({ isMobile, isTablet }) => {
       colorTextButton: theme.colors.green,
       amount: monthlyAmount,
       setAmount: setMonthlyAmount,
+      price: monthlyPrice,
+      setPrice: setMonthlyPrice,
     },
     { 
       label: "SEMESTRAL",
-      price: "$ 000.000", 
       description: "Paga tu plan cada 6 meses con un descuento que te <span style='font-family: Gilroy Bold'>ayudará a ahorrar y cuidarte.</span>",
       colorCard: theme.colors.orange500,
       colorTitle: theme.colors.white,
@@ -33,10 +37,11 @@ export const Price = ({ isMobile, isTablet }) => {
       colorTextButton: theme.colors.green,
       amount: semiannualAmount,
       setAmount: setSemiannualAmount,
+      price: semiannualPrice,
+      setPrice: setSemiannualPrice,
     },
     { 
       label: "ANUAL" ,
-      price: "$ 000.000", 
       description: "Cancela tu plan Anualmente consiguiendo <span style='font-family: Gilroy Bold'>el mejor precio para tus asistencias.</span>",
       colorCard: theme.colors.yellow,
       colorTitle: theme.colors.purple,
@@ -45,6 +50,8 @@ export const Price = ({ isMobile, isTablet }) => {
       colorTextButton: theme.colors.white, 
       amount: annualAmount,
       setAmount: setAnnualAmount,
+      price: annualPrice,
+      setPrice: setAnnualPrice,
     },
   ];
 
@@ -82,9 +89,23 @@ export const Price = ({ isMobile, isTablet }) => {
               dangerouslySetInnerHTML={{ __html: plan.description }}
             />
             <Div align="center" justify="center" gap="20px" m="0 0 10px 0">
-              <Text size={theme.fonts.size.h1} color={theme.colors.green} style={{cursor: "pointer"}} onClick={() => plan.amount > 1 && plan.setAmount(plan.amount - 1)}>-</Text>
+              <Text 
+                size={theme.fonts.size.h1} 
+                color={theme.colors.green} 
+                style={{cursor: "pointer"}} 
+                onClick={() => plan.amount > 1 && (plan.setAmount(plan.amount - 1), plan.setPrice(plan.price - plan.price / plan.amount))}
+              >
+                -
+              </Text>
               <WrapperAmount>{plan.amount}</WrapperAmount>
-              <Text size={theme.fonts.size.h1} color={theme.colors.green} style={{cursor: "pointer"}} onClick={() => plan.setAmount(plan.amount + 1)}>+</Text>
+              <Text 
+                size={theme.fonts.size.h1} 
+                color={theme.colors.green} 
+                style={{cursor: "pointer"}} 
+                onClick={() => (plan.setAmount(plan.amount + 1), plan.setPrice(plan.price + plan.price / plan.amount))}
+              >
+                +
+              </Text>
             </Div>
             <Button
               background={plan.colorButton}
@@ -96,7 +117,7 @@ export const Price = ({ isMobile, isTablet }) => {
               size={theme.fonts.size.h6}
               height="45px"
             >
-              {plan.price}
+              $ {numberFormat(plan.price)}
             </Button>
           </CardPlan>
         ))}

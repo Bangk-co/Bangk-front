@@ -39,6 +39,13 @@ const Header = ({ isMobile, isTablet }) => {
     setOptionSelected(null);
     setOpenMenu(false);
   };
+
+  const handlePetHome = () => {
+    router.push("/pet-bangk");
+    setOptionSelected(null);
+    setOpenMenu(false);
+  };
+
   return (
     <WrapperHeader>
       {isMobile ? (
@@ -50,7 +57,7 @@ const Header = ({ isMobile, isTablet }) => {
                 src={petLogo}
                 width={123}
                 height={37}
-                onClick={handleHome}
+                onClick={handlePetHome}
                 style={{ cursor: "pointer" }}
               />
             ) : (
@@ -88,7 +95,7 @@ const Header = ({ isMobile, isTablet }) => {
                 src={petLogo}
                 width={isTablet ? 169 : 246}
                 height={isTablet ? 54 : 63}
-                onClick={handleHome}
+                onClick={handlePetHome}
                 style={{ cursor: "pointer" }}
               />
             ) : (

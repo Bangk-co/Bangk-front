@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CardServices, Signs, SubTitle, WrapperAmount, WrapperServices } from "./styles";
 import { theme } from "@/styles/theme";
 import { Div, Text } from "@/styles/Common";
@@ -8,6 +8,8 @@ import Image from "next/image";
 import { Button } from "../Common/Button";
 
 export const Services = ({ isMobile, isTablet }) => {
+  const [petBangkAmount, setPetBangkAmount] = useState(1);
+  const [searchAmount, setSearchAmount] = useState(1);
 
   const buttonProps = {
     labelColor: theme.colors.purple,
@@ -34,6 +36,8 @@ export const Services = ({ isMobile, isTablet }) => {
       ],
       colorButton: theme.colors.orange500,
       background: theme.colors.blue200,
+      amount: petBangkAmount,
+      setAmount: setPetBangkAmount
     },
     {
       title1: "Buscamos tu",
@@ -47,6 +51,8 @@ export const Services = ({ isMobile, isTablet }) => {
       ],
       colorButton: theme.colors.blue200,
       background: theme.colors.orange500,
+      amount: searchAmount,
+      setAmount: setSearchAmount
     },
   ];
 
@@ -92,7 +98,7 @@ export const Services = ({ isMobile, isTablet }) => {
               <span style={{ color: option.color, fontFamily: theme.fonts.family.primaryMedium }}>{option.title2}</span>
             </Text>
             <Div width="100%" justify="end">
-              <Signs color={option.color}>
+              <Signs color={option.color} style={{ cursor: "pointer" }} onClick={() => option.setAmount(option.amount + 1)}>
                 +
               </Signs>
             </Div>
@@ -104,7 +110,7 @@ export const Services = ({ isMobile, isTablet }) => {
                 size={isMobile ? theme.fonts.size.h3 : theme.fonts.size.h1}
                 style={{ marginLeft: isMobile ? "8px" : "16px", marginRight: isMobile ? "4px" : "6px" }}
               >
-                $15,000
+                ${ (option.amount * 15000).toLocaleString('es-ES') }
               </Text>
               <Text 
                 font={theme.fonts.family.primaryBold}
@@ -116,12 +122,12 @@ export const Services = ({ isMobile, isTablet }) => {
               </Text>
               <Div direction="column" m={isMobile ? "0 0 0 38px" : "0 0 0 32px"}>
                 <WrapperAmount>
-                  1
+                  {option.amount}
                 </WrapperAmount>
               </Div>
             </Div>
             <Div width="100%" justify="end">
-              <Signs color={option.color} style={{ marginTop: isMobile ? "-15px" : "-20px" }}>
+              <Signs color={option.color} style={{ marginTop: isMobile ? "-15px" : "-20px", cursor: "pointer" }} onClick={() => option.setAmount(option.amount - 1)}>
                 -
               </Signs>  
             </Div>

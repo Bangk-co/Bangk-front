@@ -79,6 +79,7 @@ const AssistanceAreas = ({ isMobile }) => {
                 key={index}
                 p={isMobile ? "20px" : "50px 90px"}
                 gap="50px"
+                width={isMobile ? "350px" : "100%"}
                 style={{
                   borderBottom:
                     index + 1 < AssistanceAreasOptions.length &&

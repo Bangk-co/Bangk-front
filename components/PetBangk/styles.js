@@ -87,7 +87,7 @@ export const Text = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.sm};
+    font-size: ${theme.fonts.size.default2};
   }
 `;
 
@@ -170,7 +170,7 @@ export const CommentText = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
     margin-bottom: 20px;
     text-align: center;
@@ -193,7 +193,7 @@ export const Line = styled.div`
 
 export const NameText = styled.div`
   font-family: ${theme.fonts.family.primaryMedium};
-  font-size: ${theme.fonts.size.h6};
+  font-size: ${theme.fonts.size.h4};
   line-height: 32px;
   color: ${theme.colors.black};
 
@@ -204,7 +204,7 @@ export const NameText = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 12px;
   }
 `;
@@ -222,7 +222,7 @@ export const NameText2 = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxxs};
+    font-size: ${theme.fonts.size.xs};
     line-height: 10px;
   }
 `;
@@ -246,7 +246,7 @@ export const TitleReviews = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.ft};
     line-height: 24px;
     margin-bottom: 15px;
   }
@@ -264,7 +264,7 @@ export const SubTitleReviews = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxxs};
+    font-size: ${theme.fonts.size.sm};
     line-height: 10px;
     margin-bottom: 6px;
   }

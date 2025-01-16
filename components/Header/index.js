@@ -55,7 +55,7 @@ const Header = ({ isMobile, isTablet }) => {
               <Image
                 alt="logo"
                 src={petLogo}
-                width={123}
+                width={150}
                 height={37}
                 onClick={handlePetHome}
                 style={{ cursor: "pointer" }}

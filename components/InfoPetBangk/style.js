@@ -87,6 +87,10 @@ export const WrapperPetCare = styled.div`
   align-items: left;
   background: ${theme.colors.light4};
   position: relative;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 20px;
+  }
 `;
 
 export const WrapperAttendanceSummary = styled.div`
@@ -109,6 +113,10 @@ export const WrapperAssistanceAreas = styled.div`
   align-items: left;
   background: ${theme.colors.light4};
   position: relative;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 20px;
+  }
 `;
 
 export const OrangeCard = styled.div`

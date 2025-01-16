@@ -32,7 +32,7 @@ export const Card = styled.div`
     height: 146.33px;
     width: 231px;
     margin-bottom: 26.59px;
-    padding: 0px;
+    padding: 0 0 10px 0;
     justify-content: center;
     align-items: center;
     border-radius: 12px;

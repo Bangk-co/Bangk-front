@@ -184,7 +184,7 @@ export const WrapperStarWhy = styled.div`
     position: absolute;
     width: 19.48px;
     height: 20.44px;
-    top: 91.3em;
+    top: 103em;
     left: 1.6em;
   }
 

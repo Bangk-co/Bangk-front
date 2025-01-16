@@ -60,7 +60,7 @@ const Banner = ({ isMobile }) => {
         <Image
           alt="coins"
           src={coins}
-          width={isMobile ? 250 : 600}
+          width={isMobile ? 180 : 600}
           height="100%"
         />
       </Div>

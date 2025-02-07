@@ -9,6 +9,9 @@ import petLogo from "../../assets/img/petBangkLogo.png";
 import menu from "../../assets/icons/menu.svg";
 import { useRouter } from "next/router";
 import MenuMobile from "./MenuMobile";
+import chevron from "@/assets/icons/arrow-up.svg";
+import chevronDown from "@/assets/icons/chevron-down.svg";
+import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
 import { Button } from "../Common/Button";
 
 const Header = ({ isMobile, isTablet }) => {
@@ -16,12 +19,32 @@ const Header = ({ isMobile, isTablet }) => {
   const { pathname } = router;
   const [openMenu, setOpenMenu] = useState(false);
   const [optionSelected, setOptionSelected] = useState(null);
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const [subMenuLoginOpen, setSubMenuLoginOpen] = useState(false);
 
   const headerButtons = [
-    { key: 0, label: "Seguros", url: "/ahorra-en-tus-seguros" },
-    { key: 1, label: "Conócenos", url: "/conocenos" },
-    { key: 2, label: "Blog", url: "/blog" },
-    { key: 3, label: "Contacto", url: "/contacto" },
+    { key: 0, label: "Ahorro Hipotecario", url: null },
+    {
+      key: 1,
+      label: "Seguros y Asistencias",
+      url: "/ahorra-en-tus-seguros",
+      hasSubMenu: true,
+    },
+    { key: 2, label: "Conócenos", url: "/conocenos" },
+    { key: 3, label: "Blog", url: "/blog" },
+    { key: 4, label: "Contacto", url: "/contacto" },
+  ];
+
+  const subMenuItems = [
+    { key: 0, label: "Endosos", url: "/ahorra-en-tus-seguros" },
+    { key: 1, label: "Car-Bangk", url: "/ahorra-en-tus-seguros/car-bangk" },
+    { key: 2, label: "Telemedicina", url: null },
+    { key: 2, label: "Mascotas", url: "/pet-bangk" },
+  ];
+
+  const subMenuLogin = [
+    { key: 0, label: "Login", url: "/iniciar-sesion" },
+    { key: 1, label: "Crear cuenta", url: "/crear-cuenta" },
   ];
 
   const handleMenu = (menu) => {
@@ -29,21 +52,37 @@ const Header = ({ isMobile, isTablet }) => {
   };
 
   const handleGo = (url, key) => {
-    setOptionSelected(key);
-    router.push(url);
-    setOpenMenu(false);
+    if (url) {
+      setOptionSelected(key);
+      router.push(url);
+      setOpenMenu(false);
+      setSubMenuOpen(false);
+      setSubMenuLoginOpen(false);
+    }
   };
 
   const handleHome = () => {
     router.push("/");
     setOptionSelected(null);
     setOpenMenu(false);
+    setSubMenuOpen(false);
+    setSubMenuLoginOpen(false);
   };
 
   const handlePetHome = () => {
     router.push("/pet-bangk");
     setOptionSelected(null);
     setOpenMenu(false);
+    setSubMenuOpen(false);
+    setSubMenuLoginOpen(false);
+  };
+
+  const handleToggleSubMenu = () => {
+    setSubMenuOpen(!subMenuOpen);
+  };
+
+  const handleToggleSubMenuLogin = () => {
+    setSubMenuLoginOpen(!subMenuLoginOpen);
   };
 
   return (
@@ -110,21 +149,131 @@ const Header = ({ isMobile, isTablet }) => {
             )}
           </Div>
 
-          <Div gap={isTablet ? "63px" : "98px"}>
+          <Div gap={isTablet ? "23px" : "48px"}>
             {headerButtons.map((ele, indx) => (
-              <Link
-                key={indx}
-                size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.ft}
-                color={
-                  pathname.includes(ele.url)
-                    ? theme.colors.orange
-                    : theme.colors.black
-                }
-                onClick={() => handleGo(ele.url, ele.key)}
-              >
-                {ele.label}
-              </Link>
+              <Div key={indx} align="center" style={{ position: "relative" }}>
+                <Link
+                  size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
+                  color={
+                    pathname.includes(ele.url)
+                      ? theme.colors.orange
+                      : theme.colors.gray500
+                  }
+                  onClick={() => {
+                    if (ele.hasSubMenu) {
+                      handleToggleSubMenu();
+                    } else {
+                      handleGo(ele.url, ele.key);
+                    }
+                  }}
+                >
+                  {ele.label}
+                  {ele.label === "Seguros y Asistencias" && (
+                    <Image
+                      alt="chevron"
+                      src={
+                        pathname.includes(ele.url)
+                          ? chevronDownOrange
+                          : chevronDown
+                      }
+                      style={{ marginLeft: "5px" }}
+                    />
+                  )}
+                </Link>
+                {ele.hasSubMenu && subMenuOpen && (
+                  <Div
+                    direction="column"
+                    width="220px"
+                    backgroundColor={theme.colors.white}
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      borderRadius: "8px",
+                      padding: "10px 20px",
+                      zIndex: 10,
+                    }}
+                  >
+                    {subMenuItems.map((subItem) => (
+                      <Link
+                        key={subItem.key}
+                        size={
+                          isTablet
+                            ? theme.fonts.size.xs
+                            : theme.fonts.size.default2
+                        }
+                        color={theme.colors.gray500}
+                        onClick={() => handleGo(subItem.url, subItem.key)}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          padding: "24px 0",
+                          justifyContent: "space-between",
+                          width: "100%",
+                        }}
+                      >
+                        {subItem.label}
+                        <Image
+                          alt="chevron"
+                          src={chevron}
+                          width={24}
+                          height={24}
+                          style={{ transform: "rotate(90deg)" }}
+                        />
+                      </Link>
+                    ))}
+                  </Div>
+                )}
+              </Div>
             ))}
+            <Button
+              style={{ position: "relative" }}
+              onClick={handleToggleSubMenuLogin}
+              borderHover={theme.colors.orange900}
+              border={theme.colors.orange}
+              hover={theme.colors.orange900}
+              background={theme.colors.orange}
+              width={"122px"}
+            >
+              Mi cuenta
+              {subMenuLoginOpen && (
+                <Div
+                  direction="column"
+                  width="150px"
+                  backgroundColor={theme.colors.white}
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    borderRadius: "8px",
+                    padding: "10px 20px",
+                    zIndex: 10,
+                  }}
+                >
+                  {subMenuLogin.map((subItem) => (
+                    <Link
+                      key={subItem.key}
+                      size={
+                        isTablet
+                          ? theme.fonts.size.xs
+                          : theme.fonts.size.default2
+                      }
+                      color={theme.colors.gray500}
+                      onClick={() => handleGo(subItem.url, subItem.key)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "24px 0",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      {subItem.label}
+                    </Link>
+                  ))}
+                </Div>
+              )}
+            </Button>
           </Div>
         </>
       )}

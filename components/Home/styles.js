@@ -1,5 +1,6 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
+import bg from "@/assets/img/orangeBGStar.png";
 
 //Banner
 export const Wrapper = styled.div`
@@ -731,4 +732,18 @@ export const NameText2 = styled.div`
     font-size: ${theme.fonts.size.xs};
     line-height: 10px;
   }
+`;
+
+const backgroundImageUrl = bg.src;
+export const WrapperCarBangk = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${(props) => (props.isMobile ? "100%" : "50%")};
+  padding: 70px 72px 70px 72px;
+  background-image: url(${backgroundImageUrl});
+  background-size: cover;
+  background-position: center;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
 `;

@@ -155,7 +155,9 @@ const Header = ({ isMobile, isTablet }) => {
                 <Link
                   size={isTablet ? theme.fonts.size.xxs : theme.fonts.size.h6}
                   color={
-                    pathname.includes(ele.url)
+                    pathname.includes(ele.url) ||
+                    (ele.label === "Seguros y Asistencias" &&
+                      pathname.includes("pet-bangk"))
                       ? theme.colors.orange
                       : theme.colors.gray500
                   }
@@ -172,7 +174,9 @@ const Header = ({ isMobile, isTablet }) => {
                     <Image
                       alt="chevron"
                       src={
-                        pathname.includes(ele.url)
+                        pathname.includes(ele.url) ||
+                        (ele.label === "Seguros y Asistencias" &&
+                          pathname.includes("pet-bangk"))
                           ? chevronDownOrange
                           : chevronDown
                       }

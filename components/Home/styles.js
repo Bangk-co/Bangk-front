@@ -739,7 +739,7 @@ export const WrapperCarBangk = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.isMobile ? "100%" : "50%")};
-  padding: 70px 72px 70px 72px;
+  padding: ${(props) => (props.isMobile ? "40px 42px" : "70px 72px")};
   background-image: url(${backgroundImageUrl});
   background-size: cover;
   background-position: center;

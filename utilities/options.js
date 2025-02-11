@@ -24,7 +24,7 @@ export const footerList = [
     width: "110px",
     list: [
       {
-        label: "Disminuye el valor de las cuotas de tus créditos.",
+        label: "Ahorra endosando los seguros de tus créditos",
         link: "/ahorra-en-tus-seguros",
         isExtern: false,
       },
@@ -85,7 +85,7 @@ export const footerListResponsive = [
     height: "25px",
     list: [
       {
-        label: "Disminuye el valor de las cuotas de tus créditos.",
+        label: "Ahorra endosando los seguros de tus créditos",
         link: "/ahorra-en-tus-seguros",
         isExtern: false,
       },

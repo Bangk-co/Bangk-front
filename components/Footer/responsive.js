@@ -50,18 +50,18 @@ const FooterResponsive = ({ isMobile }) => {
               textAlign: "-webkit-center",
             }}
           >
-            Una plataforma{" "}
+            Un aliado para{" "}
             <span style={{ color: theme.colors.orange }}>
-              en la que ahorras tiempo y dinero
+              ahorrar tiempo y dinero
             </span>
           </span>
         ) : (
           <>
             <MessageText style={{ marginBottom: 0 }}>
-              Una plataforma{" "}
+              Un aliado para{" "}
             </MessageText>
             <MessageText style={{ color: theme.colors.orange, marginTop: 0 }}>
-              en la que ahorras <br></br> tiempo y dinero
+              ahorrar <br></br> tiempo y dinero
             </MessageText>
           </>
         )}

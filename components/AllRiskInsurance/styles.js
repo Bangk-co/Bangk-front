@@ -141,4 +141,8 @@ export const HoverDiv = styled.div`
   &:hover {
     background-color: ${theme.colors.orange100};
   }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 300px;
+  }
 `;

@@ -4,7 +4,7 @@ import { theme } from "@/styles/theme";
 import download from "@/assets/icons/downloadWhite.svg";
 import arrow from "@/assets/icons/arrow-back-white.svg";
 import { Div, Text } from "@/styles/Common";
-import { WrapperClause } from "./styles";
+import { HoverDiv, WrapperClause } from "./styles";
 
 const Clause = ({ isMobile }) => {
   const downloadClausePdf = () => {
@@ -30,18 +30,7 @@ const Clause = ({ isMobile }) => {
           información
         </span>
       </Text>
-      <Div
-        width="380px"
-        backgroundColor={theme.colors.yellow}
-        align="center"
-        justify="center"
-        p="60px 20px"
-        radius="25px"
-        gap="20px"
-        style={{ cursor: "pointer" }}
-        onClick={downloadClausePdf}
-      >
-        <Image alt="download" src={download} width={30} height={30} />
+      <HoverDiv onClick={downloadClausePdf}>
         <Text
           color={theme.colors.green}
           size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.ft}
@@ -59,14 +48,7 @@ const Clause = ({ isMobile }) => {
           </span>{" "}
           Colombia
         </Text>
-        <Image
-          alt="arrow"
-          src={arrow}
-          width={30}
-          height={30}
-          style={{ transform: "rotate(180deg)" }}
-        />
-      </Div>
+      </HoverDiv>
     </WrapperClause>
   );
 };

@@ -9,7 +9,7 @@ const LogosInfo = ({ isMobile }) => {
   return (
     <Div p={isMobile ? "50px 20px" : "50px 100px"} direction="column">
       <Div
-        align="end"
+        align={isMobile ? "center" : "end"}
         justify="space-around"
         direction={isMobile ? "column" : "row"}
       >
@@ -17,7 +17,7 @@ const LogosInfo = ({ isMobile }) => {
           alt="sbs"
           src={sbs}
           width={isMobile ? 300 : 550}
-          height={isMobile ? 163 : 484}
+          height={isMobile ? 264 : 484}
         />
         <Image
           alt="bangk"

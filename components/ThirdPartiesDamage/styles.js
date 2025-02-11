@@ -72,3 +72,23 @@ export const WrapperClause = styled.div`
     margin: 20px 30px;
   }
 `;
+
+export const HoverDiv = styled.div`
+  width: 380px;
+  background-color: ${theme.colors.yellow};
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  border-radius: 25px;
+  gap: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${theme.colors.orange100};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 300px;
+  }
+`;

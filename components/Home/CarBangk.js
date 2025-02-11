@@ -52,7 +52,9 @@ const CarBangk = ({ isMobile }) => {
       titleColor: theme.colors.orange500,
       buttonColor: theme.colors.orange500,
       buttonText: theme.colors.green,
-      onClick: null,
+      onClick: () => {
+        router.push("/ahorra-en-tus-seguros/car-bangk/bangk-motos");
+      },
     },
   ];
 

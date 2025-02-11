@@ -2,12 +2,10 @@ import React from "react";
 import Banner from "@/components/AllRiskInsurance/Banner";
 import { Div } from "@/styles/Common";
 import Coverage from "@/components/AllRiskInsurance/Coverage";
-import BenefitsInfo from "@/components/InsurancePerKm/BenefitsInfo";
-import AssistanceInfo from "@/components/InsurancePerKm/AssistanceInfo";
-import Quote from "@/components/InsurancePerKm/Quote";
+import BenefitsInfo from "@/components/AllRiskInsurance/BenefitsInfo";
+import AssistanceInfo from "@/components/AllRiskInsurance/AssistanceInfo";
 import LogosInfo from "@/components/CarBangk/LogosInfo";
-import FAQs from "@/components/InsurancePerKm/FAQs";
-import Clause from "@/components/InsurancePerKm/Clause";
+import Clause from "@/components/AllRiskInsurance/Clause";
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 
 const AllRiskInsurance = ({ isMobile }) => {
@@ -40,8 +38,6 @@ const AllRiskInsurance = ({ isMobile }) => {
       <Coverage isMobile={isMobile} />
       <BenefitsInfo isMobile={isMobile} />
       <AssistanceInfo isMobile={isMobile} />
-      <Quote isMobile={isMobile} />
-      <FAQs isMobile={isMobile} />
       <Clause isMobile={isMobile} />
       <LogosInfo isMobile={isMobile} />
     </Div>

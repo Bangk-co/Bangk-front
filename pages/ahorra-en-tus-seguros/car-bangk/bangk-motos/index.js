@@ -8,7 +8,7 @@ import LogosInfo from "@/components/CarBangk/LogosInfo";
 import Clause from "@/components/MotoBangk/Clause";
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 
-const AllRiskInsurance = ({ isMobile }) => {
+const BangkMotos = ({ isMobile }) => {
   const breadcrumbs = [
     {
       label: "Bangk",
@@ -44,4 +44,4 @@ const AllRiskInsurance = ({ isMobile }) => {
   );
 };
 
-export default AllRiskInsurance;
+export default BangkMotos;

@@ -66,6 +66,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     "/ahorra-en-tus-seguros",
     "/ahorra-en-tus-seguros/car-bangk",
     "/ahorra-en-tus-seguros/car-bangk/seguro-por-kilometro",
+    "/ahorra-en-tus-seguros/car-bangk/todo-riesgo",
     "/ahorra-en-tus-seguros/car-bangk/danos-a-terceros",
     "/conocenos",
     "/blog",

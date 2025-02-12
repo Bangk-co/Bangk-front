@@ -92,12 +92,13 @@ export const Text = styled.div`
 `;
 
 export const CardServices = styled.div`
-  position: relative;
   display: flex;
+  width: 576px;
   flex-direction: column;
+  align-items: center;
   background: ${({ background }) => background};
-  border-radius: 30px;
-  padding: 35px;
+  border-radius: 32px;
+  padding: 45px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 25px;
@@ -108,14 +109,13 @@ export const WrapperAmount = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  width: 81px;
   height: 40px;
-  background: ${theme.colors.light};
-  border-radius: 12%;
+  background: ${theme.colors.white};
+  border-radius: 20px;
 
   font-size: ${theme.fonts.size.h6};
-  color: ${theme.colors.neutralGray600};
-  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.gray1000};
   font-family: ${theme.fonts.family.primaryBold};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -126,16 +126,18 @@ export const WrapperAmount = styled.div`
 `;
 
 export const Signs = styled.span`
-  font-size: ${theme.fonts.size.xl};
-  color: ${({ color }) => color};
-  margin: 0;
-  padding: 0;
-  height: 50px;
-  margin-right: 4px;
+  display: flex;
+  width: 66px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: ${theme.fonts.size.h5};
+  color: ${theme.colors.white};
+  cursor: pointer;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     height: 30px;
-    font-size: ${theme.fonts.size.h2};
   }
 `;
 

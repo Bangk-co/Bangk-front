@@ -2,6 +2,7 @@ export const theme = {
   colors: {
     white: "white",
     black: "black",
+    darkBlue: "#0D7CBA",
     blue: "#1F78D1",
     blue100: "#1F78D126",
     blue200: "#1e98dc",
@@ -33,6 +34,7 @@ export const theme = {
     gray500: "#676767",
     gray700: "#514F53",
     gray900: "#191919",
+    gray1000: "#938A8A",
     whatsapp: "#25D366",
     primary25: "#E9EFEF",
     primary50: "#CDD9D9",

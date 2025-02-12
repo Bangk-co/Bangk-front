@@ -2,57 +2,64 @@ import React, { useState } from "react";
 import { CardServices, Signs, SubTitle, WrapperAmount, WrapperServices } from "./styles";
 import { theme } from "@/styles/theme";
 import { Div, Text } from "@/styles/Common";
-import star from "@/assets/img/star.png";
-import arrowRight from "@/assets/img/arrowRight.png";
-import Image from "next/image";
+import arrowRight from "@/assets/icons/arrow-right.svg";
 import { Button } from "../Common/Button";
+import Image from "next/image";
 
 export const Services = ({ isMobile, isTablet }) => {
   const [petBangkAmount, setPetBangkAmount] = useState(1);
   const [searchAmount, setSearchAmount] = useState(1);
+  const [selectedAsistance, setSelectedAsistance] = useState(1);
+  const [selectedSearch, setSelectedSearch] = useState(1);
 
   const buttonProps = {
-    labelColor: theme.colors.purple,
-    background: theme.colors.white,
-    hover: theme.colors.white,
-    font: theme.fonts.family.primaryBold,
-    size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default,
-    weight: theme.fonts.weight.bold,
-    height: isMobile ? "16.53px" : "42.74px",
-    width: isMobile ? "90px" : "120px",
-    mobileWidth: "90px"
+    labelColor: theme.colors.white,
+    size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
+    mobileWidth: "90px",
+    width: '192px',
+    height: '100%',
+    border: 'transparent',
+    borderHover: 'transparent',
   };
 
   const options = [
     {
-      title1: "Plan",
-      title2: "PetBangk",
+      id: 1,
+      title: "Asistencia para <span style='font-family: Gilroy Bold; color: #FFC400'>mascotas</span>",
       color: theme.colors.yellow,
-      description: "Seguro integral para tu mascota, cubriendo una gran cantidad de percances para la tranquilidad tuya y de tu mascota.",
+      description: "Con el <span style='font-family: Gilroy Bold; color: #FFC400'>Plan PetBangk</span> tienes una asistencia que protege frente a múltiples percances, brindando tranquilidad para ti y tu mascota.",
       butttons: [
-        { label: "Mensual" },
-        { label: "Semestral" },
-        { label: "Anual" },
+        { label: "Mensual", id: 1 },
+        { label: "Semestral", id: 2 },
+        { label: "Anual", id: 3 },
       ],
-      colorButton: theme.colors.orange500,
+      colorButton: theme.colors.darkBlue,
       background: theme.colors.blue200,
+      onClick: (value) => setSelectedAsistance(value),
+      buttonText: "Protege a tu mascota ahora!",
+      urlButton: "/",
+      countButtonsColor: theme.colors.orange500,
       amount: petBangkAmount,
       setAmount: setPetBangkAmount
     },
     {
-      title1: "Buscamos tu",
-      title2: "mascota",
+      id: 2,
+      title: "Buscamos tu <span style='font-family: Gilroy Bold; color: #563f88'>mascota</span>",
       color: theme.colors.purple,
       description: "Servicio el cual hace viral la busqueda de tu mascota en la zona del percance, siendo rápido y efectivo la divulgación, ahorrando tiempo y esfuerzos.",
       butttons: [
-        { label: "Básico" },
-        { label: "Avanzado" },
-        { label: "Premium" },
+        { label: "Básico", id: 1 },
+        { label: "Avanzado", id: 2 },
+        { label: "Premium", id: 3 },
       ],
-      colorButton: theme.colors.blue200,
+      colorButton: theme.colors.purple,
       background: theme.colors.orange500,
+      onClick: (value) => setSelectedSearch(value),
+      buttonText: "Anunciar mi mascota perdida",
+      urlButton: "/",
       amount: searchAmount,
-      setAmount: setSearchAmount
+      setAmount: setSearchAmount,
+      countButtonsColor: theme.colors.purple,
     },
   ];
 
@@ -62,7 +69,7 @@ export const Services = ({ isMobile, isTablet }) => {
     } else if (isTablet) {
       return "80px";
     } else {
-      return "120px";
+      return "30px";
     }
   };
 
@@ -87,80 +94,84 @@ export const Services = ({ isMobile, isTablet }) => {
         {options.map((option, index) => (
           <CardServices key={index} background={option.background}>
             <Text
-              font={theme.fonts.family.primaryMedium}
+              font={theme.fonts.family.primaryBold}
               color={theme.colors.white}
-              weight={theme.fonts.weight.bold}
               size={isMobile ? theme.fonts.size.h4 : theme.fonts.size.h3}
-              lineHeight={isMobile ? "24px" : "36px"}
-              style={{ width: "300px", height: isMobile ? "55px" : "72px" }}
-            >
-              {option.title1}{" "}
-              <span style={{ color: option.color, fontFamily: theme.fonts.family.primaryMedium }}>{option.title2}</span>
-            </Text>
-            <Div width="100%" justify="end">
-              <Signs color={option.color} style={{ cursor: "pointer" }} onClick={() => option.setAmount(option.amount + 1)}>
-                +
-              </Signs>
-            </Div>
-            <Div align="center" m="0px">
-              <Image src={star} alt="star" width={isMobile ? 20 : 25} height={isMobile ? 20 : 25} style={{ marginBottom: "18px" }} />
-              <Text 
-                font={theme.fonts.family.primaryBold}
-                color={theme.colors.white}
-                size={isMobile ? theme.fonts.size.h3 : theme.fonts.size.h1}
-                style={{ marginLeft: isMobile ? "8px" : "16px", marginRight: isMobile ? "4px" : "6px" }}
-              >
-                ${ (option.amount * 15000).toLocaleString('es-ES') }
-              </Text>
-              <Text 
-                font={theme.fonts.family.primaryBold}
-                color={option.color} 
-                size={isMobile ? theme.fonts.size.xs : theme.fonts.size.default2}
-                mt="18px"
-              >
-                Por mascota
-              </Text>
-              <Div direction="column" m={isMobile ? "0 0 0 38px" : "0 0 0 32px"}>
-                <WrapperAmount>
-                  {option.amount}
-                </WrapperAmount>
-              </Div>
-            </Div>
-            <Div width="100%" justify="end">
-              <Signs color={option.color} style={{ marginTop: isMobile ? "-15px" : "-20px", cursor: "pointer" }} onClick={() => option.setAmount(option.amount - 1)}>
-                -
-              </Signs>  
-            </Div>
+              dangerouslySetInnerHTML={{ __html: option.title }}
+            />
             <Text 
               color={theme.colors.white}
-              size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.default}
-              style={{ width: isMobile ? "280px" : "380px", height: isMobile ? "86px" : "86px" }}
+              size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
               mt="20px"
               mb="20px"
+              style={{ textAlign: "center", height: "100px" }}
+              dangerouslySetInnerHTML={{ __html: option.description }}
+            />
+            <Text 
+              color={theme.colors.white}
+              size={theme.fonts.size.default2}
+              mb="10px"
+              style={{ textAlign: "center" }}
             >
-              {option.description}
+              Selecciona una forma de pago
             </Text>
-            <Div justify="space-between">
+            <Div style={{ background: "rgba(255, 255, 255, 0.2)", width: "100%", height: "50px", borderRadius: "40px" }}>
               {option.butttons.map((button, index) => ( 
                 <Button 
                   {...buttonProps}
-                  borderHover={index === 0 ? option.colorButton : theme.colors.white}
-                  border={index === 0 ? option.colorButton : theme.colors.white} 
                   key={index}
+                  style={{ 
+                    marginLeft: index > 0 ? '-45px' : '0',
+                  }}
+                  font={option.id === 1 ? button.id === selectedAsistance ? theme.fonts.family.primaryBold : theme.fonts.family.primary : button.id === selectedSearch ? theme.fonts.family.primaryBold : theme.fonts.family.primary}
+                  background={option.id === 1 ? button.id === selectedAsistance ? option.colorButton : "transparent" : button.id === selectedSearch ? option.colorButton : "transparent"}
+                  hover={option.id === 1 ? button.id === selectedAsistance ? option.colorButton : "transparent" : button.id === selectedSearch ? option.colorButton : "transparent"}
+                  onClick={() => option.onClick(button.id)}
                 >
                   {button.label}
                 </Button>
               ))}
             </Div>
-            <Div 
-              style={{ 
-                position: "absolute", 
-                right: isMobile ? "-15px" : "-30px", 
-                bottom: isMobile ? "-25px" : "-40px",
-              }}
-            >
-              <Image src={arrowRight} alt="arrowRight" width={isMobile ? 50 : 80} height={isMobile ? 50 : 80} />
+            <Div direction="column" align="center" m="20px 0 0 0">
+              <Text color={theme.colors.white} size={theme.fonts.size.sm} mb="10px">
+                Número de mascotas
+              </Text>
+              <Div gap="10px">
+                <Signs style={{ background: option.countButtonsColor }} onClick={() => option.amount > 1 && option.setAmount(option.amount - 1)}>
+                  -
+                </Signs>
+                <WrapperAmount>
+                  {option.amount}
+                </WrapperAmount>
+                <Signs style={{ background: option.countButtonsColor }} onClick={() => option.setAmount(option.amount + 1)}>
+                  +
+                </Signs>
+              </Div>
             </Div>
+            <Div m="20px 0 0 0">
+              <Text 
+                font={theme.fonts.family.primaryBold}
+                color={theme.colors.white}
+                size={isMobile ? theme.fonts.size.h3 : theme.fonts.size.h2}
+                style={{ marginLeft: isMobile ? "8px" : "16px", marginRight: isMobile ? "4px" : "6px" }}
+              >
+                ${ (option.amount * 15000).toLocaleString('es-ES') }*
+              </Text>
+            </Div>
+            <Button
+              width={"352px"}
+              height={"40px"}
+              background={"transparent"}
+              labelColor={theme.colors.white}
+              font={theme.fonts.family.primary}
+              size={theme.fonts.size.h6}
+              border={theme.colors.white}
+              borderRadius={"50px"}
+              style={{ marginTop: "30px" }}
+            >
+              {option.buttonText}
+              <Image src={arrowRight} alt="arrowRight" />
+            </Button>
           </CardServices>
         ))}
       </Div>

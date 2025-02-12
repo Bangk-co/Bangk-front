@@ -170,93 +170,95 @@ export const Record = ({
   }, [allianzRule]);
 
   useEffect(() => {
-    setCurrentInsuranceData([
-      Object.keys(loan).length === 0
-        ? {
-            label: "Seguro mensual",
-            value: `$ ${numberFormat(monthlyCostInsurance2)}`,
-          }
-        : {
-            label: "Seguro mensual",
-            value: `$ ${numberFormat(monthlyCostInsurance)}`,
-          },
-      Object.keys(loan).length === 0
-        ? {
-            label: "Seguro anual",
-            value: `$ ${numberFormat(_.multiply(monthlyCostInsurance2, 12))}`,
-          }
-        : {
-            label: "Seguro anual",
-            value: `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12))}`,
-          },
-    ]);
-    if (insurer === 114) {
-      setBangkInsuranceData([
+    if (loan) {
+      setCurrentInsuranceData([
         Object.keys(loan).length === 0
           ? {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                Number(_.divide(bangkYearlyFee, 12).toFixed())
-              )}`,
+              value: `$ ${numberFormat(monthlyCostInsurance2)}`,
             }
           : {
               label: "Seguro mensual",
-              value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
+              value: `$ ${numberFormat(monthlyCostInsurance)}`,
             },
         Object.keys(loan).length === 0
           ? {
               label: "Seguro anual",
-              value: `$ ${numberFormat(bangkYearlyFee)}`,
+              value: `$ ${numberFormat(_.multiply(monthlyCostInsurance2, 12))}`,
             }
           : {
               label: "Seguro anual",
-              value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
+              value: `$ ${numberFormat(_.multiply(monthlyCostInsurance, 12))}`,
             },
       ]);
-      setSaveValue(
-        Object.keys(loan).length === 0
-          ? `$ ${numberFormat(
-              _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
-            )}`
-          : `$ ${numberFormat(
-              Number(_.multiply(monthlyCostInsurance, 12)) -
-                Number(insuranceAnnualFinal)
-            )}`
-      );
-    } else {
-      setBangkInsuranceData([
-        Object.keys(loan).length === 0
-          ? {
-              label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                Number(_.divide(bangkYearlyFee, 12).toFixed())
-              )}`,
-            }
-          : {
-              label: "Seguro mensual",
-              value: `$ ${numberFormat(
-                Number(_.divide(yearlyFee, 12).toFixed())
-              )}`,
-            },
-        Object.keys(loan).length === 0
-          ? {
-              label: "Seguro anual",
-              value: `$ ${numberFormat(bangkYearlyFee)}`,
-            }
-          : {
-              label: "Seguro anual",
-              value: `$ ${numberFormatText(yearlyFee)}`,
-            },
-      ]);
-      setSaveValue(
-        Object.keys(loan).length === 0
-          ? `$ ${numberFormat(
-              _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
-            )}`
-          : `$ ${numberFormat(
-              _.multiply(monthlyCostInsurance, 12) - yearlyFee
-            )}`
-      );
+      if (insurer === 114) {
+        setBangkInsuranceData([
+          Object.keys(loan).length === 0
+            ? {
+                label: "Seguro mensual",
+                value: `$ ${numberFormat(
+                  Number(_.divide(bangkYearlyFee, 12).toFixed())
+                )}`,
+              }
+            : {
+                label: "Seguro mensual",
+                value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
+              },
+          Object.keys(loan).length === 0
+            ? {
+                label: "Seguro anual",
+                value: `$ ${numberFormat(bangkYearlyFee)}`,
+              }
+            : {
+                label: "Seguro anual",
+                value: `$ ${numberFormat(Number(insuranceAnnualFinal))}`,
+              },
+        ]);
+        setSaveValue(
+          Object.keys(loan).length === 0
+            ? `$ ${numberFormat(
+                _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
+              )}`
+            : `$ ${numberFormat(
+                Number(_.multiply(monthlyCostInsurance, 12)) -
+                  Number(insuranceAnnualFinal)
+              )}`
+        );
+      } else {
+        setBangkInsuranceData([
+          Object.keys(loan).length === 0
+            ? {
+                label: "Seguro mensual",
+                value: `$ ${numberFormat(
+                  Number(_.divide(bangkYearlyFee, 12).toFixed())
+                )}`,
+              }
+            : {
+                label: "Seguro mensual",
+                value: `$ ${numberFormat(
+                  Number(_.divide(yearlyFee, 12).toFixed())
+                )}`,
+              },
+          Object.keys(loan).length === 0
+            ? {
+                label: "Seguro anual",
+                value: `$ ${numberFormat(bangkYearlyFee)}`,
+              }
+            : {
+                label: "Seguro anual",
+                value: `$ ${numberFormatText(yearlyFee)}`,
+              },
+        ]);
+        setSaveValue(
+          Object.keys(loan).length === 0
+            ? `$ ${numberFormat(
+                _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
+              )}`
+            : `$ ${numberFormat(
+                _.multiply(monthlyCostInsurance, 12) - yearlyFee
+              )}`
+        );
+      }
     }
   }, [
     insurer,

@@ -53,7 +53,7 @@ export const CardPlan = styled.div`
   padding: 50px 30px 20px 30px;
   border-radius: 23px;
 
-   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     padding: 40px 10px 20px 10px;
   }
@@ -129,6 +129,7 @@ export const OrangeCard = styled.div`
   background: ${theme.colors.orange500};
   border-radius: 32px;
   margin-top: 60px;
+  cursor: pointer;
 
   color: ${theme.colors.white};
   font-size: ${theme.fonts.size.h5};

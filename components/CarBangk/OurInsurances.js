@@ -30,7 +30,9 @@ const OurInsurances = ({ isMobile }) => {
       descriptionColor: theme.colors.green,
       buttonColor: theme.colors.green,
       buttonText: theme.colors.yellow,
-      onClick: null,
+      onClick: () => {
+        router.push("/ahorra-en-tus-seguros/car-bangk/todo-riesgo");
+      },
     },
     {
       secureColor: theme.colors.white,
@@ -54,7 +56,9 @@ const OurInsurances = ({ isMobile }) => {
       descriptionColor: theme.colors.green,
       buttonColor: theme.colors.orange500,
       buttonText: theme.colors.green,
-      onClick: null,
+      onClick: () => {
+        router.push("/ahorra-en-tus-seguros/car-bangk/bangk-motos");
+      },
     },
   ];
   return (

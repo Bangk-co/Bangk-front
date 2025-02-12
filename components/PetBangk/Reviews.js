@@ -25,14 +25,19 @@ import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Link } from "../Common/Link";
 import marcela from "../../assets/img/marcela.jpg";
-
+import { useRouter } from "next/router";
 
 const Reviews = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [showPlayer, setShowPlayer] = useState(false);
 
   useEffect(() => {
     setShowPlayer(true);
   }, []);
+
+  const navigateToConditions = () => {
+    router.push("/pet-bangk/condiciones");
+  };
 
   return (
     <WrapperReviews>
@@ -50,7 +55,9 @@ const Reviews = ({ isMobile, isTablet }) => {
                 <Image alt="message" src={message} width={49} />
               </WrapperComment>
               <CommentText>
-                &quot;Toby ha tenido problemas de salud desde tiempo atrás, gracias a Petbangk he podido prevenir y cuidarlo de la mejor manera.&quot;
+                &quot;Toby ha tenido problemas de salud desde tiempo atrás,
+                gracias a Petbangk he podido prevenir y cuidarlo de la mejor
+                manera.&quot;
               </CommentText>
               <Line />
               <WrapperPerson>
@@ -95,28 +102,39 @@ const Reviews = ({ isMobile, isTablet }) => {
           </RowReviews>
         </>
       )}
-      <Div m={isMobile || isTablet ? "50px" : "150px"} justify="center" direction="column" align="center">
-        <Text 
+      <Div
+        m={isMobile || isTablet ? "50px" : "150px"}
+        justify="center"
+        direction="column"
+        align="center"
+      >
+        <Text
           color={theme.colors.blue200}
-          style={{ width: isMobile || isTablet ? "100%" : "950px", textAlign: "center" }}
+          style={{
+            width: isMobile || isTablet ? "100%" : "950px",
+            textAlign: "center",
+          }}
         >
           Los servicios del plan de asistencias de MedBangk/PetBangk son
-          prestados por <span style={{ fontFamily: theme.fonts.family.primaryBold }}>GEA, “Grupo Especializado de Asistencias Colombia
-          S.A.S.”</span> 
+          prestados por{" "}
+          <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
+            GEA, “Grupo Especializado de Asistencias Colombia S.A.S.”
+          </span>
         </Text>
         <Text color={theme.colors.blue200} mt="18px">
-          Consulta 
-          <Link 
-            color={theme.colors.blue200} 
-            size={theme.fonts.size.default} 
+          Consulta
+          <Link
+            color={theme.colors.blue200}
+            size={theme.fonts.size.default}
             style={{ textDecoration: "underline" }}
+            onClick={navigateToConditions}
           >
             aquí
-          </Link> 
+          </Link>
           las Condiciones Generales del plan de asistencia
         </Text>
-        <OrangeCard>
-          Condiciones 
+        <OrangeCard onClick={navigateToConditions}>
+          Condiciones
           <br />
           Generales
         </OrangeCard>

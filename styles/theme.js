@@ -15,6 +15,7 @@ export const theme = {
     orange: "#FD6700",
     orange100: "#FF8400",
     orange500: "#ff8600",
+    orange900: "#B44C00",
     red: "#E94E4E",
     red100: "#F8D8D3",
     red500: "#DB3B21",

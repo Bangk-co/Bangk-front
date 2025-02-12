@@ -365,6 +365,7 @@ export const OrangeCard = styled.div`
   background: ${theme.colors.orange500};
   border-radius: 32px;
   margin-top: 60px;
+  cursor: pointer;
 
   color: ${theme.colors.white};
   font-size: ${theme.fonts.size.h5};

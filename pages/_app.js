@@ -66,7 +66,9 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     "/ahorra-en-tus-seguros",
     "/ahorra-en-tus-seguros/car-bangk",
     "/ahorra-en-tus-seguros/car-bangk/seguro-por-kilometro",
+    "/ahorra-en-tus-seguros/car-bangk/todo-riesgo",
     "/ahorra-en-tus-seguros/car-bangk/danos-a-terceros",
+    "/ahorra-en-tus-seguros/car-bangk/bangk-motos",
     "/conocenos",
     "/blog",
     "/contacto",
@@ -74,6 +76,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     "/pet-bangk",
     "/pet-bangk/info-petbangk",
     "/pet-bangk/buscamos-tu-mascota",
+    "/pet-bangk/condiciones",
   ];
 
   const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(

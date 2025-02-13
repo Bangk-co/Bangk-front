@@ -16,7 +16,7 @@ export const Services = ({ isMobile, isTablet }) => {
     labelColor: theme.colors.white,
     size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
     mobileWidth: "90px",
-    width: '192px',
+    width: isMobile ? "135px" : '192px',
     height: '100%',
     border: 'transparent',
     borderHover: 'transparent',
@@ -90,6 +90,8 @@ export const Services = ({ isMobile, isTablet }) => {
         gap={returnGap()} 
         direction={isMobile || isTablet ? "column" : "row"}
         justify={"center"}
+        align={"center"}
+        width={"100%"}
       >
         {options.map((option, index) => (
           <CardServices key={index} background={option.background}>
@@ -115,13 +117,22 @@ export const Services = ({ isMobile, isTablet }) => {
             >
               Selecciona una forma de pago
             </Text>
-            <Div style={{ background: "rgba(255, 255, 255, 0.2)", width: "100%", height: "50px", borderRadius: "40px" }}>
+            <Div 
+              style={{ 
+                background: "rgba(255, 255, 255, 0.2)", 
+                width: "100%", 
+                height:isMobile ? "40px" : "50px", 
+                borderRadius: "40px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {option.butttons.map((button, index) => ( 
                 <Button 
                   {...buttonProps}
                   key={index}
                   style={{ 
-                    marginLeft: index > 0 ? '-45px' : '0',
+                    marginLeft: isMobile ? '-25px' : (index > 0 ? '-45px' : '0'),
                   }}
                   font={option.id === 1 ? button.id === selectedAsistance ? theme.fonts.family.primaryBold : theme.fonts.family.primary : button.id === selectedSearch ? theme.fonts.family.primaryBold : theme.fonts.family.primary}
                   background={option.id === 1 ? button.id === selectedAsistance ? option.colorButton : "transparent" : button.id === selectedSearch ? option.colorButton : "transparent"}
@@ -159,13 +170,15 @@ export const Services = ({ isMobile, isTablet }) => {
               </Text>
             </Div>
             <Button
-              width={"352px"}
+              width={isMobile ? "100%" : "352px"}
               height={"40px"}
               background={"transparent"}
+              hover={"transparent"}
               labelColor={theme.colors.white}
               font={theme.fonts.family.primary}
               size={theme.fonts.size.h6}
               border={theme.colors.white}
+              borderHover={theme.colors.white}
               borderRadius={"50px"}
               style={{ marginTop: "30px" }}
             >

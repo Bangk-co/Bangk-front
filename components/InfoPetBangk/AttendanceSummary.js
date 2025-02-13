@@ -3,6 +3,7 @@ import React from "react";
 import { WrapperAttendanceSummary, WrapperServicesTitle, WrapperTitle } from "./style";
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { theme } from "@/styles/theme";
+import AttendanceSummaryResponsive from "./AttendanceSummaryResponsive";
 
 const AttendanceSummary = ({isMobile, isTablet}) => {
   const rows = [
@@ -52,52 +53,56 @@ const AttendanceSummary = ({isMobile, isTablet}) => {
       >
         Resumen de asistencia
       </Text>
-      <WrapperAttendanceSummary>  
-        {!isMobile && !isTablet && (
-          <WrapperServicesTitle>
-            Servicios de asistencia
-          </WrapperServicesTitle>
-        )}
-        {!isMobile && !isTablet && Title.map((title, index) => (
-          <WrapperTitle 
-            key={index} 
-            backgroundColor={title.backgroundColor} 
-            right={title.right}
-            top={title.top}
-          >
-            {title.title}
-          </WrapperTitle>
-        ))}
-        <Div 
-          style={{ 
-            maxHeight: 'max-content', 
-            overflowY: 'auto', 
-            borderRadius: '11px',
-            width: '100%',
-          }}>
-          <Table>
-            {(isMobile || isTablet) && (
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ backgroundColor: theme.colors.yellow }}>
-                    <Text color={theme.colors.purple}>Servicios por plan de asistencia</Text>
-                  </TableCell>
-                  {Title.map((title, index) => (
-                    <TableCell key={index} style={{ backgroundColor: title.backgroundColor }}>
-                      <Text color={theme.colors.white}>{title.title}</Text>
+      {isMobile ? (
+        <AttendanceSummaryResponsive />
+      ) : (
+        <WrapperAttendanceSummary>  
+          {!isMobile && !isTablet && (
+            <WrapperServicesTitle>
+              Servicios de asistencia
+            </WrapperServicesTitle>
+          )}
+          {!isMobile && !isTablet && Title.map((title, index) => (
+            <WrapperTitle 
+              key={index} 
+              backgroundColor={title.backgroundColor} 
+              right={title.right}
+              top={title.top}
+            >
+              {title.title}
+            </WrapperTitle>
+          ))}
+          <Div 
+            style={{ 
+              maxHeight: 'max-content', 
+              overflowY: 'auto', 
+              borderRadius: '11px',
+              width: '100%',
+            }}>
+            <Table>
+              {(isMobile || isTablet) && (
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ backgroundColor: theme.colors.yellow }}>
+                      <Text color={theme.colors.purple}>Servicios por plan de asistencia</Text>
                     </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-            )}
-            <TableBody>
-              {rows.map((row, index) => (
-                <TableRowComponent key={row.service} row={row} index={index} />
-              ))}
-            </TableBody>
-          </Table>
-        </Div>
-      </WrapperAttendanceSummary>
+                    {Title.map((title, index) => (
+                      <TableCell key={index} style={{ backgroundColor: title.backgroundColor }}>
+                        <Text color={theme.colors.white}>{title.title}</Text>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+              )}
+              <TableBody>
+                {rows.map((row, index) => (
+                  <TableRowComponent key={row.service} row={row} index={index} />
+                ))}
+              </TableBody>
+            </Table>
+          </Div>
+        </WrapperAttendanceSummary>
+      )}
     </Div>
   )
 };

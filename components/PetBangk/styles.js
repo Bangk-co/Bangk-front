@@ -3,6 +3,7 @@ import { theme } from "@/styles/theme";
 
 export const WrapperBanner = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   background: ${theme.colors.blue200};
@@ -51,7 +52,7 @@ export const Title = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h6};
+    font-size: ${theme.fonts.size.h5s};
     height: 25px;
   }
 `;
@@ -102,6 +103,7 @@ export const CardServices = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 25px;
+    width: 90%;
   }
 `;
 
@@ -375,5 +377,9 @@ export const OrangeCard = styled.div`
     height: 130px;
     font-size: ${theme.fonts.size.h6};
     margin-top: 30px;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 `;

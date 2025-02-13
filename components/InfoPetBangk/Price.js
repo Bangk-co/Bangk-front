@@ -1,127 +1,158 @@
+import React, { useState } from "react";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import React, { useState } from "react";
-import { CardPlan, WrapperAmount } from "./style";
+import { CardPlan, WrapperAmount, Signs, WrapperIcon } from "./style";
 import { Button } from "../Common/Button";
 import { numberFormat } from "@/utilities/helpers";
+import Image from "next/image";
+import shieldStar from "@/assets/icons/shield-star.svg";
 
 export const Price = ({ isMobile, isTablet }) => {
-  const [monthlyAmount, setMonthlyAmount] = useState(1);
-  const [semiannualAmount, setSemiannualAmount] = useState(1);
-  const [annualAmount, setAnnualAmount] = useState(1);
-  const [monthlyPrice, setMonthlyPrice] = useState(100000);
-  const [semiannualPrice, setSemiannualPrice] = useState(100000);
-  const [annualPrice, setAnnualPrice] = useState(100000);
+  const [petsAmount, setPetsAmount] = useState(1);
+  const [monthlyPrice, setMonthlyPrice] = useState(15000);
+  const [semiannualPrice, setSemiannualPrice] = useState(85000);
+  const [annualPrice, setAnnualPrice] = useState(150000);
+  const [selectedPlan, setSelectedPlan] = useState(2);
 
   const plansList = [
     { 
-      label: "MENSUAL",
-      description: "La manera más sencilla de tener nuestras asistencias, <span style='font-family: Gilroy Bold'>mes a mes</span> tu suscripción",
-      colorCard: theme.colors.blue200,
-      colorTitle: theme.colors.yellow,
-      colorButton: theme.colors.orange500,
-      colorText: theme.colors.white,
-      colorTextButton: theme.colors.green,
-      amount: monthlyAmount,
-      setAmount: setMonthlyAmount,
+      id: 1,
+      label: "Mensual",
+      description: "La forma más sencilla de acceder a nuestras asistencias: paga tu seguro <span style='font-family: Gilroy Bold'>mes a mes.</span>",
       price: monthlyPrice,
       setPrice: setMonthlyPrice,
     },
     { 
-      label: "SEMESTRAL",
-      description: "Paga tu plan cada 6 meses con un descuento que te <span style='font-family: Gilroy Bold'>ayudará a ahorrar y cuidarte.</span>",
-      colorCard: theme.colors.orange500,
-      colorTitle: theme.colors.white,
-      colorButton: theme.colors.yellow,
-      colorText: theme.colors.white, 
-      colorTextButton: theme.colors.green,
-      amount: semiannualAmount,
-      setAmount: setSemiannualAmount,
+      id: 2,
+      label: "Semestral",
+      description: "Paga tu seguro cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
       price: semiannualPrice,
       setPrice: setSemiannualPrice,
     },
     { 
-      label: "ANUAL" ,
-      description: "Cancela tu plan Anualmente consiguiendo <span style='font-family: Gilroy Bold'>el mejor precio para tus asistencias.</span>",
-      colorCard: theme.colors.yellow,
-      colorTitle: theme.colors.purple,
-      colorButton: theme.colors.blue200,
-      colorText: theme.colors.black, 
-      colorTextButton: theme.colors.white, 
-      amount: annualAmount,
-      setAmount: setAnnualAmount,
+      id: 3,
+      label: "Anual",
+      description: "Paga tu seguro anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
       price: annualPrice,
       setPrice: setAnnualPrice,
     },
   ];
 
-
-
   return (
     <Div p="100px 0" direction="column" justify="center" align="center">
-      <Text color={theme.colors.blue200} size={theme.fonts.size.default}>
+      <Text
+        color={theme.colors.orange500}
+        size={theme.fonts.size.lgs}
+        font={theme.fonts.family.primaryBold}
+      >
+        Nuestros <span style={{color: theme.colors.blue200, fontFamily: theme.fonts.family.primaryBold}}>Planes</span>
+      </Text>
+      <Text color={theme.colors.blue200} size={theme.fonts.size.default2} mb={isMobile ? "20px" : "0"}>
         Conoce nuestros diferentes planes de pago
       </Text>
-      <Text 
-        color={theme.colors.blue200} 
-        size={isTablet ? theme.fonts.size.lg : theme.fonts.size.xl}
-        font={theme.fonts.family.primaryBold}  
-        mb="40px"
-      >
-        Precios
-      </Text>
+      {!isMobile && (
+        <Div m="50px 0 0 0" direction="column" align="center">
+          <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
+            Indica el número de mascotas para asegurar
+          </Text>
+          <Div m="10px 0 40px 0" gap="10px">
+            <Signs 
+              style={{ background: theme.colors.orange500 }} 
+              onClick={() => petsAmount > 1 && setPetsAmount(petsAmount - 1)}
+            >
+              -
+            </Signs>
+            <WrapperAmount>
+              {petsAmount}
+            </WrapperAmount>
+            <Signs style={{ background: theme.colors.orange500 }} onClick={() => setPetsAmount(petsAmount + 1)}>
+              +
+            </Signs>
+          </Div>
+        </Div>
+      )}
       <Div direction={isMobile ? "column" : "row"} gap="40px">
         {plansList.map((plan, index) => (
-          <CardPlan key={index} backgroundColor={plan.colorCard}>
+          <CardPlan 
+            key={index} 
+            backgroundColor={selectedPlan === plan.id ? theme.colors.purple : theme.colors.light} 
+            onClick={() => setSelectedPlan(plan.id)}
+            style={{
+              height: selectedPlan === plan.id ? "488px" : "410px"
+            }}
+          >
+            {selectedPlan === plan.id && (
+              <WrapperIcon>
+                <Image src={shieldStar} alt="shield" />
+              </WrapperIcon>
+            )}
             <Text  
-              color={plan.colorTitle} 
-              size={isTablet ? theme.fonts.size.h4 : theme.fonts.size.h3}
+              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.orange500} 
+              size={isTablet ? theme.fonts.size.h4 : theme.fonts.size.h3s}
               font={theme.fonts.family.primaryBold}
+              mt={selectedPlan === plan.id ? "10px" : "0"}
               mb="30px"
             >
               {plan.label}
             </Text>
             <Text 
-              color={plan.colorText} 
-              size={theme.fonts.size.default2}
+              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.black100} 
+              size={theme.fonts.size.h6}
               mb="20px"
-              style={{ width: "212px", height: "80px" }}
               dangerouslySetInnerHTML={{ __html: plan.description }}
             />
-            <Div align="center" justify="center" gap="20px" m="0 0 10px 0">
-              <Text 
-                size={theme.fonts.size.h1} 
-                color={theme.colors.green} 
-                style={{cursor: "pointer"}} 
-                onClick={() => plan.amount > 1 && (plan.setAmount(plan.amount - 1), plan.setPrice(plan.price - plan.price / plan.amount))}
-              >
-                -
-              </Text>
-              <WrapperAmount>{plan.amount}</WrapperAmount>
-              <Text 
-                size={theme.fonts.size.h1} 
-                color={theme.colors.green} 
-                style={{cursor: "pointer"}} 
-                onClick={() => (plan.setAmount(plan.amount + 1), plan.setPrice(plan.price + plan.price / plan.amount))}
-              >
-                +
-              </Text>
-            </Div>
-            <Button
-              background={plan.colorButton}
-              hover={plan.colorButton}
-              borderHover={plan.colorButton}
-              colorHover={plan.colorTextButton}
-              border={plan.colorButton}
-              labelColor={plan.colorTextButton}
-              size={theme.fonts.size.h6}
-              height="45px"
+            <Text
+              size={theme.fonts.size.xls}
+              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.black200}
+              font={theme.fonts.family.primaryBold}
+              mt="40px"
+              mb="30px"
             >
-              $ {numberFormat(plan.price)}
+              $ {numberFormat(Number(plan.price) * petsAmount)}
+            </Text>
+            <Button
+              background={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.light}
+              hover={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.light}
+              borderHover={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.orange500}
+              border={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.orange500}
+              labelColor={selectedPlan === plan.id ? theme.colors.white : theme.colors.orange500}
+              width="192px"
+              height="40px"
+            >
+              Protege tu mascota
             </Button>
           </CardPlan>
         ))}
       </Div>
+      {isMobile && (
+        <Div m="50px 0 0 0" direction="column" align="center">
+          <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
+            Indica el número de mascotas para asegurar
+          </Text>
+          <Div m="10px 0 40px 0" gap="10px">
+            <Signs 
+              style={{ background: theme.colors.orange500 }} 
+              onClick={() => petsAmount > 1 && setPetsAmount(petsAmount - 1)}
+            >
+              -
+            </Signs>
+            <WrapperAmount>
+              {petsAmount}
+            </WrapperAmount>
+            <Signs style={{ background: theme.colors.orange500 }} onClick={() => setPetsAmount(petsAmount + 1)}>
+              +
+            </Signs>
+          </Div>
+        </Div>
+      )}
+      <Text 
+        size={theme.fonts.size.default2} 
+        color={theme.colors.gray150} 
+        mt={isMobile ? "20px" : "40px"}
+        style={{ alignSelf: isMobile ? "center" : "flex-start", marginLeft: isMobile ? "0" : "100px" }}
+      >
+        *El valor del seguro se descontará automáticamente de tu método de pago según el plan elegido.
+      </Text>
     </Div>
   )
 };

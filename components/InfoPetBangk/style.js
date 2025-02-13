@@ -50,8 +50,11 @@ export const WrapperTitle = styled.div`
 
 export const CardPlan = styled.div`
   background-color: ${({ backgroundColor }) => backgroundColor};
-  padding: 50px 30px 20px 30px;
+  padding: 50px 35px 30px 35px;
   border-radius: 23px;
+  width: 378px;
+  border: 1px solid ${theme.colors.gray1100};
+  cursor: pointer;
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
@@ -59,24 +62,50 @@ export const CardPlan = styled.div`
   }
 `;
 
+export const WrapperIcon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+`;
+
 export const WrapperAmount = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  width: 61px;
   height: 40px;
-  background: ${theme.colors.light};
-  border-radius: 12%;
+  background: ${theme.colors.white};
+  border-radius: 20px;
+  border: 1px solid ${theme.colors.gray1100};
 
   font-size: ${theme.fonts.size.h6};
-  color: ${theme.colors.neutralGray600};
-  font-weight: ${theme.fonts.weight.bold};
+  color: ${theme.colors.gray1000};
   font-family: ${theme.fonts.family.primaryBold};
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 30px;
     height: 30px;
     font-size: ${theme.fonts.size.default};
+  }
+`;
+
+export const Signs = styled.span`
+  display: flex;
+  width: 66px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: ${theme.fonts.size.h5};
+  color: ${theme.colors.white};
+  cursor: pointer;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    height: 30px;
   }
 `;
 
@@ -119,6 +148,15 @@ export const WrapperAssistanceAreas = styled.div`
   }
 `;
 
+export const WrapperServicesInfo = styled.div`
+  display: flex;
+  width: 70%;
+  justify-content: center;
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: 12px;
+  padding: 10px 20px;
+`;
+
 export const OrangeCard = styled.div`
   display: flex;
   justify-content: center;
@@ -130,6 +168,7 @@ export const OrangeCard = styled.div`
   border-radius: 32px;
   margin-top: 60px;
   cursor: pointer;
+  
 
   color: ${theme.colors.white};
   font-size: ${theme.fonts.size.h5};
@@ -139,5 +178,9 @@ export const OrangeCard = styled.div`
     height: 130px;
     font-size: ${theme.fonts.size.h6};
     margin-top: 30px;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 `;

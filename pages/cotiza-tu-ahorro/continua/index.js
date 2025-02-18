@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import { Container, WrapperQuote } from "@/styles/Quote";
-import woman from "@/assets/img/woman-success.svg"
+import woman from "@/assets/img/woman-success.svg";
 import wappIcon from "@/assets/icons/whatsapp-original.svg";
 import { theme } from "@/styles/theme";
 import { resetInitData, setOtpDate } from "@/store/balance";
@@ -19,21 +19,23 @@ const ContinueQuoting = ({ isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleWapp = () => {
-    const phoneNumber = '3009136761';
-    const message = 'Hola! quiero cotizar mi seguro de vida deudores';
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
-    window.open(url, '_blank');
+    const phoneNumber = "3009136761";
+    const message = "Hola! quiero cotizar mi seguro de vida deudores";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(url, "_blank");
 
     dispatch(resetInitData());
     dispatch(setOtpDate(null));
   };
 
   const handleBack = () => {
-    router.push("/")
-    dispatch(resetInitData())
+    router.push("/");
+    dispatch(resetInitData());
     dispatch(setSelectedRequestInformation({}));
-  }
+  };
 
   return (
     <Container>
@@ -42,12 +44,20 @@ const ContinueQuoting = ({ isMobile }) => {
         {!isMobile && (
           <BackButton isHovered={isHovered} setIsHovered={setIsHovered} />
         )}
-        <Div direction={isMobile ? "column" : "row"} height={isMobile ? "100%" : "80vh"} gap={isMobile ? "48px" : "0"}>
-          <Div width={isMobile ? "100%" : "40%"} p={isMobile ? "0px" : "0 82px"} style={{ alignSelf: "center" }}>
+        <Div
+          direction={isMobile ? "column" : "row"}
+          height={isMobile ? "100%" : "80vh"}
+          gap={isMobile ? "48px" : "0"}
+        >
+          <Div
+            width={isMobile ? "100%" : "40%"}
+            p={isMobile ? "0px" : "0 82px"}
+            style={{ alignSelf: "center" }}
+          >
             <Image alt="woman" src={woman} width={isMobile ? 314 : 421} />
           </Div>
-          <Div 
-            direction="column" 
+          <Div
+            direction="column"
             width={isMobile ? "100%" : "60%"}
             align="center"
             gap="12px"
@@ -60,11 +70,12 @@ const ContinueQuoting = ({ isMobile }) => {
               align="center"
               style={{ width: isMobile ? "100%" : "720px" }}
             >
-              Continúa con el proceso de cotización de tu seguro haciendo clic aquí para comunicarte con uno de nuestros asesores.
+              Continúa con el proceso de cotización de tu seguro haciendo clic
+              aquí para comunicarte con uno de nuestros asesores.
             </Text>
-            <Image 
-              alt="wapp" 
-              src={wappIcon} 
+            <Image
+              alt="wapp"
+              src={wappIcon}
               width={"48px"}
               onClick={handleWapp}
               style={{ cursor: "pointer" }}
@@ -88,13 +99,13 @@ const ContinueQuoting = ({ isMobile }) => {
               height={"40px"}
               onClick={handleBack}
             >
-              Volver a Bangk.com
+              Volver a Bangk.co
             </Button>
           </Div>
         )}
       </WrapperQuote>
     </Container>
-  )
+  );
 };
 
 export default ContinueQuoting;

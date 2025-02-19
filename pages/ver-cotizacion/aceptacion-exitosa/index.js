@@ -10,10 +10,12 @@ import { useRouter } from "next/router";
 
 const CreationSuceess = ({ isMobile }) => {
   const router = useRouter();
+  const { loanApplicationId } = router.query;
 
   const handleGo = () => {
-    router.push("/solicitar-poliza/confirma-tus-datos")
-  }
+    const url = loanApplicationId ? `/solicitar-poliza/confirma-tus-datos?loanApplicationId=${loanApplicationId}` : "/solicitar-poliza/confirma-tus-datos";
+    router.push(url);
+  };
 
   return (
     <Container>

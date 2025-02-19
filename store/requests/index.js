@@ -52,7 +52,8 @@ export const slice = createSlice({
       beneficiaries: null,
       beneficiary: [],
       loanBalance: null,
-      monthlyCostInsurance: null
+      monthlyCostInsurance: null,
+      residenceAddress: null
     }
   },
   reducers: {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import Image from "next/image";
@@ -8,16 +9,18 @@ import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
 import { useRouter } from "next/router";
 import { ColForm, Container, WrapperPolicy } from "@/styles/Policy";
-import { setRequestInfo } from "@/store/requests";
+import { setRequestInfo, setSelectedRequestInformation } from "@/store/requests";
 import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
 import { Link } from "@/components/Link";
 
 const RequestSuccess = ({ isMobile }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleBangk = () => {
     router.push("/");
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
+    dispatch(setSelectedRequestInformation({}));
   };
 
   const handleCreate = () => {

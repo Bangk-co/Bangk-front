@@ -344,29 +344,47 @@ export const PersonalData = ({
               </Text>
             </Col>
           </Row>
-          <Col gap="10px" width="313.5px" m="16px 0 0 0">
-            <Text
-              font={theme.fonts.family.primaryBold}
-              size={theme.fonts.size.sm}
-              color={theme.colors.neutralGray900}
-            >
-              Ciudad de residencia
-            </Text>
-            <Text
-              font={theme.fonts.family.primary}
-              size={theme.fonts.size.default2}
-              weight={theme.fonts.weight.regular}
-              color={theme.colors.neutralGray900}
-            >
-              {getLabelFromValue(
-                personalInfo.residenceCityId,
-                residenceCitiesOptions,
-                "id",
-                "name"
-              )}
-            </Text>
-          </Col>
-
+          <Row width="100%" m="16px 0 0 0">
+            <Col gap="10px" width="313.5px" m="16px 0 0 0">
+              <Text
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.sm}
+                color={theme.colors.neutralGray900}
+              >
+                Ciudad de residencia
+              </Text>
+              <Text
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.default2}
+                weight={theme.fonts.weight.regular}
+                color={theme.colors.neutralGray900}
+              >
+                {getLabelFromValue(
+                  personalInfo.residenceCityId,
+                  residenceCitiesOptions,
+                  "id",
+                  "name"
+                )}
+              </Text>
+            </Col>
+            <Col gap="10px" width="313.5px" m="16px 0 0 0">
+              <Text
+                font={theme.fonts.family.primaryBold}
+                size={theme.fonts.size.sm}
+                color={theme.colors.neutralGray900}
+              >
+                Dirección de residencia
+              </Text>
+              <Text
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.default2}
+                weight={theme.fonts.weight.regular}
+                color={theme.colors.neutralGray900}
+              >
+                {personalInfo.residenceAddress}
+              </Text>
+            </Col>
+          </Row>
           <Div
             width="100%"
             height="1px"

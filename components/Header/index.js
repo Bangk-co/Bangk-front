@@ -6,6 +6,7 @@ import { Link } from "../Link";
 import { theme } from "@/styles/theme";
 import greenLogo from "../../assets/icons/green-logo.svg";
 import petLogo from "../../assets/img/petBangkLogo.png";
+import medLogo from "../../assets/img/med-logo-green.png";
 import menu from "../../assets/icons/menu.svg";
 import { useRouter } from "next/router";
 import MenuMobile from "./MenuMobile";
@@ -38,8 +39,8 @@ const Header = ({ isMobile, isTablet }) => {
   const subMenuItems = [
     { key: 0, label: "Endosos", url: "/ahorra-en-tus-seguros" },
     { key: 1, label: "Car-Bangk", url: "/ahorra-en-tus-seguros/car-bangk" },
-    { key: 2, label: "Telemedicina", url: null },
-    { key: 2, label: "Mascotas", url: "/pet-bangk" },
+    { key: 2, label: "Telemedicina", url: "/ahorra-en-tus-seguros/med-bangk" },
+    { key: 3, label: "Mascotas", url: "/pet-bangk" },
   ];
 
   const subMenuLogin = [
@@ -90,7 +91,16 @@ const Header = ({ isMobile, isTablet }) => {
       {isMobile ? (
         <>
           <Div>
-            {pathname.includes("pet-bangk") ? (
+            {pathname.includes("med-bangk") && (
+              <Image
+                alt="logo"
+                src={medLogo}
+                width={150}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+            {pathname.includes("pet-bangk") && (
               <Image
                 alt="logo"
                 src={petLogo}
@@ -99,7 +109,8 @@ const Header = ({ isMobile, isTablet }) => {
                 onClick={handlePetHome}
                 style={{ cursor: "pointer" }}
               />
-            ) : (
+            )}
+            {!pathname.includes("pet-bangk") && !pathname.includes("med-bangk") && (
               <Image
                 alt="logo"
                 src={greenLogo}
@@ -128,7 +139,7 @@ const Header = ({ isMobile, isTablet }) => {
       ) : (
         <>
           <Div>
-            {pathname.includes("pet-bangk") ? (
+            {pathname.includes("pet-bangk") && (
               <Image
                 alt="logo"
                 src={petLogo}
@@ -137,14 +148,24 @@ const Header = ({ isMobile, isTablet }) => {
                 onClick={handlePetHome}
                 style={{ cursor: "pointer" }}
               />
-            ) : (
+            )}
+            {pathname.includes("med-bangk") && (
+              <Image
+                alt="logo"
+                src={medLogo}
+                width={isTablet ? 123 : 163}
+                onClick={handleHome}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+            {!pathname.includes("pet-bangk") && !pathname.includes("med-bangk") && (
               <Image
                 alt="logo"
                 src={greenLogo}
                 width={isTablet ? 139 : 163}
                 height={isTablet ? 51 : 60}
                 onClick={handleHome}
-                style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer" }}
               />
             )}
           </Div>

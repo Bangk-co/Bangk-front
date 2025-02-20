@@ -39,7 +39,7 @@ export const Prices = ({ isMobile, isTablet }) => {
   ];
 
   return (
-    <Div p="0 0 80px 0" direction="column" justify="center" align="center">
+    <Div p="0 0 80px 0" direction="column" justify="center" align="center" id="prices">
       <Text
         color={theme.colors.green1000}
         size={theme.fonts.size.lgs}

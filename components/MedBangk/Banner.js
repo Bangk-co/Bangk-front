@@ -7,8 +7,9 @@ import { Div, Text } from "@/styles/Common";
 import { Button } from "../Common/Button";
 import { theme } from "@/styles/theme";
 import logo from "@/assets/img/med-logo-white.png";
+import stethoscope from "@/assets/icons/stethoscope.png";
 
-const Banner = ({ isMobile, isTablet }) => {
+const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
   return (
     <WrapperBanner>
       <Image 
@@ -46,12 +47,14 @@ const Banner = ({ isMobile, isTablet }) => {
             height={"40px"}
             labelWeight={theme.fonts.weight.bold}
             size={theme.fonts.size.h6}
+            onClick={handleScrollTo}
           >
             Cotiza ya!
           </Button>
         </Div>
-        <Div width="100%" justify="space-between">
+        <Div width="100%" justify="space-between" align="center">
           <Image alt="logo" src={logo} width={290} />
+          <Image alt="stethoscope" src={stethoscope} width={120} />
         </Div>
       </Div>
     </WrapperBanner>

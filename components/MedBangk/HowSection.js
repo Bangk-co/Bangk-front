@@ -5,8 +5,10 @@ import Image from "next/image";
 import youngMan from "@/assets/img/young-man.png";
 import star from "@/assets/img/starOrange.png";
 import { theme } from "@/styles/theme";
+import { Button } from "../Common/Button";
+import wow from "@/assets/img/wow.png";
 
-const HowSection = ({ isMobile, isTablet }) => {
+const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
   return (
     <WrapperHowSection>
       <WrapperLeft>
@@ -49,8 +51,26 @@ const HowSection = ({ isMobile, isTablet }) => {
           </Text>
         </Div>
       </WrapperLeft>
-      <Div width={(isMobile || isTablet) ? "100%" : "45%"}>
+      <Div width={(isMobile || isTablet) ? "100%" : "45%"} style={{ position: "relative" }}>
         <Image src={youngMan} alt="youngMan" style={{ width: "100%", height: "100%" }} />
+        <Div style={{ position: "absolute", top: "120px", right: "50px" }}>
+          <Image src={wow} alt="wow" />
+        </Div>
+        <Div style={{ position: "absolute", bottom: "60px", right: "50px" }}>
+          <Button
+            labelColor={theme.colors.orange}
+            background={theme.colors.white}
+            border={theme.colors.white}
+            hover={theme.colors.white}
+            borderHover={theme.colors.white}
+            height={"40px"}
+            labelWeight={theme.fonts.weight.bold}
+            size={theme.fonts.size.h6}
+            onClick={handleScrollTo}
+          >
+            Cotiza ya!
+          </Button>
+        </Div>
       </Div>
     </WrapperHowSection>
   )

@@ -25,11 +25,18 @@ const MedBangk = ({ isMobile, isTablet }) => {
     }
   ];
 
+  const handleScrollTo = () => {
+    const element = document.getElementById("prices");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
-      <Banner isMobile={isMobile} isTablet={isTablet} />
-      <HowSection isMobile={isMobile} isTablet={isTablet} />
+      <Banner isMobile={isMobile} isTablet={isTablet} handleScrollTo={handleScrollTo} />
+      <HowSection isMobile={isMobile} isTablet={isTablet} handleScrollTo={handleScrollTo} />
       <SummaryPlan isMobile={isMobile} isTablet={isTablet} />
       <Prices isMobile={isMobile} isTablet={isTablet} />
       <Benefits isMobile={isMobile} isTablet={isTablet} />

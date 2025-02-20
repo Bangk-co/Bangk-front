@@ -71,7 +71,7 @@ export const Prices = ({ isMobile, isTablet }) => {
           </Div>
         </Div>
       )}
-      <Div direction={isMobile ? "column" : "row"} gap="40px">
+      <Div direction={(isMobile || isTablet) ? "column" : "row"} gap="40px">
         {plansList.map((plan, index) => (
           <CardPlan 
             key={index} 

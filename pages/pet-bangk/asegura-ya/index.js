@@ -1,6 +1,5 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 import React, { useState } from "react";
-import { Wrapper } from "./styles";
 import { Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Tabs } from "@/components/Common/Tabs";
@@ -11,14 +10,15 @@ import Image from "next/image";
 import { Step1 } from "@/components/SecureItNow/Step1";
 import { Step2 } from "@/components/SecureItNow/Step2";
 import { Step3 } from "@/components/SecureItNow/Step3";
+import { Wrapper } from "@/components/SecureItNow/styles";
 
-const SecureItNow = () => {
+const SecureItNow = ({ isMobile }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const router = useRouter();
   const { petsAmount, selectedPlan } = router.query;
   const [petsForm, setPetsForm] = useState({
-    methodOfPayment: selectedPlan,
-    petsAmount: petsAmount,
+    methodOfPayment: selectedPlan || "", 
+    petsAmount: petsAmount || 1,
     documentType: "",
     documentNumber: "",
     email: "",
@@ -95,7 +95,7 @@ const SecureItNow = () => {
 
   return (
     <>
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
       <Wrapper>
         <Image 
           src={footprint} 
@@ -109,9 +109,9 @@ const SecureItNow = () => {
         <Text
           font={theme.fonts.family.primaryBold}
           color={theme.colors.orange500}
-          size={theme.fonts.size.lgs}
+          size={isMobile ? theme.fonts.size.h1 : theme.fonts.size.lgs}
         >
-          Confgura <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.blue200 }}>tu seguro</span>
+          Configura <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.blue200 }}>tu seguro</span>
         </Text>
         <Text color={theme.colors.blue200} mb="40px">
           Contrata tu seguro en menos de 2 minutos
@@ -134,6 +134,7 @@ const SecureItNow = () => {
         </Tabs>
         {selectedTab === 0 && (
           <Step1 
+            isMobile={isMobile}
             buttonProps={buttonProps}
             labelsProps={labelsProps} 
             handleContinue={handleContinue}
@@ -143,6 +144,7 @@ const SecureItNow = () => {
         )}
         {selectedTab === 1 && (
           <Step2 
+            isMobile={isMobile}
             buttonProps={buttonProps}
             labelsProps={labelsProps}
             handleContinue={handleContinue}
@@ -152,6 +154,7 @@ const SecureItNow = () => {
         )}
         {selectedTab === 2 && (
           <Step3 
+            isMobile={isMobile}
             buttonProps={buttonProps}
             handleContinue={handleContinue}
             petsForm={petsForm}

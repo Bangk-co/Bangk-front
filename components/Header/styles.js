@@ -31,7 +31,7 @@ export const WrapperMenu = styled.div`
   width: 100%;
   height: 93%;
   background: ${theme.colors.green};
-  z-index: 5;
+  z-index: 15;
 `;
 
 export const Text = styled.div`

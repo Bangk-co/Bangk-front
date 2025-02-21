@@ -1,6 +1,26 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: ${theme.colors.light};
+  padding: 40px 280px 30px 280px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 30px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 40px 100px 30px 100px;
+  }
+`;
+
 export const Card = styled.div`
   display: flex;
   flex-direction: column;

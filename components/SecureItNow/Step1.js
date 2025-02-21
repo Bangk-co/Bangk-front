@@ -13,6 +13,7 @@ import dog from "@/assets/img/dog.png";
 import Image from "next/image";
 
 export const Step1 = ({ 
+    isMobile,
     buttonProps,
     labelsProps, 
     handleContinue,
@@ -178,7 +179,7 @@ export const Step1 = ({
         <Grid item xs={12} md={6}>
           <Button 
             {...buttonProps}
-            width="124px"
+            width={isMobile ? "100%" : "124px"}
             onClick={handleContinue}
           >
             Continuar

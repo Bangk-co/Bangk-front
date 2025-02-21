@@ -13,7 +13,8 @@ export const PetInfoForm = ({
   handleContinue,
   setPetsForm,
   petsForm,
-  index
+  index,
+  isMobile
 }) => {
   const radioOptions = [
     {
@@ -112,7 +113,7 @@ export const PetInfoForm = ({
       <Grid item xs={12} md={6}>
         <Button 
           {...buttonProps}
-          width="124px"
+          width={isMobile ? "100%" : "124px"}
           onClick={handleContinue}
           style={{ marginTop: "20px" }}
         >

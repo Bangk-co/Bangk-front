@@ -7,10 +7,12 @@ import { Button } from "../Common/Button";
 import dog from "@/assets/img/dog.png";
 import Image from "next/image";
 import dogIcon from "@/assets/icons/dog.svg";
+import catIcon from "@/assets/icons/cat.svg";
 import edit from "@/assets/icons/edit-gray.svg";
 import trash from "@/assets/icons/trash-gray.svg";
 
 export const Step3 = ({ 
+    isMobile,
     buttonProps,
     handleContinue,
     petsForm,
@@ -92,18 +94,18 @@ export const Step3 = ({
           <Grid item xs={12} md={12} key={index}>
             <WrapperPetInfo>
               <Div align="center" gap="20px">
-                <Image src={dogIcon} alt="dog" />
+                <Image src={pet.petType === "1" ? dogIcon : catIcon} alt="pet" />
                 <Div direction="column">
                   <Text
                     font={theme.fonts.family.primaryBold}
-                    size={theme.fonts.size.h6}
+                    size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
                     color={theme.colors.gray150}
                   >
                     {pet.petName}
                   </Text>
                   <Text
                     font={theme.fonts.family.primary}
-                    size={theme.fonts.size.default}
+                    size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default}
                     color={theme.colors.gray150}
                     style={{ textAlign: "left" }}
                   >
@@ -121,7 +123,7 @@ export const Step3 = ({
         <Grid item xs={12} md={6}>
           <Button 
             {...buttonProps}
-            width="147px"
+            width={isMobile ? "100%" : "147px"}
             onClick={handleContinue}
           >
             Pagar ahora

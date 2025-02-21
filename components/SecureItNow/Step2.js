@@ -6,6 +6,7 @@ import catImg from "@/assets/img/footprintCat.png";
 import Image from "next/image";
 
 export const Step2 = ({
+  isMobile,
   buttonProps,
   labelsProps,
   handleContinue,
@@ -20,7 +21,7 @@ export const Step2 = ({
       setPetsForm((prev) => ({
         ...prev,
         petsInfo: Array.from({ length: petsForm.petsAmount }, (_, index) => ({
-          ...prev.petsInfo[index], // Mantiene datos previos
+          ...prev.petsInfo[index], 
           id: index,
           petType: prev.petsInfo[index]?.petType || "",
           petName: prev.petsInfo[index]?.petName || "",
@@ -44,13 +45,16 @@ export const Step2 = ({
             setPetsForm={setPetsForm}
             petsForm={petsForm}
             index={index}
+            isMobile={isMobile}
           /> 
       })));
   }, [petsForm]);
 
   return (
     <Div>
-      <Image src={catImg} alt="cat" height={391} style={{ position: "absolute", top: "380px", right: "-140px", zIndex: "1" }} />
+      {!isMobile && (
+        <Image src={catImg} alt="cat" height={391} style={{ position: "absolute", top: "380px", right: "-140px", zIndex: "1" }} />
+      )}
       <CardCollapse panels={panels} activeKey={activeKey} setActiveKey={setActiveKey} />
     </Div>
   )

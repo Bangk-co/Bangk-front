@@ -6,8 +6,9 @@ import { Button } from "../Common/Button";
 import { numberFormat } from "@/utilities/helpers";
 import Image from "next/image";
 import shieldStar from "@/assets/icons/shield-star.svg";
-
+import { useRouter } from "next/router";
 export const Price = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [petsAmount, setPetsAmount] = useState(1);
   const [monthlyPrice, setMonthlyPrice] = useState(15000);
   const [semiannualPrice, setSemiannualPrice] = useState(85000);
@@ -118,6 +119,7 @@ export const Price = ({ isMobile, isTablet }) => {
               labelColor={selectedPlan === plan.id ? theme.colors.white : theme.colors.orange500}
               width="192px"
               height="40px"
+              onClick={() => router.push(`/pet-bangk/asegura-ya?selectedPlan=${selectedPlan}&&petsAmount=${petsAmount}`)}
             >
               Protege tu mascota
             </Button>

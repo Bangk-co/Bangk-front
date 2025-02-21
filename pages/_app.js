@@ -77,6 +77,7 @@ const MyApp = ({ Component, pageProps, isMobileServer, isTabletServer }) => {
     "/pet-bangk/info-petbangk",
     "/pet-bangk/buscamos-tu-mascota",
     "/pet-bangk/condiciones",
+    "/pet-bangk/asegura-ya",
   ];
 
   const showHeaderAndAnimation = routesWithHeaderAndFooter.includes(

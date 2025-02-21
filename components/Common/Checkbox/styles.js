@@ -5,7 +5,7 @@ import { theme } from '@/styles/theme';
 export const CustomCheckbox = styled(Checkbox)(({ checkedColor, borderColor }) => ({
   '& .MuiSvgIcon-root': {
     color: borderColor || theme.colors.white,
-    width: "18px",
+    width: ({ width }) => width || "18px",
   },
   '&.MuiCheckbox-root': {
     background: "transparent",

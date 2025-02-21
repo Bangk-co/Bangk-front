@@ -5,8 +5,9 @@ import { Div, Text } from "@/styles/Common";
 import arrowRight from "@/assets/icons/arrow-right.svg";
 import { Button } from "../Common/Button";
 import Image from "next/image";
-
+import { useRouter } from "next/router";
 export const Services = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [petBangkAmount, setPetBangkAmount] = useState(1);
   const [searchAmount, setSearchAmount] = useState(1);
   const [selectedAsistance, setSelectedAsistance] = useState(1);
@@ -37,7 +38,7 @@ export const Services = ({ isMobile, isTablet }) => {
       background: theme.colors.blue200,
       onClick: (value) => setSelectedAsistance(value),
       buttonText: "Protege a tu mascota ahora!",
-      urlButton: "/",
+      urlButton: "/pet-bangk/asegura-ya",
       countButtonsColor: theme.colors.orange500,
       amount: petBangkAmount,
       setAmount: setPetBangkAmount
@@ -181,6 +182,7 @@ export const Services = ({ isMobile, isTablet }) => {
               borderHover={theme.colors.white}
               borderRadius={"50px"}
               style={{ marginTop: "30px" }}
+              onClick={() => router.push(`${option.urlButton}?selectedPlan=${selectedAsistance}&&petsAmount=${petBangkAmount}`)}
             >
               {option.buttonText}
               <Image src={arrowRight} alt="arrowRight" />

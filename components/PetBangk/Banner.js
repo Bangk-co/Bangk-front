@@ -76,6 +76,7 @@ const Banner = ({ isMobile, isTablet }) => {
                 border={theme.colors.yellow}
                 borderHover={theme.colors.yellow}
                 width={returnWidthButton1()}
+                onClick={() => router.push("/pet-bangk/asegura-ya")}
               >
                 Protege a tu mascota ahora!
               </Button>
@@ -111,6 +112,7 @@ const Banner = ({ isMobile, isTablet }) => {
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
             width={returnWidthButton1()}
+            onClick={() => router.push("/pet-bangk/asegura-ya")}
           >
             Protege a tu mascota ahora!
           </Button>

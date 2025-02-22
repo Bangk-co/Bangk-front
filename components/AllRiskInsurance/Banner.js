@@ -4,8 +4,15 @@ import { theme } from "@/styles/theme";
 import car from "@/assets/img/carIlustration.png";
 import { Col, Text } from "@/styles/Common";
 import { WrapperBanner } from "./styles";
+import { Button } from "../Common/Button";
 
 const Banner = ({ isMobile }) => {
+  const handleWpp = () => {
+    window.open(
+      "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk!",
+      "_blank"
+    );
+  };
   return (
     <WrapperBanner>
       <Image
@@ -38,6 +45,7 @@ const Banner = ({ isMobile }) => {
         size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.ft}
         font={theme.fonts.family.primary}
         align="center"
+        mb="20px"
         style={{ width: !isMobile && "50%" }}
       >
         Conduce tranquilo y con la seguridad que necesitas en cada recorrido,
@@ -50,6 +58,19 @@ const Banner = ({ isMobile }) => {
           hasta de $4,000 millones
         </span>
       </Text>
+      <Button
+        width={"260px"}
+        font={theme.fonts.family.primaryBold}
+        size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
+        background={theme.colors.orange}
+        labelColor={theme.colors.green}
+        border={"transparent"}
+        hover={theme.colors.orange}
+        borderHover={theme.colors.orange}
+        onClick={handleWpp}
+      >
+        Contacta a un asesor
+      </Button>
     </WrapperBanner>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
-import Banner from "@/components/MedBangk/banner";
+import Banner from "@/components/MedBangk/Banner";
 import HowSection from "@/components/MedBangk/HowSection";
 import SummaryPlan from "@/components/MedBangk/SummaryPlan";
 import { Prices } from "@/components/MedBangk/Prices";
@@ -12,17 +12,17 @@ const MedBangk = ({ isMobile, isTablet }) => {
     {
       label: "Bangk",
       href: "/",
-      type: "link"
+      type: "link",
     },
     {
       label: "Seguros",
       href: "/ahorra-en-tus-seguros",
-      type: "link"
+      type: "link",
     },
     {
       label: "MedBangk",
-      type: "text"
-    }
+      type: "text",
+    },
   ];
 
   const handleScrollTo = () => {
@@ -35,8 +35,16 @@ const MedBangk = ({ isMobile, isTablet }) => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
-      <Banner isMobile={isMobile} isTablet={isTablet} handleScrollTo={handleScrollTo} />
-      <HowSection isMobile={isMobile} isTablet={isTablet} handleScrollTo={handleScrollTo} />
+      <Banner
+        isMobile={isMobile}
+        isTablet={isTablet}
+        handleScrollTo={handleScrollTo}
+      />
+      <HowSection
+        isMobile={isMobile}
+        isTablet={isTablet}
+        handleScrollTo={handleScrollTo}
+      />
       <SummaryPlan isMobile={isMobile} isTablet={isTablet} />
       <Prices isMobile={isMobile} isTablet={isTablet} />
       <Benefits isMobile={isMobile} isTablet={isTablet} />

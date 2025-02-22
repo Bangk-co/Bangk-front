@@ -224,146 +224,146 @@ const PetConditions = ({ isMobile, isTablet }) => {
           <tbody>
             <tr>
               <td>Paseador de mascotas</td>
-              <td>2 eventos</td>
-              <td>$ 50.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>2 eventos</td>
+              <td style={{ textAlign: "center" }}>$ 50.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Hotel para mascota por hospitalización del dueño</td>
-              <td>2 eventos * 3 días</td>
-              <td>$ 150.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>2 eventos * 3 días</td>
+              <td style={{ textAlign: "center" }}>$ 150.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Orientación médica veterinaria telefónica</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Consulta médica veterinaria en red GEA</td>
-              <td>3 eventos</td>
-              <td>$ 120.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>3 eventos</td>
+              <td style={{ textAlign: "center" }}>$ 120.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Vacunación en red veterinaria</td>
-              <td>1 evento</td>
-              <td>$ 100.000</td>
-              <td>90 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 100.000</td>
+              <td style={{ textAlign: "center" }}>90 días</td>
             </tr>
             <tr>
               <td>
                 Traslado de la mascota por emergencia: accidente o enfermedad
               </td>
-              <td>3 eventos</td>
-              <td>$ 120.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>3 eventos</td>
+              <td style={{ textAlign: "center" }}>$ 120.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>
                 Asistencia médica veterinaria por ingestión de cuerpos extraños
               </td>
-              <td>1 evento</td>
-              <td>$ 120.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 120.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Auxilio para la esterilización de la mascota</td>
-              <td>1 evento</td>
-              <td>$ 120.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 120.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Servicio de eutanasia por enfermedad o accidente grave</td>
-              <td>1 evento</td>
-              <td>$ 200.000</td>
-              <td>90 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 200.000</td>
+              <td style={{ textAlign: "center" }}>90 días</td>
             </tr>
             <tr>
               <td>Servicio de cremación por enfermedad o accidente</td>
-              <td>1 evento</td>
-              <td>$ 300.000</td>
-              <td>90 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 300.000</td>
+              <td style={{ textAlign: "center" }}>90 días</td>
             </tr>
             <tr>
               <td>Auxilio para desparasitación</td>
-              <td>1 evento</td>
-              <td>$ 70.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 70.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Auxilio pipeta antipulgas</td>
-              <td>1 evento</td>
-              <td>$ 80.000</td>
-              <td>90 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 80.000</td>
+              <td style={{ textAlign: "center" }}>90 días</td>
             </tr>
             <tr>
               <td>
                 Auxilio para radiografías, ecografías y cirugías para mascota
               </td>
-              <td>1 evento</td>
-              <td>$ 100.000</td>
-              <td>30 días</td>
+              <td style={{ textAlign: "center" }}>1 evento</td>
+              <td style={{ textAlign: "center" }}>$ 100.000</td>
+              <td style={{ textAlign: "center" }}>30 días</td>
             </tr>
             <tr>
               <td>Referencia y coordinación de adiestrador de perros</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>
                 Referencia y coordinación de caminatas eco-recreativas caninas
               </td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Referencia y coordinación de clínicas veterinarias</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Información sobre guarderías de mascotas</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Referencia y coordinación para el transporte de mascotas</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Coordinación radiografías, ecografías, y cirugías</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>
                 Referencia y coordinación con salón de belleza, boutiques y
                 clínicas veterinarias
               </td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Referencia y coordinación con cementerios de mascotas</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
             <tr>
               <td>Asistencia legal telefónica</td>
-              <td>Sin límite</td>
-              <td>Sin límite</td>
-              <td>No aplica</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>Sin límite</td>
+              <td style={{ textAlign: "center" }}>No aplica</td>
             </tr>
           </tbody>
         </table>
@@ -390,9 +390,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Paseador de mascotas
         </Text>
@@ -472,9 +473,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Hotel para mascota por hospitalización del dueño
         </Text>
@@ -552,9 +554,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Orientación médica veterinaria telefónica
         </Text>
@@ -611,9 +614,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Consulta médica veterinaria
         </Text>
@@ -682,9 +686,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Vacunación en red veterinaria
         </Text>
@@ -767,9 +772,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Traslado de la mascota por emergencia: accidente o enfermedad
         </Text>
@@ -854,9 +860,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Asistencia médica veterinaria de control por ingesta de cuerpos
           extraños
@@ -949,9 +956,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Auxilio para la esterilización de la mascota
         </Text>
@@ -1031,9 +1039,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Servicio de eutanasia por enfermedad o accidente grave
         </Text>
@@ -1126,9 +1135,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Servicio de cremación por enfermedad o accidente
         </Text>
@@ -1237,9 +1247,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Auxilio para desparasitación
         </Text>
@@ -1319,9 +1330,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Auxilio pipeta antipulgas
         </Text>
@@ -1392,9 +1404,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Auxilio para radiografías, ecografías y cirugias para mascota
         </Text>
@@ -1480,9 +1493,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y coordinación de adiestrador de perros
         </Text>
@@ -1542,9 +1556,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y coordinación de caminatas eco- recreativas caninas
         </Text>
@@ -1604,9 +1619,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y coordinación de clínicas veterinarias
         </Text>
@@ -1666,9 +1682,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Información sobre guarderías de mascotas
         </Text>
@@ -1728,9 +1745,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y/o coordinación para el transporte de mascotas
         </Text>
@@ -1789,9 +1807,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Coordinación radiografías, ecografías, y cirugías
         </Text>
@@ -1855,9 +1874,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y coordinación con salón de belleza, boutiques y clínicas
           veterinarias
@@ -1918,9 +1938,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Referencia y coordinación con cementerios de mascotas
         </Text>
@@ -1980,9 +2001,10 @@ const PetConditions = ({ isMobile, isTablet }) => {
       <Col m="20px 0">
         <Text
           color={theme.colors.green}
-          size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+          size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5s}
           font={theme.fonts.family.primaryBold}
           align="center"
+          mb="20px"
         >
           Asistencia legal telefónica
         </Text>

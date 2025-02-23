@@ -110,16 +110,17 @@ const Header = ({ isMobile, isTablet }) => {
                 style={{ cursor: "pointer" }}
               />
             )}
-            {!pathname.includes("pet-bangk") && !pathname.includes("med-bangk") && (
-              <Image
-                alt="logo"
-                src={greenLogo}
-                width={93}
-                height={34}
-                onClick={handleHome}
-                style={{ cursor: "pointer" }}
-              />
-            )}
+            {!pathname.includes("pet-bangk") &&
+              !pathname.includes("med-bangk") && (
+                <Image
+                  alt="logo"
+                  src={greenLogo}
+                  width={93}
+                  height={34}
+                  onClick={handleHome}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
           </Div>
           <Div
             m="0 30px 0 0"
@@ -133,6 +134,9 @@ const Header = ({ isMobile, isTablet }) => {
               headerButtons={headerButtons}
               optionSelected={optionSelected}
               handleGo={handleGo}
+              subMenuOpen={subMenuOpen}
+              setSubMenuOpen={setSubMenuOpen}
+              subMenuItems={subMenuItems}
             />
           )}
         </>
@@ -158,16 +162,17 @@ const Header = ({ isMobile, isTablet }) => {
                 style={{ cursor: "pointer" }}
               />
             )}
-            {!pathname.includes("pet-bangk") && !pathname.includes("med-bangk") && (
-              <Image
-                alt="logo"
-                src={greenLogo}
-                width={isTablet ? 139 : 163}
-                height={isTablet ? 51 : 60}
-                onClick={handleHome}
+            {!pathname.includes("pet-bangk") &&
+              !pathname.includes("med-bangk") && (
+                <Image
+                  alt="logo"
+                  src={greenLogo}
+                  width={isTablet ? 139 : 163}
+                  height={isTablet ? 51 : 60}
+                  onClick={handleHome}
                   style={{ cursor: "pointer" }}
-              />
-            )}
+                />
+              )}
           </Div>
 
           <Div gap={isTablet ? "23px" : "48px"}>

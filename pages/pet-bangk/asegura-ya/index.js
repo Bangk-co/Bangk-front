@@ -83,7 +83,7 @@ const SecureItNow = ({ isMobile }) => {
   const tabs = [
     { label: "Información general" },
     { label: "Datos de tu mascota" },
-    { label: "Resumen de tu seguro"}
+    { label: "Resumen de tu asistencia"}
   ];
 
   const handleContinue = () => {
@@ -111,10 +111,10 @@ const SecureItNow = ({ isMobile }) => {
           color={theme.colors.orange500}
           size={isMobile ? theme.fonts.size.h1 : theme.fonts.size.lgs}
         >
-          Configura <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.blue200 }}>tu seguro</span>
+          Configura <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.blue200 }}>tu asistencia</span>
         </Text>
         <Text color={theme.colors.blue200} mb="40px">
-          Contrata tu seguro en menos de 2 minutos
+          Contrata tu asistencia en menos de 2 minutos
         </Text>
         <Tabs
           value={selectedTab}

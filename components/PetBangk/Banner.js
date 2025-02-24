@@ -51,8 +51,10 @@ const Banner = ({ isMobile, isTablet }) => {
     <WrapperBanner>
       <Div direction="row">
         <Div width={"60%"} direction="column">
-          <Title>Cuidamos a quienes</Title>
-          <Title color={theme.colors.yellow}>dejan huella!</Title>
+          <Title style={{ marginBottom: isMobile ? "60px" : "100px" }}>
+            Cuidamos a quienes {" "} 
+            <span style={{ color: theme.colors.yellow, fontFamily: theme.fonts.family.primaryBold }}>dejan huella!</span>
+          </Title>
           <Text mt={returnMarginText1()}>
             Cuidamos no solo tu bolsillo, si no tus seres queridos.
             Sabemos que tu mascota es uno más de tu familia y se 

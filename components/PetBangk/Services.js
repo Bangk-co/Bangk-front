@@ -17,7 +17,7 @@ export const Services = ({ isMobile, isTablet }) => {
     labelColor: theme.colors.white,
     size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default2,
     mobileWidth: "90px",
-    width: isMobile ? "135px" : '192px',
+    width: isMobile ? "120px" : '192px',
     height: '100%',
     border: 'transparent',
     borderHover: 'transparent',
@@ -122,9 +122,9 @@ export const Services = ({ isMobile, isTablet }) => {
               style={{ 
                 background: "rgba(255, 255, 255, 0.2)", 
                 width: "100%", 
-                height:isMobile ? "40px" : "50px", 
+                height: isMobile ? "40px" : "50px", 
                 borderRadius: "40px",
-                justifyContent: "center",
+                justifyContent: isMobile ? "space-around" : "center",
                 alignItems: "center",
               }}
             >
@@ -133,7 +133,7 @@ export const Services = ({ isMobile, isTablet }) => {
                   {...buttonProps}
                   key={index}
                   style={{ 
-                    marginLeft: isMobile ? '-25px' : (index > 0 ? '-45px' : '0'),
+                    marginLeft: isMobile ? '-20px' : (index > 0 ? '-45px' : '0'),
                   }}
                   font={option.id === 1 ? button.id === selectedAsistance ? theme.fonts.family.primaryBold : theme.fonts.family.primary : button.id === selectedSearch ? theme.fonts.family.primaryBold : theme.fonts.family.primary}
                   background={option.id === 1 ? button.id === selectedAsistance ? option.colorButton : "transparent" : button.id === selectedSearch ? option.colorButton : "transparent"}
@@ -172,7 +172,7 @@ export const Services = ({ isMobile, isTablet }) => {
             </Div>
             <Button
               width={isMobile ? "100%" : "352px"}
-              height={"40px"}
+              height={isMobile ? "max-content" : "40px"}
               background={"transparent"}
               hover={"transparent"}
               labelColor={theme.colors.white}

@@ -47,7 +47,7 @@ export const Step3 = ({
         font={theme.fonts.family.primaryBold}
         mb="20px"
       >
-        Aquí el resumen de tu seguro
+        Aquí el resumen de tu asistencia
       </Text>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} style={{ flexDirection: "column" }}>
@@ -79,7 +79,7 @@ export const Step3 = ({
             size={theme.fonts.size.default2}
             mb="10px"
           >
-            Valor de tu seguro {returnPlan()}
+            Valor de tu asistencia {returnPlan()}
           </Text>
           <Text
             color={theme.colors.gray150}

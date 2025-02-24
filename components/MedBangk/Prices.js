@@ -18,21 +18,21 @@ export const Prices = ({ isMobile, isTablet }) => {
     { 
       id: 1,
       label: "Mensual",
-      description: "La forma más sencilla de acceder a nuestras asistencias: paga tu seguro <span style='font-family: Gilroy Bold'>mes a mes.</span>",
+      description: "La forma más sencilla de acceder a nuestras asistencias: paga tu asistencia <span style='font-family: Gilroy Bold'>mes a mes.</span>",
       price: monthlyPrice,
       setPrice: setMonthlyPrice,
     },
     { 
       id: 2,
       label: "Semestral",
-      description: "Paga tu seguro cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
+      description: "Paga tu asistencia cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
       price: semiannualPrice,
       setPrice: setSemiannualPrice,
     },
     { 
       id: 3,
       label: "Anual",
-      description: "Paga tu seguro anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
+      description: "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
       price: annualPrice,
       setPrice: setAnnualPrice,
     },
@@ -47,30 +47,30 @@ export const Prices = ({ isMobile, isTablet }) => {
       >
         Precios
       </Text>
-      <Text color={theme.colors.green1000} size={theme.fonts.size.default2} mb={isMobile ? "20px" : "0"}>
+      <Text color={theme.colors.green1000} size={theme.fonts.size.default2}>
         Conoce nuestros diferentes planes de pago
       </Text>
-      {!isMobile && (
-        <Div m="50px 0 0 0" direction="column" align="center">
-          <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
-            Indica el número de personas para asegurar
-          </Text>
-          <Div m="10px 0 40px 0" gap="10px">
-            <Signs 
-              style={{ background: theme.colors.green1000 }} 
-              onClick={() => planAmount > 1 && setPlanAmount(planAmount - 1)}
-            >
-              -
-            </Signs>
-            <WrapperAmount>
-              {planAmount}
-            </WrapperAmount>
-            <Signs style={{ background: theme.colors.green1000 }} onClick={() => setPlanAmount(planAmount + 1)}>
-              +
-            </Signs>
-          </Div>
+
+      <Div m="50px 0 0 0" direction="column" align="center">
+        <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
+          Indica el número de personas 
+        </Text>
+        <Div m="10px 0 40px 0" gap="10px">
+          <Signs 
+            style={{ background: theme.colors.green1000 }} 
+            onClick={() => planAmount > 1 && setPlanAmount(planAmount - 1)}
+          >
+            -
+          </Signs>
+          <WrapperAmount>
+            {planAmount}
+          </WrapperAmount>
+          <Signs style={{ background: theme.colors.green1000 }} onClick={() => setPlanAmount(planAmount + 1)}>
+            +
+          </Signs>
         </Div>
-      )}
+      </Div>
+
       <Div direction={(isMobile || isTablet) ? "column" : "row"} gap="40px">
         {plansList.map((plan, index) => (
           <CardPlan 
@@ -151,7 +151,7 @@ export const Prices = ({ isMobile, isTablet }) => {
         mt={isMobile ? "20px" : "40px"}
         style={{ alignSelf: isMobile ? "center" : "flex-start", marginLeft: isMobile ? "0" : "100px" }}
       >
-        *El valor del seguro se descontará automáticamente de tu método de pago según el plan elegido.
+        *El valor de la asistencia se descontará automáticamente de tu método de pago según el plan elegido.
       </Text>
     </Div>
   )

@@ -221,7 +221,7 @@ const Header = ({ isMobile, isTablet }) => {
                       left: 0,
                       borderRadius: "8px",
                       padding: "10px 20px",
-                      zIndex: 10,
+                      zIndex: 999,
                     }}
                   >
                     {subMenuItems.map((subItem) => (

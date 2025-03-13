@@ -40,7 +40,7 @@ const MenuMobile = ({
             <>
               <Link
                 key={indx}
-                size={theme.fonts.size.h3}
+                size={theme.fonts.size.ft}
                 weight={theme.fonts.weight.bold}
                 color={
                   pathname.includes(ele.url) ||

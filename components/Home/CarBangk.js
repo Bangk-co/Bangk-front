@@ -186,8 +186,8 @@ const CarBangk = ({ isMobile }) => {
               onClick={insurance.onClick}
               style={{
                 position: "absolute",
-                top: "20px", // Ajusta la distancia desde el borde superior
-                right: "20px", // Ajusta la distancia desde el borde derecho
+                top: "20px",
+                right: "20px",
               }}
             >
               Conoce más

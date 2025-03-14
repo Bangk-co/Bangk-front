@@ -1,6 +1,7 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 import bg from "@/assets/img/orangeBGStar.png";
+import medBg from "@/assets/img/old-man-cross.png";
 
 //Banner
 export const Wrapper = styled.div`
@@ -746,4 +747,34 @@ export const WrapperCarBangk = styled.div`
   gap: 40px;
   align-items: center;
   justify-content: center;
+`;
+
+const backgroundImageUrlMed = medBg.src;
+export const WrapperMedBangk = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: ${(props) => (props.isMobile ? "40px 22px" : "70px 72px")};
+  background-image: url(${backgroundImageUrlMed});
+  background-position: center;
+  background-repeat: no-repeat;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const WrapperModal = styled.div`
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 200px;
+  flex-direction: column;
+  padding: 24px 32px;
+  border-radius: 20px;
+  gap: 10px;
+  background: ${theme.colors.white};
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
 `;

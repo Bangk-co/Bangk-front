@@ -16,6 +16,7 @@ import {
 } from "@/store/requests";
 import CarBangk from "@/components/Home/CarBangk";
 import PetBangk from "@/components/Home/PetBangk";
+import MedBangk from "@/components/Home/MedBangk";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Home = ({ isMobile, isTablet }) => {
       <Bangk isMobile={isMobile} />
       <CarBangk isMobile={isMobile} />
       <PetBangk isMobile={isMobile} />
+      <MedBangk isMobile={isMobile} />
       <BlogSection isTablet={isTablet} isMobile={isMobile} />
       <Reviews isMobile={isMobile} isTablet={isTablet} />
     </Div>

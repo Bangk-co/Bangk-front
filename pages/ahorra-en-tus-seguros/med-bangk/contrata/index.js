@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import { Step1 } from "@/components/HireMedBangk/Step1";
 import _ from "lodash";
 import { Button } from "@/components/Common/Button";
 import { Checkbox } from "@/components/Common/Checkbox";
+import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
+import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 
 const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
@@ -33,8 +35,6 @@ const HireAssistance = ({ isMobile }) => {
       documentNumber: "",
     })),
   });
-
-  console.log("form", form);
 
   const labelsProps = {
     labelColor: theme.colors.gray1000,
@@ -77,6 +77,34 @@ const HireAssistance = ({ isMobile }) => {
     },
   ];
 
+  const documentsType = useGetDocumentType();
+  const { data: dataDocuments, isSuccess: isSuccessDocuments } = documentsType;
+  const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessDocuments) {
+      setDocumentTypeOptions(
+        dataDocuments?.data.groupSettings.map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+      );
+    }
+  }, [isSuccessDocuments, dataDocuments]);
+
+  const phoneCode = useGetIndicatives();
+  const { data: dataPhone, isSuccess: isSuccessPhone } = phoneCode;
+  const [phoneCodesOptions, setPhoneCodesOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessPhone) {
+      setPhoneCodesOptions(
+        dataPhone?.data?.groupSettings?.map((ele) => ({
+          label: `(${ele.code}) ${ele.name}`,
+          value: ele.id,
+        }))
+      );
+    }
+  }, [isSuccessPhone, dataPhone]);
+
   const handleContinue = () => {
     if (actualStep === 2) {
       return;
@@ -98,16 +126,7 @@ const HireAssistance = ({ isMobile }) => {
         <Text color={theme.colors.green1000} mb="40px">
           Contrata tu asistencia en menos de 5 minutos
         </Text>
-        {actualStep === 0 && (
-          <Step1
-            isMobile={isMobile}
-            buttonProps={buttonProps}
-            labelsProps={labelsProps}
-            handleContinue={handleContinue}
-            form={form}
-            setForm={setForm}
-          />
-        )}
+
         <Step1
           isMobile={isMobile}
           buttonProps={buttonProps}
@@ -115,6 +134,8 @@ const HireAssistance = ({ isMobile }) => {
           handleContinue={handleContinue}
           form={form}
           setForm={setForm}
+          documentTypeOptions={documentTypeOptions}
+          phoneCodesOptions={phoneCodesOptions}
         />
       </Wrapper>
     </>

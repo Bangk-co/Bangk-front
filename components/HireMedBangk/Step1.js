@@ -19,6 +19,8 @@ export const Step1 = ({
   handleContinue,
   form,
   setForm,
+  documentTypeOptions,
+  phoneCodesOptions,
 }) => {
   const radioOptions = [
     { label: "Mensual", value: "1" },
@@ -42,6 +44,8 @@ export const Step1 = ({
             form={form}
             isMobile={isMobile}
             setActiveKey={setActiveKey}
+            documentTypeOptions={documentTypeOptions}
+            phoneCodesOptions={phoneCodesOptions}
           />
         ),
       },
@@ -58,10 +62,13 @@ export const Step1 = ({
           index={index}
           isMobile={isMobile}
           setActiveKey={setActiveKey}
+          documentTypeOptions={documentTypeOptions}
+          phoneCodesOptions={phoneCodesOptions}
         />
       ),
     }));
     setPanels([...panelsData, ...beneficiaryPanels]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form]);
 
   const handleRadio = (event) => {

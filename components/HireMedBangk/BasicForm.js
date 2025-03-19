@@ -1,6 +1,6 @@
 import React from "react";
 import { theme } from "@/styles/theme";
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
@@ -14,6 +14,8 @@ export const BasicForm = ({
   index,
   isMobile,
   setActiveKey,
+  documentTypeOptions,
+  phoneCodesOptions,
 }) => {
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -58,11 +60,20 @@ export const BasicForm = ({
         <Select
           {...labelsProps}
           label="Tipo de documento"
-          options={[]}
           value={form.beneficiariesInfo[index].documentType}
           onChange={(event) => handleSelect("documentType", event)}
           disabled={index === 0 && form.beneficiary}
-        />
+        >
+          {documentTypeOptions.map((ele, indx) => (
+            <MenuItem
+              key={indx}
+              value={ele.value}
+              style={{ fontFamily: theme.fonts.family.primary }}
+            >
+              {ele.label}
+            </MenuItem>
+          ))}
+        </Select>
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
@@ -113,11 +124,21 @@ export const BasicForm = ({
           <Select
             {...labelsProps}
             label="Ind del país"
-            options={[]}
             value={form.beneficiariesInfo[index].countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
             disabled={index === 0 && form.beneficiary}
-          />
+          >
+            {phoneCodesOptions.map((ele, indx) => (
+              <MenuItem
+                key={indx}
+                value={ele.value}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.label}
+              </MenuItem>
+            ))}
+          </Select>
+
           <TextField
             {...labelsProps}
             id="phoneNumber"

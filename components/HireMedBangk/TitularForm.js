@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { theme } from "@/styles/theme";
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
@@ -14,23 +14,9 @@ export const TitularForm = ({
   form,
   isMobile,
   setActiveKey,
+  documentTypeOptions,
+  phoneCodesOptions,
 }) => {
-  const handleChange = (event) => {
-    const { id, value } = event.target;
-    const updatedForm = { ...form };
-    updatedForm[id] = value;
-
-    setForm(updatedForm);
-  };
-
-  const handleSelect = (field, event) => {
-    const { value } = event.target;
-    const updatedForm = { ...form };
-    updatedForm[field] = value;
-
-    setForm(updatedForm);
-  };
-
   useEffect(() => {
     if (form.beneficiary) {
       const updatedForm = { ...form };
@@ -59,7 +45,24 @@ export const TitularForm = ({
       };
       setForm(updatedForm);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.beneficiary]);
+
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    const updatedForm = { ...form };
+    updatedForm[id] = value;
+
+    setForm(updatedForm);
+  };
+
+  const handleSelect = (field, event) => {
+    const { value } = event.target;
+    const updatedForm = { ...form };
+    updatedForm[field] = value;
+
+    setForm(updatedForm);
+  };
 
   return (
     <Grid
@@ -72,10 +75,19 @@ export const TitularForm = ({
         <Select
           {...labelsProps}
           label="Tipo de documento"
-          options={[]}
           value={form.documentType}
           onChange={(event) => handleSelect("documentType", event)}
-        />
+        >
+          {documentTypeOptions.map((ele, indx) => (
+            <MenuItem
+              key={indx}
+              value={ele.value}
+              style={{ fontFamily: theme.fonts.family.primary }}
+            >
+              {ele.label}
+            </MenuItem>
+          ))}
+        </Select>
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
@@ -122,10 +134,19 @@ export const TitularForm = ({
           <Select
             {...labelsProps}
             label="Ind del país"
-            options={[]}
             value={form.countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
-          />
+          >
+            {phoneCodesOptions.map((ele, indx) => (
+              <MenuItem
+                key={indx}
+                value={ele.value}
+                style={{ fontFamily: theme.fonts.family.primary }}
+              >
+                {ele.label}
+              </MenuItem>
+            ))}
+          </Select>
           <TextField
             {...labelsProps}
             id="phoneNumber"

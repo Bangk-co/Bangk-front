@@ -19,6 +19,8 @@ export const Step1 = ({
   handleContinue,
   form,
   setForm,
+  activeKey,
+  setActiveKey,
   documentTypeOptions,
   phoneCodesOptions,
 }) => {
@@ -29,7 +31,6 @@ export const Step1 = ({
   ];
 
   const [panels, setPanels] = useState([]);
-  const [activeKey, setActiveKey] = useState(0);
 
   useEffect(() => {
     const panelsData = [

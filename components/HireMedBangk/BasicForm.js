@@ -60,7 +60,7 @@ export const BasicForm = ({
         <Select
           {...labelsProps}
           label="Tipo de documento"
-          value={form.beneficiariesInfo[index].documentType}
+          value={form.beneficiariesInfo[index]?.documentType}
           onChange={(event) => handleSelect("documentType", event)}
           disabled={index === 0 && form.beneficiary}
         >
@@ -81,7 +81,7 @@ export const BasicForm = ({
           id="documentNumber"
           label="Número de documento"
           placeholder={"Ingresa el número"}
-          value={form.beneficiariesInfo[index].documentNumber}
+          value={form.beneficiariesInfo[index]?.documentNumber}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
         />
@@ -92,7 +92,7 @@ export const BasicForm = ({
           id="beneficiaryName"
           label="Nombre"
           placeholder={"Indica tu nombre"}
-          value={form.beneficiariesInfo[index].beneficiaryName}
+          value={form.beneficiariesInfo[index]?.beneficiaryName}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
         />
@@ -103,7 +103,7 @@ export const BasicForm = ({
           id="beneficiaryLastname"
           label="Apellido"
           placeholder={"Indica tu apellido"}
-          value={form.beneficiariesInfo[index].beneficiaryLastname}
+          value={form.beneficiariesInfo[index]?.beneficiaryLastname}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
         />
@@ -114,7 +114,7 @@ export const BasicForm = ({
           id="email"
           label="Email"
           placeholder={"Ej: correo@email.com"}
-          value={form.beneficiariesInfo[index].email}
+          value={form.beneficiariesInfo[index]?.email}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
         />
@@ -124,7 +124,7 @@ export const BasicForm = ({
           <Select
             {...labelsProps}
             label="Ind del país"
-            value={form.beneficiariesInfo[index].countryCode}
+            value={form.beneficiariesInfo[index]?.countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
             disabled={index === 0 && form.beneficiary}
           >
@@ -144,7 +144,7 @@ export const BasicForm = ({
             id="phoneNumber"
             label="Número de celular"
             placeholder={"Indica tu número"}
-            value={form.beneficiariesInfo[index].phoneNumber}
+            value={form.beneficiariesInfo[index]?.phoneNumber}
             onChange={handleChange}
             disabled={index === 0 && form.beneficiary}
           />

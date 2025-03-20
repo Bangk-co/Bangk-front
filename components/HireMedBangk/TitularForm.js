@@ -31,19 +31,6 @@ export const TitularForm = ({
         phoneNumber: updatedForm.phoneNumber,
       };
       setForm(updatedForm);
-    } else {
-      const updatedForm = { ...form };
-      updatedForm.beneficiariesInfo[0] = {
-        ...updatedForm.beneficiariesInfo[0],
-        beneficiaryName: "",
-        beneficiaryLastname: "",
-        documentNumber: "",
-        documentType: "",
-        email: "",
-        countryCode: "",
-        phoneNumber: "",
-      };
-      setForm(updatedForm);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.beneficiary]);

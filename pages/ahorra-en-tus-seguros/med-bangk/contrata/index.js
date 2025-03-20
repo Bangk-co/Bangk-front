@@ -5,6 +5,7 @@ import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { Wrapper } from "@/components/HireMedBangk/styles";
 import { Step1 } from "@/components/HireMedBangk/Step1";
+import { Step2 } from "@/components/HireMedBangk/Step2";
 import _ from "lodash";
 import { Button } from "@/components/Common/Button";
 import { Checkbox } from "@/components/Common/Checkbox";
@@ -13,11 +14,12 @@ import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 
 const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
+  const [activeKey, setActiveKey] = useState(0);
   const router = useRouter();
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
-    planAmount: planAmount || 1,
+    planAmount: Number(planAmount) || 1,
     documentType: "",
     documentNumber: "",
     email: "",
@@ -112,6 +114,11 @@ const HireAssistance = ({ isMobile }) => {
     setActualStep(actualStep + 1);
   };
 
+  const handleEdit = (keyToEdit) => {
+    setActualStep(1);
+    setActiveKey(keyToEdit);
+  };
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
@@ -126,17 +133,30 @@ const HireAssistance = ({ isMobile }) => {
         <Text color={theme.colors.green1000} mb="40px">
           Contrata tu asistencia en menos de 5 minutos
         </Text>
-
-        <Step1
-          isMobile={isMobile}
-          buttonProps={buttonProps}
-          labelsProps={labelsProps}
-          handleContinue={handleContinue}
-          form={form}
-          setForm={setForm}
-          documentTypeOptions={documentTypeOptions}
-          phoneCodesOptions={phoneCodesOptions}
-        />
+        {actualStep === 1 && (
+          <Step1
+            isMobile={isMobile}
+            buttonProps={buttonProps}
+            labelsProps={labelsProps}
+            handleContinue={handleContinue}
+            form={form}
+            setForm={setForm}
+            activeKey={activeKey}
+            setActiveKey={setActiveKey}
+            documentTypeOptions={documentTypeOptions}
+            phoneCodesOptions={phoneCodesOptions}
+          />
+        )}
+        {actualStep === 2 && (
+          <Step2
+            isMobile={isMobile}
+            buttonProps={buttonProps}
+            form={form}
+            setForm={setForm}
+            documentTypeOptions={documentTypeOptions}
+            handleEdit={handleEdit}
+          />
+        )}
       </Wrapper>
     </>
   );

@@ -30,7 +30,7 @@ export const Card = styled.div`
   border-radius: 24px;
   background-color: ${theme.colors.white};
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.08);
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 export const WrapperAmount = styled.div`
@@ -60,4 +60,15 @@ export const Signs = styled.div`
   color: ${theme.colors.orange500};
   font-family: ${theme.fonts.family.primaryBold};
   font-size: ${theme.fonts.size.h5s};
+`;
+
+export const ResumeCard = styled.div`
+  background: ${({ background, theme }) => background || theme.colors.gray1300};
+  border: 1px solid ${theme.colors.gray1200};
+  border-radius: 13px;
+  padding: 16px 24px;
+  margin: 20px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

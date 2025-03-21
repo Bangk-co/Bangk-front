@@ -10,9 +10,6 @@ import { useRouter } from "next/router";
 export const Price = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const [petsAmount, setPetsAmount] = useState(1);
-  const [monthlyPrice, setMonthlyPrice] = useState(15000);
-  const [semiannualPrice, setSemiannualPrice] = useState(85000);
-  const [annualPrice, setAnnualPrice] = useState(150000);
   const [selectedPlan, setSelectedPlan] = useState(2);
 
   const plansList = [
@@ -20,24 +17,55 @@ export const Price = ({ isMobile, isTablet }) => {
       id: 1,
       label: "Mensual",
       description: "La forma más sencilla de acceder a nuestras asistencias: paga tu asistencia <span style='font-family: Gilroy Bold'>mes a mes.</span>",
-      price: monthlyPrice,
-      setPrice: setMonthlyPrice,
     },
     { 
       id: 2,
       label: "Semestral",
       description: "Paga tu asistencia cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
-      price: semiannualPrice,
-      setPrice: setSemiannualPrice,
     },
     { 
       id: 3,
       label: "Anual",
       description: "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
-      price: annualPrice,
-      setPrice: setAnnualPrice,
     },
   ];
+
+  const getPrice = (amount, frequency) => {
+    const prices = {
+      monthly: [23800, 45220, 63546],
+      semiannual: [135660, 257754, 358399],
+      annual: [257040, 488376, 678671],
+    };
+
+    const additionalCosts = {
+      monthly: 20825,
+      semiannual: 98175,
+      annual: 222768,
+    };
+
+    const frequencyMap = {
+      1: 'monthly',
+      2: 'semiannual',
+      3: 'annual',
+    };
+
+    const frequencyKey = frequencyMap[frequency];
+    if (!frequencyKey || !prices[frequencyKey]) {
+      return 0;
+    }
+
+    const index = amount > 2 ? 2 : amount - 1;
+    const basePrice = prices[frequencyKey][index];
+
+    if (index < 0 || index >= prices[frequencyKey].length) {
+      return 0;
+    }
+
+    // Añadir costo adicional si hay más de 3 mascotas
+    const additionalCost = amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
+
+    return basePrice + additionalCost; // Sumar el costo adicional al precio base
+  };
 
   return (
     <Div p="100px 0" direction="column" justify="center" align="center">
@@ -109,7 +137,7 @@ export const Price = ({ isMobile, isTablet }) => {
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(plan.price) * petsAmount)}
+              $ {numberFormat(Number(getPrice(petsAmount, plan.id)))}
             </Text>
             <Button
               background={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.light}

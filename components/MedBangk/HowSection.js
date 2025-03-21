@@ -53,10 +53,10 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
       </WrapperLeft>
       <Div width={(isMobile || isTablet) ? "100%" : "45%"} style={{ position: "relative" }}>
         <Image src={youngMan} alt="youngMan" style={{ width: "100%", height: "100%" }} />
-        <Div style={{ position: "absolute", top: "120px", right: "50px" }}>
+        <Div style={{ position: "absolute", top: isMobile ? "-20px" : "120px", right: isMobile ? "10px" : "50px" }}>
           <Image src={wow} alt="wow" />
         </Div>
-        <Div style={{ position: "absolute", bottom: "60px", right: "50px" }}>
+        <Div style={{ position: "absolute", bottom: isMobile ? "30px" : "60px", right: isMobile ? "10px" : "50px" }}>
           <Button
             labelColor={theme.colors.orange}
             background={theme.colors.white}

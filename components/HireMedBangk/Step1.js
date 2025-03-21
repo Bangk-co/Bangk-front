@@ -85,11 +85,19 @@ export const Step1 = ({
       methodOfPayment: event.target.defaultValue,
     });
   };
-
   const handleSave = () => {
     const validation = validateMedBangkForm.validate(form, {
       abortEarly: false,
     });
+    const errorMessages = {
+      name: "Mínimo 2 Máximo 50 caracteres",
+      lastName: "Mínimo 2 Máximo 50 caracteres",
+      phoneNumber: "Mínimo 7 Máximo 15 caracteres",
+      documentNumber: "Mínimo 5 Máximo 13 caracteres",
+      beneficiaryName: "Mínimo 2 Máximo 50 caracteres",
+      beneficiaryLastname: "Mínimo 2 Máximo 50 caracteres",
+      email: "Obligatorio, debe ser un correo válido",
+    };
     if (validation.error) {
       const newErrorForm = { ...errorForm };
       validation.error.details.forEach((ele) => {
@@ -97,8 +105,21 @@ export const Step1 = ({
         if (!newErrorForm[label]) {
           newErrorForm[label] = { error: false, message: "" };
         }
-        newErrorForm[label].error = true;
-        newErrorForm[label].message = "Campo obligatorio";
+
+        if (label.startsWith("beneficiariesInfo")) {
+          const fieldName = label.split(".").pop();
+          const customMessage = errorMessages[fieldName] || "Campo obligatorio";
+
+          _.set(newErrorForm, label, {
+            error: true,
+            message: customMessage,
+          });
+        } else {
+          _.set(newErrorForm, label, {
+            error: true,
+            message: errorMessages[label] || "Campo obligatorio",
+          });
+        }
       });
       setErrorForm(newErrorForm);
 

@@ -68,7 +68,7 @@ export const BasicForm = ({
           onChange={(event) => handleSelect("documentType", event)}
           disabled={index === 0 && form.beneficiary}
           error={errorForm?.[`beneficiariesInfo[${index}].documentType`]?.error}
-          helperText={
+          helper={
             errorForm?.[`beneficiariesInfo[${index}].documentType`]?.error
               ? errorForm?.[`beneficiariesInfo[${index}].documentType`]?.message
               : ""
@@ -98,7 +98,7 @@ export const BasicForm = ({
           error={
             errorForm?.[`beneficiariesInfo[${index}].documentNumber`]?.error
           }
-          helperText={
+          helper={
             errorForm?.[`beneficiariesInfo[${index}].documentNumber`]?.error
               ? errorForm?.[`beneficiariesInfo[${index}].documentNumber`]
                   ?.message
@@ -118,7 +118,7 @@ export const BasicForm = ({
           error={
             errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]?.error
           }
-          helperText={
+          helper={
             errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]?.error
               ? errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]
                   ?.message
@@ -139,7 +139,7 @@ export const BasicForm = ({
             errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
               ?.error
           }
-          helperText={
+          helper={
             errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
               ?.error
               ? errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
@@ -158,7 +158,7 @@ export const BasicForm = ({
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
           error={errorForm?.[`beneficiariesInfo[${index}].email`]?.error}
-          helperText={
+          helper={
             errorForm?.[`beneficiariesInfo[${index}].email`]?.error
               ? errorForm?.[`beneficiariesInfo[${index}].email`]?.message
               : ""
@@ -176,7 +176,7 @@ export const BasicForm = ({
             error={
               errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
             }
-            helperText={
+            helper={
               errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
                 ? errorForm?.[`beneficiariesInfo[${index}].countryCode`]
                     ?.message
@@ -206,7 +206,7 @@ export const BasicForm = ({
             error={
               errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
             }
-            helperText={
+            helper={
               errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
                 ? errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]
                     ?.message

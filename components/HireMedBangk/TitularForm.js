@@ -41,11 +41,6 @@ export const TitularForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.beneficiary]);
 
-  useEffect(() => {
-    // Aquí puedes hacer cualquier acción necesaria cuando los errores cambian
-    console.log("ErrorForm ha cambiado:", errorForm);
-  }, [errorForm]);
-
   const handleChange = (event) => {
     const { id, value } = event.target;
     const updatedForm = { ...form };
@@ -73,8 +68,6 @@ export const TitularForm = ({
     setErrorForm(null);
   };
 
-  console.log("errorForm?.lastName?.error", errorForm?.lastName?.error);
-  console.log("mensaje", errorForm?.lastName?.message);
   return (
     <Grid
       container

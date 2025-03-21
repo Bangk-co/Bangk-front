@@ -13,6 +13,7 @@ import { BasicForm } from "./BasicForm";
 import _ from "lodash";
 import { TitularForm } from "./TitularForm";
 import { validateMedBangkForm } from "@/utilities/validations";
+import { ToastErrorClient } from "../Common/ToastErrorClients";
 
 export const Step1 = ({
   isMobile,
@@ -76,7 +77,7 @@ export const Step1 = ({
       ),
     }));
     setPanels([...panelsData, ...beneficiaryPanels]);
-  }, [form, errorForm]);
+  }, [form, errorForm, phoneCodesOptions, documentTypeOptions]);
 
   const handleRadio = (event) => {
     setForm({
@@ -84,7 +85,6 @@ export const Step1 = ({
       methodOfPayment: event.target.defaultValue,
     });
   };
-  console.log("form", form);
 
   const handleSave = () => {
     const validation = validateMedBangkForm.validate(form, {
@@ -101,7 +101,15 @@ export const Step1 = ({
         newErrorForm[label].message = "Campo obligatorio";
       });
       setErrorForm(newErrorForm);
-      toast.error("Verifica todos los campos obligatorios");
+
+      toast.custom(
+        <ToastErrorClient
+          message={"Verifica todo los campos"}
+          color={theme.colors.white}
+          background={theme.colors.primary300}
+        />,
+        { duration: 1000 }
+      );
     } else {
       handleContinue();
     }

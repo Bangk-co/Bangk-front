@@ -61,10 +61,9 @@ export const Price = ({ isMobile, isTablet }) => {
       return 0;
     }
 
-    // Añadir costo adicional si hay más de 3 mascotas
     const additionalCost = amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
 
-    return basePrice + additionalCost; // Sumar el costo adicional al precio base
+    return basePrice + additionalCost;
   };
 
   return (

@@ -9,9 +9,6 @@ import { CardPlan, Signs, WrapperAmount, WrapperIcon } from "./styles";
 
 export const Prices = ({ isMobile, isTablet }) => {
   const [planAmount, setPlanAmount] = useState(1);
-  const [monthlyPrice, setMonthlyPrice] = useState(12500);
-  const [semiannualPrice, setSemiannualPrice] = useState(47500);
-  const [annualPrice, setAnnualPrice] = useState(85000);
   const [selectedPlan, setSelectedPlan] = useState(1);
 
   const plansList = [
@@ -19,24 +16,46 @@ export const Prices = ({ isMobile, isTablet }) => {
       id: 1,
       label: "Mensual",
       description: "La forma más sencilla de acceder a nuestras asistencias: paga tu asistencia <span style='font-family: Gilroy Bold'>mes a mes.</span>",
-      price: monthlyPrice,
-      setPrice: setMonthlyPrice,
     },
     { 
       id: 2,
       label: "Semestral",
       description: "Paga tu asistencia cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
-      price: semiannualPrice,
-      setPrice: setSemiannualPrice,
     },
     { 
       id: 3,
       label: "Anual",
       description: "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
-      price: annualPrice,
-      setPrice: setAnnualPrice,
     },
   ];
+
+  const getPrice = (amount, frequency) => {
+    const prices = {
+      monthly: [22610, 42959, 65569],
+      semiannual: [21480, 40811, 373743],
+      annual: [20349, 38663, 723882],
+    };
+
+    const frequencyMap = {
+      1: 'monthly',
+      2: 'semiannual',
+      3: 'annual',
+    };
+
+    const frequencyKey = frequencyMap[frequency];
+    if (!frequencyKey || !prices[frequencyKey]) {
+      return 0;
+    }
+
+    const index = amount > 2 ? 2 : amount - 1;
+    const basePrice = prices[frequencyKey][index];
+
+    if (index < 0 || index >= prices[frequencyKey].length) {
+      return 0;
+    }
+
+    return basePrice;
+  };
 
   return (
     <Div p="0 0 80px 0" direction="column" justify="center" align="center" id="prices">
@@ -65,7 +84,7 @@ export const Prices = ({ isMobile, isTablet }) => {
           <WrapperAmount>
             {planAmount}
           </WrapperAmount>
-          <Signs style={{ background: theme.colors.green1000 }} onClick={() => setPlanAmount(planAmount + 1)}>
+          <Signs style={{ background: theme.colors.green1000 }} onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}>
             +
           </Signs>
         </Div>
@@ -108,7 +127,7 @@ export const Prices = ({ isMobile, isTablet }) => {
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(plan.price) * planAmount)}
+              $ {numberFormat(Number(getPrice(planAmount, plan.id)))}
             </Text>
             <Button
               background={selectedPlan === plan.id ? theme.colors.green1000 : theme.colors.light}
@@ -139,7 +158,7 @@ export const Prices = ({ isMobile, isTablet }) => {
             <WrapperAmount>
               {planAmount}
             </WrapperAmount>
-            <Signs style={{ background: theme.colors.green1000 }} onClick={() => setPlanAmount(planAmount + 1)}>
+            <Signs style={{ background: theme.colors.green1000 }} onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}>
               +
             </Signs>
           </Div>

@@ -50,7 +50,7 @@ export const ModalAccept = ({
             size={theme.fonts.size.default2}
             align="center"
           >
-            Recuerda que tu cotización tiene 2 días de vigencias para ser
+            Recuerda que tu cotización tiene 2 días de vigencia para ser
             adquirida.
           </Text>
         </Div>

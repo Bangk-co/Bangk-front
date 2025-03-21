@@ -53,8 +53,8 @@ const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
           </Button>
         </Div>
         <Div width="100%" justify="space-between" align="center">
-          <Image alt="logo" src={logo} width={290} />
-          <Image alt="stethoscope" src={stethoscope} width={120} />
+          <Image alt="logo" src={logo} width={isMobile ? 250 : 290} />
+          <Image alt="stethoscope" src={stethoscope} width={isMobile ? 110 : 120} />
         </Div>
       </Div>
     </WrapperBanner>

@@ -159,7 +159,6 @@ export const validateMedBangkForm = Joi.object({
   beneficiariesInfo: Joi.array()
     .items(
       Joi.object({
-        id: Joi.number().required(),
         documentType: Joi.number().required(),
         documentNumber: Joi.string().required(),
         email: validateEmailRequired,

@@ -34,7 +34,7 @@ export const Step1 = ({
 
   const [panels, setPanels] = useState([]);
   const [errorForm, setErrorForm] = useState({});
-  console.log("error", errorForm);
+
   useEffect(() => {
     const panelsData = [
       {
@@ -50,7 +50,8 @@ export const Step1 = ({
             setActiveKey={setActiveKey}
             documentTypeOptions={documentTypeOptions}
             phoneCodesOptions={phoneCodesOptions}
-            errors={errorForm}
+            errorForm={errorForm}
+            setErrorForm={setErrorForm}
           />
         ),
       },
@@ -69,12 +70,13 @@ export const Step1 = ({
           setActiveKey={setActiveKey}
           documentTypeOptions={documentTypeOptions}
           phoneCodesOptions={phoneCodesOptions}
+          errorForm={errorForm}
+          setErrorForm={setErrorForm}
         />
       ),
     }));
     setPanels([...panelsData, ...beneficiaryPanels]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form]);
+  }, [form, errorForm]);
 
   const handleRadio = (event) => {
     setForm({
@@ -83,6 +85,7 @@ export const Step1 = ({
     });
   };
   console.log("form", form);
+
   const handleSave = () => {
     const validation = validateMedBangkForm.validate(form, {
       abortEarly: false,
@@ -98,7 +101,7 @@ export const Step1 = ({
         newErrorForm[label].message = "Campo obligatorio";
       });
       setErrorForm(newErrorForm);
-      toast.error("Por favor, completa todos los campos obligatorios");
+      toast.error("Verifica todos los campos obligatorios");
     } else {
       handleContinue();
     }
@@ -144,6 +147,10 @@ export const Step1 = ({
                   setForm({
                     ...form,
                     planAmount: form.planAmount - 1,
+                    beneficiariesInfo: form.beneficiariesInfo.slice(
+                      0,
+                      form.planAmount - 1
+                    ),
                   })
                 }
               >
@@ -152,9 +159,22 @@ export const Step1 = ({
               <WrapperAmount>{form.planAmount || 1}</WrapperAmount>
               <Signs
                 onClick={() =>
+                  form.planAmount < 5 &&
                   setForm({
                     ...form,
                     planAmount: form.planAmount + 1,
+                    beneficiariesInfo: [
+                      ...form.beneficiariesInfo,
+                      {
+                        documentType: "",
+                        documentNumber: "",
+                        email: "",
+                        beneficiaryName: "",
+                        beneficiaryLastname: "",
+                        countryCode: "",
+                        phoneNumber: "",
+                      },
+                    ],
                   })
                 }
               >
@@ -199,11 +219,13 @@ export const Step1 = ({
             y poder ser contactado para la oferta del servicio.
           </Text>
         </Row>
+
         <Button
           {...buttonProps}
           width={isMobile ? "100%" : "230px"}
           onClick={handleSave}
           labelWeight={theme.fonts.weight.regular}
+          disabled={!form.authorization}
         >
           Contratar asistencia
         </Button>

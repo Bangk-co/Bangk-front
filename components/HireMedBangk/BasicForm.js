@@ -16,6 +16,8 @@ export const BasicForm = ({
   setActiveKey,
   documentTypeOptions,
   phoneCodesOptions,
+  errorForm,
+  setErrorForm,
 }) => {
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -26,6 +28,7 @@ export const BasicForm = ({
       [id]: value,
     };
     setForm({ ...form, beneficiariesInfo: updatedBeneficiaries });
+    setErrorForm({});
   };
 
   const handleSelect = (field, event) => {
@@ -38,6 +41,7 @@ export const BasicForm = ({
     };
 
     setForm({ ...form, beneficiariesInfo: updatedBeneficiaries });
+    setErrorForm({});
   };
 
   return (
@@ -63,6 +67,12 @@ export const BasicForm = ({
           value={form.beneficiariesInfo[index]?.documentType}
           onChange={(event) => handleSelect("documentType", event)}
           disabled={index === 0 && form.beneficiary}
+          error={errorForm?.[`beneficiariesInfo[${index}].documentType`]?.error}
+          helperText={
+            errorForm?.[`beneficiariesInfo[${index}].documentType`]?.error
+              ? errorForm?.[`beneficiariesInfo[${index}].documentType`]?.message
+              : ""
+          }
         >
           {documentTypeOptions.map((ele, indx) => (
             <MenuItem
@@ -85,6 +95,15 @@ export const BasicForm = ({
           value={form.beneficiariesInfo[index]?.documentNumber}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
+          error={
+            errorForm?.[`beneficiariesInfo[${index}].documentNumber`]?.error
+          }
+          helperText={
+            errorForm?.[`beneficiariesInfo[${index}].documentNumber`]?.error
+              ? errorForm?.[`beneficiariesInfo[${index}].documentNumber`]
+                  ?.message
+              : ""
+          }
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -96,6 +115,15 @@ export const BasicForm = ({
           value={form.beneficiariesInfo[index]?.beneficiaryName}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
+          error={
+            errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]?.error
+          }
+          helperText={
+            errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]?.error
+              ? errorForm?.[`beneficiariesInfo[${index}].beneficiaryName`]
+                  ?.message
+              : ""
+          }
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -107,6 +135,17 @@ export const BasicForm = ({
           value={form.beneficiariesInfo[index]?.beneficiaryLastname}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
+          error={
+            errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
+              ?.error
+          }
+          helperText={
+            errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
+              ?.error
+              ? errorForm?.[`beneficiariesInfo[${index}].beneficiaryLastname`]
+                  ?.message
+              : ""
+          }
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -118,6 +157,12 @@ export const BasicForm = ({
           value={form.beneficiariesInfo[index]?.email}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
+          error={errorForm?.[`beneficiariesInfo[${index}].email`]?.error}
+          helperText={
+            errorForm?.[`beneficiariesInfo[${index}].email`]?.error
+              ? errorForm?.[`beneficiariesInfo[${index}].email`]?.message
+              : ""
+          }
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -128,6 +173,15 @@ export const BasicForm = ({
             value={form.beneficiariesInfo[index]?.countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
             disabled={index === 0 && form.beneficiary}
+            error={
+              errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
+            }
+            helperText={
+              errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
+                ? errorForm?.[`beneficiariesInfo[${index}].countryCode`]
+                    ?.message
+                : ""
+            }
           >
             {phoneCodesOptions.map((ele, indx) => (
               <MenuItem
@@ -149,6 +203,15 @@ export const BasicForm = ({
             value={form.beneficiariesInfo[index]?.phoneNumber}
             onChange={handleChange}
             disabled={index === 0 && form.beneficiary}
+            error={
+              errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
+            }
+            helperText={
+              errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
+                ? errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]
+                    ?.message
+                : ""
+            }
           />
         </Row>
       </Grid>

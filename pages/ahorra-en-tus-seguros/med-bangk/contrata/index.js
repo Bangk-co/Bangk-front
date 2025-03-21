@@ -7,8 +7,6 @@ import { Wrapper } from "@/components/HireMedBangk/styles";
 import { Step1 } from "@/components/HireMedBangk/Step1";
 import { Step2 } from "@/components/HireMedBangk/Step2";
 import _ from "lodash";
-import { Button } from "@/components/Common/Button";
-import { Checkbox } from "@/components/Common/Checkbox";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 
@@ -30,7 +28,6 @@ const HireAssistance = ({ isMobile }) => {
     beneficiary: false,
     authorization: false,
     beneficiariesInfo: _.times(planAmount, (index) => ({
-      id: index,
       documentType: "",
       documentNumber: "",
       email: "",

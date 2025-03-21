@@ -7,7 +7,11 @@ import { Col, Div, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
 import _, { get } from "lodash";
-import { documentTypeAbbreviation, formattedPrice } from "@/utilities/helpers";
+import {
+  documentTypeAbbreviation,
+  formattedPrice,
+  getMedBangkPrice,
+} from "@/utilities/helpers";
 import Image from "next/image";
 import edit from "@/assets/icons/edit-gray.svg";
 import trash from "@/assets/icons/trash-gray.svg";
@@ -29,17 +33,6 @@ export const Step2 = ({
   const getLabelFromValue = (value, options) => {
     const selectedOption = options.find((option) => option.value === value);
     return selectedOption ? selectedOption.label : null;
-  };
-  console.log("form", form);
-  const getPricePlan = () => {
-    switch (form.methodOfPayment) {
-      case "1":
-        return 12500 * form.planAmount;
-      case "2":
-        return 47500 * form.planAmount;
-      case "3":
-        return 85000 * form.planAmount;
-    }
   };
 
   const handleDelete = (index) => {
@@ -95,7 +88,9 @@ export const Step2 = ({
               font={theme.fonts.family.primaryBold}
               mt="10px"
             >
-              {formattedPrice(getPricePlan())}
+              {formattedPrice(
+                getMedBangkPrice(form.planAmount, form.methodOfPayment)
+              )}
             </Text>
           </Grid>
         </Grid>
@@ -204,9 +199,9 @@ export const Step2 = ({
                   src={trash}
                   alt="trash"
                   style={{
-                    cursor: "pointer",
+                    cursor: index !== 0 ? "pointer" : "not-allowed",
                   }}
-                  onClick={() => handleDelete(index)}
+                  onClick={() => index !== 0 && handleDelete(index)}
                 />
               </Div>
             </ResumeCard>

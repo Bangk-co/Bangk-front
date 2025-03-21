@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
-import { numberFormat } from "@/utilities/helpers";
+import { getMedBangkPrice, numberFormat } from "@/utilities/helpers";
 import Image from "next/image";
 import shieldStar from "@/assets/icons/shield-star.svg";
 import { CardPlan, Signs, WrapperAmount, WrapperIcon } from "./styles";
@@ -33,34 +33,6 @@ export const Prices = ({ isMobile, isTablet }) => {
         "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
     },
   ];
-
-  const getPrice = (amount, frequency) => {
-    const prices = {
-      monthly: [22610, 42959, 65569],
-      semiannual: [21480, 40811, 373743],
-      annual: [20349, 38663, 723882],
-    };
-
-    const frequencyMap = {
-      1: "monthly",
-      2: "semiannual",
-      3: "annual",
-    };
-
-    const frequencyKey = frequencyMap[frequency];
-    if (!frequencyKey || !prices[frequencyKey]) {
-      return 0;
-    }
-
-    const index = amount > 2 ? 2 : amount - 1;
-    const basePrice = prices[frequencyKey][index];
-
-    if (index < 0 || index >= prices[frequencyKey].length) {
-      return 0;
-    }
-
-    return basePrice;
-  };
 
   const handleHire = (planId) => {
     if (selectedPlan !== planId) {
@@ -168,7 +140,7 @@ export const Prices = ({ isMobile, isTablet }) => {
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(getPrice(planAmount, plan.id)))}
+              $ {numberFormat(Number(getMedBangkPrice(planAmount, plan.id)))}
             </Text>
             <Button
               background={

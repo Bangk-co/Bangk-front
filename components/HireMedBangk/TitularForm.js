@@ -17,31 +17,47 @@ export const TitularForm = ({
   documentTypeOptions,
   phoneCodesOptions,
   errorForm,
+  setErrorForm,
 }) => {
+  const updateBeneficiaryInfo = (updatedForm) => {
+    updatedForm.beneficiariesInfo[0] = {
+      ...updatedForm.beneficiariesInfo[0],
+      beneficiaryName: updatedForm.name,
+      beneficiaryLastname: updatedForm.lastName,
+      documentNumber: updatedForm.documentNumber,
+      documentType: updatedForm.documentType,
+      email: updatedForm.email,
+      countryCode: updatedForm.countryCode,
+      phoneNumber: updatedForm.phoneNumber,
+    };
+    return updatedForm;
+  };
+
   useEffect(() => {
     if (form.beneficiary) {
       const updatedForm = { ...form };
-      updatedForm.beneficiariesInfo[0] = {
-        ...updatedForm.beneficiariesInfo[0],
-        beneficiaryName: updatedForm.name,
-        beneficiaryLastname: updatedForm.lastName,
-        documentNumber: updatedForm.documentNumber,
-        documentType: updatedForm.documentType,
-        email: updatedForm.email,
-        countryCode: updatedForm.countryCode,
-        phoneNumber: updatedForm.phoneNumber,
-      };
-      setForm(updatedForm);
+      setForm(updateBeneficiaryInfo(updatedForm));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.beneficiary]);
+
+  useEffect(() => {
+    // Aquí puedes hacer cualquier acción necesaria cuando los errores cambian
+    console.log("ErrorForm ha cambiado:", errorForm);
+  }, [errorForm]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
     const updatedForm = { ...form };
     updatedForm[id] = value;
 
-    setForm(updatedForm);
+    if (form.beneficiary) {
+      setForm(updateBeneficiaryInfo(updatedForm));
+    } else {
+      setForm(updatedForm);
+    }
+
+    setErrorForm({});
   };
 
   const handleSelect = (field, event) => {
@@ -49,9 +65,16 @@ export const TitularForm = ({
     const updatedForm = { ...form };
     updatedForm[field] = value;
 
-    setForm(updatedForm);
+    if (form.beneficiary) {
+      setForm(updateBeneficiaryInfo(updatedForm));
+    } else {
+      setForm(updatedForm);
+    }
+    setErrorForm(null);
   };
 
+  console.log("errorForm?.lastName?.error", errorForm?.lastName?.error);
+  console.log("mensaje", errorForm?.lastName?.message);
   return (
     <Grid
       container

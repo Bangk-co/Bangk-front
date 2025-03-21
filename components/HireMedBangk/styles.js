@@ -26,7 +26,7 @@ export const Card = styled.div`
   flex-direction: column;
   position: relative;
   width: 100%;
-  padding: 40px;
+  padding: ${({ isMobile }) => (isMobile ? "40px 20px" : "40px")};
   border-radius: 24px;
   background-color: ${theme.colors.white};
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.08);
@@ -63,7 +63,7 @@ export const Signs = styled.div`
 `;
 
 export const ResumeCard = styled.div`
-  background: ${({ background, theme }) => background || theme.colors.gray1300};
+  background: ${({ background }) => background || theme.colors.gray1300};
   border: 1px solid ${theme.colors.gray1200};
   border-radius: 13px;
   padding: 16px 24px;
@@ -71,4 +71,5 @@ export const ResumeCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 `;

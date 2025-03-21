@@ -58,7 +58,7 @@ export const Step2 = ({
 
   return (
     <>
-      <Card>
+      <Card isMobile={isMobile}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Text
@@ -100,19 +100,27 @@ export const Step2 = ({
           </Grid>
         </Grid>
         <Grid item xs={12} md={6}>
-          <ResumeCard>
-            <Col width="100%" gap="5px" align="left">
+          <ResumeCard isMobile={isMobile}>
+            <Col width={isMobile ? "100px" : "100%"} gap="5px" align="left">
               <Text
                 color={theme.colors.black200}
-                size={theme.fonts.size.h6}
+                size={
+                  isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                }
                 font={theme.fonts.family.primaryMedium}
               >
                 {`${form.name} ${form.lastName}`}
               </Text>
-              <Row width="353px" justify="space-between">
+              <Div
+                width="353px"
+                justify="space-between"
+                direction={isMobile ? "column" : "row"}
+              >
                 <Text
                   color={theme.colors.gray150}
-                  size={theme.fonts.size.default2}
+                  size={
+                    isMobile ? theme.fonts.size.sm : theme.fonts.size.default2
+                  }
                 >
                   {`${documentTypeAbbreviation(
                     getLabelFromValue(form.documentType, documentTypeOptions)
@@ -120,14 +128,16 @@ export const Step2 = ({
                 </Text>
                 <Text
                   color={theme.colors.gray150}
-                  size={theme.fonts.size.default2}
+                  size={
+                    isMobile ? theme.fonts.size.sm : theme.fonts.size.default2
+                  }
                 >
                   <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
                     Celular:{" "}
                   </span>
                   {form.phoneNumber}
                 </Text>
-              </Row>
+              </Div>
             </Col>
             <Div gap="10px">
               <Image
@@ -140,18 +150,26 @@ export const Step2 = ({
           </ResumeCard>
           {form.beneficiariesInfo.map((beneficiary, index) => (
             <ResumeCard key={index} background={theme.colors.light}>
-              <Col width="100%" gap="5px" align="left">
+              <Col width={isMobile ? "100px" : "100%"} gap="5px" align="left">
                 <Text
                   color={theme.colors.black200}
-                  size={theme.fonts.size.h6}
+                  size={
+                    isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                  }
                   font={theme.fonts.family.primaryMedium}
                 >
                   {`${beneficiary.beneficiaryName} ${beneficiary.beneficiaryLastname}`}
                 </Text>
-                <Row width="353px" justify="space-between">
+                <Div
+                  width="353px"
+                  justify="space-between"
+                  direction={isMobile ? "column" : "row"}
+                >
                   <Text
                     color={theme.colors.gray150}
-                    size={theme.fonts.size.default2}
+                    size={
+                      isMobile ? theme.fonts.size.sm : theme.fonts.size.default2
+                    }
                   >
                     {`${documentTypeAbbreviation(
                       getLabelFromValue(
@@ -162,7 +180,9 @@ export const Step2 = ({
                   </Text>
                   <Text
                     color={theme.colors.gray150}
-                    size={theme.fonts.size.default2}
+                    size={
+                      isMobile ? theme.fonts.size.sm : theme.fonts.size.default2
+                    }
                   >
                     <span
                       style={{ fontFamily: theme.fonts.family.primaryBold }}
@@ -171,9 +191,9 @@ export const Step2 = ({
                     </span>
                     {beneficiary.phoneNumber}
                   </Text>
-                </Row>
+                </Div>
               </Col>
-              <Div gap="10px">
+              <Div gap={isMobile ? "5px" : "10px"}>
                 <Image
                   src={edit}
                   alt="edit"

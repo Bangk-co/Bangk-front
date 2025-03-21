@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Signs, WrapperAmount } from "./styles";
+import toast from "react-hot-toast";
 import { Grid } from "@mui/material";
 import { RadioGroup } from "../Common/Radio/Group";
 import { Radio } from "../Common/Radio";
@@ -11,6 +12,7 @@ import { CardCollapse } from "../Common/CardCollapse";
 import { BasicForm } from "./BasicForm";
 import _ from "lodash";
 import { TitularForm } from "./TitularForm";
+import { validateMedBangkForm } from "@/utilities/validations";
 
 export const Step1 = ({
   isMobile,
@@ -31,7 +33,8 @@ export const Step1 = ({
   ];
 
   const [panels, setPanels] = useState([]);
-
+  const [errorForm, setErrorForm] = useState({});
+  console.log("error", errorForm);
   useEffect(() => {
     const panelsData = [
       {
@@ -47,6 +50,7 @@ export const Step1 = ({
             setActiveKey={setActiveKey}
             documentTypeOptions={documentTypeOptions}
             phoneCodesOptions={phoneCodesOptions}
+            errors={errorForm}
           />
         ),
       },
@@ -77,6 +81,27 @@ export const Step1 = ({
       ...form,
       methodOfPayment: event.target.defaultValue,
     });
+  };
+  console.log("form", form);
+  const handleSave = () => {
+    const validation = validateMedBangkForm.validate(form, {
+      abortEarly: false,
+    });
+    if (validation.error) {
+      const newErrorForm = { ...errorForm };
+      validation.error.details.forEach((ele) => {
+        const label = ele.context.label;
+        if (!newErrorForm[label]) {
+          newErrorForm[label] = { error: false, message: "" };
+        }
+        newErrorForm[label].error = true;
+        newErrorForm[label].message = "Campo obligatorio";
+      });
+      setErrorForm(newErrorForm);
+      toast.error("Por favor, completa todos los campos obligatorios");
+    } else {
+      handleContinue();
+    }
   };
 
   return (
@@ -177,7 +202,7 @@ export const Step1 = ({
         <Button
           {...buttonProps}
           width={isMobile ? "100%" : "230px"}
-          onClick={handleContinue}
+          onClick={handleSave}
           labelWeight={theme.fonts.weight.regular}
         >
           Contratar asistencia

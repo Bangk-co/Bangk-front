@@ -80,6 +80,7 @@ export const BasicForm = ({
           {...labelsProps}
           id="documentNumber"
           label="Número de documento"
+          type="number"
           placeholder={"Ingresa el número"}
           value={form.beneficiariesInfo[index]?.documentNumber}
           onChange={handleChange}
@@ -143,6 +144,7 @@ export const BasicForm = ({
             {...labelsProps}
             id="phoneNumber"
             label="Número de celular"
+            type="number"
             placeholder={"Indica tu número"}
             value={form.beneficiariesInfo[index]?.phoneNumber}
             onChange={handleChange}

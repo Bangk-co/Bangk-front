@@ -141,3 +141,33 @@ export const validateEditVehiculeInfo = Joi.object({
   cityVehiculeId: Joi.number().required(),
   vehicleLicensePlate: Joi.string().required(),
 });
+
+export const validateMedBangkForm = Joi.object({
+  methodOfPayment: Joi.string().valid("1", "2", "3").required(),
+  planAmount: Joi.number().integer().min(1).required(),
+  documentType: Joi.number().required(),
+  documentNumber: Joi.string().required(),
+  email: validateEmailRequired,
+  name: Joi.string().min(2).required(),
+  lastName: Joi.string().min(2).required(),
+  countryCode: Joi.number().required(),
+  phoneNumber: Joi.string().required(),
+  beneficiary: Joi.boolean(),
+  authorization: Joi.boolean().valid(true).required(),
+
+  // Validación de los beneficiarios
+  beneficiariesInfo: Joi.array()
+    .items(
+      Joi.object({
+        id: Joi.number().required(),
+        documentType: Joi.number().required(),
+        documentNumber: Joi.string().required(),
+        email: validateEmailRequired,
+        beneficiaryName: Joi.string().min(2).required(),
+        beneficiaryLastname: Joi.string().min(2).required(),
+        countryCode: Joi.number().required(),
+        phoneNumber: Joi.string().required(),
+      })
+    )
+    .min(1),
+});

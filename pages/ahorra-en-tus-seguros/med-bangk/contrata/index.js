@@ -32,9 +32,12 @@ const HireAssistance = ({ isMobile }) => {
     beneficiariesInfo: _.times(planAmount, (index) => ({
       id: index,
       documentType: "",
+      documentNumber: "",
+      email: "",
       beneficiaryName: "",
       beneficiaryLastname: "",
-      documentNumber: "",
+      countryCode: "",
+      phoneNumber: "",
     })),
   });
 

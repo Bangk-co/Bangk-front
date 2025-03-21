@@ -16,6 +16,7 @@ export const TitularForm = ({
   setActiveKey,
   documentTypeOptions,
   phoneCodesOptions,
+  errorForm,
 }) => {
   useEffect(() => {
     if (form.beneficiary) {
@@ -64,6 +65,8 @@ export const TitularForm = ({
           label="Tipo de documento"
           value={form.documentType}
           onChange={(event) => handleSelect("documentType", event)}
+          error={errorForm?.documentType?.error}
+          helper={errorForm?.documentType?.message}
         >
           {documentTypeOptions.map((ele, indx) => (
             <MenuItem
@@ -81,9 +84,16 @@ export const TitularForm = ({
           {...labelsProps}
           id="documentNumber"
           label="Número de documento"
+          type="number"
           placeholder={"Ingresa el número"}
           value={form.documentNumber}
           onChange={handleChange}
+          error={errorForm?.documentNumber?.error}
+          helper={
+            errorForm?.documentNumber?.error
+              ? errorForm?.documentNumber?.message
+              : ""
+          }
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -94,6 +104,8 @@ export const TitularForm = ({
           placeholder={"Indica tu nombre"}
           value={form.name}
           onChange={handleChange}
+          error={errorForm?.name?.error}
+          helperText={errorForm?.name?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -104,6 +116,8 @@ export const TitularForm = ({
           placeholder={"Indica tu apellido"}
           value={form.lastName}
           onChange={handleChange}
+          error={errorForm?.lastName?.error}
+          helperText={errorForm?.lastName?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -114,6 +128,8 @@ export const TitularForm = ({
           placeholder={"Ej: correo@email.com"}
           value={form.email}
           onChange={handleChange}
+          error={errorForm?.email?.error}
+          helperText={errorForm?.email?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -123,6 +139,8 @@ export const TitularForm = ({
             label="Ind del país"
             value={form.countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
+            error={errorForm?.countryCode?.error}
+            helperText={errorForm?.countryCode?.message}
           >
             {phoneCodesOptions.map((ele, indx) => (
               <MenuItem
@@ -138,9 +156,12 @@ export const TitularForm = ({
             {...labelsProps}
             id="phoneNumber"
             label="Número de celular"
+            type="number"
             placeholder={"Indica tu número"}
             value={form.phoneNumber}
             onChange={handleChange}
+            error={errorForm?.phoneNumber?.error}
+            helperText={errorForm?.phoneNumber?.message}
           />
         </Row>
       </Grid>

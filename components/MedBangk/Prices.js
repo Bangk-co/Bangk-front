@@ -1,64 +1,60 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
-import { numberFormat } from "@/utilities/helpers";
+import { getMedBangkPrice, numberFormat } from "@/utilities/helpers";
 import Image from "next/image";
 import shieldStar from "@/assets/icons/shield-star.svg";
 import { CardPlan, Signs, WrapperAmount, WrapperIcon } from "./styles";
 
 export const Prices = ({ isMobile, isTablet }) => {
+  const router = useRouter();
   const [planAmount, setPlanAmount] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState(1);
 
   const plansList = [
-    { 
+    {
       id: 1,
       label: "Mensual",
-      description: "La forma más sencilla de acceder a nuestras asistencias: paga tu asistencia <span style='font-family: Gilroy Bold'>mes a mes.</span>",
+      description:
+        "La forma más sencilla de acceder a nuestras asistencias: paga tu asistencia <span style='font-family: Gilroy Bold'>mes a mes.</span>",
     },
-    { 
+    {
       id: 2,
       label: "Semestral",
-      description: "Paga tu asistencia cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
+      description:
+        "Paga tu asistencia cada 6 meses con un <span style='font-family: Gilroy Bold'>descuento que te ayudará a ahorrar y cuidarte.</span>",
     },
-    { 
+    {
       id: 3,
       label: "Anual",
-      description: "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
+      description:
+        "Paga tu asistencia anual y consigue el <span style='font-family: Gilroy Bold'>mejor precio para tus asistencias.</span>",
     },
   ];
 
-  const getPrice = (amount, frequency) => {
-    const prices = {
-      monthly: [22610, 42959, 65569],
-      semiannual: [21480, 40811, 373743],
-      annual: [20349, 38663, 723882],
-    };
-
-    const frequencyMap = {
-      1: 'monthly',
-      2: 'semiannual',
-      3: 'annual',
-    };
-
-    const frequencyKey = frequencyMap[frequency];
-    if (!frequencyKey || !prices[frequencyKey]) {
-      return 0;
+  const handleHire = (planId) => {
+    if (selectedPlan !== planId) {
+      setSelectedPlan(planId);
+      router.push(
+        `/ahorra-en-tus-seguros/med-bangk/contrata?selectedPlan=${planId}&&planAmount=${planAmount}`
+      );
+    } else {
+      router.push(
+        `/ahorra-en-tus-seguros/med-bangk/contrata?selectedPlan=${selectedPlan}&&planAmount=${planAmount}`
+      );
     }
-
-    const index = amount > 2 ? 2 : amount - 1;
-    const basePrice = prices[frequencyKey][index];
-
-    if (index < 0 || index >= prices[frequencyKey].length) {
-      return 0;
-    }
-
-    return basePrice;
   };
 
   return (
-    <Div p="0 0 80px 0" direction="column" justify="center" align="center" id="prices">
+    <Div
+      p="0 0 80px 0"
+      direction="column"
+      justify="center"
+      align="center"
+      id="prices"
+    >
       <Text
         color={theme.colors.green1000}
         size={theme.fonts.size.lgs}
@@ -72,32 +68,37 @@ export const Prices = ({ isMobile, isTablet }) => {
 
       <Div m="50px 0 0 0" direction="column" align="center">
         <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
-          Indica el número de personas 
+          Indica el número de personas
         </Text>
         <Div m="10px 0 40px 0" gap="10px">
-          <Signs 
-            style={{ background: theme.colors.green1000 }} 
+          <Signs
+            style={{ background: theme.colors.green1000 }}
             onClick={() => planAmount > 1 && setPlanAmount(planAmount - 1)}
           >
             -
           </Signs>
-          <WrapperAmount>
-            {planAmount}
-          </WrapperAmount>
-          <Signs style={{ background: theme.colors.green1000 }} onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}>
+          <WrapperAmount>{planAmount}</WrapperAmount>
+          <Signs
+            style={{ background: theme.colors.green1000 }}
+            onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}
+          >
             +
           </Signs>
         </Div>
       </Div>
 
-      <Div direction={(isMobile || isTablet) ? "column" : "row"} gap="40px">
+      <Div direction={isMobile || isTablet ? "column" : "row"} gap="40px">
         {plansList.map((plan, index) => (
-          <CardPlan 
-            key={index} 
-            backgroundColor={selectedPlan === plan.id ? theme.colors.green1000 : theme.colors.light} 
+          <CardPlan
+            key={index}
+            backgroundColor={
+              selectedPlan === plan.id
+                ? theme.colors.green1000
+                : theme.colors.light
+            }
             onClick={() => setSelectedPlan(plan.id)}
             style={{
-              height: selectedPlan === plan.id ? "488px" : "410px"
+              height: selectedPlan === plan.id ? "488px" : "410px",
             }}
           >
             {selectedPlan === plan.id && (
@@ -105,8 +106,12 @@ export const Prices = ({ isMobile, isTablet }) => {
                 <Image src={shieldStar} alt="shield" />
               </WrapperIcon>
             )}
-            <Text  
-              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.green1000} 
+            <Text
+              color={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.green1000
+              }
               size={isTablet ? theme.fonts.size.h4 : theme.fonts.size.h3s}
               font={theme.fonts.family.primaryBold}
               mt={selectedPlan === plan.id ? "10px" : "0"}
@@ -114,29 +119,58 @@ export const Prices = ({ isMobile, isTablet }) => {
             >
               {plan.label}
             </Text>
-            <Text 
-              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.black100} 
+            <Text
+              color={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.black100
+              }
               size={theme.fonts.size.h6}
               mb="20px"
               dangerouslySetInnerHTML={{ __html: plan.description }}
             />
             <Text
               size={theme.fonts.size.xls}
-              color={selectedPlan === plan.id ? theme.colors.white : theme.colors.black200}
+              color={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.black200
+              }
               font={theme.fonts.family.primaryBold}
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(getPrice(planAmount, plan.id)))}
+              $ {numberFormat(Number(getMedBangkPrice(planAmount, plan.id)))}
             </Text>
             <Button
-              background={selectedPlan === plan.id ? theme.colors.green1000 : theme.colors.light}
-              hover={selectedPlan === plan.id ? theme.colors.green1000 : theme.colors.light}
-              borderHover={selectedPlan === plan.id ? theme.colors.white : theme.colors.green1000}
-              border={selectedPlan === plan.id ? theme.colors.white : theme.colors.green1000}
-              labelColor={selectedPlan === plan.id ? theme.colors.white : theme.colors.green1000}
+              background={
+                selectedPlan === plan.id
+                  ? theme.colors.green1000
+                  : theme.colors.light
+              }
+              hover={
+                selectedPlan === plan.id
+                  ? theme.colors.green1000
+                  : theme.colors.light
+              }
+              borderHover={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.green1000
+              }
+              border={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.green1000
+              }
+              labelColor={
+                selectedPlan === plan.id
+                  ? theme.colors.white
+                  : theme.colors.green1000
+              }
               width="192px"
               height="40px"
+              onClick={() => handleHire(plan.id)}
             >
               Adquiérelo ya
             </Button>
@@ -149,29 +183,34 @@ export const Prices = ({ isMobile, isTablet }) => {
             Indica el número de mascotas para asegurar
           </Text>
           <Div m="10px 0 40px 0" gap="10px">
-            <Signs 
-              style={{ background: theme.colors.green1000 }} 
+            <Signs
+              style={{ background: theme.colors.green1000 }}
               onClick={() => planAmount > 1 && setPlanAmount(planAmount - 1)}
             >
               -
             </Signs>
-            <WrapperAmount>
-              {planAmount}
-            </WrapperAmount>
-            <Signs style={{ background: theme.colors.green1000 }} onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}>
+            <WrapperAmount>{planAmount}</WrapperAmount>
+            <Signs
+              style={{ background: theme.colors.green1000 }}
+              onClick={() => planAmount < 5 && setPlanAmount(planAmount + 1)}
+            >
               +
             </Signs>
           </Div>
         </Div>
       )}
-      <Text 
-        size={theme.fonts.size.default2} 
-        color={theme.colors.gray150} 
+      <Text
+        size={theme.fonts.size.default2}
+        color={theme.colors.gray150}
         mt={isMobile ? "20px" : "40px"}
-        style={{ alignSelf: isMobile ? "center" : "flex-start", marginLeft: isMobile ? "0" : "100px" }}
+        style={{
+          alignSelf: isMobile ? "center" : "flex-start",
+          marginLeft: isMobile ? "0" : "100px",
+        }}
       >
-        *El valor de la asistencia se descontará automáticamente de tu método de pago según el plan elegido.
+        *El valor de la asistencia se descontará automáticamente de tu método de
+        pago según el plan elegido.
       </Text>
     </Div>
-  )
+  );
 };

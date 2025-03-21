@@ -393,3 +393,31 @@ export const initDataLoanInsurancePolicy = {
   vehicleLicensePlate: null,
   weight: null,
 };
+
+export const getMedBangkPrice = (amount, frequency) => {
+  const prices = {
+    monthly: [22610, 42959, 65569],
+    semiannual: [21480, 40811, 373743],
+    annual: [20349, 38663, 723882],
+  };
+
+  const frequencyMap = {
+    1: "monthly",
+    2: "semiannual",
+    3: "annual",
+  };
+
+  const frequencyKey = frequencyMap[frequency];
+  if (!frequencyKey || !prices[frequencyKey]) {
+    return 0;
+  }
+
+  const index = amount > 2 ? 2 : amount - 1;
+  const basePrice = prices[frequencyKey][index];
+
+  if (index < 0 || index >= prices[frequencyKey].length) {
+    return 0;
+  }
+
+  return basePrice;
+};

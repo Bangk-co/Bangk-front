@@ -107,8 +107,7 @@ export const Step1 = ({
         }
 
         if (label.startsWith("beneficiariesInfo")) {
-          // Para los campos de los beneficiarios, asignamos el mensaje personalizado
-          const fieldName = label.split(".").pop(); // Extrae el nombre del campo (ej. "phoneNumber")
+          const fieldName = label.split(".").pop();
           const customMessage = errorMessages[fieldName] || "Campo obligatorio";
 
           _.set(newErrorForm, label, {
@@ -116,7 +115,6 @@ export const Step1 = ({
             message: customMessage,
           });
         } else {
-          // Para los campos comunes, asignamos el mensaje desde errorMessages
           _.set(newErrorForm, label, {
             error: true,
             message: errorMessages[label] || "Campo obligatorio",

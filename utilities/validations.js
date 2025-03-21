@@ -146,12 +146,12 @@ export const validateMedBangkForm = Joi.object({
   methodOfPayment: Joi.string().valid("1", "2", "3").required(),
   planAmount: Joi.number().integer().min(1).required(),
   documentType: Joi.number().required(),
-  documentNumber: Joi.string().required(),
+  documentNumber: Joi.string().min(5).max(13).required(),
   email: validateEmailRequired,
-  name: Joi.string().min(2).required(),
-  lastName: Joi.string().min(2).required(),
+  name: Joi.string().min(2).max(50).required(),
+  lastName: Joi.string().min(2).max(50).required(),
   countryCode: Joi.number().required(),
-  phoneNumber: Joi.string().required(),
+  phoneNumber: Joi.string().min(7).max(15).required(),
   beneficiary: Joi.boolean(),
   authorization: Joi.boolean().valid(true).required(),
 
@@ -160,12 +160,12 @@ export const validateMedBangkForm = Joi.object({
     .items(
       Joi.object({
         documentType: Joi.number().required(),
-        documentNumber: Joi.string().required(),
+        documentNumber: Joi.string().min(5).max(13).required(),
         email: validateEmailRequired,
-        beneficiaryName: Joi.string().min(2).required(),
-        beneficiaryLastname: Joi.string().min(2).required(),
+        beneficiaryName: Joi.string().min(2).max(50).required(),
+        beneficiaryLastname: Joi.string().min(2).max(50).required(),
         countryCode: Joi.number().required(),
-        phoneNumber: Joi.string().required(),
+        phoneNumber: Joi.string().min(7).max(15).required(),
       })
     )
     .min(1),

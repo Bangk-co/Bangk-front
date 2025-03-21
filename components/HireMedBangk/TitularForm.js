@@ -121,7 +121,7 @@ export const TitularForm = ({
           value={form.name}
           onChange={handleChange}
           error={errorForm?.name?.error}
-          helperText={errorForm?.name?.message}
+          helper={errorForm?.name?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -133,7 +133,7 @@ export const TitularForm = ({
           value={form.lastName}
           onChange={handleChange}
           error={errorForm?.lastName?.error}
-          helperText={errorForm?.lastName?.message}
+          helper={errorForm?.lastName?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -145,7 +145,7 @@ export const TitularForm = ({
           value={form.email}
           onChange={handleChange}
           error={errorForm?.email?.error}
-          helperText={errorForm?.email?.message}
+          helper={errorForm?.email?.message}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -156,7 +156,11 @@ export const TitularForm = ({
             value={form.countryCode}
             onChange={(event) => handleSelect("countryCode", event)}
             error={errorForm?.countryCode?.error}
-            helperText={errorForm?.countryCode?.message}
+            helper={
+              errorForm?.countryCode?.error
+                ? errorForm?.countryCode?.message
+                : ""
+            }
           >
             {phoneCodesOptions.map((ele, indx) => (
               <MenuItem
@@ -177,7 +181,7 @@ export const TitularForm = ({
             value={form.phoneNumber}
             onChange={handleChange}
             error={errorForm?.phoneNumber?.error}
-            helperText={errorForm?.phoneNumber?.message}
+            helper={errorForm?.phoneNumber?.message}
           />
         </Row>
       </Grid>

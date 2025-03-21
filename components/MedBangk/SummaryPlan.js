@@ -27,7 +27,7 @@ const SummaryPlan = ({ isMobile, isTablet }) => {
 
   const TableRowComponent = ({ row, index }) => (
     <TableRow key={row.service} style={{ backgroundColor: index % 2 === 0 ? theme.colors.white : theme.colors.light4 }}>
-      <TableCell component="th" scope="row" style={{ border: border, padding: index % 2 === 0 ? "12px 35px" : "8px 35px" }}>
+      <TableCell component="th" scope="row" style={{ border: border, padding: index % 2 === 0 ? "12px 15px" : "8px 15px" }}>
         <Text color={theme.colors.green1000}>{row.service}</Text>
       </TableCell>
       <TableCell align="center" style={{ border: border, padding: rowPadding(index), borderLeft: `1px solid ${theme.colors.gray300}`, borderRight: `1px solid ${theme.colors.gray300}` }}>

@@ -6,6 +6,46 @@ import arrowRight from "@/assets/icons/arrow-right.svg";
 import { Button } from "../Common/Button";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+const getPrice = (amount, frequency) => {
+  const prices = {
+    monthly: [23800, 45220, 63546],
+    semiannual: [135660, 257754, 358399],
+    annual: [257040, 488376, 678671],
+  };
+
+  const additionalCosts = {
+    monthly: 20825,
+    semiannual: 98175,
+    annual: 222768,
+  };
+
+  const frequencyMap = {
+    1: 'monthly',
+    2: 'semiannual',
+    3: 'annual',
+  };
+
+  const frequencyKey = frequencyMap[frequency];
+  if (!frequencyKey || !prices[frequencyKey]) {
+    return 0;
+  }
+
+  const index = amount > 3 ? 2 : amount - 1;
+  let basePrice = prices[frequencyKey][index];
+
+  if (amount > 3) {
+    const additionalPets = amount - 3;
+    basePrice += additionalPets * additionalCosts[frequencyKey];
+  }
+
+  if (index < 0 || index >= prices[frequencyKey].length) {
+    return 0;
+  }
+
+  return basePrice;
+};
+
 export const Services = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const [petBangkAmount, setPetBangkAmount] = useState(1);
@@ -167,7 +207,7 @@ export const Services = ({ isMobile, isTablet }) => {
                 size={isMobile ? theme.fonts.size.h3 : theme.fonts.size.h2}
                 style={{ marginLeft: isMobile ? "8px" : "16px", marginRight: isMobile ? "4px" : "6px" }}
               >
-                ${ (option.amount * 15000).toLocaleString('es-ES') }*
+                {option.id === 1 ? `$${getPrice(option.amount, selectedAsistance).toLocaleString('es-ES') }*` : "$0*"}
               </Text>
             </Div>
             <Button

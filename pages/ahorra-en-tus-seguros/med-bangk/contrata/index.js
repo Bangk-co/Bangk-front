@@ -9,10 +9,12 @@ import { Step2 } from "@/components/HireMedBangk/Step2";
 import _ from "lodash";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
+import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 
 const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
+  const [showModal, setShowModal] = useState(true);
   const router = useRouter();
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
@@ -122,6 +124,11 @@ const HireAssistance = ({ isMobile }) => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
+      <ModalPaymentMethod
+        showModal={showModal}
+        handleCloseModal={() => setShowModal(false)}
+        isMobile={isMobile}
+      />
       <Wrapper>
         <Text
           font={theme.fonts.family.primaryBold}
@@ -155,6 +162,7 @@ const HireAssistance = ({ isMobile }) => {
             setForm={setForm}
             documentTypeOptions={documentTypeOptions}
             handleEdit={handleEdit}
+            setShowModal={setShowModal}
           />
         )}
       </Wrapper>

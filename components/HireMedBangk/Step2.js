@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Card, ResumeCard, Signs, WrapperAmount } from "./styles";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { RadioGroup } from "../Common/Radio/Group";
 import { Radio } from "../Common/Radio";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Button } from "../Common/Button";
-import _, { get } from "lodash";
+import _ from "lodash";
 import {
   documentTypeAbbreviation,
   formattedPrice,
@@ -23,6 +23,7 @@ export const Step2 = ({
   setForm,
   documentTypeOptions,
   handleEdit,
+  setShowModal,
 }) => {
   const radioOptions = [
     { label: "Mensual", value: "1" },
@@ -211,6 +212,7 @@ export const Step2 = ({
             width={isMobile ? "100%" : "147px"}
             labelWeight={theme.fonts.weight.regular}
             style={{ marginTop: "40px" }}
+            onClick={() => setShowModal(true)}
           >
             Pagar ahora
           </Button>

@@ -40,7 +40,7 @@ export const Step3 = ({
   };
 
   return (
-    <Card style={{ width: "70%", alignSelf: "center" }}>
+    <Card style={{ width: isMobile ? "100%" : "70%", alignSelf: "center" }}>
       <Text 
         color={theme.colors.gray150} 
         size={theme.fonts.size.h6}
@@ -119,15 +119,17 @@ export const Step3 = ({
           </Button>
         </Grid>
       </Grid>
-      <Image 
-        src={dog} 
-        alt="dog" 
-        style={{
-          position: "absolute",
-          left: "-400px",
-          bottom: "-32px"
-        }}
-      />
+      {!isMobile && (
+        <Image 
+          src={dog} 
+          alt="dog" 
+          style={{
+            position: "absolute",
+            left: "-400px",
+            bottom: "-32px"
+          }}
+        />
+      )}
     </Card>
   );
 };

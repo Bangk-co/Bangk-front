@@ -132,27 +132,51 @@ export const Step1 = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} md={6} style={{display: "flex", flexDirection: "row", gap: "5px"}}>
-          <Div width="20%">
-            <Select
-              {...labelsProps}
-              label="Indicativo"
-              options={[]}
-              value={petsForm.countryCode}
-              onChange={(event) => handleSelect("countryCode", event)}
-            />
-          </Div>
-          <Div width="75%">
-            <TextField
-              {...labelsProps}
-              id="phoneNumber"
-              label="Número de celular"
-              placeholder={"Ingresa tu número"}
-              value={petsForm.phoneNumber}
-              onChange={handleChange}
-            />
-          </Div>
-        </Grid>
+        {isMobile ? (
+          <>
+            <Grid item xs={12} md={6}>
+              <Select
+                {...labelsProps}
+                label="Indicativo"
+                options={[]}
+                value={petsForm.countryCode}
+                onChange={(event) => handleSelect("countryCode", event)}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                {...labelsProps}
+                id="phoneNumber"
+                label="Número de celular"
+                placeholder={"Ingresa tu número"}
+                value={petsForm.phoneNumber}
+                onChange={handleChange}
+              />
+            </Grid>
+          </>
+        ) : (
+          <Grid item xs={12} md={6} style={{display: "flex", flexDirection: "row", gap: "5px"}}>
+            <Div width="20%">
+              <Select
+                {...labelsProps}
+                label="Indicativo"
+                options={[]}
+                value={petsForm.countryCode}
+                onChange={(event) => handleSelect("countryCode", event)}
+              />
+            </Div>
+            <Div width="75%">
+              <TextField
+                {...labelsProps}
+                id="phoneNumber"
+                label="Número de celular"
+                placeholder={"Ingresa tu número"}
+                value={petsForm.phoneNumber}
+                onChange={handleChange}
+              />
+            </Div>
+          </Grid>
+        )}
         <Grid item xs={12} md={6}>
           <Button 
             {...buttonProps}
@@ -188,17 +212,19 @@ export const Step1 = ({
           </Row>
         </Grid>
       </Grid>
-      <Image 
-        src={dog} 
-        alt="dog" 
-        style={{
-          position: "absolute",
-          left: "-300px",
-          bottom: "-32px",
-          zIndex: 0,
-          pointerEvents: "none"
-        }}
-      />
+      {!isMobile && 
+        <Image 
+          src={dog} 
+          alt="dog" 
+          style={{
+            position: "absolute",
+            left: "-300px",
+            bottom: "-32px",
+            zIndex: 0,
+            pointerEvents: "none"
+          }}
+        />
+      }
     </Card>
   );
 };

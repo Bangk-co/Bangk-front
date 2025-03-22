@@ -11,6 +11,7 @@ import { Step1 } from "@/components/SecureItNow/Step1";
 import { Step2 } from "@/components/SecureItNow/Step2";
 import { Step3 } from "@/components/SecureItNow/Step3";
 import { Wrapper } from "@/components/SecureItNow/styles";
+import { MobileStepper } from "@/components/SecureItNow/StepperMobile/StepperMobile";
 
 const SecureItNow = ({ isMobile }) => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -116,22 +117,26 @@ const SecureItNow = ({ isMobile }) => {
         <Text color={theme.colors.blue200} mb="40px">
           Contrata tu asistencia en menos de 2 minutos
         </Text>
-        <Tabs
-          value={selectedTab}
-          background={theme.colors.orange}
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          {tabs.map((tab, idx) => (
-            <Tab
-              key={idx}
-              label={tab.label}
-              color={theme.colors.gray1200}
-              size={theme.fonts.size.default2}
-              source="pet"
-            />
-          ))}
-        </Tabs>
+        {isMobile ? (
+          <MobileStepper activeStep={selectedTab} />
+        ) : (
+          <Tabs
+            value={selectedTab}
+            background={theme.colors.orange}
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            {tabs.map((tab, idx) => (
+              <Tab
+                key={idx}
+                label={tab.label}
+                color={theme.colors.gray1200}
+                size={theme.fonts.size.default2}
+                source="pet"
+              />
+            ))}
+          </Tabs>
+        )}
         {selectedTab === 0 && (
           <Step1 
             isMobile={isMobile}

@@ -73,3 +73,17 @@ export const WrapperPetInfo = styled.div`
   border-radius: 16px;
   padding: 0 16px;
 `;
+
+export const WrapperPlan = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: ${theme.colors.blue200};
+  color: ${theme.colors.white};
+  font-family: ${theme.fonts.family.primary};
+  font-size: ${theme.fonts.size.h6};
+  width: 155px;
+  height: 40px;
+  border-radius: 50px;
+`;

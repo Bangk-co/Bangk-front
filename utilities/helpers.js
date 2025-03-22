@@ -397,8 +397,8 @@ export const initDataLoanInsurancePolicy = {
 export const getMedBangkPrice = (amount, frequency) => {
   const prices = {
     monthly: [22610, 42959, 65569],
-    semiannual: [21480, 40811, 373743],
-    annual: [20349, 38663, 723882],
+    semiannual: [128880, 244866, 373743],
+    annual: [244188, 463956, 723882],
   };
 
   const frequencyMap = {

@@ -107,7 +107,7 @@ export const Step1 = ({
             {...labelsProps}
             id="name"
             label="Nombre"
-            placeholder={"Indica tu nombre"}
+            placeholder={"Ingresa tu nombre"}
             value={petsForm.name}
             onChange={handleChange}
           />
@@ -117,7 +117,7 @@ export const Step1 = ({
             {...labelsProps}
             id="lastName"
             label="Apellido"
-            placeholder={"Indica tu apellido"}
+            placeholder={"Ingresa tu apellido"}
             value={petsForm.lastName}
             onChange={handleChange}
           />
@@ -132,27 +132,38 @@ export const Step1 = ({
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Select
-            {...labelsProps}
-            label="Indicativos del país"
-            options={[]}
-            value={petsForm.countryCode}
-            onChange={(event) => handleSelect("countryCode", event)}
-          />
+        <Grid item xs={12} md={6} style={{display: "flex", flexDirection: "row", gap: "5px"}}>
+          <Div width="20%">
+            <Select
+              {...labelsProps}
+              label="Indicativo"
+              options={[]}
+              value={petsForm.countryCode}
+              onChange={(event) => handleSelect("countryCode", event)}
+            />
+          </Div>
+          <Div width="75%">
+            <TextField
+              {...labelsProps}
+              id="phoneNumber"
+              label="Número de celular"
+              placeholder={"Ingresa tu número"}
+              value={petsForm.phoneNumber}
+              onChange={handleChange}
+            />
+          </Div>
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField
-            {...labelsProps}
-            id="phoneNumber"
-            label="Número de celular"
-            placeholder={"Indica tu número"}
-            value={petsForm.phoneNumber}
-            onChange={handleChange}
-          />
+          <Button 
+            {...buttonProps}
+            width={isMobile ? "100%" : "124px"}
+            onClick={handleContinue}
+          >
+            Continuar
+          </Button>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Row m="22px 0 0 0">
+          <Row>
             <Checkbox 
               borderColor={theme.colors.gray1000}
               width="22px"
@@ -176,15 +187,6 @@ export const Step1 = ({
             </Text>
           </Row>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Button 
-            {...buttonProps}
-            width={isMobile ? "100%" : "124px"}
-            onClick={handleContinue}
-          >
-            Continuar
-          </Button>
-        </Grid>
       </Grid>
       <Image 
         src={dog} 
@@ -192,7 +194,9 @@ export const Step1 = ({
         style={{
           position: "absolute",
           left: "-300px",
-          bottom: "-32px"
+          bottom: "-32px",
+          zIndex: 0,
+          pointerEvents: "none"
         }}
       />
     </Card>

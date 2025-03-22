@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, WrapperPetInfo } from "./styles";
+import { Card, WrapperPetInfo, WrapperPlan } from "./styles";
 import { Grid } from "@mui/material";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
@@ -40,7 +40,7 @@ export const Step3 = ({
   };
 
   return (
-    <Card>
+    <Card style={{ width: "70%", alignSelf: "center" }}>
       <Text 
         color={theme.colors.gray150} 
         size={theme.fonts.size.h6}
@@ -58,20 +58,9 @@ export const Step3 = ({
           >
             Forma de pago seleccionada
           </Text>
-          <Button
-            background={theme.colors.blue200}
-            labelColor={theme.colors.white}
-            font={theme.fonts.family.primary}
-            size={theme.fonts.size.h6}
-            border={theme.colors.blue200}
-            hover={theme.colors.blue200}
-            borderHover={theme.colors.blue200}
-            width="155px"
-            height="40px"
-            borderRadius="50px"
-          >
+          <WrapperPlan>
             {returnPlan()}
-          </Button>
+          </WrapperPlan>
         </Grid>
         <Grid item xs={12} md={6}>
           <Text
@@ -120,10 +109,10 @@ export const Step3 = ({
             </WrapperPetInfo>
           </Grid>
         ))}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={12} style={{ display: "flex", justifyContent: "center" }}>
           <Button 
             {...buttonProps}
-            width={isMobile ? "100%" : "147px"}
+            width={isMobile ? "100%" : "220px"}
             onClick={handleContinue}
           >
             Pagar ahora
@@ -135,7 +124,7 @@ export const Step3 = ({
         alt="dog" 
         style={{
           position: "absolute",
-          left: "-300px",
+          left: "-400px",
           bottom: "-32px"
         }}
       />

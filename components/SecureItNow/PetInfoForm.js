@@ -3,9 +3,10 @@ import { theme } from "@/styles/theme";
 import { Grid } from "@mui/material";
 import { Radio } from "../Common/Radio";
 import { RadioGroup } from "../Common/Radio/Group";
-import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
+import { Select } from "../Common/Select";
+import { Div } from "@/styles/Common";
 
 export const PetInfoForm = ({ 
   labelsProps,
@@ -80,31 +81,42 @@ export const PetInfoForm = ({
         />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Select
+        <TextField
           {...labelsProps}
           id="petBreed"
           label="Raza"
-          options={[]}
+          placeholder={"Ingresa la raza"}
           value={petsForm.petsInfo[index]?.petBreed}
           onChange={handleChange}
         />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          {...labelsProps}
-          id="petAge"
-          label="Edad"
-          placeholder={"Ingresa el número"}
-          value={petsForm.petsInfo[index]?.petAge}
-          onChange={handleChange}
-        />
+      <Grid item xs={12} md={6} style={{display: "flex", flexDirection: "row"}}>
+        <Div width="50%">
+          <TextField
+            {...labelsProps}
+            id="petAge"
+            label="Edad"
+            placeholder={"Ingresa el número"}
+            value={petsForm.petsInfo[index]?.petAge}
+            onChange={handleChange}
+          />
+        </Div>
+        <Div width="45%">
+          <Select
+            {...labelsProps}
+            label="Meses o años"
+            options={[]}
+            value={petsForm.petsInfo[index]?.petAgeTime}
+            onChange={(event) => handleChange(event)}
+          />
+        </Div>
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
           {...labelsProps}
           id="petColor"
           label="Color"
-          placeholder={"Indica tu nombre"}
+          placeholder={"Ingresa el color"}
           value={petsForm.petsInfo[index]?.petColor}
           onChange={handleChange}
         />

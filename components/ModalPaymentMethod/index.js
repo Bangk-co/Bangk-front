@@ -9,11 +9,12 @@ import { Button } from "../Common/Button";
 import close from "@/assets/icons/close.svg";
 import { Radio } from "../Common/Radio";
 import bancolombia from "@/assets/img/bancolombia.svg";
+import { useRouter } from "next/router";
 
 const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
+  const router = useRouter();
   const bancolombiaToken = useGenerateTknTrxBancolombia();
   const [paymentMethod, setPaymentMethod] = useState(null);
-  const [loadingPayment, setLoadingPayment] = useState(false);
 
   const buttonProps = {
     background: theme.colors.orange1000,
@@ -33,11 +34,13 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
       {},
       {
         onSuccess: (data) => {
-          setLoadingPayment(true);
+          handleCloseModal();
+          router.push(
+            `/transaccion?paymentMethod=bancolombia&requestId=${data?.data?.result?.data?.id}`
+          );
           window.open(data?.data?.result?.data?.authorization_Url, "_blank");
         },
         onError: (error) => {
-          setLoadingPayment(false);
           console.log(error);
         },
       }

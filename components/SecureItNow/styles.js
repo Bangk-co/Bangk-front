@@ -88,15 +88,29 @@ export const WrapperPlan = styled.div`
   border-radius: 50px;
 `;
 
-export const WrapperMobileStepper = styled.div`
+export const WrapperModal = styled.div`
   display: flex;
-  width: 100%;
-  height: 72px;
-  padding: 8px 16px 8px 16px;
-  border-radius: 8px;
-  gap: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 367px;
+  height: 371px;
+  flex-direction: column;
+  padding: 40px 32px 0 32px;
+  border-radius: 24px;
+  gap: 10px;
   background: ${theme.colors.white};
-  box-shadow: 4px 4px 8px 0px #00000014;
+  box-shadow: 0px 4px 13px 3px #0000000F;
   align-items: center;
-  margin-top: 10px;
-`
+`;
+
+export const WrapperIcon = styled.div`
+  display: flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.yellow700};
+  border-radius: 50%;
+`;

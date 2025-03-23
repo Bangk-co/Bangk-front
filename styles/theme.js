@@ -28,6 +28,8 @@ export const theme = {
     yellow100: "#FC940326",
     yellow500: "#FFBC00",
     yellow600: "#FC9403",
+    yellow700: "#FFF1CE",
+    yellow800: "#D09C17",
     light: "#FBFAFB",
     light2: "#FCFBFC",
     light3: "#F8F8F7",

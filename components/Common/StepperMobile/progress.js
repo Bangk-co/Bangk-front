@@ -3,7 +3,7 @@ import { CircularProgress } from "../../Common/CircularProgress";
 import { Div } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 
-export const Progress = ({ currentStep, activeStep }) => {
+export const Progress = ({ currentStep, activeStep, lineColor }) => {
   return (
     <Div style={{ position: 'relative' }}>
       <CircularProgress 
@@ -16,10 +16,10 @@ export const Progress = ({ currentStep, activeStep }) => {
       <CircularProgress 
         thickness={6} 
         variant="determinate" 
-        lineColor={theme.colors.blue200}
+        lineColor={lineColor}
         value={currentStep(activeStep).value}
         style={{ position: 'absolute', left: '0px', top: '-20px' }}
       />
     </Div>
-    ); 
-}
+  ); 
+};

@@ -11,27 +11,44 @@ export const Step2 = ({
   labelsProps,
   handleContinue,
   petsForm,
-  setPetsForm
+  setPetsForm,
+  petTypeOptions,
+  errorForm,
+  setErrorForm,
+  activeKey,
+  setActiveKey
 }) => {
   const [panels, setPanels] = useState([]);
-  const [activeKey, setActiveKey] = useState(1);
 
   useEffect(() => {
-    if (petsForm.petsInfo.length !== petsForm.petsAmount) {
-      setPetsForm((prev) => ({
-        ...prev,
-        petsInfo: Array.from({ length: petsForm.petsAmount }, (_, index) => ({
-          ...prev.petsInfo[index], 
-          id: index,
-          petType: prev.petsInfo[index]?.petType || "",
-          petName: prev.petsInfo[index]?.petName || "",
-          petBreed: prev.petsInfo[index]?.petBreed || "",
-          petAge: prev.petsInfo[index]?.petAge || "",
-          petColor: prev.petsInfo[index]?.petColor || ""
-        }))
-      }));
-    }
-  }, [petsForm.petsAmount]);
+    const updatedPets = Array.from({ length: petsForm.petsAmount }, (_, index) => ({
+      id: index,
+      petTypeId: petsForm.pets[index]?.petTypeId || "",
+      name: petsForm.pets[index]?.name || "",
+      breed: petsForm.pets[index]?.breed || "",
+      age: petsForm.pets[index]?.age || "",
+      ageTime: petsForm.pets[index]?.ageTime || "Años",
+      color: petsForm.pets[index]?.color || ""
+    }));
+
+    setPetsForm((prev) => ({
+      ...prev,
+      pets: updatedPets
+    }));
+
+    setErrorForm((prev) => ({
+      ...prev,
+      pets: Array.from({ length: petsForm.petsAmount }, () => ({
+        name: { error: false, message: "" },
+        breed: { error: false, message: "" },
+        color: { error: false, message: "" },
+        age: { error: false, message: "" },
+        ageTime: { error: false, message: "" },
+        petTypeId: { error: false, message: "" },
+        id: { error: false, message: "" },
+      }))
+    }));
+  }, [petsForm]);
 
   useEffect(() => {
     setPanels(Array.from({ length: petsForm.petsAmount }, (_, index) => 
@@ -46,9 +63,12 @@ export const Step2 = ({
             petsForm={petsForm}
             index={index}
             isMobile={isMobile}
+            petTypeOptions={petTypeOptions}
+            errorForm={errorForm?.pets[index]}
+            setErrorForm={setErrorForm}
           /> 
       })));
-  }, [petsForm]);
+  }, [petsForm, errorForm]);
 
   return (
     <Div>

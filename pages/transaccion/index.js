@@ -37,7 +37,7 @@ const TransactionState = ({ isMobile }) => {
     borderHover: theme.colors.orange1000,
     height: "40px",
     borderRadius: "50px",
-    width: "161px",
+    width: isMobile ? "100%" : "161px",
   };
 
   const returnStatus = (status) => {
@@ -105,7 +105,7 @@ const TransactionState = ({ isMobile }) => {
       )}
 
       <Wrapper>
-        <Div direction="column" width="577px">
+        <Div direction="column" width={isMobile ? "100%" : "577px"}>
           <Text
             font={theme.fonts.family.primaryBold}
             color={petAssistance ? theme.colors.blue200 : theme.colors.green1000}
@@ -123,7 +123,7 @@ const TransactionState = ({ isMobile }) => {
                 <Text
                   font={theme.fonts.family.primary}
                   color={theme.colors.gray150}
-                  size={theme.fonts.size.h6}
+                  size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
                 >
                   {detail.label}
                 </Text>
@@ -131,7 +131,7 @@ const TransactionState = ({ isMobile }) => {
                 <Text
                   font={theme.fonts.family.primaryMedium}
                   color={theme.colors.gray150}
-                  size={theme.fonts.size.h6}
+                  size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
                 >
                   {detail.value}
                 </Text>

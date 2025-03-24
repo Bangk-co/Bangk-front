@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
   background-color: ${theme.colors.light};
   padding: 40px 280px 30px 280px;
   align-items: center;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 20px;
+  };
 `;
 
 export const Card = styled.div`
@@ -17,11 +21,15 @@ export const Card = styled.div`
   flex-direction: column;
   position: relative;
   width: 100%;
-  padding: ${({ isMobile }) => (isMobile ? "40px 20px" : "43px 40px")};
+  padding: 43px 40px;
   border-radius: 24px;
   background-color: ${theme.colors.white};
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.08);
   margin-top: 20px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 27px;
+  };
 `;
 
 export const WrapperPayment = styled.div`
@@ -72,4 +80,10 @@ export const WrapperStatus = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 140px;
+    font-size: ${theme.fonts.size.default2};
+    gap: 5px;
+  };
 `;

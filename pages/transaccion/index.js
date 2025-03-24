@@ -35,7 +35,6 @@ const TransactionState = ({ isMobile }) => {
       });
     }
   }, [dataBancolombia]);
-  console.log("dataBancolombia", dataBancolombia);
 
   const buttonProps = {
     background: theme.colors.orange1000,

@@ -10,24 +10,21 @@ import dogIcon from "@/assets/icons/dog.svg";
 import catIcon from "@/assets/icons/cat.svg";
 import edit from "@/assets/icons/edit-gray.svg";
 import trash from "@/assets/icons/trash-gray.svg";
+import { numberFormat } from "@/utilities/helpers";
 
 export const Step3 = ({ 
-    isMobile,
-    buttonProps,
-    handleContinue,
-    petsForm,
-    setPetsForm,
-    setSelectedTab
+  isMobile,
+  buttonProps,
+  handleContinue,
+  petsForm,
+  setPetsForm,
+  setSelectedTab,
+  paymentOcurrencyOptions,
+  getPrice
 }) => {
   const returnPlan = () => {
-    switch (petsForm.methodOfPayment) {
-      case "1":
-        return "Mensual";
-      case "2":
-        return "Semestral";
-      case "3":
-        return "Anual";
-    }
+    const currentPlan = paymentOcurrencyOptions.find((option) => option.value === petsForm.paymentOcurrencyId);
+    return currentPlan.label;
   };
 
   const handleEditPet = () => {
@@ -35,12 +32,12 @@ export const Step3 = ({
   }
 
   const handleDeletePet = (indx) => {
-    const updatedPets = petsForm.petsInfo.filter((_, i) => i !== indx);
-    setPetsForm({ ...petsForm, petsInfo: updatedPets });
+    const updatedPets = petsForm.pets.filter((_, i) => i !== indx);
+    setPetsForm({ ...petsForm, pets: updatedPets });
   };
 
   return (
-    <Card style={{ width: "70%", alignSelf: "center" }}>
+    <Card style={{ width: isMobile ? "100%" : "70%", alignSelf: "center" }}>
       <Text 
         color={theme.colors.gray150} 
         size={theme.fonts.size.h6}
@@ -76,21 +73,21 @@ export const Step3 = ({
             font={theme.fonts.family.primaryBold}
             mb="10px"
           >
-            $85,000
+            $ {numberFormat(getPrice(petsForm.pets.length, petsForm.paymentOcurrencyId, paymentOcurrencyOptions))}
           </Text>
         </Grid>
-        {petsForm.petsInfo.length > 0 && petsForm.petsInfo.map((pet, index) => (
+        {petsForm.pets.length > 0 && petsForm.pets.map((pet, index) => (
           <Grid item xs={12} md={12} key={index}>
             <WrapperPetInfo>
               <Div align="center" gap="20px">
-                <Image src={pet.petType === "1" ? dogIcon : catIcon} alt="pet" />
+                <Image src={pet.petTypeId === 718 ? dogIcon : catIcon} alt="pet" />
                 <Div direction="column">
                   <Text
                     font={theme.fonts.family.primaryBold}
                     size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
                     color={theme.colors.gray150}
                   >
-                    {pet.petName}
+                    {pet.name}
                   </Text>
                   <Text
                     font={theme.fonts.family.primary}
@@ -98,13 +95,13 @@ export const Step3 = ({
                     color={theme.colors.gray150}
                     style={{ textAlign: "left" }}
                   >
-                    {pet.petBreed}, {pet.petAge}, {pet.petColor}
+                    {pet.breed}, {pet.age} {pet.ageTime}, {pet.color}
                   </Text>
                 </Div>
               </Div>
               <Div gap="10px">
                 <Image src={edit} alt="edit" style={{ cursor: "pointer" }} onClick={handleEditPet} />
-                <Image src={trash} alt="trash" style={{ cursor: "pointer" }} onClick={() => handleDeletePet(index)} />
+                {petsForm.pets.length > 1 && <Image src={trash} alt="trash" style={{ cursor: "pointer" }} onClick={() => handleDeletePet(index)} />}
               </Div>
             </WrapperPetInfo>
           </Grid>
@@ -114,20 +111,23 @@ export const Step3 = ({
             {...buttonProps}
             width={isMobile ? "100%" : "220px"}
             onClick={handleContinue}
+            disabled={petsForm.pets.length === 0}
           >
             Pagar ahora
           </Button>
         </Grid>
       </Grid>
-      <Image 
-        src={dog} 
-        alt="dog" 
-        style={{
-          position: "absolute",
-          left: "-400px",
-          bottom: "-32px"
-        }}
-      />
+      {!isMobile && (
+        <Image 
+          src={dog} 
+          alt="dog" 
+          style={{
+            position: "absolute",
+            left: "-400px",
+            bottom: "-32px"
+          }}
+        />
+      )}
     </Card>
   );
 };

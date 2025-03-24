@@ -1,6 +1,6 @@
 import React from "react";
 import { theme } from "@/styles/theme";
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import { Radio } from "../Common/Radio";
 import { RadioGroup } from "../Common/Radio/Group";
 import { TextField } from "../Common/TextField";
@@ -15,57 +15,96 @@ export const PetInfoForm = ({
   setPetsForm,
   petsForm,
   index,
-  isMobile
+  isMobile,
+  petTypeOptions,
+  errorForm,
+  setErrorForm
 }) => {
-  const radioOptions = [
-    {
-      label: "Perro",
-      value: "1"
-    },
-    {
-      label: "Gato",
-      value: "2"
-    },
+  const ageTimeOptions = [
+    { label: "Meses", value: "Meses" },
+    { label: "Años", value: "Años" },
   ];
 
   const handleRadio = (event) => {
     const selectedValue = event.target.defaultValue;
   
     setPetsForm((prev) => {
-      const updatedPets = [...prev.petsInfo];
-      updatedPets[index] = { ...updatedPets[index], petType: selectedValue };
-      return { ...prev, petsInfo: updatedPets };
+      const updatedPets = [...prev.pets];
+      updatedPets[index] = { ...updatedPets[index], petTypeId: Number(selectedValue) };
+      return { ...prev, pets: updatedPets };
+    });
+    setErrorForm((prev) => {
+      const updatedPets = [...prev.pets];
+      updatedPets[index] = { ...updatedPets[index], petTypeId: { error: false, message: "" } };
+      return { ...prev, pets: updatedPets };
     });
   };
-  
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    
-    const updatedPets = [...petsForm.petsInfo];
-    updatedPets[index] = { ...updatedPets[index], [id]: value };
-    setPetsForm({ ...petsForm, petsInfo: updatedPets });
+    const cleanedValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+
+    const updatedPets = [...petsForm.pets];
+    updatedPets[index] = { ...updatedPets[index], [id]: cleanedValue };
+    setPetsForm({ ...petsForm, pets: updatedPets });
+    setErrorForm((prev) => {
+      const updatedPets = [...prev.pets];
+      updatedPets[index] = { ...updatedPets[index], [id]: { error: false, message: "" } };
+      return { ...prev, pets: updatedPets };
+    });
+  };
+
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target;
+    const cleanedValue = value.replace(/[^0-9]/g, '');
+
+    const updatedPets = [...petsForm.pets];
+    updatedPets[index] = { ...updatedPets[index], [id]: cleanedValue };
+    setPetsForm({ ...petsForm, pets: updatedPets });
+    setErrorForm((prev) => {
+      const updatedPets = [...prev.pets];
+      updatedPets[index] = { ...updatedPets[index], [id]: { error: false, message: "" } };
+      return { ...prev, pets: updatedPets };
+    });
+  };
+
+  const handleSelect = (id, event) => {
+    const { value } = event.target;
+    setPetsForm((prev) => {
+      const updatedPets = [...prev.pets];
+      updatedPets[index] = { ...updatedPets[index], [id]: value };
+      return { ...prev, pets: updatedPets };
+    });
+  };
+
+  const isFormValid = () => {
+    return petsForm.pets.every(pet => 
+      pet.name && pet.breed && pet.age && pet.ageTime && pet.color && pet.petTypeId
+    );
   };
 
   return (
     <Grid container spacing={2} width={"100%"} style={{ padding: "30px 20px 0px 20px" }}>
       <Grid item xs={12} md={6}>
         <RadioGroup
-          name="petType"
+          name="petTypeId"
           direction="row"
           label="Tipo de mascota"
           labelSize={theme.fonts.size.default2}
           labelColor={theme.colors.gray1000}
           onChange={handleRadio}
+          value={petsForm.pets[index]?.petTypeId}
         >
-          {radioOptions.map((option, idx) => (
+          {petTypeOptions.map((option, idx) => (
             <Radio
               key={idx}
               label={option.label}
               value={option.value}
               labelColor={theme.colors.gray1000}
               radioColor={theme.colors.gray1000}
-              checked={petsForm.petsInfo[index]?.petType === option.value}
+              checked={petsForm.pets[index]?.petTypeId === option.value}
+              error={errorForm?.petTypeId?.error}
+              helperText={errorForm?.petTypeId?.message}
             />
           ))}
         </RadioGroup>
@@ -73,52 +112,77 @@ export const PetInfoForm = ({
       <Grid item xs={12} md={6}>
         <TextField
           {...labelsProps}
-          id="petName"
+          id="name"
           label="Nombre de tu mascota"
           placeholder={"Cómo se llama?"}
-          value={petsForm.petsInfo[index]?.petName}
+          value={petsForm.pets[index]?.name}
           onChange={handleChange}
+          error={errorForm?.name?.error}
+          helperText={errorForm?.name?.message}
+          inputProps={{
+            maxLength: 50,
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
           {...labelsProps}
-          id="petBreed"
+          id="breed"
           label="Raza"
           placeholder={"Ingresa la raza"}
-          value={petsForm.petsInfo[index]?.petBreed}
+          value={petsForm.pets[index]?.breed}
           onChange={handleChange}
+          error={errorForm?.breed?.error}
+          helperText={errorForm?.breed?.message}
+          inputProps={{
+            maxLength: 50,
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6} style={{display: "flex", flexDirection: "row"}}>
         <Div width="50%">
           <TextField
             {...labelsProps}
-            id="petAge"
+            id="age"
             label="Edad"
             placeholder={"Ingresa el número"}
-            value={petsForm.petsInfo[index]?.petAge}
-            onChange={handleChange}
+            value={petsForm.pets[index]?.age}
+            onChange={handleChangeNumber}
+            error={errorForm?.age?.error}
+            helperText={errorForm?.age?.message}
+            inputProps={{
+              maxLength: 3,
+            }}
           />
         </Div>
         <Div width="45%">
           <Select
             {...labelsProps}
             label="Meses o años"
-            options={[]}
-            value={petsForm.petsInfo[index]?.petAgeTime}
-            onChange={(event) => handleChange(event)}
-          />
+            value={petsForm.pets[index]?.ageTime}
+            onChange={(event) => handleSelect("ageTime", event)}
+          >
+            {ageTimeOptions.map((option, idx) => (
+              <MenuItem key={idx} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
         </Div>
       </Grid>
       <Grid item xs={12} md={6}>
         <TextField
           {...labelsProps}
-          id="petColor"
+          id="color"
           label="Color"
           placeholder={"Ingresa el color"}
-          value={petsForm.petsInfo[index]?.petColor}
+          value={petsForm.pets[index]?.color}
           onChange={handleChange}
+          error={errorForm?.color?.error}
+          helperText={errorForm?.color?.message}
+          inputProps={{
+            maxLength: 50,
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6}></Grid>
@@ -128,6 +192,7 @@ export const PetInfoForm = ({
           width={isMobile ? "100%" : "124px"}
           onClick={handleContinue}
           style={{ marginTop: "20px" }}
+          disabled={!isFormValid()}
         >
           Continuar
         </Button>

@@ -14,8 +14,11 @@ import chevron from "@/assets/icons/arrow-up.svg";
 import chevronDown from "@/assets/icons/chevron-down.svg";
 import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
 import { Button } from "../Common/Button";
+import { useDispatch } from "react-redux";
+import { setPetsFormInfo } from "@/store/pets";
 
 const Header = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { pathname } = router;
   const [openMenu, setOpenMenu] = useState(false);
@@ -53,6 +56,7 @@ const Header = ({ isMobile, isTablet }) => {
   };
 
   const handleGo = (url, key) => {
+    dispatch(setPetsFormInfo({}));
     if (url) {
       setOptionSelected(key);
       router.push(url);
@@ -68,6 +72,7 @@ const Header = ({ isMobile, isTablet }) => {
     setOpenMenu(false);
     setSubMenuOpen(false);
     setSubMenuLoginOpen(false);
+    dispatch(setPetsFormInfo({}));
   };
 
   const handlePetHome = () => {
@@ -76,6 +81,7 @@ const Header = ({ isMobile, isTablet }) => {
     setOpenMenu(false);
     setSubMenuOpen(false);
     setSubMenuLoginOpen(false);
+    dispatch(setPetsFormInfo({}));
   };
 
   const handleToggleSubMenu = () => {

@@ -47,6 +47,11 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
     );
   };
 
+  const handlePayCard = () => {
+    router.push("/realizar-pago?payAssistance=pet");
+    handleCloseModal();
+  };
+
   const methodOfPaymentOptions = [
     {
       label: <Image alt="bancolombia" src={bancolombia} />,
@@ -134,7 +139,7 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
             width={isMobile ? "100%" : "147px"}
             labelWeight={theme.fonts.weight.regular}
             onClick={
-              paymentMethod === "bancolombia" ? handlePayBancolombia : null
+              paymentMethod === "bancolombia" ? handlePayBancolombia : handlePayCard
             }
             startIcon={
               bancolombiaToken.isLoading ? (

@@ -1,11 +1,18 @@
+import React, { useEffect } from "react";
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 import Banner from "@/components/PetBangk/Banner";
 import Reviews from "@/components/PetBangk/Reviews";
 import Search from "@/components/PetBangk/Search";
 import { Services } from "@/components/PetBangk/Services";
-import React from "react";
+import { useDispatch } from "react-redux";
+import { setPetsFormInfo } from "@/store/pets";
 
 const PetBangk = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setPetsFormInfo({}));
+  }, []);
 
   const breadcrumbs = [
     {

@@ -48,7 +48,8 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
   };
 
   const handlePayCard = () => {
-    console.log("pay card");
+    router.push("/realizar-pago?payAssistance=pet");
+    handleCloseModal();
   };
 
   const methodOfPaymentOptions = [

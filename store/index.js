@@ -16,6 +16,7 @@ const persistConfig = {
 
 const persistedBalanceReducer = persistReducer(persistConfig, balance);
 const persistedRequestsReducer = persistReducer(persistConfig, requests);
+const persistedPetsReducer = persistReducer(persistConfig, pets);
 
 const store = configureStore({
   reducer: {
@@ -25,7 +26,7 @@ const store = configureStore({
     requests: persistedRequestsReducer,
     auth,
     policy,
-    pets,
+    pets: persistedPetsReducer,
   },
 });
 

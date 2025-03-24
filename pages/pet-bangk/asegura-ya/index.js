@@ -19,13 +19,14 @@ import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
 import { validatePetFormStep1, validatePetFormStep2 } from "@/utilities/validations";
 import { CircularProgress, Modal } from "@mui/material";
 import { ModalAgeError } from "@/components/SecureItNow/ModalAgeError";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPetsFormInfo } from "@/store/pets";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 
 const SecureItNow = ({ isMobile }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { petsForm: petsFormStore } = useSelector((state) => state.pets);
   const [selectedTab, setSelectedTab] = useState(0);
   const [activeKey, setActiveKey] = useState(1);
   const { petsAmount, selectedPlan } = router.query;
@@ -38,6 +39,42 @@ const SecureItNow = ({ isMobile }) => {
   const { data: dataPaymentOcurrency, isSuccess: isSuccessPaymentOcurrency, isLoading: isLoadingPaymentOcurrency } = useGetMethodPayment();
   const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  const getPrice = (amount, frequency, paymentOcurrencyId) => {
+    const prices = {
+      monthly: [23800, 45220, 63546],
+      semiannual: [135660, 257754, 358399],
+      annual: [257040, 488376, 678671],
+    };
+
+    const additionalCosts = {
+      monthly: 20825,
+      semiannual: 98175,
+      annual: 222768,
+    };
+
+    const frequencyMap = {
+      [paymentOcurrencyId[0].value]: "monthly",
+      [paymentOcurrencyId[1].value]: "semiannual",
+      [paymentOcurrencyId[2].value]: "annual",
+    };
+
+    const frequencyKey = frequencyMap[frequency];
+    if (!frequencyKey || !prices[frequencyKey]) {
+      return 0;
+    };
+
+    const index = amount > 2 ? 2 : amount - 1;
+    const basePrice = prices[frequencyKey][index];
+
+    if (index < 0 || index >= prices[frequencyKey].length) {
+      return 0;
+    };
+
+    const additionalCost = amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
+
+    return basePrice + additionalCost;
+  };
 
   const [petsForm, setPetsForm] = useState({
     paymentOcurrencyId: null, 
@@ -96,6 +133,32 @@ const SecureItNow = ({ isMobile }) => {
 
     setPetsForm({...petsForm, paymentOcurrencyId: paymentOptions[selectedPlan] || ""})
   }, [petsForm, selectedPlan, paymentOcurrencyOptions]);
+
+  useEffect(() => {
+    if (petsFormStore && Object.keys(petsFormStore).length > 0) {
+      setPetsForm({
+        paymentOcurrencyId: petsFormStore.paymentOcurrencyId, 
+        petsAmount: petsFormStore.petsAmount,
+        documentTypeId: petsFormStore.documentTypeId,
+        documentNumber: petsFormStore.documentNumber,
+        email: petsFormStore.email,
+        name: petsFormStore.name,
+        lastName: petsFormStore.lastName,
+        countryCodePhoneId: petsFormStore.countryCodePhoneId,
+        phoneNumber: petsFormStore.phoneNumber,
+        authorization: true,
+        pets: petsFormStore.pets.map((pet, index) => ({
+          id: index,
+          petTypeId: pet.petTypeId,
+          name: pet.name,
+          breed: pet.breed,
+          age: pet.age,
+          ageTime: pet.ageTime,
+          color: pet.color,
+        })),
+      });
+    };
+  }, [petsFormStore]);
 
   const [treatPersonalDataDate, setTreatPersonalDataDate] = useState(null);
   const [showAgeErrorModal, setShowAgeErrorModal] = useState(false);
@@ -332,11 +395,13 @@ const SecureItNow = ({ isMobile }) => {
         pets: petsForm.pets.map((pet) => ({
           petTypeId: pet.petTypeId,
           breed: pet.breed,
-          age: pet.ageTime === "Años" ? pet.age * 12 : pet.age,
+          age: pet.age,
+          ageTime: pet.ageTime,
           name: pet.name,
           color: pet.color
         })),
-        countryCodePhoneId: petsForm.countryCodePhoneId
+        countryCodePhoneId: petsForm.countryCodePhoneId,
+        amount: getPrice(petsForm.petsAmount, petsForm.paymentOcurrencyId, paymentOcurrencyOptions)
       };
 
       dispatch(setPetsFormInfo(payload));
@@ -472,6 +537,7 @@ const SecureItNow = ({ isMobile }) => {
             setPetsForm={setPetsForm}
             setSelectedTab={setSelectedTab}
             paymentOcurrencyOptions={paymentOcurrencyOptions}
+            getPrice={getPrice}
           />
         )}
       </Wrapper>

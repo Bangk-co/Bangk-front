@@ -19,7 +19,8 @@ export const Step3 = ({
   petsForm,
   setPetsForm,
   setSelectedTab,
-  paymentOcurrencyOptions
+  paymentOcurrencyOptions,
+  getPrice
 }) => {
   const returnPlan = () => {
     const currentPlan = paymentOcurrencyOptions.find((option) => option.value === petsForm.paymentOcurrencyId);
@@ -33,42 +34,6 @@ export const Step3 = ({
   const handleDeletePet = (indx) => {
     const updatedPets = petsForm.pets.filter((_, i) => i !== indx);
     setPetsForm({ ...petsForm, pets: updatedPets });
-  };
-
-  const getPrice = (amount, frequency, paymentOcurrencyId) => {
-    const prices = {
-      monthly: [23800, 45220, 63546],
-      semiannual: [135660, 257754, 358399],
-      annual: [257040, 488376, 678671],
-    };
-
-    const additionalCosts = {
-      monthly: 20825,
-      semiannual: 98175,
-      annual: 222768,
-    };
-
-    const frequencyMap = {
-      [paymentOcurrencyId[0].value]: "monthly",
-      [paymentOcurrencyId[1].value]: "semiannual",
-      [paymentOcurrencyId[2].value]: "annual",
-    };
-
-    const frequencyKey = frequencyMap[frequency];
-    if (!frequencyKey || !prices[frequencyKey]) {
-      return 0;
-    };
-
-    const index = amount > 2 ? 2 : amount - 1;
-    const basePrice = prices[frequencyKey][index];
-
-    if (index < 0 || index >= prices[frequencyKey].length) {
-      return 0;
-    };
-
-    const additionalCost = amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
-
-    return basePrice + additionalCost;
   };
 
   return (

@@ -69,8 +69,11 @@ export const theme = {
     error100: "#F8D8D3",
     error300: "#ED9D90",
     error800: "#6D1D10",
+    error1000: "#FFEBEB",
+    error1100: "#E45151",
     teal: "#83A09F",
     default: "#414447",
+    success: "#DBF6CB",
   },
   fonts: {
     family: {

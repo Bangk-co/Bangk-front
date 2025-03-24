@@ -9,11 +9,13 @@ import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check.svg";
 import closeErrorIcon from "@/assets/icons/close-error.svg";
 import Image from "next/image";
+import { formattedDate } from "@/utilities/helpers";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
   const { paymentMethod, requestId, payAssistance } = router.query;
   const [loadingPayment, setLoadingPayment] = useState(true);
+  const [transactionInfo, setTransactionInfo] = useState({});
 
   const petAssistance = payAssistance === "pet";
 
@@ -22,10 +24,18 @@ const TransactionState = ({ isMobile }) => {
   );
   const { data: dataBancolombia } = getTrxBancolombiaStatus;
   useEffect(() => {
-    if (dataBancolombia?.data?.result?.data?.status === "APPROVED") {
+    if (dataBancolombia?.data?.result?.data?.status !== "PENDING") {
       setLoadingPayment(false);
+      setTransactionInfo({
+        idNumber: dataBancolombia?.data?.result?.data?.id,
+        transactionDate: dataBancolombia?.data?.result?.data?.updated_At,
+        status: dataBancolombia?.data?.result?.data?.status,
+        receptor: "Bancolombia",
+        payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
+      });
     }
   }, [dataBancolombia]);
+  console.log("dataBancolombia", dataBancolombia);
 
   const buttonProps = {
     background: theme.colors.orange1000,
@@ -43,8 +53,8 @@ const TransactionState = ({ isMobile }) => {
   const returnStatus = (status) => {
     if (status === "APPROVED") {
       return (
-        <WrapperStatus 
-          background={theme.colors.success} 
+        <WrapperStatus
+          background={theme.colors.success}
           color={theme.colors.green1000}
         >
           <Image src={checkIcon} alt="check" />
@@ -53,8 +63,8 @@ const TransactionState = ({ isMobile }) => {
       );
     } else {
       return (
-        <WrapperStatus 
-          background={theme.colors.error1000} 
+        <WrapperStatus
+          background={theme.colors.error1000}
           color={theme.colors.error1100}
         >
           <Image src={closeErrorIcon} alt="close" />
@@ -65,13 +75,25 @@ const TransactionState = ({ isMobile }) => {
   };
 
   const transactionDetails = [
-    { label: "Número de transacción:", value: "" },
-    { label: "Estado de la transacción:", value: returnStatus("") },
-    { label: "Fecha de la transacción:", value: "" },
-    { label: "Receptor", value: "" },
+    { label: "Número de transacción:", value: transactionInfo?.idNumber },
+    {
+      label: "Estado de la transacción:",
+      value: returnStatus(transactionInfo?.status),
+    },
+    {
+      label: "Fecha de la transacción:",
+      value: formattedDate(transactionInfo?.transactionDate),
+    },
+    { label: "Receptor", value: transactionInfo?.receptor },
     { label: "Monto pagado:", value: "" },
-    { label: "Completada el:", value: "" },
-    { label: "Método de pago:", value: "" },
+    {
+      label: "Completada el:",
+      value: formattedDate(transactionInfo?.transactionDate),
+    },
+    {
+      label: "Método de pago:",
+      value: transactionInfo?.payment,
+    },
   ];
 
   return (
@@ -108,22 +130,22 @@ const TransactionState = ({ isMobile }) => {
         <Div direction="column" width={isMobile ? "100%" : "577px"}>
           <Text
             font={theme.fonts.family.primaryBold}
-            color={petAssistance ? theme.colors.blue200 : theme.colors.green1000}
+            color={
+              petAssistance ? theme.colors.blue200 : theme.colors.green1000
+            }
             size={isMobile ? theme.fonts.size.h1 : theme.fonts.size.h2}
           >
             Detalles de la transacción
           </Text>
           <Card>
             {transactionDetails.map((detail, index) => (
-              <Div 
-                key={index}
-                justify="space-between" 
-                margin="0 0 15px 0"
-              >
+              <Div key={index} justify="space-between" margin="0 0 15px 0">
                 <Text
                   font={theme.fonts.family.primary}
                   color={theme.colors.gray150}
-                  size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+                  size={
+                    isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                  }
                 >
                   {detail.label}
                 </Text>
@@ -131,7 +153,18 @@ const TransactionState = ({ isMobile }) => {
                 <Text
                   font={theme.fonts.family.primaryMedium}
                   color={theme.colors.gray150}
-                  size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
+                  size={
+                    isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                  }
+                  align="right"
+                  style={{
+                    width: "300px",
+                    justifyItems: "right",
+                    wordBreak: "break-word",
+                    whiteSpace: "normal",
+                    display: "block",
+                    flexShrink: 0,
+                  }}
                 >
                   {detail.value}
                 </Text>

@@ -14,7 +14,7 @@ import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({

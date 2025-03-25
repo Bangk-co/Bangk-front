@@ -9,11 +9,15 @@ import { Button } from "@/components/Common/Button";
 import checkIcon from "@/assets/icons/check.svg";
 import closeErrorIcon from "@/assets/icons/close-error.svg";
 import Image from "next/image";
-import { formattedDate } from "@/utilities/helpers";
+import { formattedDate, numberFormat } from "@/utilities/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setPaymentInfo } from "@/store/payment";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
   const { paymentMethod, requestId, payAssistance } = router.query;
+  const dispatch = useDispatch();
+  const { paymentInfo } = useSelector((state) => state.payment);
   const [loadingPayment, setLoadingPayment] = useState(true);
   const [transactionInfo, setTransactionInfo] = useState({});
 
@@ -23,6 +27,7 @@ const TransactionState = ({ isMobile }) => {
     paymentMethod === "bancolombia" && requestId
   );
   const { data: dataBancolombia } = getTrxBancolombiaStatus;
+
   useEffect(() => {
     if (dataBancolombia?.data?.result?.data?.status !== "PENDING") {
       setLoadingPayment(false);
@@ -35,6 +40,13 @@ const TransactionState = ({ isMobile }) => {
       });
     }
   }, [dataBancolombia]);
+
+  useEffect(() => {
+    if (paymentInfo) {
+      setLoadingPayment(false);
+      setTransactionInfo(paymentInfo);
+    }
+  }, [paymentInfo]);
 
   const buttonProps = {
     background: theme.colors.orange1000,
@@ -83,8 +95,8 @@ const TransactionState = ({ isMobile }) => {
       label: "Fecha de la transacción:",
       value: formattedDate(transactionInfo?.transactionDate),
     },
-    { label: "Receptor", value: transactionInfo?.receptor },
-    { label: "Monto pagado:", value: "" },
+    { label: petAssistance ? "Destinatario" : "Receptor", value: transactionInfo?.receptor },
+    { label: "Monto pagado:", value: `$${numberFormat(transactionInfo?.paymentAmount)}` },
     {
       label: "Completada el:",
       value: formattedDate(transactionInfo?.transactionDate),
@@ -94,6 +106,11 @@ const TransactionState = ({ isMobile }) => {
       value: transactionInfo?.payment,
     },
   ];
+
+  const handleBack = () => {
+    dispatch(setPaymentInfo({}));
+    router.push("/");
+  };
 
   return (
     <>
@@ -169,7 +186,7 @@ const TransactionState = ({ isMobile }) => {
                 </Text>
               </Div>
             ))}
-            <Button {...buttonProps} style={{ marginTop: "30px" }}>
+            <Button {...buttonProps} style={{ marginTop: "30px" }} onClick={handleBack}>
               Volver al inicio
             </Button>
           </Card>

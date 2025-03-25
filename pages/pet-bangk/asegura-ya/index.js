@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
-import React, { useEffect, useState } from "react";
-import { Text } from "@/styles/Common";
+import React, { useEffect, useMemo, useState } from "react";
+import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Tabs } from "@/components/Common/Tabs";
 import { Tab } from "@/components/Common/Tabs/Tab";
@@ -41,6 +41,7 @@ const SecureItNow = ({ isMobile }) => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const getPrice = (amount, frequency, paymentOcurrencyId) => {
+    const paymentOcurrency = Number(frequency);
     const prices = {
       monthly: [23800, 45220, 63546],
       semiannual: [135660, 257754, 358399],
@@ -53,13 +54,17 @@ const SecureItNow = ({ isMobile }) => {
       annual: 222768,
     };
 
+    if (paymentOcurrencyId.length < 3) {
+      return 0;
+    }
+
     const frequencyMap = {
       [paymentOcurrencyId[0].value]: "monthly",
       [paymentOcurrencyId[1].value]: "semiannual",
       [paymentOcurrencyId[2].value]: "annual",
     };
 
-    const frequencyKey = frequencyMap[frequency];
+    const frequencyKey = frequencyMap[paymentOcurrency];
     if (!frequencyKey || !prices[frequencyKey]) {
       return 0;
     };
@@ -123,16 +128,6 @@ const SecureItNow = ({ isMobile }) => {
     },
     pets: [],
   });
-
-  useEffect(() => {
-    const paymentOptions = {
-      "1": paymentOcurrencyOptions[0]?.value,
-      "2": paymentOcurrencyOptions[1]?.value,
-      "3": paymentOcurrencyOptions[2]?.value,
-    };
-
-    setPetsForm({...petsForm, paymentOcurrencyId: paymentOptions[selectedPlan] || ""})
-  }, [petsForm, selectedPlan, paymentOcurrencyOptions]);
 
   useEffect(() => {
     if (petsFormStore && Object.keys(petsFormStore).length > 0) {
@@ -254,14 +249,22 @@ const SecureItNow = ({ isMobile }) => {
 
   useEffect(() => {
     if (isSuccessPaymentOcurrency) {
-      setPaymentOcurrencyOptions(
-        dataPaymentOcurrency?.data.groupSettings
-          .map((ele) => ({
-            label: ele.name,
-            value: ele.id,
-          }))
-          .sort((a, b) => a.value - b.value)
-      );
+      const paymentOcurrency = dataPaymentOcurrency?.data.groupSettings
+        .map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+        .sort((a, b) => a.value - b.value);
+      setPaymentOcurrencyOptions(paymentOcurrency);
+      const planId = {
+        "1": paymentOcurrency[0].value,
+        "2": paymentOcurrency[1].value,
+        "3": paymentOcurrency[2].value,
+      }
+      setPetsForm((prevPetsForm) => ({
+        ...prevPetsForm,
+        paymentOcurrencyId: planId[selectedPlan] || 716,
+      }));
     }
   }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
 
@@ -401,7 +404,7 @@ const SecureItNow = ({ isMobile }) => {
           color: pet.color
         })),
         countryCodePhoneId: petsForm.countryCodePhoneId,
-        amount: getPrice(petsForm.petsAmount, petsForm.paymentOcurrencyId, paymentOcurrencyOptions)
+        amount: getPrice(petsForm.pets.length, Number(petsForm.paymentOcurrencyId), paymentOcurrencyOptions)
       };
 
       dispatch(setPetsFormInfo(payload));
@@ -434,11 +437,18 @@ const SecureItNow = ({ isMobile }) => {
 
   if (isLoadingPaymentOcurrency) {
     return (
-      <CircularProgress
-        size={20}
-        style={{ color: theme.colors.blue200 }}
-      />
+      <Div justify="center" align="center" height="100vh">
+        <CircularProgress
+          size={24}
+          style={{ color: theme.colors.blue200 }}
+        />
+      </Div>
     );
+  };
+
+  const handleCardPayment = () => {
+    setShowPaymentModal(false);
+    router.push("/realizar-pago?payAssistance=pet");
   };
 
   return (
@@ -456,6 +466,7 @@ const SecureItNow = ({ isMobile }) => {
         showModal={showPaymentModal}
         handleCloseModal={() => setShowPaymentModal(false)}
         isMobile={isMobile}
+        handleCardPayment={handleCardPayment}
       />
       <Wrapper>
         <Image 

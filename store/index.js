@@ -8,7 +8,7 @@ import requests from "./requests";
 import auth from "./auth";
 import policy from "./policy";
 import pets from "./pets";
-
+import payment from "./payment";
 const persistConfig = {
   key: "root",
   storage,
@@ -17,6 +17,7 @@ const persistConfig = {
 const persistedBalanceReducer = persistReducer(persistConfig, balance);
 const persistedRequestsReducer = persistReducer(persistConfig, requests);
 const persistedPetsReducer = persistReducer(persistConfig, pets);
+const persistedPaymentReducer = persistReducer(persistConfig, payment);
 
 const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ const store = configureStore({
     auth,
     policy,
     pets: persistedPetsReducer,
+    payment: persistedPaymentReducer,
   },
 });
 

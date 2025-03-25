@@ -74,6 +74,7 @@ export const theme = {
     teal: "#83A09F",
     default: "#414447",
     success: "#DBF6CB",
+    errorToast: "#FFC9C9",
   },
   fonts: {
     family: {

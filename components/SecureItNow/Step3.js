@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, WrapperPetInfo, WrapperPlan } from "./styles";
 import { Grid } from "@mui/material";
 import { Div, Text } from "@/styles/Common";
@@ -22,10 +22,11 @@ export const Step3 = ({
   paymentOcurrencyOptions,
   getPrice
 }) => {
-  const returnPlan = () => {
-    const currentPlan = paymentOcurrencyOptions.find((option) => option.value === petsForm.paymentOcurrencyId);
-    return currentPlan.label;
-  };
+
+  const planName = useMemo(() => {
+    return paymentOcurrencyOptions.find((option) => option.value === petsForm?.paymentOcurrencyId)?.label || "";
+  }, [paymentOcurrencyOptions, petsForm]);
+  
 
   const handleEditPet = () => {
     setSelectedTab(1);
@@ -56,7 +57,7 @@ export const Step3 = ({
             Forma de pago seleccionada
           </Text>
           <WrapperPlan>
-            {returnPlan()}
+            {planName}
           </WrapperPlan>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -65,7 +66,7 @@ export const Step3 = ({
             size={theme.fonts.size.default2}
             mb="10px"
           >
-            Valor de tu asistencia {returnPlan()}
+            Valor de tu asistencia {planName}
           </Text>
           <Text
             color={theme.colors.gray150}

@@ -11,15 +11,17 @@ import visa from "@/assets/icons/visa.svg";
 import Image from "next/image";
 import { numberFormat } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
-import { useSelector } from "react-redux";
-import useCardPayment from "@/hooks/Common/useCardPayment";
+import { useDispatch, useSelector } from "react-redux";
+import useCardPayment from "@/hooks/WompiPayment/useCardPayment";
 import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import { CircularProgress } from "@/components/Common/CircularProgress";
 import toast from "react-hot-toast";
 import { setPetsFormInfo } from "@/store/pets";
+import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 
 const RealizarPago = ({ isMobile }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { payAssistance } = router.query;
   const createPetInsurance = useCreatePetInsurance();
   const cardPayment = useCardPayment();
@@ -27,6 +29,9 @@ const RealizarPago = ({ isMobile }) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [summary, setSummary] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [transactionReference, setTransactionReference] = useState(null);
+  const { data: statusTransaction, isSuccess: isSuccessStatusTransaction } = useGetStatusTransaction(transactionReference);
+  const [transactionStatus, setTransactionStatus] = useState("");
   const [cardPaymentForm, setCardPaymentForm] = useState({
     email: "",
     name: "",
@@ -74,6 +79,27 @@ const RealizarPago = ({ isMobile }) => {
       </Div>
     )
   };
+
+  useEffect(() => {
+    if (isSuccessStatusTransaction) {
+      setTransactionStatus(statusTransaction?.data?.result);
+      setLoading(false);
+
+      if (statusTransaction?.data?.result === "APPROVED" || statusTransaction?.data?.result === "DECLINED") {
+        setTimeout(() => {
+          router.push(`/transaccion?payAssistance=${payAssistance}`);
+        }, 100);
+      };
+    }
+  }, [isSuccessStatusTransaction, statusTransaction]);
+
+  useEffect(() => {
+    if (transactionStatus === "VOIDED" || transactionStatus === "ERROR") {
+      toast.error("Ha ocurrido un error, por favor intente nuevamente");
+      setTransactionReference(null);
+      setTransactionStatus("");
+    };
+  }, [transactionStatus]);
 
   useEffect(() => {
     if (petAssistance) {
@@ -214,11 +240,11 @@ const RealizarPago = ({ isMobile }) => {
     createPetInsurance.reset();
     createPetInsurance.mutate(petPayload, {
       onSuccess: (res) => {
-        const petApplicationId = res.data.data.petApplicationId;
+        const applicationId = res?.data?.clientInsuredId;
         const cardPayload = {
           email: cardPaymentForm.email,
           name: cardPaymentForm.name,
-          petApplicationId: petApplicationId,
+          applicationId: applicationId,
           cardNumber: cardPaymentForm.cardNumber,
           expiredMonth: cardPaymentForm.expiredDate.slice(0, 2),
           expiredYear: cardPaymentForm.expiredDate.slice(3, 5),
@@ -226,14 +252,13 @@ const RealizarPago = ({ isMobile }) => {
           paymentInstallments: 1,
           cvc: cardPaymentForm.cvc,
           amount: cardPaymentForm.amount,
-          typeApplication: "",
+          typeApplication: "PET",
         };
 
         cardPayment.reset();
         cardPayment.mutate(cardPayload, {
           onSuccess: (res) => {
-            console.log(res?.data?.data);
-            setLoading(false);
+            setTransactionReference(res?.data?.result?.transactionReference);
             dispatch(setPetsFormInfo({}));
           },
           onError: () => {

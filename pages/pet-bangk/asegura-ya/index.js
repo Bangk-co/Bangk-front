@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
-import React, { useEffect, useState } from "react";
-import { Text } from "@/styles/Common";
+import React, { useEffect, useMemo, useState } from "react";
+import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Tabs } from "@/components/Common/Tabs";
 import { Tab } from "@/components/Common/Tabs/Tab";
@@ -76,8 +76,12 @@ const SecureItNow = ({ isMobile }) => {
     return basePrice + additionalCost;
   };
 
+  const planId = useMemo(() => {
+    return paymentOcurrencyOptions.find((option) => option.value === Number(selectedPlan))?.value || "";
+  }, [paymentOcurrencyOptions, selectedPlan]);
+
   const [petsForm, setPetsForm] = useState({
-    paymentOcurrencyId: null, 
+    paymentOcurrencyId: planId, 
     petsAmount: Number(petsAmount) || 1,
     documentTypeId: 76,
     documentNumber: "",
@@ -123,16 +127,6 @@ const SecureItNow = ({ isMobile }) => {
     },
     pets: [],
   });
-
-  useEffect(() => {
-    const paymentOptions = {
-      "1": paymentOcurrencyOptions[0]?.value,
-      "2": paymentOcurrencyOptions[1]?.value,
-      "3": paymentOcurrencyOptions[2]?.value,
-    };
-
-    setPetsForm({...petsForm, paymentOcurrencyId: paymentOptions[selectedPlan] || ""})
-  }, [petsForm, selectedPlan, paymentOcurrencyOptions]);
 
   useEffect(() => {
     if (petsFormStore && Object.keys(petsFormStore).length > 0) {
@@ -434,11 +428,18 @@ const SecureItNow = ({ isMobile }) => {
 
   if (isLoadingPaymentOcurrency) {
     return (
-      <CircularProgress
-        size={20}
-        style={{ color: theme.colors.blue200 }}
-      />
+      <Div justify="center" align="center" height="100vh">
+        <CircularProgress
+          size={24}
+          style={{ color: theme.colors.blue200 }}
+        />
+      </Div>
     );
+  };
+
+  const handleCardPayment = () => {
+    setShowPaymentModal(false);
+    router.push("/realizar-pago?payAssistance=pet");
   };
 
   return (
@@ -456,6 +457,7 @@ const SecureItNow = ({ isMobile }) => {
         showModal={showPaymentModal}
         handleCloseModal={() => setShowPaymentModal(false)}
         isMobile={isMobile}
+        handleCardPayment={handleCardPayment}
       />
       <Wrapper>
         <Image 

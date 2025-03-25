@@ -11,7 +11,7 @@ import { Radio } from "../Common/Radio";
 import bancolombia from "@/assets/img/bancolombia.svg";
 import { useRouter } from "next/router";
 
-const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
+const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile, handleCardPayment }) => {
   const router = useRouter();
   const bancolombiaToken = useGenerateTknTrxBancolombia();
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -45,11 +45,6 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
         },
       }
     );
-  };
-
-  const handlePayCard = () => {
-    router.push("/realizar-pago?payAssistance=pet");
-    handleCloseModal();
   };
 
   const methodOfPaymentOptions = [
@@ -139,7 +134,7 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile }) => {
             width={isMobile ? "100%" : "147px"}
             labelWeight={theme.fonts.weight.regular}
             onClick={
-              paymentMethod === "bancolombia" ? handlePayBancolombia : handlePayCard
+              paymentMethod === "bancolombia" ? handlePayBancolombia : handleCardPayment
             }
             startIcon={
               bancolombiaToken.isLoading ? (

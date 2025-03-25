@@ -54,10 +54,6 @@ const SecureItNow = ({ isMobile }) => {
       annual: 222768,
     };
 
-    if (paymentOcurrencyId.length < 3) {
-      return 0;
-    }
-
     const frequencyMap = {
       [paymentOcurrencyId[0].value]: "monthly",
       [paymentOcurrencyId[1].value]: "semiannual",

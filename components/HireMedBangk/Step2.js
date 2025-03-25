@@ -15,6 +15,8 @@ import {
 import Image from "next/image";
 import edit from "@/assets/icons/edit-gray.svg";
 import trash from "@/assets/icons/trash-gray.svg";
+import { setMedFormInfo } from "@/store/med";
+import { useDispatch } from "react-redux";
 
 export const Step2 = ({
   isMobile,
@@ -25,6 +27,8 @@ export const Step2 = ({
   handleEdit,
   setShowModal,
 }) => {
+  const dispatch = useDispatch();
+
   const radioOptions = [
     { label: "Mensual", value: "1" },
     { label: "Semestral", value: "2" },
@@ -48,6 +52,35 @@ export const Step2 = ({
       beneficiariesInfo: updatedBeneficiaries,
       planAmount: updatedPlanAmount,
     }));
+  };
+
+  const handlePay = () => {
+    setShowModal(true);
+    const payload = {
+      paymentOcurrencyId: form.methodOfPayment,
+      documentTypeId: form.documentType,
+      documentNumber: form.documentNumber,
+      name: form.name,
+      lastName: form.lastName,
+      email: form.email,
+      phoneNumber: form.phoneNumber,
+      treatPErsonalDatadate: "",
+      countryCodePhoneId: form.countryCode,
+      isBeneficiary: form.beneficiary,
+      beneficiaryInsurance: form.beneficiariesInfo.map((beneficiary) => ({
+        documentTypeId: beneficiary.documentType,
+        documentNumber: beneficiary.documentNumber,
+        name: beneficiary.beneficiaryName,
+        lastName: beneficiary.beneficiaryLastname,
+        email: beneficiary.email,
+        phoneNumber: beneficiary.phoneNumber,
+        treatPErsonalDatadate: "",
+        countryCodePhoneId: beneficiary.countryCode
+      })),
+      amount: getMedBangkPrice(form.planAmount, form.methodOfPayment)
+    };
+
+    dispatch(setMedFormInfo(payload));
   };
 
   return (
@@ -212,7 +245,7 @@ export const Step2 = ({
             width={isMobile ? "100%" : "147px"}
             labelWeight={theme.fonts.weight.regular}
             style={{ marginTop: "40px" }}
-            onClick={() => setShowModal(true)}
+            onClick={handlePay}
           >
             Pagar ahora
           </Button>

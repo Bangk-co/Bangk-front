@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stepper from "@/components/Common/Stepper";
 import BangkData from "@/components/Insurance/BangkData";
 import Banner from "@/components/Insurance/Banner";
 import FormInfo from "@/components/Insurance/FormInfo";
 import Save from "@/components/Insurance/Save";
 import { Div } from "@/styles/Common";
+import { useDispatch } from "react-redux";
+import { setMedFormInfo } from "@/store/med";
 
 const Insurance = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(setMedFormInfo({}));
+  }, []);
+
   return (
     <Div direction="column">
       <Banner isMobile={isMobile} />

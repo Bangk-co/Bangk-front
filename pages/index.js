@@ -18,6 +18,7 @@ import CarBangk from "@/components/Home/CarBangk";
 import PetBangk from "@/components/Home/PetBangk";
 import MedBangk from "@/components/Home/MedBangk";
 import { setPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Home = ({ isMobile, isTablet }) => {
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
     dispatch(setSelectedRequestInformation({}));
     dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
   }, []);
 
   return (

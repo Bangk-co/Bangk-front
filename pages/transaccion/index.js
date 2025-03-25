@@ -12,6 +12,7 @@ import Image from "next/image";
 import { formattedDate, numberFormat } from "@/utilities/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentInfo } from "@/store/payment";
+import { setMedFormInfo } from "@/store/med";
 import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 
@@ -29,6 +30,7 @@ const TransactionState = ({ isMobile }) => {
 
   const petAssistance = payAssistance === "pet";
   const medAssistance = payAssistance === "med";
+  console.log("medForm", medForm);
 
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && medForm?.bancolombiaToken
@@ -47,7 +49,7 @@ const TransactionState = ({ isMobile }) => {
         documentIdentificationType: medForm?.documentTypeId,
         documentIdentificationNumber: medForm?.documentNumber,
         tokenPayment: medForm?.bancolombiaToken,
-        amount: 4990000, // TODO update medForm?.amount,
+        amount: 4990000, // TODO change for production medForm?.amount,
         typeApplication: "MED",
         timeApplication: medForm?.paymentOcurrencyId,
         paymentSourceId: 0,
@@ -68,8 +70,6 @@ const TransactionState = ({ isMobile }) => {
               payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
             });
           }
-          /* setLoadingPayment(false);
-           */
         },
         onError: (err) => {
           console.log("errorPayBan", err);
@@ -93,8 +93,10 @@ const TransactionState = ({ isMobile }) => {
   useEffect(() => {
     if (paymentInfo && Object.keys(paymentInfo).length > 0) {
       setLoadingPayment(false);
+      dispatch(setMedFormInfo({}));
       setTransactionInfo(paymentInfo);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentInfo]);
 
   const buttonProps = {
@@ -163,6 +165,7 @@ const TransactionState = ({ isMobile }) => {
 
   const handleBack = () => {
     dispatch(setPaymentInfo({}));
+    dispatch(setMedFormInfo({}));
     router.push("/");
   };
 
@@ -208,49 +211,55 @@ const TransactionState = ({ isMobile }) => {
             Detalles de la transacción
           </Text>
 
-          {transactionInfo?.idNumber && (
-            <Card>
-              {transactionDetails.map((detail, index) => (
-                <Div key={index} justify="space-between" margin="0 0 15px 0">
-                  <Text
-                    font={theme.fonts.family.primary}
-                    color={theme.colors.gray150}
-                    size={
-                      isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
-                    }
-                  >
-                    {detail.label}
-                  </Text>
+          <Card>
+            {transactionInfo?.idNumber && (
+              <>
+                {transactionDetails.map((detail, index) => (
+                  <Div key={index} justify="space-between" margin="0 0 15px 0">
+                    <Text
+                      font={theme.fonts.family.primary}
+                      color={theme.colors.gray150}
+                      size={
+                        isMobile
+                          ? theme.fonts.size.default2
+                          : theme.fonts.size.h6
+                      }
+                    >
+                      {detail.label}
+                    </Text>
 
-                  <Text
-                    font={theme.fonts.family.primaryMedium}
-                    color={theme.colors.gray150}
-                    size={
-                      isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
-                    }
-                    align="right"
-                    style={{
-                      width: "300px",
-                      justifyItems: "right",
-                      wordBreak: "break-word",
-                      whiteSpace: "normal",
-                      display: "block",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {detail.value}
-                  </Text>
-                </Div>
-              ))}
-              <Button
-                {...buttonProps}
-                style={{ marginTop: "30px" }}
-                onClick={handleBack}
-              >
-                Volver al inicio
-              </Button>
-            </Card>
-          )}
+                    <Text
+                      font={theme.fonts.family.primaryMedium}
+                      color={theme.colors.gray150}
+                      size={
+                        isMobile
+                          ? theme.fonts.size.default2
+                          : theme.fonts.size.h6
+                      }
+                      align="right"
+                      style={{
+                        width: "300px",
+                        justifyItems: "right",
+                        wordBreak: "break-word",
+                        whiteSpace: "normal",
+                        display: "block",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {detail.value}
+                    </Text>
+                  </Div>
+                ))}
+                <Button
+                  {...buttonProps}
+                  style={{ marginTop: "30px" }}
+                  onClick={handleBack}
+                >
+                  Volver al inicio
+                </Button>
+              </>
+            )}
+          </Card>
         </Div>
       </Wrapper>
     </>

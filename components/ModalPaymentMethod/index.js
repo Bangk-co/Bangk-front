@@ -1,33 +1,22 @@
 import React, { useState } from "react";
 import { theme } from "@/styles/theme";
 import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import { CircularProgress, Modal } from "@mui/material";
 import { WrapperModal } from "./styles";
-import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { Button } from "../Common/Button";
 import close from "@/assets/icons/close.svg";
 import { Radio } from "../Common/Radio";
 import bancolombia from "@/assets/img/bancolombia.svg";
-import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
-import { setMedFormInfo } from "@/store/med";
-import toast from "react-hot-toast";
-import { ToastErrorClient } from "../Common/ToastErrorClients";
 
 const ModalPaymentMethod = ({
   showModal,
   handleCloseModal,
   isMobile,
   handleCardPayment,
+  handlePayBancolombia,
+  loading,
 }) => {
-  const router = useRouter();
-  const createInsurance = useCreateInsurance();
-  const dispatch = useDispatch();
-  const { medForm } = useSelector((state) => state.med);
-
-  const getBancolombiaToken = useGenerateTknTrxBancolombia();
   const [paymentMethod, setPaymentMethod] = useState(null);
 
   const buttonProps = {
@@ -40,48 +29,6 @@ const ModalPaymentMethod = ({
     borderHover: theme.colors.orange1000,
     height: "40px",
     borderRadius: "50px",
-  };
-
-  const handlePayBancolombia = () => {
-    createInsurance.reset();
-    createInsurance.mutate(medForm, {
-      onSuccess: (resInsurance) => {
-        getBancolombiaToken.reset();
-        getBancolombiaToken.mutate(
-          {},
-          {
-            onSuccess: (resToken) => {
-              dispatch(
-                setMedFormInfo({
-                  ...medForm,
-                  bancolombiaToken: resToken?.data?.result?.data?.id,
-                  applicationId: resInsurance?.data?.medEnsuranceApplicationId,
-                })
-              );
-              handleCloseModal();
-              window.location.href =
-                resToken?.data?.result?.data?.authorization_Url;
-            },
-            onError: (error) => {
-              console.log("errorbancolombia", error);
-            },
-          }
-        );
-      },
-      onError: (err) => {
-        console.log("errorinsurance", err);
-        isMobile
-          ? toast.custom(
-              <ToastErrorClient
-                message={"No fue posible crear el seguro"}
-                color={theme.colors.white}
-                background={theme.colors.primary300}
-              />,
-              { duration: 1000 }
-            )
-          : toast.error("No fue posible crear el seguro");
-      },
-    });
   };
 
   const methodOfPaymentOptions = [
@@ -176,7 +123,7 @@ const ModalPaymentMethod = ({
                 : handleCardPayment
             }
             startIcon={
-              createInsurance.isLoading || getBancolombiaToken.isLoading ? (
+              loading ? (
                 <CircularProgress
                   size={20}
                   style={{ color: theme.colors.white }}

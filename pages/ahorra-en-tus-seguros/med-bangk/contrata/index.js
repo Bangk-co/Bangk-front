@@ -1,8 +1,10 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 import React, { useState, useEffect } from "react";
 import { Col, Row, Text } from "@/styles/Common";
-import { theme } from "@/styles/theme";
+import toast from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { theme } from "@/styles/theme";
 import { Wrapper } from "@/components/HireMedBangk/styles";
 import { Step1 } from "@/components/HireMedBangk/Step1";
 import { Step2 } from "@/components/HireMedBangk/Step2";
@@ -11,12 +13,21 @@ import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
+import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
+import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
+import { setMedFormInfo } from "@/store/med";
+import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 
 const HireAssistance = ({ isMobile }) => {
+  const router = useRouter();
+  const createInsurance = useCreateInsurance();
+  const createBancolombiaToken = useGenerateTknTrxBancolombia();
+  const dispatch = useDispatch();
+  const { medForm } = useSelector((state) => state.med);
+
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
@@ -151,6 +162,48 @@ const HireAssistance = ({ isMobile }) => {
     router.push("/realizar-pago?payAssistance=med");
   };
 
+  const handlePayBancolombia = () => {
+    createInsurance.reset();
+    createInsurance.mutate(medForm, {
+      onSuccess: (resInsurance) => {
+        createBancolombiaToken.reset();
+        createBancolombiaToken.mutate(
+          {},
+          {
+            onSuccess: (resToken) => {
+              dispatch(
+                setMedFormInfo({
+                  ...medForm,
+                  bancolombiaToken: resToken?.data?.result?.data?.id,
+                  applicationId: resInsurance?.data?.medEnsuranceApplicationId,
+                })
+              );
+              setShowModal(false);
+              window.location.href =
+                resToken?.data?.result?.data?.authorization_Url;
+            },
+            onError: (error) => {
+              console.log("errorbancolombia", error);
+            },
+          }
+        );
+      },
+      onError: (err) => {
+        console.log("errorinsurance", err);
+        isMobile
+          ? toast.custom(
+              <ToastErrorClient
+                message={"No fue posible crear el seguro"}
+                color={theme.colors.white}
+                background={theme.colors.primary300}
+              />,
+              { duration: 1000 }
+            )
+          : toast.error("No fue posible crear el seguro");
+      },
+    });
+  };
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
@@ -159,6 +212,8 @@ const HireAssistance = ({ isMobile }) => {
         handleCloseModal={() => setShowModal(false)}
         isMobile={isMobile}
         handleCardPayment={handleCardPayment}
+        handlePayBancolombia={handlePayBancolombia}
+        loading={createInsurance.isLoading || createBancolombiaToken.isLoading}
       />
       <Wrapper>
         <Text

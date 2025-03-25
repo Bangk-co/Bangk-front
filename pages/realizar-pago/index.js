@@ -225,7 +225,7 @@ const RealizarPago = ({ isMobile }) => {
         amount: medForm.amount,
       });
     }
-  }, [medAssistance, medForm]);
+  }, [medAssistance, medForm, cardPaymentForm]);
   
   const handleChange = (e) => {
     const { id, value } = e.target;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 import Banner from "@/components/MedBangk/Banner";
 import HowSection from "@/components/MedBangk/HowSection";
@@ -6,8 +6,16 @@ import SummaryPlan from "@/components/MedBangk/SummaryPlan";
 import { Prices } from "@/components/MedBangk/Prices";
 import { Benefits } from "@/components/MedBangk/Benefits";
 import { GeneralConditions } from "@/components/MedBangk/GeneralConditions";
+import { useDispatch } from "react-redux";
+import { setMedFormInfo } from "@/store/med";
 
 const MedBangk = ({ isMobile, isTablet }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setMedFormInfo({}));
+  }, []);
+
   const breadcrumbs = [
     {
       label: "Bangk",

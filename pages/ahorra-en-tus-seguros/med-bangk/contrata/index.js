@@ -120,6 +120,11 @@ const HireAssistance = ({ isMobile }) => {
     setActualStep(1);
     setActiveKey(keyToEdit);
   };
+  
+  const handleCardPayment = () => {
+    setShowModal(false);
+    router.push("/realizar-pago?payAssistance=med");
+  };
 
   return (
     <>
@@ -128,6 +133,7 @@ const HireAssistance = ({ isMobile }) => {
         showModal={showModal}
         handleCloseModal={() => setShowModal(false)}
         isMobile={isMobile}
+        handleCardPayment={handleCardPayment}
       />
       <Wrapper>
         <Text

@@ -22,6 +22,7 @@ const TransactionState = ({ isMobile }) => {
   const [transactionInfo, setTransactionInfo] = useState({});
 
   const petAssistance = payAssistance === "pet";
+  const medAssistance = payAssistance === "med";
 
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && requestId
@@ -42,7 +43,7 @@ const TransactionState = ({ isMobile }) => {
   }, [dataBancolombia]);
 
   useEffect(() => {
-    if (paymentInfo) {
+    if (paymentInfo && Object.keys(paymentInfo).length > 0) {
       setLoadingPayment(false);
       setTransactionInfo(paymentInfo);
     }
@@ -95,7 +96,7 @@ const TransactionState = ({ isMobile }) => {
       label: "Fecha de la transacción:",
       value: formattedDate(transactionInfo?.transactionDate),
     },
-    { label: petAssistance ? "Destinatario" : "Receptor", value: transactionInfo?.receptor },
+    { label: petAssistance || medAssistance ? "Destinatario" : "Receptor", value: transactionInfo?.receptor },
     { label: "Monto pagado:", value: `$${numberFormat(transactionInfo?.paymentAmount)}` },
     {
       label: "Completada el:",

@@ -20,14 +20,18 @@ import { setPetsFormInfo } from "@/store/pets";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 import { CustomErrorToast } from "@/components/Common/CustomErrorToast";
 import { setPaymentInformation } from "@/store/payment";
+import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
+import { setMedFormInfo } from "@/store/med";
 
 const RealizarPago = ({ isMobile }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { payAssistance } = router.query;
+  const createInsurance = useCreateInsurance();
   const createPetInsurance = useCreatePetInsurance();
   const cardPayment = useCardPayment();
   const { petsForm } = useSelector((state) => state.pets);
+  const { medForm } = useSelector((state) => state.med);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [summary, setSummary] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -47,6 +51,7 @@ const RealizarPago = ({ isMobile }) => {
   });
 
   const petAssistance = payAssistance === "pet";
+  const medAssistance = payAssistance === "med";
 
   const inputProps = {
     labelColor: theme.colors.gray1000,
@@ -196,23 +201,31 @@ const RealizarPago = ({ isMobile }) => {
   }, [petAssistance, petsForm, cardPaymentForm]);
 
   useEffect(() => {
-    if (!petAssistance) {
+    if (medAssistance && medForm?.beneficiaryInsurance?.length > 0) {
       setSummary([
         {
           label: "Total beneficiarios",
-          value: ""
+          value: medForm.beneficiaryInsurance.length === 1 
+            ? "1 beneficiario" 
+            : medForm.beneficiaryInsurance.length + " beneficiarios"
         },
         {
           label: "Valor individual",
-          value: ""
+          value: "$ " + numberFormat(medForm?.amount / medForm?.beneficiaryInsurance?.length)
         },
         {
           label: "Subtotal",
-          value: ""
+          value: "$ " + numberFormat(medForm.amount)
         },
       ]);
+      setCardPaymentForm({
+        ...cardPaymentForm,
+        name: medForm.name,
+        email: medForm.email,
+        amount: medForm.amount,
+      });
     }
-  }, [petAssistance]);
+  }, [medAssistance, medForm]);
   
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -290,7 +303,45 @@ const RealizarPago = ({ isMobile }) => {
   };
 
   const handlePay = () => {
+    setLoading(true);
+    const medPayload = { ...medForm };
+    delete medPayload.amount;
 
+    createInsurance.reset();
+    createInsurance.mutate(medPayload, {
+      onSuccess: (res) => {
+        const applicationId = res?.data?.medEnsuranceApplicationId;
+        const cardPayload = {
+          email: cardPaymentForm.email,
+          name: cardPaymentForm.name,
+          applicationId: applicationId,
+          cardNumber: cardPaymentForm.cardNumber,
+          expiredMonth: cardPaymentForm.expiredDate.slice(0, 2),
+          expiredYear: cardPaymentForm.expiredDate.slice(3, 5),
+          cardHolder: cardPaymentForm.cardHolder,
+          paymentInstallments: 1,
+          cvc: cardPaymentForm.cvc,
+          amount: cardPaymentForm.amount,
+          typeApplication: "MED",
+        };
+
+        cardPayment.reset();
+        cardPayment.mutate(cardPayload, {
+          onSuccess: (res) => {
+            setTransactionReference(res?.data?.result?.transactionReference);
+            dispatch(setMedFormInfo({}));
+          },
+          onError: () => {
+            console.log("Error");
+            setLoading(false);
+          }
+        });
+      },
+      onError: () => {
+        toast.error("Ha ocurrido un error, por favor intente nuevamente");
+        setLoading(false);
+      }
+    });
   };
 
   return (

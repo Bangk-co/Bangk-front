@@ -10,6 +10,7 @@ import _ from "lodash";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
+import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
 
 const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
@@ -109,6 +110,30 @@ const HireAssistance = ({ isMobile }) => {
     }
   }, [isSuccessPhone, dataPhone]);
 
+  const { data: dataPaymentOcurrency, isSuccess: isSuccessPaymentOcurrency } =
+    useGetMethodPayment();
+  const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessPaymentOcurrency) {
+      const paymentOcurrency = dataPaymentOcurrency?.data.groupSettings
+        .map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+        .sort((a, b) => a.value - b.value);
+      setPaymentOcurrencyOptions(paymentOcurrency);
+      const planId = {
+        1: paymentOcurrency[0].value,
+        2: paymentOcurrency[1].value,
+        3: paymentOcurrency[2].value,
+      };
+      setForm((prevForm) => ({
+        ...prevForm,
+        methodOfPayment: planId[selectedPlan] || 716,
+      }));
+    }
+  }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
+
   const handleContinue = () => {
     if (actualStep === 2) {
       return;
@@ -120,7 +145,7 @@ const HireAssistance = ({ isMobile }) => {
     setActualStep(1);
     setActiveKey(keyToEdit);
   };
-  
+
   const handleCardPayment = () => {
     setShowModal(false);
     router.push("/realizar-pago?payAssistance=med");
@@ -158,6 +183,7 @@ const HireAssistance = ({ isMobile }) => {
             setActiveKey={setActiveKey}
             documentTypeOptions={documentTypeOptions}
             phoneCodesOptions={phoneCodesOptions}
+            paymentOcurrencyOptions={paymentOcurrencyOptions}
           />
         )}
         {actualStep === 2 && (
@@ -167,6 +193,7 @@ const HireAssistance = ({ isMobile }) => {
             form={form}
             setForm={setForm}
             documentTypeOptions={documentTypeOptions}
+            paymentOcurrencyOptions={paymentOcurrencyOptions}
             handleEdit={handleEdit}
             setShowModal={setShowModal}
           />

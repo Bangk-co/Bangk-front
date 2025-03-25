@@ -18,6 +18,8 @@ import { CircularProgress } from "@/components/Common/CircularProgress";
 import toast from "react-hot-toast";
 import { setPetsFormInfo } from "@/store/pets";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
+import { CustomErrorToast } from "@/components/Common/CustomErrorToast";
+import { setPaymentInformation } from "@/store/payment";
 
 const RealizarPago = ({ isMobile }) => {
   const router = useRouter();
@@ -56,7 +58,7 @@ const RealizarPago = ({ isMobile }) => {
     width: "100%",
     font: theme.fonts.family.primary,
     size: theme.fonts.size.default2,
-    fontColor: theme.colors.gray1000,
+    fontColor: theme.colors.gray150,
   };
 
   const buttonProps = {
@@ -88,6 +90,14 @@ const RealizarPago = ({ isMobile }) => {
       if (statusTransaction?.data?.result === "APPROVED" || statusTransaction?.data?.result === "DECLINED") {
         setTimeout(() => {
           router.push(`/transaccion?payAssistance=${payAssistance}`);
+          dispatch(setPaymentInformation({
+            idNumber: "",
+            transactionDate: new Date(),
+            status: statusTransaction?.data?.result,
+            receptor: "Building Life Technologies SAS",
+            paymentAmount: cardPaymentForm.amount,
+            payment: "Tarjeta terminada en " + cardPaymentForm.cardNumber.slice(-4),
+          }));
         }, 100);
       };
     }
@@ -95,7 +105,12 @@ const RealizarPago = ({ isMobile }) => {
 
   useEffect(() => {
     if (transactionStatus === "VOIDED" || transactionStatus === "ERROR") {
-      toast.error("Ha ocurrido un error, por favor intente nuevamente");
+      toast.custom(
+        <CustomErrorToast
+          message={"Ha ocurrido un error con el método de pago. Por favor inténtalo nuevamente"}
+        />,
+        { duration: 1000 }
+      )
       setTransactionReference(null);
       setTransactionStatus("");
     };

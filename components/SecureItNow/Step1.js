@@ -106,7 +106,6 @@ export const Step1 = ({
       petsForm.authorization
     );
   };
-
   return (
     <Card>
       <Grid container spacing={3}>
@@ -117,7 +116,7 @@ export const Step1 = ({
             label="Forma de pago"
             labelSize={theme.fonts.size.default2}
             labelColor={theme.colors.gray1000}
-            value={petsForm.paymentOcurrencyId}
+            value={Number(petsForm.paymentOcurrencyId)}
             onChange={handleRadio}
           >
             {paymentOcurrencyOptions.map((option, idx) => (
@@ -127,7 +126,7 @@ export const Step1 = ({
                 value={option.value}
                 labelColor={theme.colors.gray1000}
                 radioColor={theme.colors.gray1000}
-                checked={petsForm.paymentOcurrencyId === option.value}
+                checked={Number(petsForm.paymentOcurrencyId) === Number(option.value)}
               />
             ))}
           </RadioGroup>

@@ -24,7 +24,7 @@ export const Step3 = ({
 }) => {
 
   const planName = useMemo(() => {
-    return paymentOcurrencyOptions.find((option) => option.value === petsForm?.paymentOcurrencyId)?.label || "";
+    return paymentOcurrencyOptions.find((option) => Number(option.value) === Number(petsForm?.paymentOcurrencyId))?.label || "";
   }, [paymentOcurrencyOptions, petsForm]);
   
 

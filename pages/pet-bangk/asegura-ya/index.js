@@ -41,6 +41,7 @@ const SecureItNow = ({ isMobile }) => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const getPrice = (amount, frequency, paymentOcurrencyId) => {
+    const paymentOcurrency = Number(frequency);
     const prices = {
       monthly: [23800, 45220, 63546],
       semiannual: [135660, 257754, 358399],
@@ -53,13 +54,17 @@ const SecureItNow = ({ isMobile }) => {
       annual: 222768,
     };
 
+    if (paymentOcurrencyId.length < 3) {
+      return 0;
+    }
+
     const frequencyMap = {
       [paymentOcurrencyId[0].value]: "monthly",
       [paymentOcurrencyId[1].value]: "semiannual",
       [paymentOcurrencyId[2].value]: "annual",
     };
 
-    const frequencyKey = frequencyMap[frequency];
+    const frequencyKey = frequencyMap[paymentOcurrency];
     if (!frequencyKey || !prices[frequencyKey]) {
       return 0;
     };
@@ -76,12 +81,8 @@ const SecureItNow = ({ isMobile }) => {
     return basePrice + additionalCost;
   };
 
-  const planId = useMemo(() => {
-    return paymentOcurrencyOptions.find((option) => option.value === Number(selectedPlan))?.value || "";
-  }, [paymentOcurrencyOptions, selectedPlan]);
-
   const [petsForm, setPetsForm] = useState({
-    paymentOcurrencyId: planId, 
+    paymentOcurrencyId: null, 
     petsAmount: Number(petsAmount) || 1,
     documentTypeId: 76,
     documentNumber: "",
@@ -248,14 +249,22 @@ const SecureItNow = ({ isMobile }) => {
 
   useEffect(() => {
     if (isSuccessPaymentOcurrency) {
-      setPaymentOcurrencyOptions(
-        dataPaymentOcurrency?.data.groupSettings
-          .map((ele) => ({
-            label: ele.name,
-            value: ele.id,
-          }))
-          .sort((a, b) => a.value - b.value)
-      );
+      const paymentOcurrency = dataPaymentOcurrency?.data.groupSettings
+        .map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+        .sort((a, b) => a.value - b.value);
+      setPaymentOcurrencyOptions(paymentOcurrency);
+      const planId = {
+        "1": paymentOcurrency[0].value,
+        "2": paymentOcurrency[1].value,
+        "3": paymentOcurrency[2].value,
+      }
+      setPetsForm((prevPetsForm) => ({
+        ...prevPetsForm,
+        paymentOcurrencyId: planId[selectedPlan] || 716,
+      }));
     }
   }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
 
@@ -395,7 +404,7 @@ const SecureItNow = ({ isMobile }) => {
           color: pet.color
         })),
         countryCodePhoneId: petsForm.countryCodePhoneId,
-        amount: getPrice(petsForm.petsAmount, petsForm.paymentOcurrencyId, paymentOcurrencyOptions)
+        amount: getPrice(petsForm.pets.length, Number(petsForm.paymentOcurrencyId), paymentOcurrencyOptions)
       };
 
       dispatch(setPetsFormInfo(payload));

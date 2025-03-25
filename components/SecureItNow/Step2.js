@@ -20,8 +20,10 @@ export const Step2 = ({
 }) => {
   const [panels, setPanels] = useState([]);
 
+  const amount = petsForm?.petsAmount ? Number(petsForm?.petsAmount) : petsForm?.pets?.length;
+
   useEffect(() => {
-    const updatedPets = Array.from({ length: petsForm.petsAmount }, (_, index) => ({
+    const updatedPets = Array.from({ length: amount }, (_, index) => ({
       id: index,
       petTypeId: petsForm.pets[index]?.petTypeId || "",
       name: petsForm.pets[index]?.name || "",
@@ -38,7 +40,7 @@ export const Step2 = ({
 
     setErrorForm((prev) => ({
       ...prev,
-      pets: Array.from({ length: petsForm.petsAmount }, () => ({
+      pets: Array.from({ length: amount }, () => ({
         name: { error: false, message: "" },
         breed: { error: false, message: "" },
         color: { error: false, message: "" },
@@ -51,7 +53,7 @@ export const Step2 = ({
   }, [petsForm]);
 
   useEffect(() => {
-    setPanels(Array.from({ length: petsForm.petsAmount }, (_, index) => 
+    setPanels(Array.from({ length: amount }, (_, index) => 
       ({ key: `${index + 1}`, 
         header: `Datos mascota ${index + 1}`, 
         panel: 

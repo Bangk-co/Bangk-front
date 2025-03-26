@@ -4,7 +4,7 @@ import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
-import { Row, Text } from "@/styles/Common";
+import { Div, Row, Text } from "@/styles/Common";
 
 export const BasicForm = ({
   labelsProps,
@@ -167,52 +167,55 @@ export const BasicForm = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <Row>
-          <Select
-            {...labelsProps}
-            label="Ind del país"
-            value={form.beneficiariesInfo[index]?.countryCode}
-            onChange={(event) => handleSelect("countryCode", event)}
-            disabled={index === 0 && form.beneficiary}
-            error={
-              errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
-            }
-            helper={
-              errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
-                ? errorForm?.[`beneficiariesInfo[${index}].countryCode`]
-                    ?.message
-                : ""
-            }
-          >
-            {phoneCodesOptions.map((ele, indx) => (
-              <MenuItem
-                key={indx}
-                value={ele.value}
-                style={{ fontFamily: theme.fonts.family.primary }}
-              >
-                {ele.label}
-              </MenuItem>
-            ))}
-          </Select>
-
-          <TextField
-            {...labelsProps}
-            id="phoneNumber"
-            label="Número de celular"
-            type="number"
-            placeholder={"Indica tu número"}
-            value={form.beneficiariesInfo[index]?.phoneNumber}
-            onChange={handleChange}
-            disabled={index === 0 && form.beneficiary}
-            error={
-              errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
-            }
-            helper={
-              errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
-                ? errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]
-                    ?.message
-                : ""
-            }
-          />
+          <Div width="25%">
+            <Select
+              {...labelsProps}
+              label="Ind del país"
+              value={form.beneficiariesInfo[index]?.countryCode}
+              onChange={(event) => handleSelect("countryCode", event)}
+              disabled={index === 0 && form.beneficiary}
+              error={
+                errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
+              }
+              helper={
+                errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
+                  ? errorForm?.[`beneficiariesInfo[${index}].countryCode`]
+                      ?.message
+                  : ""
+              }
+            >
+              {phoneCodesOptions.map((ele, indx) => (
+                <MenuItem
+                  key={indx}
+                  value={ele.value}
+                  style={{ fontFamily: theme.fonts.family.primary }}
+                >
+                  {ele.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </Div>
+          <Div width="72%">
+            <TextField
+              {...labelsProps}
+              id="phoneNumber"
+              label="Número de celular"
+              type="number"
+              placeholder={"Indica tu número"}
+              value={form.beneficiariesInfo[index]?.phoneNumber}
+              onChange={handleChange}
+              disabled={index === 0 && form.beneficiary}
+              error={
+                errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
+              }
+              helper={
+                errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]?.error
+                  ? errorForm?.[`beneficiariesInfo[${index}].phoneNumber`]
+                      ?.message
+                  : ""
+              }
+            />
+          </Div>
         </Row>
       </Grid>
 

@@ -33,22 +33,22 @@ const HireAssistance = ({ isMobile }) => {
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
     planAmount: Number(planAmount) || 1,
-    documentType: "",
+    documentType: 76,
     documentNumber: "",
     email: "",
     name: "",
     lastName: "",
-    countryCode: "",
+    countryCode: 6,
     phoneNumber: "",
     beneficiary: false,
     authorization: false,
     beneficiariesInfo: _.times(planAmount, (index) => ({
-      documentType: "",
+      documentType: 76,
       documentNumber: "",
       email: "",
       beneficiaryName: "",
       beneficiaryLastname: "",
-      countryCode: "",
+      countryCode: 6,
       phoneNumber: "",
     })),
   });
@@ -115,7 +115,7 @@ const HireAssistance = ({ isMobile }) => {
     if (isSuccessPhone) {
       setPhoneCodesOptions(
         dataPhone?.data?.groupSettings?.map((ele) => ({
-          label: `(${ele.code}) ${ele.name}`,
+          label: `(${ele.code})`,
           value: ele.id,
         }))
       );

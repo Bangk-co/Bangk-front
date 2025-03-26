@@ -15,25 +15,32 @@ import { setPaymentInfo } from "@/store/payment";
 import { setMedFormInfo } from "@/store/med";
 import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
+import { setPetsFormInfo } from "@/store/pets";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
-  const { paymentMethod, paymentId, payAssistance } = router.query;
+  const { paymentMethod, payAssistance } = router.query;
   const dispatch = useDispatch();
   const { paymentInfo } = useSelector((state) => state.payment);
   const { medForm } = useSelector((state) => state.med);
+  const { petsForm } = useSelector((state) => state.pets);
   const bancolombiaPayment = useBancolombiaPayment();
 
   const [loadingPayment, setLoadingPayment] = useState(true);
   const [transactionReference, setTransactionReference] = useState(null);
   const [transactionInfo, setTransactionInfo] = useState({});
+  const [hasErrors, setHasErrors] = useState(false);
 
-  const petAssistance = payAssistance === "pet";
-  const medAssistance = payAssistance === "med";
-  console.log("medForm", medForm);
+  const petAssistance =
+    payAssistance === "pet" || (petsForm && Object.keys(petsForm).length !== 0);
+  const medAssistance =
+    payAssistance === "med" || (medForm && Object.keys(medForm).length !== 0);
+
+  const formToSend =
+    medForm && Object.keys(medForm).length !== 0 ? medForm : petsForm;
 
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
-    paymentMethod === "bancolombia" && medForm?.bancolombiaToken
+    paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
   );
   const { data: dataBancolombia, isSuccess: isSuccessBancolombia } =
     getTrxBancolombiaStatus;
@@ -43,15 +50,15 @@ const TransactionState = ({ isMobile }) => {
       dataBancolombia?.data?.result?.data?.status === "APPROVED"
     ) {
       const bancolombiaForm = {
-        email: medForm?.email,
-        name: medForm?.name,
-        applicationId: medForm?.applicationId,
-        documentIdentificationType: medForm?.documentTypeId,
-        documentIdentificationNumber: medForm?.documentNumber,
-        tokenPayment: medForm?.bancolombiaToken,
-        amount: 4990000, // TODO change for production medForm?.amount,
-        typeApplication: "MED",
-        timeApplication: medForm?.paymentOcurrencyId,
+        email: formToSend?.email,
+        name: formToSend?.name,
+        applicationId: formToSend?.applicationId,
+        documentIdentificationType: formToSend?.documentTypeId,
+        documentIdentificationNumber: formToSend?.documentNumber,
+        tokenPayment: formToSend?.bancolombiaToken,
+        amount: 4990000, // TODO change for production formToSend?.amount,
+        typeApplication: medAssistance ? "MED" : "PET",
+        timeApplication: formToSend?.paymentOcurrencyId,
         paymentSourceId: 0,
       };
       bancolombiaPayment.reset();
@@ -66,18 +73,18 @@ const TransactionState = ({ isMobile }) => {
               transactionDate: dataBancolombia?.data?.result?.data?.updated_At,
               status: dataBancolombia?.data?.result?.data?.status,
               receptor: "Bancolombia",
-              paymentAmount: medForm?.amount,
+              paymentAmount: formToSend?.amount,
               payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
             });
+          } else {
+            setHasErrors(true);
+            setLoadingPayment(false);
           }
-        },
-        onError: (err) => {
-          console.log("errorPayBan", err);
         },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataBancolombia, isSuccessBancolombia, medForm]);
+  }, [dataBancolombia, isSuccessBancolombia, medForm, petsForm]);
 
   const getStatusTransaction = useGetStatusTransaction(transactionReference);
   const { data: dataStatusTransaction, isSuccess: isSuccessStatusTransaction } =
@@ -90,14 +97,6 @@ const TransactionState = ({ isMobile }) => {
       setLoadingPayment(false);
     }
   }, [dataStatusTransaction, isSuccessStatusTransaction]);
-  useEffect(() => {
-    if (paymentInfo && Object.keys(paymentInfo).length > 0) {
-      setLoadingPayment(false);
-      dispatch(setMedFormInfo({}));
-      setTransactionInfo(paymentInfo);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paymentInfo]);
 
   const buttonProps = {
     background: theme.colors.orange1000,
@@ -154,10 +153,6 @@ const TransactionState = ({ isMobile }) => {
       value: `$${numberFormat(transactionInfo?.paymentAmount)}`,
     },
     {
-      label: "Completada el:",
-      value: formattedDate(transactionInfo?.transactionDate),
-    },
-    {
       label: "Método de pago:",
       value: transactionInfo?.payment,
     },
@@ -166,7 +161,19 @@ const TransactionState = ({ isMobile }) => {
   const handleBack = () => {
     dispatch(setPaymentInfo({}));
     dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
     router.push("/");
+  };
+
+  const handleRetry = () => {
+    dispatch(setPaymentInfo({}));
+    dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
+    router.push(
+      petAssistance
+        ? "/pet-bangk/asegura-ya/?selectedPlan=1&&petsAmount=1"
+        : "/ahorra-en-tus-seguros/med-bangk/contrata/?selectedPlan=1&&planAmount=1"
+    );
   };
 
   return (
@@ -194,7 +201,8 @@ const TransactionState = ({ isMobile }) => {
             color={theme.colors.white}
             size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6}
           >
-            Esperando respuesta de la transacción
+            Este proceso puede tardar unos minutos, por favor no cierres esta
+            ventana...
           </Text>
         </Div>
       )}
@@ -212,7 +220,7 @@ const TransactionState = ({ isMobile }) => {
           </Text>
 
           <Card>
-            {transactionInfo?.idNumber && (
+            {!hasErrors && transactionInfo?.idNumber && (
               <>
                 {transactionDetails.map((detail, index) => (
                   <Div key={index} justify="space-between" margin="0 0 15px 0">
@@ -256,6 +264,27 @@ const TransactionState = ({ isMobile }) => {
                   onClick={handleBack}
                 >
                   Volver al inicio
+                </Button>
+              </>
+            )}
+            {hasErrors && (
+              <>
+                <Text
+                  font={theme.fonts.family.primary}
+                  color={theme.colors.gray150}
+                  size={
+                    isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                  }
+                >
+                  Ha ocurrido un error con el método de pago. Por favor
+                  intentalo nuevamente
+                </Text>
+                <Button
+                  {...buttonProps}
+                  style={{ marginTop: "30px", width: "200px" }}
+                  onClick={handleRetry}
+                >
+                  Volver a intentar
                 </Button>
               </>
             )}

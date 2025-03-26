@@ -17,6 +17,7 @@ import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
 import { setMedFormInfo } from "@/store/med";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
+import { setPetsFormInfo } from "@/store/pets";
 
 const HireAssistance = ({ isMobile }) => {
   const router = useRouter();
@@ -171,6 +172,7 @@ const HireAssistance = ({ isMobile }) => {
           {},
           {
             onSuccess: (resToken) => {
+              dispatch(setPetsFormInfo({}));
               dispatch(
                 setMedFormInfo({
                   ...medForm,
@@ -189,7 +191,6 @@ const HireAssistance = ({ isMobile }) => {
         );
       },
       onError: (err) => {
-        console.log("errorinsurance", err);
         isMobile
           ? toast.custom(
               <ToastErrorClient

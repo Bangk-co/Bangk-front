@@ -539,7 +539,6 @@ const SecureItNow = ({ isMobile }) => {
               );
             },
             onError: (error) => {
-              console.log("errorbancolombia", error);
               toast.error(
                 "Ha ocurrido un error con Bancolombia, por favor intente nuevamente"
               );

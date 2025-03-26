@@ -4,7 +4,7 @@ import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
-import { Row, Text } from "@/styles/Common";
+import { Div, Row, Text } from "@/styles/Common";
 import { Checkbox } from "../Common/Checkbox";
 
 export const TitularForm = ({
@@ -150,39 +150,43 @@ export const TitularForm = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <Row>
-          <Select
-            {...labelsProps}
-            label="Ind del país"
-            value={form.countryCode}
-            onChange={(event) => handleSelect("countryCode", event)}
-            error={errorForm?.countryCode?.error}
-            helper={
-              errorForm?.countryCode?.error
-                ? errorForm?.countryCode?.message
-                : ""
-            }
-          >
-            {phoneCodesOptions.map((ele, indx) => (
-              <MenuItem
-                key={indx}
-                value={ele.value}
-                style={{ fontFamily: theme.fonts.family.primary }}
-              >
-                {ele.label}
-              </MenuItem>
-            ))}
-          </Select>
-          <TextField
-            {...labelsProps}
-            id="phoneNumber"
-            label="Número de celular"
-            type="number"
-            placeholder={"Indica tu número"}
-            value={form.phoneNumber}
-            onChange={handleChange}
-            error={errorForm?.phoneNumber?.error}
-            helper={errorForm?.phoneNumber?.message}
-          />
+          <Div width="25%">
+            <Select
+              {...labelsProps}
+              label="Ind del país"
+              value={form.countryCode}
+              onChange={(event) => handleSelect("countryCode", event)}
+              error={errorForm?.countryCode?.error}
+              helper={
+                errorForm?.countryCode?.error
+                  ? errorForm?.countryCode?.message
+                  : ""
+              }
+            >
+              {phoneCodesOptions.map((ele, indx) => (
+                <MenuItem
+                  key={indx}
+                  value={ele.value}
+                  style={{ fontFamily: theme.fonts.family.primary }}
+                >
+                  {ele.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </Div>
+          <Div width="72%">
+            <TextField
+              {...labelsProps}
+              id="phoneNumber"
+              label="Número de celular"
+              type="number"
+              placeholder={"Indica tu número"}
+              value={form.phoneNumber}
+              onChange={handleChange}
+              error={errorForm?.phoneNumber?.error}
+              helper={errorForm?.phoneNumber?.message}
+            />
+          </Div>
         </Row>
       </Grid>
       <Grid item xs={12} md={6}>

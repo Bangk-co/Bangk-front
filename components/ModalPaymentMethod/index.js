@@ -4,16 +4,19 @@ import Image from "next/image";
 import { Col, Div, Row, Text } from "@/styles/Common";
 import { CircularProgress, Modal } from "@mui/material";
 import { WrapperModal } from "./styles";
-import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { Button } from "../Common/Button";
 import close from "@/assets/icons/close.svg";
 import { Radio } from "../Common/Radio";
 import bancolombia from "@/assets/img/bancolombia.svg";
-import { useRouter } from "next/router";
 
-const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile, handleCardPayment }) => {
-  const router = useRouter();
-  const bancolombiaToken = useGenerateTknTrxBancolombia();
+const ModalPaymentMethod = ({
+  showModal,
+  handleCloseModal,
+  isMobile,
+  handleCardPayment,
+  handlePayBancolombia,
+  loading,
+}) => {
   const [paymentMethod, setPaymentMethod] = useState(null);
 
   const buttonProps = {
@@ -26,25 +29,6 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile, handleCardP
     borderHover: theme.colors.orange1000,
     height: "40px",
     borderRadius: "50px",
-  };
-
-  const handlePayBancolombia = () => {
-    bancolombiaToken.reset();
-    bancolombiaToken.mutate(
-      {},
-      {
-        onSuccess: (data) => {
-          handleCloseModal();
-          router.push(
-            `/transaccion?paymentMethod=bancolombia&requestId=${data?.data?.result?.data?.id}`
-          );
-          window.open(data?.data?.result?.data?.authorization_Url, "_blank");
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      }
-    );
   };
 
   const methodOfPaymentOptions = [
@@ -131,19 +115,22 @@ const ModalPaymentMethod = ({ showModal, handleCloseModal, isMobile, handleCardP
           </Button>
           <Button
             {...buttonProps}
-            width={isMobile ? "100%" : "147px"}
+            width={isMobile ? "100%" : "200px"}
             labelWeight={theme.fonts.weight.regular}
             onClick={
-              paymentMethod === "bancolombia" ? handlePayBancolombia : handleCardPayment
+              paymentMethod === "bancolombia"
+                ? handlePayBancolombia
+                : handleCardPayment
             }
             startIcon={
-              bancolombiaToken.isLoading ? (
+              loading ? (
                 <CircularProgress
                   size={20}
                   style={{ color: theme.colors.white }}
                 />
               ) : null
             }
+            disabled={!paymentMethod}
           >
             Pagar ahora
           </Button>

@@ -394,7 +394,15 @@ export const initDataLoanInsurancePolicy = {
   weight: null,
 };
 
-export const getMedBangkPrice = (amount, frequency) => {
+export const getMedBangkPrice = (
+  amount,
+  frequency,
+  paymentOcurrencyOptions
+) => {
+  if (!paymentOcurrencyOptions || paymentOcurrencyOptions.length < 3) {
+    return 0;
+  }
+
   const prices = {
     monthly: [22610, 42959, 65569],
     semiannual: [128880, 244866, 373743],
@@ -402,11 +410,10 @@ export const getMedBangkPrice = (amount, frequency) => {
   };
 
   const frequencyMap = {
-    1: "monthly",
-    2: "semiannual",
-    3: "annual",
+    [paymentOcurrencyOptions[0]?.value]: "monthly",
+    [paymentOcurrencyOptions[1]?.value]: "semiannual",
+    [paymentOcurrencyOptions[2]?.value]: "annual",
   };
-
   const frequencyKey = frequencyMap[frequency];
   if (!frequencyKey || !prices[frequencyKey]) {
     return 0;

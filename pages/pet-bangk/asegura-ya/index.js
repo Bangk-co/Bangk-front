@@ -16,27 +16,42 @@ import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetPetType from "@/hooks/Pets/useGetPetType";
 import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
-import { validatePetFormStep1, validatePetFormStep2 } from "@/utilities/validations";
+import {
+  validatePetFormStep1,
+  validatePetFormStep2,
+} from "@/utilities/validations";
 import { CircularProgress, Modal } from "@mui/material";
 import { ModalAgeError } from "@/components/SecureItNow/ModalAgeError";
 import { useDispatch, useSelector } from "react-redux";
 import { setPetsFormInfo } from "@/store/pets";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
+import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
+import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
+import { setMedFormInfo } from "@/store/med";
+import toast from "react-hot-toast";
 
 const SecureItNow = ({ isMobile }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const createPetInsurance = useCreatePetInsurance();
+  const createBancolombiaToken = useGenerateTknTrxBancolombia();
   const { petsForm: petsFormStore } = useSelector((state) => state.pets);
   const [selectedTab, setSelectedTab] = useState(0);
   const [activeKey, setActiveKey] = useState(1);
   const { petsAmount, selectedPlan } = router.query;
-  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } = useGetIndicatives();
+  const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
+    useGetIndicatives();
   const [indicativesOptions, setIndicativesOptions] = useState([]);
-  const { data: dataDocuments, isSuccess: isSuccessDocuments } = useGetDocumentType();
+  const { data: dataDocuments, isSuccess: isSuccessDocuments } =
+    useGetDocumentType();
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
   const { data: dataPetType, isSuccess: isSuccessPetType } = useGetPetType();
   const [petTypeOptions, setPetTypeOptions] = useState([]);
-  const { data: dataPaymentOcurrency, isSuccess: isSuccessPaymentOcurrency, isLoading: isLoadingPaymentOcurrency } = useGetMethodPayment();
+  const {
+    data: dataPaymentOcurrency,
+    isSuccess: isSuccessPaymentOcurrency,
+    isLoading: isLoadingPaymentOcurrency,
+  } = useGetMethodPayment();
   const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -63,22 +78,23 @@ const SecureItNow = ({ isMobile }) => {
     const frequencyKey = frequencyMap[paymentOcurrency];
     if (!frequencyKey || !prices[frequencyKey]) {
       return 0;
-    };
+    }
 
     const index = amount > 2 ? 2 : amount - 1;
     const basePrice = prices[frequencyKey][index];
 
     if (index < 0 || index >= prices[frequencyKey].length) {
       return 0;
-    };
+    }
 
-    const additionalCost = amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
+    const additionalCost =
+      amount > 3 ? additionalCosts[frequencyKey] * (amount - 3) : 0;
 
     return basePrice + additionalCost;
   };
 
   const [petsForm, setPetsForm] = useState({
-    paymentOcurrencyId: null, 
+    paymentOcurrencyId: null,
     petsAmount: Number(petsAmount) || 1,
     documentTypeId: 76,
     documentNumber: "",
@@ -97,7 +113,7 @@ const SecureItNow = ({ isMobile }) => {
         age: "",
         ageTime: "Años",
         color: "",
-      }
+      },
     ],
   });
 
@@ -128,7 +144,7 @@ const SecureItNow = ({ isMobile }) => {
   useEffect(() => {
     if (petsFormStore && Object.keys(petsFormStore).length > 0) {
       setPetsForm({
-        paymentOcurrencyId: petsFormStore.paymentOcurrencyId, 
+        paymentOcurrencyId: petsFormStore.paymentOcurrencyId,
         petsAmount: petsFormStore.petsAmount,
         documentTypeId: petsFormStore.documentTypeId,
         documentNumber: petsFormStore.documentNumber,
@@ -148,7 +164,7 @@ const SecureItNow = ({ isMobile }) => {
           color: pet.color,
         })),
       });
-    };
+    }
   }, [petsFormStore]);
 
   const [treatPersonalDataDate, setTreatPersonalDataDate] = useState(null);
@@ -160,7 +176,7 @@ const SecureItNow = ({ isMobile }) => {
     labelColor: theme.colors.gray1000,
     labelSize: theme.fonts.size.default2,
     labelFont: theme.fonts.family.primary,
-    border: theme.colors.gray1100
+    border: theme.colors.gray1100,
   };
 
   const buttonProps = {
@@ -172,19 +188,19 @@ const SecureItNow = ({ isMobile }) => {
     hover: theme.colors.orange1000,
     borderHover: theme.colors.orange1000,
     height: "40px",
-    borderRadius: "50px"
+    borderRadius: "50px",
   };
 
   const breadcrumbs = [
     {
       label: "Bangk",
       href: "/",
-      type: "link"
+      type: "link",
     },
     {
       label: "PetBangk",
       href: "/pet-bangk",
-      type: "link"
+      type: "link",
     },
     {
       label: "Info PetBangk",
@@ -193,14 +209,14 @@ const SecureItNow = ({ isMobile }) => {
     },
     {
       label: "Adquiere asistencia",
-      type: "text"
-    }
+      type: "text",
+    },
   ];
 
   const tabs = [
     { label: "Información general" },
     { label: "Datos de tu mascota" },
-    { label: "Resumen de tu asistencia"}
+    { label: "Resumen de tu asistencia" },
   ];
 
   const steps = [
@@ -222,10 +238,12 @@ const SecureItNow = ({ isMobile }) => {
   useEffect(() => {
     if (isSuccessDocuments) {
       setDocumentTypeOptions(
-        dataDocuments?.data.groupSettings.filter((ele) => ele.id !== 78).map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
+        dataDocuments?.data.groupSettings
+          .filter((ele) => ele.id !== 78)
+          .map((ele) => ({
+            label: ele.name,
+            value: ele.id,
+          }))
       );
     }
   }, [isSuccessDocuments, dataDocuments]);
@@ -253,10 +271,10 @@ const SecureItNow = ({ isMobile }) => {
         .sort((a, b) => a.value - b.value);
       setPaymentOcurrencyOptions(paymentOcurrency);
       const planId = {
-        "1": paymentOcurrency[0].value,
-        "2": paymentOcurrency[1].value,
-        "3": paymentOcurrency[2].value,
-      }
+        1: paymentOcurrency[0].value,
+        2: paymentOcurrency[1].value,
+        3: paymentOcurrency[2].value,
+      };
       setPetsForm((prevPetsForm) => ({
         ...prevPetsForm,
         paymentOcurrencyId: planId[selectedPlan] || 716,
@@ -307,33 +325,38 @@ const SecureItNow = ({ isMobile }) => {
           if (!newErrorForm[label]) {
             newErrorForm[label] = { error: false, message: "" };
           }
-          setErrorForm(prevErrorForm => ({
+          setErrorForm((prevErrorForm) => ({
             ...prevErrorForm,
-            [label]: { error: true, message: errorMessages[label] || "Campo obligatorio" }
+            [label]: {
+              error: true,
+              message: errorMessages[label] || "Campo obligatorio",
+            },
           }));
         });
       } else {
         setSelectedTab(1);
       }
       return;
-    };
+    }
 
     if (selectedTab === 1) {
       if (validationStep2.error) {
         setErrorForm((prevErrorForm) => {
-          const newPetsErrors = Array.isArray(prevErrorForm.pets) ? [...prevErrorForm.pets] : [];
-    
+          const newPetsErrors = Array.isArray(prevErrorForm.pets)
+            ? [...prevErrorForm.pets]
+            : [];
+
           validationStep2.error.details.forEach((ele) => {
             const label = ele.context.label;
-    
+
             const match = label.match(/^pets\[(\d+)]\.(\w+)$/);
             if (!match) return;
-    
+
             const index = parseInt(match[1], 10);
             const fieldName = match[2];
-    
+
             if (isNaN(index)) return;
-    
+
             if (!newPetsErrors[index]) {
               newPetsErrors[index] = {
                 name: { error: false, message: "" },
@@ -345,11 +368,15 @@ const SecureItNow = ({ isMobile }) => {
                 id: { error: false, message: "" },
               };
             }
-    
-            const customMessage = errorMessages[fieldName] || "Campo obligatorio";
-            newPetsErrors[index][fieldName] = { error: true, message: customMessage };
+
+            const customMessage =
+              errorMessages[fieldName] || "Campo obligatorio";
+            newPetsErrors[index][fieldName] = {
+              error: true,
+              message: customMessage,
+            };
           });
-    
+
           return {
             ...prevErrorForm,
             pets: newPetsErrors,
@@ -366,9 +393,13 @@ const SecureItNow = ({ isMobile }) => {
           }
           return { index, error: false };
         });
-  
-        const invalidPets = ageErrors.filter(error => error.error).map(error => error.name);
-        const invalidIndexes = ageErrors.filter(error => error.error).map(error => error.index);
+
+        const invalidPets = ageErrors
+          .filter((error) => error.error)
+          .map((error) => error.name);
+        const invalidIndexes = ageErrors
+          .filter((error) => error.error)
+          .map((error) => error.index);
 
         if (invalidPets.length > 0) {
           setShowAgeErrorModal(true);
@@ -378,8 +409,8 @@ const SecureItNow = ({ isMobile }) => {
         } else {
           setSelectedTab(2);
         }
-      };
-    };  
+      }
+    }
 
     if (selectedTab === 2) {
       const payload = {
@@ -397,10 +428,14 @@ const SecureItNow = ({ isMobile }) => {
           age: pet.age,
           ageTime: pet.ageTime,
           name: pet.name,
-          color: pet.color
+          color: pet.color,
         })),
         countryCodePhoneId: petsForm.countryCodePhoneId,
-        amount: getPrice(petsForm.pets.length, Number(petsForm.paymentOcurrencyId), paymentOcurrencyOptions)
+        amount: getPrice(
+          petsForm.pets.length,
+          Number(petsForm.paymentOcurrencyId),
+          paymentOcurrencyOptions
+        ),
       };
 
       dispatch(setPetsFormInfo(payload));
@@ -413,19 +448,35 @@ const SecureItNow = ({ isMobile }) => {
       setPetsForm((prevPetsForm) => ({
         ...prevPetsForm,
         petsAmount: 1,
-        pets: [{ id: 0, petTypeId: "", name: "", breed: "", age: "", ageTime: "Años", color: "" }],
+        pets: [
+          {
+            id: 0,
+            petTypeId: "",
+            name: "",
+            breed: "",
+            age: "",
+            ageTime: "Años",
+            color: "",
+          },
+        ],
       }));
     } else {
       setPetsForm((prevPetsForm) => ({
         ...prevPetsForm,
-        petsAmount: prevPetsForm.pets.filter((ele, index) => !invalidPetsIndex.includes(ele.id)).length,
-        pets: prevPetsForm.pets.filter((ele, index) => !invalidPetsIndex.includes(ele.id)),
+        petsAmount: prevPetsForm.pets.filter(
+          (ele, index) => !invalidPetsIndex.includes(ele.id)
+        ).length,
+        pets: prevPetsForm.pets.filter(
+          (ele, index) => !invalidPetsIndex.includes(ele.id)
+        ),
       }));
       setErrorForm((prevErrorForm) => ({
         ...prevErrorForm,
-        pets: prevErrorForm.pets.filter((ele, index) => !invalidPetsIndex.includes(ele.id)),
+        pets: prevErrorForm.pets.filter(
+          (ele, index) => !invalidPetsIndex.includes(ele.id)
+        ),
       }));
-    };
+    }
     setShowAgeErrorModal(false);
     setInvalidPetsIndex([]);
     setActiveKey(1);
@@ -434,24 +485,79 @@ const SecureItNow = ({ isMobile }) => {
   if (isLoadingPaymentOcurrency) {
     return (
       <Div justify="center" align="center" height="100vh">
-        <CircularProgress
-          size={24}
-          style={{ color: theme.colors.blue200 }}
-        />
+        <CircularProgress size={24} style={{ color: theme.colors.blue200 }} />
       </Div>
     );
-  };
+  }
 
   const handleCardPayment = () => {
     setShowPaymentModal(false);
     router.push("/realizar-pago?payAssistance=pet");
   };
 
+  const handlePayBancolombia = () => {
+    const petPayload = {
+      ...petsForm,
+      pets: petsForm.pets.map((pet) => ({
+        petTypeId: pet.petTypeId,
+        breed: pet.breed,
+        name: pet.name,
+        color: pet.color,
+        age: pet.ageTime === "Años" ? pet.age * 12 : pet.age,
+      })),
+    };
+    delete petPayload.amount;
+
+    createPetInsurance.reset();
+    createPetInsurance.mutate(petPayload, {
+      onSuccess: (res) => {
+        createBancolombiaToken.reset();
+        createBancolombiaToken.mutate(
+          {},
+          {
+            onSuccess: (resToken) => {
+              dispatch(setMedFormInfo({}));
+              dispatch(
+                setPetsFormInfo({
+                  ...petsForm,
+                  bancolombiaToken: resToken?.data?.result?.data?.id,
+                  applicationId: res?.data?.clientInsuredId,
+                  amount: getPrice(
+                    petsForm.pets.length,
+                    Number(petsForm.paymentOcurrencyId),
+                    paymentOcurrencyOptions
+                  ),
+                })
+              );
+              setShowPaymentModal(false);
+              router.push(
+                "/transaccion/?paymentMethod=bancolombia&payAssistance=pet"
+              );
+              window.open(
+                resToken?.data?.result?.data?.authorization_Url,
+                "_blank"
+              );
+            },
+            onError: (error) => {
+              toast.error(
+                "Ha ocurrido un error con Bancolombia, por favor intente nuevamente"
+              );
+            },
+          }
+        );
+      },
+      onError: (err) => {
+        toast.error("Ha ocurrido un error, por favor intente nuevamente");
+        setLoading(false);
+      },
+    });
+  };
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
       <Modal open={showAgeErrorModal}>
-        <ModalAgeError 
+        <ModalAgeError
           handleClose={() => setShowAgeErrorModal(false)}
           handleRemovePet={handleRemovePet}
           invalidPetsNames={invalidPetsNames}
@@ -463,15 +569,19 @@ const SecureItNow = ({ isMobile }) => {
         handleCloseModal={() => setShowPaymentModal(false)}
         isMobile={isMobile}
         handleCardPayment={handleCardPayment}
+        handlePayBancolombia={handlePayBancolombia}
+        loading={
+          createPetInsurance.isLoading || createBancolombiaToken.isLoading
+        }
       />
       <Wrapper>
-        <Image 
-          src={footprint} 
-          alt="footprint" 
+        <Image
+          src={footprint}
+          alt="footprint"
           style={{
             position: "absolute",
             top: "200px",
-            right: "50px"
+            right: "50px",
           }}
         />
         <Text
@@ -479,13 +589,25 @@ const SecureItNow = ({ isMobile }) => {
           color={theme.colors.orange500}
           size={isMobile ? theme.fonts.size.h1 : theme.fonts.size.lgs}
         >
-          Configura <span style={{ fontFamily: theme.fonts.family.primaryBold, color: theme.colors.blue200 }}>tu asistencia</span>
+          Configura{" "}
+          <span
+            style={{
+              fontFamily: theme.fonts.family.primaryBold,
+              color: theme.colors.blue200,
+            }}
+          >
+            tu asistencia
+          </span>
         </Text>
         <Text color={theme.colors.blue200} mb="40px">
           Contrata tu asistencia en menos de 2 minutos
         </Text>
         {isMobile ? (
-          <StepperMobile steps={steps} activeStep={selectedTab} lineColor={theme.colors.blue200} />
+          <StepperMobile
+            steps={steps}
+            activeStep={selectedTab}
+            lineColor={theme.colors.blue200}
+          />
         ) : (
           <Tabs
             value={selectedTab}
@@ -505,10 +627,10 @@ const SecureItNow = ({ isMobile }) => {
           </Tabs>
         )}
         {selectedTab === 0 && (
-          <Step1 
+          <Step1
             isMobile={isMobile}
             buttonProps={buttonProps}
-            labelsProps={labelsProps} 
+            labelsProps={labelsProps}
             handleContinue={handleContinue}
             petsForm={petsForm}
             setPetsForm={setPetsForm}
@@ -521,7 +643,7 @@ const SecureItNow = ({ isMobile }) => {
           />
         )}
         {selectedTab === 1 && (
-          <Step2 
+          <Step2
             isMobile={isMobile}
             buttonProps={buttonProps}
             labelsProps={labelsProps}
@@ -536,7 +658,7 @@ const SecureItNow = ({ isMobile }) => {
           />
         )}
         {selectedTab === 2 && (
-          <Step3 
+          <Step3
             isMobile={isMobile}
             buttonProps={buttonProps}
             handleContinue={handleContinue}

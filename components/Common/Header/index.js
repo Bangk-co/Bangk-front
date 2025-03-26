@@ -1,6 +1,6 @@
 import React from "react";
 import { WrapperHeader } from "./styles";
-import logo from "@/assets/icons/white-logo.png"
+import logo from "@/assets/icons/white-logo.png";
 import Image from "next/image";
 import { Button } from "../Button";
 import { theme } from "@/styles/theme";
@@ -19,7 +19,7 @@ export const Header = ({ isMobile }) => {
     "/solicitar-poliza",
     "/solicitar-poliza/solicitud-exitosa",
     "/cotiza-tu-ahorro/tu-credito",
-    "/cotiza-tu-ahorro/creacion-exitosa"
+    "/cotiza-tu-ahorro/creacion-exitosa",
   ];
 
   const handleLogout = () => {
@@ -48,5 +48,5 @@ export const Header = ({ isMobile }) => {
         </Button>
       )}
     </WrapperHeader>
-  )
-}
+  );
+};

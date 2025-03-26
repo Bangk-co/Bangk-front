@@ -1,8 +1,10 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
 import React, { useState, useEffect } from "react";
 import { Col, Row, Text } from "@/styles/Common";
-import { theme } from "@/styles/theme";
+import toast from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { theme } from "@/styles/theme";
 import { Wrapper } from "@/components/HireMedBangk/styles";
 import { Step1 } from "@/components/HireMedBangk/Step1";
 import { Step2 } from "@/components/HireMedBangk/Step2";
@@ -10,32 +12,42 @@ import _ from "lodash";
 import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
+import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
+import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
+import { setMedFormInfo } from "@/store/med";
+import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
+import { setPetsFormInfo } from "@/store/pets";
 
 const HireAssistance = ({ isMobile }) => {
+  const router = useRouter();
+  const createInsurance = useCreateInsurance();
+  const createBancolombiaToken = useGenerateTknTrxBancolombia();
+  const dispatch = useDispatch();
+  const { medForm } = useSelector((state) => state.med);
+
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
     planAmount: Number(planAmount) || 1,
-    documentType: "",
+    documentType: 76,
     documentNumber: "",
     email: "",
     name: "",
     lastName: "",
-    countryCode: "",
+    countryCode: 6,
     phoneNumber: "",
     beneficiary: false,
     authorization: false,
     beneficiariesInfo: _.times(planAmount, (index) => ({
-      documentType: "",
+      documentType: 76,
       documentNumber: "",
       email: "",
       beneficiaryName: "",
       beneficiaryLastname: "",
-      countryCode: "",
+      countryCode: 6,
       phoneNumber: "",
     })),
   });
@@ -102,12 +114,36 @@ const HireAssistance = ({ isMobile }) => {
     if (isSuccessPhone) {
       setPhoneCodesOptions(
         dataPhone?.data?.groupSettings?.map((ele) => ({
-          label: `(${ele.code}) ${ele.name}`,
+          label: `(${ele.code})`,
           value: ele.id,
         }))
       );
     }
   }, [isSuccessPhone, dataPhone]);
+
+  const { data: dataPaymentOcurrency, isSuccess: isSuccessPaymentOcurrency } =
+    useGetMethodPayment();
+  const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
+  useEffect(() => {
+    if (isSuccessPaymentOcurrency) {
+      const paymentOcurrency = dataPaymentOcurrency?.data.groupSettings
+        .map((ele) => ({
+          label: ele.name,
+          value: ele.id,
+        }))
+        .sort((a, b) => a.value - b.value);
+      setPaymentOcurrencyOptions(paymentOcurrency);
+      const planId = {
+        1: paymentOcurrency[0].value,
+        2: paymentOcurrency[1].value,
+        3: paymentOcurrency[2].value,
+      };
+      setForm((prevForm) => ({
+        ...prevForm,
+        methodOfPayment: planId[selectedPlan] || 716,
+      }));
+    }
+  }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
 
   const handleContinue = () => {
     if (actualStep === 2) {
@@ -120,10 +156,50 @@ const HireAssistance = ({ isMobile }) => {
     setActualStep(1);
     setActiveKey(keyToEdit);
   };
-  
+
   const handleCardPayment = () => {
     setShowModal(false);
     router.push("/realizar-pago?payAssistance=med");
+  };
+
+  const handlePayBancolombia = () => {
+    createInsurance.reset();
+    createInsurance.mutate(medForm, {
+      onSuccess: (resInsurance) => {
+        createBancolombiaToken.reset();
+        createBancolombiaToken.mutate(
+          {},
+          {
+            onSuccess: (resToken) => {
+              dispatch(setPetsFormInfo({}));
+              dispatch(
+                setMedFormInfo({
+                  ...medForm,
+                  bancolombiaToken: resToken?.data?.result?.data?.id,
+                  applicationId: resInsurance?.data?.medEnsuranceApplicationId,
+                })
+              );
+              setShowModal(false);
+              router.push(
+                "/transaccion/?paymentMethod=bancolombia&payAssistance=med"
+              );
+              window.open(
+                resToken?.data?.result?.data?.authorization_Url,
+                "_blank"
+              );
+            },
+            onError: (error) => {
+              toast.error(
+                "Ha ocurrido un error con Bancolombia, por favor intente nuevamente"
+              );
+            },
+          }
+        );
+      },
+      onError: (err) => {
+        toast.error("Ha ocurrido un error, por favor intente nuevamente");
+      },
+    });
   };
 
   return (
@@ -134,6 +210,8 @@ const HireAssistance = ({ isMobile }) => {
         handleCloseModal={() => setShowModal(false)}
         isMobile={isMobile}
         handleCardPayment={handleCardPayment}
+        handlePayBancolombia={handlePayBancolombia}
+        loading={createInsurance.isLoading || createBancolombiaToken.isLoading}
       />
       <Wrapper>
         <Text
@@ -158,6 +236,7 @@ const HireAssistance = ({ isMobile }) => {
             setActiveKey={setActiveKey}
             documentTypeOptions={documentTypeOptions}
             phoneCodesOptions={phoneCodesOptions}
+            paymentOcurrencyOptions={paymentOcurrencyOptions}
           />
         )}
         {actualStep === 2 && (
@@ -167,6 +246,7 @@ const HireAssistance = ({ isMobile }) => {
             form={form}
             setForm={setForm}
             documentTypeOptions={documentTypeOptions}
+            paymentOcurrencyOptions={paymentOcurrencyOptions}
             handleEdit={handleEdit}
             setShowModal={setShowModal}
           />

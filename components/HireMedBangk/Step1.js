@@ -26,13 +26,8 @@ export const Step1 = ({
   setActiveKey,
   documentTypeOptions,
   phoneCodesOptions,
+  paymentOcurrencyOptions,
 }) => {
-  const radioOptions = [
-    { label: "Mensual", value: "1" },
-    { label: "Semestral", value: "2" },
-    { label: "Anual", value: "3" },
-  ];
-
   const [panels, setPanels] = useState([]);
   const [errorForm, setErrorForm] = useState({});
 
@@ -82,10 +77,10 @@ export const Step1 = ({
   const handleRadio = (event) => {
     setForm({
       ...form,
-      methodOfPayment: event.target.defaultValue,
+      methodOfPayment: Number(event.target.defaultValue),
     });
   };
-  const handleSave = () => {
+  const handleValidate = () => {
     const validation = validateMedBangkForm.validate(form, {
       abortEarly: false,
     });
@@ -150,7 +145,7 @@ export const Step1 = ({
               value={form.methodOfPayment}
               onChange={handleRadio}
             >
-              {radioOptions.map((option, idx) => (
+              {paymentOcurrencyOptions.map((option, idx) => (
                 <Radio
                   key={idx}
                   label={option.label}
@@ -252,7 +247,7 @@ export const Step1 = ({
         <Button
           {...buttonProps}
           width={isMobile ? "100%" : "230px"}
-          onClick={handleSave}
+          onClick={handleValidate}
           labelWeight={theme.fonts.weight.regular}
           disabled={!form.authorization}
         >

@@ -3,7 +3,7 @@ import { axiosClient } from "../services/axiosInstance";
 
 const useGenerateTknTrxBancolombia = () => {
   const mutation = useMutation(() => {
-    return axiosClient.post("/WompiIntegration/GenerateTokenTrxBancolombia");
+    return axiosClient.post("WompiIntegration/GenerateTokenTrxBancolombia");
   });
   return mutation;
 };

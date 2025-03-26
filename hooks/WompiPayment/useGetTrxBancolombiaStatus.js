@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { axiosClient } from "../services/axiosInstance";
 
 const useGetTrxBancolombiaStatus = (transactionId) => {
-  let urlString = `/WompiIntegration/GetTrxBancolombiaStatus?id=${transactionId}`;
+  let urlString = `WompiIntegration/GetTrxBancolombiaStatus?id=${transactionId}`;
 
   const data = useQuery(
     ["getTrxBancolombiaStatus", transactionId],

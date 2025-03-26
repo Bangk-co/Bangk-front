@@ -24,16 +24,11 @@ export const Step2 = ({
   form,
   setForm,
   documentTypeOptions,
+  paymentOcurrencyOptions,
   handleEdit,
   setShowModal,
 }) => {
   const dispatch = useDispatch();
-
-  const radioOptions = [
-    { label: "Mensual", value: "1" },
-    { label: "Semestral", value: "2" },
-    { label: "Anual", value: "3" },
-  ];
 
   const getLabelFromValue = (value, options) => {
     const selectedOption = options.find((option) => option.value === value);
@@ -55,7 +50,6 @@ export const Step2 = ({
   };
 
   const handlePay = () => {
-    setShowModal(true);
     const payload = {
       paymentOcurrencyId: form.methodOfPayment,
       documentTypeId: form.documentType,
@@ -64,7 +58,7 @@ export const Step2 = ({
       lastName: form.lastName,
       email: form.email,
       phoneNumber: form.phoneNumber,
-      treatPErsonalDatadate: "",
+      treatPErsonalDatadate: new Date(),
       countryCodePhoneId: form.countryCode,
       isBeneficiary: form.beneficiary,
       beneficiaryInsurance: form.beneficiariesInfo.map((beneficiary) => ({
@@ -74,13 +68,18 @@ export const Step2 = ({
         lastName: beneficiary.beneficiaryLastname,
         email: beneficiary.email,
         phoneNumber: beneficiary.phoneNumber,
-        treatPErsonalDatadate: "",
-        countryCodePhoneId: beneficiary.countryCode
+        treatPErsonalDatadate: new Date(),
+        countryCodePhoneId: beneficiary.countryCode,
       })),
-      amount: getMedBangkPrice(form.planAmount, form.methodOfPayment)
+      amount: getMedBangkPrice(
+        form.planAmount,
+        form.methodOfPayment,
+        paymentOcurrencyOptions
+      ),
     };
 
     dispatch(setMedFormInfo(payload));
+    setShowModal(true);
   };
 
   return (
@@ -102,7 +101,10 @@ export const Step2 = ({
               radius="50px"
             >
               <Text color={theme.colors.white} size={theme.fonts.size.h6}>
-                {getLabelFromValue(form.methodOfPayment, radioOptions)}
+                {getLabelFromValue(
+                  form.methodOfPayment,
+                  paymentOcurrencyOptions
+                )}
               </Text>
             </Div>
           </Grid>
@@ -113,7 +115,7 @@ export const Step2 = ({
             >
               {`Valor de tu asistencia ${getLabelFromValue(
                 form.methodOfPayment,
-                radioOptions
+                paymentOcurrencyOptions
               )}`}
             </Text>
             <Text
@@ -123,7 +125,11 @@ export const Step2 = ({
               mt="10px"
             >
               {formattedPrice(
-                getMedBangkPrice(form.planAmount, form.methodOfPayment)
+                getMedBangkPrice(
+                  form.planAmount,
+                  form.methodOfPayment,
+                  paymentOcurrencyOptions
+                )
               )}
             </Text>
           </Grid>

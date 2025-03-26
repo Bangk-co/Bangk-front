@@ -13,7 +13,6 @@ import useGetDocumentType from "@/hooks/Common/useGetDocumentType";
 import useGetIndicatives from "@/hooks/Common/useGetIndicatives";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
-import { ToastErrorClient } from "@/components/Common/ToastErrorClients";
 import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
 import { setMedFormInfo } from "@/store/med";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
@@ -181,26 +180,24 @@ const HireAssistance = ({ isMobile }) => {
                 })
               );
               setShowModal(false);
-              window.location.href =
-                resToken?.data?.result?.data?.authorization_Url;
+              router.push(
+                "/transaccion/?paymentMethod=bancolombia&payAssistance=med"
+              );
+              window.open(
+                resToken?.data?.result?.data?.authorization_Url,
+                "_blank"
+              );
             },
             onError: (error) => {
-              console.log("errorbancolombia", error);
+              toast.error(
+                "Ha ocurrido un error con Bancolombia, por favor intente nuevamente"
+              );
             },
           }
         );
       },
       onError: (err) => {
-        isMobile
-          ? toast.custom(
-              <ToastErrorClient
-                message={"No fue posible crear el seguro"}
-                color={theme.colors.white}
-                background={theme.colors.primary300}
-              />,
-              { duration: 1000 }
-            )
-          : toast.error("No fue posible crear el seguro");
+        toast.error("Ha ocurrido un error, por favor intente nuevamente");
       },
     });
   };

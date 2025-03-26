@@ -28,6 +28,7 @@ import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setMedFormInfo } from "@/store/med";
+import toast from "react-hot-toast";
 
 const SecureItNow = ({ isMobile }) => {
   const router = useRouter();
@@ -529,16 +530,24 @@ const SecureItNow = ({ isMobile }) => {
                 })
               );
               setShowPaymentModal(false);
-              window.location.href =
-                resToken?.data?.result?.data?.authorization_Url;
+              router.push(
+                "/transaccion/?paymentMethod=bancolombia&payAssistance=pet"
+              );
+              window.open(
+                resToken?.data?.result?.data?.authorization_Url,
+                "_blank"
+              );
             },
             onError: (error) => {
               console.log("errorbancolombia", error);
+              toast.error(
+                "Ha ocurrido un error con Bancolombia, por favor intente nuevamente"
+              );
             },
           }
         );
       },
-      onError: () => {
+      onError: (err) => {
         toast.error("Ha ocurrido un error, por favor intente nuevamente");
         setLoading(false);
       },

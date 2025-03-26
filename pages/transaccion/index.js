@@ -77,8 +77,10 @@ const TransactionState = ({ isMobile }) => {
               payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
             });
           } else {
-            setHasErrors(true);
-            setLoadingPayment(false);
+            if (loadingPayment) {
+              setHasErrors(true);
+              setLoadingPayment(false);
+            }
           }
         },
       });

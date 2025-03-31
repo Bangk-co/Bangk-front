@@ -171,7 +171,7 @@ export const TitularForm = ({
           <Div width={isMobile ? "100%" : "25%"}>
             <Select
               {...labelsProps}
-              label={"Ind del país"}
+              label={"Indicativo"}
               value={form.countryCode}
               onChange={(event) => handleSelect("countryCode", event)}
               error={errorForm?.countryCode?.error}

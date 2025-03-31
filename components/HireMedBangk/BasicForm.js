@@ -170,7 +170,7 @@ export const BasicForm = ({
           <Div width={isMobile ? "100%" : "25%"}>
             <Select
               {...labelsProps}
-              label={"Ind del país"}
+              label={"Indicativo"}
               value={form.beneficiariesInfo[index]?.countryCode}
               onChange={(event) => handleSelect("countryCode", event)}
               disabled={index === 0 && form.beneficiary}

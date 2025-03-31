@@ -138,7 +138,7 @@ export const Step1 = ({
           <Grid item xs={12} md={6}>
             <RadioGroup
               name="paymentMethod"
-              direction="row"
+              direction={isMobile ? "column" : "row"}
               label="Forma de pago"
               labelSize={theme.fonts.size.default2}
               labelColor={theme.colors.gray1000}

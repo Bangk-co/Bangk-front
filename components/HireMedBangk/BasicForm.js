@@ -111,7 +111,7 @@ export const BasicForm = ({
           {...labelsProps}
           id="beneficiaryName"
           label="Nombre"
-          placeholder={"Indica tu nombre"}
+          placeholder={"Ingresa tu nombre"}
           value={form.beneficiariesInfo[index]?.beneficiaryName}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
@@ -131,7 +131,7 @@ export const BasicForm = ({
           {...labelsProps}
           id="beneficiaryLastname"
           label="Apellido"
-          placeholder={"Indica tu apellido"}
+          placeholder={"Ingresa tu apellido"}
           value={form.beneficiariesInfo[index]?.beneficiaryLastname}
           onChange={handleChange}
           disabled={index === 0 && form.beneficiary}
@@ -166,11 +166,11 @@ export const BasicForm = ({
         />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Row>
-          <Div width="25%">
+        <Div direction={isMobile ? "column" : "row"}>
+          <Div width={isMobile ? "100%" : "25%"}>
             <Select
               {...labelsProps}
-              label="Ind del país"
+              label={"Ind del país"}
               value={form.beneficiariesInfo[index]?.countryCode}
               onChange={(event) => handleSelect("countryCode", event)}
               disabled={index === 0 && form.beneficiary}
@@ -195,13 +195,13 @@ export const BasicForm = ({
               ))}
             </Select>
           </Div>
-          <Div width="72%">
+          <Div width={isMobile ? "100%" : "72%"}>
             <TextField
               {...labelsProps}
               id="phoneNumber"
               label="Número de celular"
               type="number"
-              placeholder={"Indica tu número"}
+              placeholder={"Ingresa tu número"}
               value={form.beneficiariesInfo[index]?.phoneNumber}
               onChange={handleChange}
               disabled={index === 0 && form.beneficiary}
@@ -216,7 +216,7 @@ export const BasicForm = ({
               }
             />
           </Div>
-        </Row>
+        </Div>
       </Grid>
 
       <Grid item xs={12} md={6}>

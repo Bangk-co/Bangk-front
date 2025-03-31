@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { theme } from "@/styles/theme";
 import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
@@ -19,6 +19,7 @@ export const TitularForm = ({
   errorForm,
   setErrorForm,
 }) => {
+  const [isFormValid, setIsFormValid] = useState(false);
   const updateBeneficiaryInfo = (updatedForm) => {
     updatedForm.beneficiariesInfo[0] = {
       ...updatedForm.beneficiariesInfo[0],
@@ -67,6 +68,23 @@ export const TitularForm = ({
     }
     setErrorForm(null);
   };
+
+  const validateForm = () => {
+    const isValid =
+      form.documentType &&
+      form.documentNumber &&
+      form.name &&
+      form.lastName &&
+      form.email &&
+      form.countryCode &&
+      form.phoneNumber;
+
+    setIsFormValid(isValid);
+  };
+  useEffect(() => {
+    validateForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form]);
 
   return (
     <Grid
@@ -117,7 +135,7 @@ export const TitularForm = ({
           {...labelsProps}
           id="name"
           label="Nombre"
-          placeholder={"Indica tu nombre"}
+          placeholder={"Ingresa tu nombre"}
           value={form.name}
           onChange={handleChange}
           error={errorForm?.name?.error}
@@ -129,7 +147,7 @@ export const TitularForm = ({
           {...labelsProps}
           id="lastName"
           label="Apellido"
-          placeholder={"Indica tu apellido"}
+          placeholder={"Ingresa tu apellido"}
           value={form.lastName}
           onChange={handleChange}
           error={errorForm?.lastName?.error}
@@ -149,11 +167,11 @@ export const TitularForm = ({
         />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Row>
-          <Div width="25%">
+        <Div direction={isMobile ? "column" : "row"}>
+          <Div width={isMobile ? "100%" : "25%"}>
             <Select
               {...labelsProps}
-              label="Ind del país"
+              label={"Ind del país"}
               value={form.countryCode}
               onChange={(event) => handleSelect("countryCode", event)}
               error={errorForm?.countryCode?.error}
@@ -174,20 +192,20 @@ export const TitularForm = ({
               ))}
             </Select>
           </Div>
-          <Div width="72%">
+          <Div width={isMobile ? "100%" : "72%"}>
             <TextField
               {...labelsProps}
               id="phoneNumber"
               label="Número de celular"
               type="number"
-              placeholder={"Indica tu número"}
+              placeholder={"Ingresa tu número"}
               value={form.phoneNumber}
               onChange={handleChange}
               error={errorForm?.phoneNumber?.error}
               helper={errorForm?.phoneNumber?.message}
             />
           </Div>
-        </Row>
+        </Div>
       </Grid>
       <Grid item xs={12} md={6}>
         <Row m="22px 0 0 0">
@@ -218,6 +236,7 @@ export const TitularForm = ({
           width={isMobile ? "100%" : "124px"}
           onClick={() => setActiveKey("1")}
           labelWeight={theme.fonts.weight.regular}
+          disabled={!isFormValid}
         >
           Continuar
         </Button>

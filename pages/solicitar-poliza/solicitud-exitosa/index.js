@@ -52,7 +52,7 @@ const RequestSuccess = ({ isMobile }) => {
             >
               ¡Felicitaciones!
               <br />
-              Haz completado tu solicitud para la póliza con Bangk
+              Has completado tu solicitud para la póliza con Bangk
             </Text>
             <Text
               size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}

@@ -100,6 +100,13 @@ const TransactionState = ({ isMobile }) => {
     }
   }, [dataStatusTransaction, isSuccessStatusTransaction]);
 
+  useEffect(() => {
+    if (paymentInfo && Object.keys(paymentInfo).length > 0) {
+      setLoadingPayment(false);
+      setTransactionInfo(paymentInfo);
+    }
+  }, [paymentInfo]);
+
   const buttonProps = {
     background: theme.colors.orange1000,
     labelColor: theme.colors.white,
@@ -222,7 +229,7 @@ const TransactionState = ({ isMobile }) => {
           </Text>
 
           <Card>
-            {!hasErrors && transactionInfo?.idNumber && (
+            {!hasErrors && transactionInfo?.status && (
               <>
                 {transactionDetails.map((detail, index) => (
                   <Div key={index} justify="space-between" margin="0 0 15px 0">

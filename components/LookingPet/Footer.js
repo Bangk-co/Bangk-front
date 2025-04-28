@@ -39,8 +39,9 @@ const Footer = ({ isMobile, isTablet }) => {
         width="280px"
         height="42px"
         style={{ marginTop: "40px" }}
+        onClick={() => window.open(`https://app.finders.pet/find?tenant=bangk`, "_blank")}
       >
-        Inicia tu busqueda ya!
+        Inicia tu búsqueda ya!
       </Button>
     </WrapperFooter>
   );

@@ -46,6 +46,27 @@ const getPrice = (amount, frequency) => {
   return basePrice;
 };
 
+const getPriceSearch = (amount) => {
+  const prices = {
+    basic: 79000,
+    advanced: 197500,
+    premium: 395500,
+  };
+
+
+  const frequencyMap = {
+    1: 'basic',
+    2: 'advanced',
+    3: 'premium',
+  };
+
+  const frequencyKey = frequencyMap[amount];
+  if (!frequencyKey || !prices[frequencyKey]) {
+    return 0;
+  }
+
+  return prices[frequencyKey];
+}
 export const Services = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const [petBangkAmount, setPetBangkAmount] = useState(1);
@@ -63,6 +84,21 @@ export const Services = ({ isMobile, isTablet }) => {
     borderHover: 'transparent',
   };
 
+  const returnPlan = (selected) => {
+    switch (selected) {
+      case 1:
+        return "basic";
+      case 2:
+        return "advanced";
+      case 3:
+        return "premium";
+    };
+  };
+
+  const handleClickSearch = () => {
+    window.open(`https://app.finders.pet/find?tenant=bangk&plan=${returnPlan(selectedSearch)}`, "_blank");
+  };
+
   const options = [
     {
       id: 1,
@@ -78,7 +114,7 @@ export const Services = ({ isMobile, isTablet }) => {
       background: theme.colors.blue200,
       onClick: (value) => setSelectedAsistance(value),
       buttonText: "Protege a tu mascota ahora!",
-      urlButton: "/pet-bangk/asegura-ya",
+      handleClick: () => router.push(`/pet-bangk/asegura-ya?selectedPlan=${selectedAsistance}&&petsAmount=${petBangkAmount}`),
       countButtonsColor: theme.colors.orange500,
       amount: petBangkAmount,
       setAmount: setPetBangkAmount
@@ -97,7 +133,7 @@ export const Services = ({ isMobile, isTablet }) => {
       background: theme.colors.orange500,
       onClick: (value) => setSelectedSearch(value),
       buttonText: "Anunciar mi mascota perdida",
-      urlButton: "/",
+      handleClick: handleClickSearch,
       amount: searchAmount,
       setAmount: setSearchAmount,
       countButtonsColor: theme.colors.purple,
@@ -189,15 +225,19 @@ export const Services = ({ isMobile, isTablet }) => {
                 Número de mascotas
               </Text>
               <Div gap="10px">
-                <Signs style={{ background: option.countButtonsColor }} onClick={() => option.amount > 1 && option.setAmount(option.amount - 1)}>
-                  -
-                </Signs>
+                {option.id === 1 && (
+                  <Signs style={{ background: option.countButtonsColor }} onClick={() => option.amount > 1 && option.setAmount(option.amount - 1)}>
+                    -
+                  </Signs>
+                )}
                 <WrapperAmount>
                   {option.amount}
                 </WrapperAmount>
+                {option.id === 1 && (
                 <Signs style={{ background: option.countButtonsColor }} onClick={() => option.setAmount(option.amount + 1)}>
-                  +
-                </Signs>
+                    +
+                  </Signs>
+                )}
               </Div>
             </Div>
             <Div m="20px 0 0 0">
@@ -207,7 +247,7 @@ export const Services = ({ isMobile, isTablet }) => {
                 size={isMobile ? theme.fonts.size.h3 : theme.fonts.size.h2}
                 style={{ marginLeft: isMobile ? "8px" : "16px", marginRight: isMobile ? "4px" : "6px" }}
               >
-                {option.id === 1 ? `$${getPrice(option.amount, selectedAsistance).toLocaleString('es-ES') }*` : "$0*"}
+                {option.id === 1 ? `$${getPrice(option.amount, selectedAsistance).toLocaleString('es-ES') }*` : `$${getPriceSearch(selectedSearch).toLocaleString('es-ES') }`}
               </Text>
             </Div>
             <Button
@@ -222,7 +262,7 @@ export const Services = ({ isMobile, isTablet }) => {
               borderHover={theme.colors.white}
               borderRadius={"50px"}
               style={{ marginTop: "30px" }}
-              onClick={() => router.push(`${option.urlButton}?selectedPlan=${selectedAsistance}&&petsAmount=${petBangkAmount}`)}
+              onClick={option.handleClick}
             >
               {option.buttonText}
               <Image src={arrowRight} alt="arrowRight" />
@@ -230,6 +270,14 @@ export const Services = ({ isMobile, isTablet }) => {
           </CardServices>
         ))}
       </Div>
+      <Text
+        size={theme.fonts.size.default2} 
+        color={theme.colors.gray150} 
+        mt={isMobile ? "20px" : "40px"}
+        style={{ alignSelf: isMobile ? "center" : "flex-start", marginLeft: isMobile ? "0" : "100px" }}
+      >
+        *El valor de la asistencia se cobrará automáticamente a tu método de pago al inicio de cada período, de acuerdo con el plan que elijas. El valor ya incluye IVA.
+      </Text>
     </WrapperServices>
   );
 };

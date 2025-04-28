@@ -5,11 +5,12 @@ import moto from "@/assets/img/motoIlustration.png";
 import { Col, Text } from "@/styles/Common";
 import { WrapperBanner } from "./styles";
 import { Button } from "../Common/Button";
+import { whatsappNumber } from "@/utilities/helpers";
 
 const Banner = ({ isMobile }) => {
   const handleWpp = () => {
     window.open(
-      "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk!",
+      `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk!`,
       "_blank"
     );
   };

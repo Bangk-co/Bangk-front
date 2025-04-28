@@ -136,7 +136,7 @@ export const Price = ({ isMobile, isTablet }) => {
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(getPrice(petsAmount, plan.id)))}
+              $ {numberFormat(Number(getPrice(petsAmount, plan.id)))}*
             </Text>
             <Button
               background={selectedPlan === plan.id ? theme.colors.orange500 : theme.colors.light}
@@ -180,7 +180,7 @@ export const Price = ({ isMobile, isTablet }) => {
         mt={isMobile ? "20px" : "40px"}
         style={{ alignSelf: isMobile ? "center" : "flex-start", marginLeft: isMobile ? "0" : "100px" }}
       >
-        *El valor de la asistencia se descontará automáticamente de tu método de pago según el plan elegido.
+        *El valor de la asistencia se cobrará automáticamente a tu método de pago al inicio de cada período, de acuerdo con el plan que elijas. El valor ya incluye IVA
       </Text>
     </Div>
   )

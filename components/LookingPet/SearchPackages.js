@@ -13,10 +13,11 @@ const SearchPackages = ({ isMobile }) => {
         "Anuncio durate 4 días",
         "Aprox. 10.000 veces se mostrara tu anuncio"
       ],
-      price: "$50.000",
+      price: "$79.000",
       backgroundColor: theme.colors.blue200,
       titleColor: theme.colors.white,
-      textColor: theme.colors.white
+      textColor: theme.colors.white,
+      id: 'basic'
     },
     {
       title: "Avanzada",
@@ -25,10 +26,11 @@ const SearchPackages = ({ isMobile }) => {
         "Aprox. se mostrará tu anuncio a 20,000 cuentas",
         "Más visualizaciones más probabilidades"
       ],
-      price: "$90.000",
+      price: "$197.500",
       backgroundColor: theme.colors.orange,
       titleColor: theme.colors.purple,
-      textColor: theme.colors.purple
+      textColor: theme.colors.purple,
+      id: 'advanced'
     },
     {
       title: "Premium",
@@ -37,12 +39,14 @@ const SearchPackages = ({ isMobile }) => {
         "Aprox. se mostrará tu anuncio a 40,000 cuentas",
         "Máxima difusión de tu búsqueda"
       ],
-      price: "$200.000",
+      price: "$395.500",
       backgroundColor: theme.colors.yellow,
       titleColor: theme.colors.blue200,
-      textColor: theme.colors.purple
+      textColor: theme.colors.purple,
+      id: 'premium'
     }
   ];
+
   return (
     <WrapperSearchPackages>
       <Text color={theme.colors.blue200} fontSize={theme.fonts.size.default}>
@@ -122,6 +126,7 @@ const SearchPackages = ({ isMobile }) => {
                   labelColor={theme.colors.purple}
                   height={"25px"}
                   width={"100px"}
+                  onClick={() => window.open(`https://app.finders.pet/find?tenant=bangk&plan=${item.id}`, "_blank")}
                 >
                   Comprar
                 </Button>

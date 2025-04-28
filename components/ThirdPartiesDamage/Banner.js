@@ -5,6 +5,7 @@ import coins from "@/assets/img/yellowCoins.png";
 import { Div, Row, Text } from "@/styles/Common";
 import { WrapperBanner } from "./styles";
 import { Button } from "../Common/Button";
+import { whatsappNumber } from "@/utilities/helpers";
 
 const Banner = ({ isMobile }) => {
   return (
@@ -76,7 +77,7 @@ const Banner = ({ isMobile }) => {
         borderHover={theme.colors.orange}
         onClick={() =>
           window.open(
-            " https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar",
+            ` https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk,%20Quiero%20Ahorrar`,
             "_blank"
           )
         }

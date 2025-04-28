@@ -54,6 +54,10 @@ const Search = ({ isMobile, isTablet }) => {
     return "25px";
   };
 
+  const handleClickSearch = () => {
+    window.open(`https://app.finders.pet/find?tenant=bangk`, "_blank");
+  };
+
   return (
     <Div direction="column" p={returnPadding()} style={{ border: `1px solid ${theme.colors.gray200}`, position: "relative" }}>
       <Div>
@@ -97,6 +101,7 @@ const Search = ({ isMobile, isTablet }) => {
                 borderHover={theme.colors.yellow}
                 width={returnWidthButton1()}
                 height={"42.74px"}
+                onClick={handleClickSearch}
               >
                 Anunciar a mi mascota perdida
               </Button>
@@ -129,6 +134,7 @@ const Search = ({ isMobile, isTablet }) => {
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
             width={returnWidthButton1()}
+            onClick={handleClickSearch}
           >
             Anunciar a mi mascota perdida
           </Button>

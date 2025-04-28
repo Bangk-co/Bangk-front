@@ -428,3 +428,4 @@ export const getMedBangkPrice = (
 
   return basePrice;
 };
+export const whatsappNumber = "573009139239";

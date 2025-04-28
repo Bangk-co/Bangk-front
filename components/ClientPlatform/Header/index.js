@@ -15,6 +15,7 @@ import { theme } from "../../../styles/theme";
 import { Modal } from "@mui/material";
 import { MenuModal } from "./MenuModal";
 import { LogoutModal } from "./LogoutModal";
+import { whatsappNumber } from "@/utilities/helpers";
 
 const Header = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -28,7 +29,7 @@ const Header = ({ isMobile, isTablet }) => {
 
   const handleWpp = () => {
     window.open(
-      "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk!",
+      `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk!`,
       "_blank"
     );
   };

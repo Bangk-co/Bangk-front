@@ -11,7 +11,7 @@ import { CardPlan, Signs, WrapperAmount, WrapperIcon } from "./styles";
 export const Prices = ({ isMobile, isTablet }) => {
   const router = useRouter();
   const [planAmount, setPlanAmount] = useState(1);
-  const [selectedPlan, setSelectedPlan] = useState(1);
+  const [selectedPlan, setSelectedPlan] = useState(2);
 
   const getMedBangkPrice = (amount, frequency) => {
     const prices = {
@@ -167,7 +167,7 @@ export const Prices = ({ isMobile, isTablet }) => {
               mt="40px"
               mb="30px"
             >
-              $ {numberFormat(Number(getMedBangkPrice(planAmount, plan.id)))}
+              $ {numberFormat(Number(getMedBangkPrice(planAmount, plan.id)))}*
             </Text>
             <Button
               background={
@@ -235,8 +235,7 @@ export const Prices = ({ isMobile, isTablet }) => {
           marginLeft: isMobile ? "0" : "100px",
         }}
       >
-        *El valor de la asistencia se descontará automáticamente de tu método de
-        pago según el plan elegido.
+        *El valor de la asistencia se cobrará automáticamente a tu método de pago al inicio de cada período, de acuerdo con el plan que elijas. El valor ya incluye IVA
       </Text>
     </Div>
   );

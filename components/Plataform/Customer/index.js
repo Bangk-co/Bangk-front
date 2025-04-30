@@ -99,10 +99,12 @@ const Customer = ({ isMobile, isTablet }) => {
   useEffect(() => {
     if (isSuccessDocTypes && dataDocTypes?.data?.groupSettings.length > 0)
       setDocumentTypeOptions(
-        dataDocTypes?.data?.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
+        dataDocTypes?.data?.groupSettings
+          .filter((ele) => ele.id !== 723)
+          .map((ele) => ({
+            label: ele.name,
+            value: ele.id,
+          }))
       );
   }, [dataDocTypes, isSuccessDocTypes]);
 

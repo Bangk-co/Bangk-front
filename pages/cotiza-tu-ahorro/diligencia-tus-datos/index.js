@@ -53,10 +53,12 @@ const UserData = ({ isMobile, isTablet }) => {
   useEffect(() => {
     if (isSuccess && data?.data?.groupSettings.length > 0)
       setDocumentTypeOptions(
-        data?.data?.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
+        data?.data?.groupSettings
+          .filter((ele) => ele.id !== 723)
+          .map((ele) => ({
+            label: ele.name,
+            value: ele.id,
+          }))
       );
   }, [data, isSuccess]);
 

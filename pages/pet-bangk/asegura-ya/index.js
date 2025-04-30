@@ -239,7 +239,7 @@ const SecureItNow = ({ isMobile }) => {
     if (isSuccessDocuments) {
       setDocumentTypeOptions(
         dataDocuments?.data.groupSettings
-          .filter((ele) => ele.id !== 78)
+          .filter((ele) => ele.id !== 78 && ele.id !== 723)
           .map((ele) => ({
             label: ele.name,
             value: ele.id,
@@ -530,13 +530,7 @@ const SecureItNow = ({ isMobile }) => {
                 })
               );
               setShowPaymentModal(false);
-              router.push(
-                "/transaccion/?paymentMethod=bancolombia&payAssistance=pet"
-              );
-              window.open(
-                resToken?.data?.result?.data?.authorization_Url,
-                "_blank"
-              );
+              window.location.href = resToken?.data?.result?.data?.authorization_Url;
             },
             onError: (error) => {
               toast.error(

@@ -39,11 +39,14 @@ const TransactionState = ({ isMobile }) => {
   const formToSend =
     medForm && Object.keys(medForm).length !== 0 ? medForm : petsForm;
 
+  console.log("formToSend", formToSend);
+
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
   );
   const { data: dataBancolombia, isSuccess: isSuccessBancolombia } =
     getTrxBancolombiaStatus;
+
   useEffect(() => {
     if (
       isSuccessBancolombia &&
@@ -72,7 +75,7 @@ const TransactionState = ({ isMobile }) => {
               idNumber: resPayment?.data?.result?.transactionReference,
               transactionDate: dataBancolombia?.data?.result?.data?.updated_At,
               status: dataBancolombia?.data?.result?.data?.status,
-              receptor: "Bancolombia",
+              receptor: "Building Life Technologies SAS",
               paymentAmount: formToSend?.amount,
               payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
             });

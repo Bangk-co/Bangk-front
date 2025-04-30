@@ -65,10 +65,12 @@ const ProfileForm = ({ isMobile }) => {
   useEffect(() => {
     if (isSuccessDocuments) {
       setDocumentTypeOptions(
-        dataDocuments?.data.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
+        dataDocuments?.data.groupSettings
+          .filter((ele) => ele.id !== 723)
+          .map((ele) => ({
+            label: ele.name,
+            value: ele.id,
+          }))
       );
     }
   }, [isSuccessDocuments, dataDocuments]);

@@ -182,13 +182,7 @@ const HireAssistance = ({ isMobile }) => {
                 })
               );
               setShowModal(false);
-              router.push(
-                "/transaccion/?paymentMethod=bancolombia&payAssistance=med"
-              );
-              window.open(
-                resToken?.data?.result?.data?.authorization_Url,
-                "_blank"
-              );
+              window.location.href = resToken?.data?.result?.data?.authorization_Url;
             },
             onError: (error) => {
               toast.error(

@@ -39,8 +39,6 @@ const TransactionState = ({ isMobile }) => {
   const formToSend =
     medForm && Object.keys(medForm).length !== 0 ? medForm : petsForm;
 
-  console.log("formToSend", formToSend);
-
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
   );

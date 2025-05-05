@@ -84,7 +84,7 @@ export const Step2 = ({
 
   return (
     <>
-      <Card isMobile={isMobile}>
+      <Card isMobile={isMobile} style={{ width: isMobile ? "100%" : "70%", alignSelf: "center" }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <Text
@@ -144,7 +144,7 @@ export const Step2 = ({
                 }
                 font={theme.fonts.family.primaryMedium}
               >
-                {`${form.name} ${form.lastName}`}
+                {`Titular: ${form.name} ${form.lastName}`}
               </Text>
               <Div
                 width="353px"
@@ -193,7 +193,7 @@ export const Step2 = ({
                   }
                   font={theme.fonts.family.primaryMedium}
                 >
-                  {`${beneficiary.beneficiaryName} ${beneficiary.beneficiaryLastname}`}
+                  {`Beneficiario ${index + 1}: ${beneficiary.beneficiaryName} ${beneficiary.beneficiaryLastname}`}
                 </Text>
                 <Div
                   width="353px"
@@ -246,15 +246,16 @@ export const Step2 = ({
               </Div>
             </ResumeCard>
           ))}
-          <Button
-            {...buttonProps}
-            width={isMobile ? "100%" : "147px"}
-            labelWeight={theme.fonts.weight.regular}
-            style={{ marginTop: "40px" }}
-            onClick={handlePay}
-          >
-            Pagar ahora
-          </Button>
+          <Grid item xs={12} md={12} style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              {...buttonProps}
+              width={isMobile ? "100%" : "220px"}
+              style={{ marginTop: "40px" }}
+              onClick={handlePay}
+            >
+              Pagar ahora
+            </Button>
+          </Grid>
         </Grid>
       </Card>
     </>

@@ -9,7 +9,7 @@ import { TextField } from "@/components/Common/TextField";
 import masterCard from "@/assets/icons/mastercard.svg";
 import visa from "@/assets/icons/visa.svg";
 import Image from "next/image";
-import { numberFormat } from "@/utilities/helpers";
+import { encrypt, numberFormat } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
 import { useDispatch, useSelector } from "react-redux";
 import useCardPayment from "@/hooks/WompiPayment/useCardPayment";
@@ -35,6 +35,7 @@ const RealizarPago = ({ isMobile }) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [summary, setSummary] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [transactionId, setTransactionId] = useState(null);
   const [transactionReference, setTransactionReference] = useState(null);
   const { data: statusTransaction, isSuccess: isSuccessStatusTransaction } = useGetStatusTransaction(transactionReference);
   const [transactionStatus, setTransactionStatus] = useState("");
@@ -96,7 +97,7 @@ const RealizarPago = ({ isMobile }) => {
         setTimeout(() => {
           router.push(`/transaccion?payAssistance=${payAssistance}`);
           dispatch(setPaymentInformation({
-            idNumber: "",
+            idNumber: transactionId,
             transactionDate: new Date(),
             status: statusTransaction?.data?.result,
             receptor: "Building Life Technologies SAS",
@@ -117,6 +118,7 @@ const RealizarPago = ({ isMobile }) => {
         { duration: 1000 }
       )
       setTransactionReference(null);
+      setTransactionId(null);
       setTransactionStatus("");
     };
   }, [transactionStatus]);
@@ -273,12 +275,12 @@ const RealizarPago = ({ isMobile }) => {
           email: cardPaymentForm.email,
           name: cardPaymentForm.name,
           applicationId: applicationId,
-          cardNumber: cardPaymentForm.cardNumber,
-          expiredMonth: cardPaymentForm.expiredDate.slice(0, 2),
-          expiredYear: cardPaymentForm.expiredDate.slice(3, 5),
-          cardHolder: cardPaymentForm.cardHolder,
+          cardNumber: encrypt(cardPaymentForm.cardNumber),
+          expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
+          expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),
+          cardHolder: encrypt(cardPaymentForm.cardHolder),
           paymentInstallments: 1,
-          cvc: cardPaymentForm.cvc,
+          cvc: encrypt(cardPaymentForm.cvc),
           amount: cardPaymentForm.amount,
           typeApplication: "PET",
         };
@@ -287,6 +289,7 @@ const RealizarPago = ({ isMobile }) => {
         cardPayment.mutate(cardPayload, {
           onSuccess: (res) => {
             setTransactionReference(res?.data?.result?.transactionReference);
+            setTransactionId(res?.data?.result?.transactionId);
             dispatch(setPetsFormInfo({}));
           },
           onError: () => {
@@ -315,12 +318,12 @@ const RealizarPago = ({ isMobile }) => {
           email: cardPaymentForm.email,
           name: cardPaymentForm.name,
           applicationId: applicationId,
-          cardNumber: cardPaymentForm.cardNumber,
-          expiredMonth: cardPaymentForm.expiredDate.slice(0, 2),
-          expiredYear: cardPaymentForm.expiredDate.slice(3, 5),
-          cardHolder: cardPaymentForm.cardHolder,
+          cardNumber: encrypt(cardPaymentForm.cardNumber),
+          expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
+          expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),
+          cardHolder: encrypt(cardPaymentForm.cardHolder),
           paymentInstallments: 1,
-          cvc: cardPaymentForm.cvc,
+          cvc: encrypt(cardPaymentForm.cvc),
           amount: cardPaymentForm.amount,
           typeApplication: "MED",
         };
@@ -329,6 +332,7 @@ const RealizarPago = ({ isMobile }) => {
         cardPayment.mutate(cardPayload, {
           onSuccess: (res) => {
             setTransactionReference(res?.data?.result?.transactionReference);
+            setTransactionId(res?.data?.result?.transactionId);
             dispatch(setMedFormInfo({}));
           },
           onError: () => {

@@ -20,6 +20,7 @@ export const TitularForm = ({
   setErrorForm,
 }) => {
   const [isFormValid, setIsFormValid] = useState(false);
+
   const updateBeneficiaryInfo = (updatedForm) => {
     updatedForm.beneficiariesInfo[0] = {
       ...updatedForm.beneficiariesInfo[0],
@@ -33,14 +34,6 @@ export const TitularForm = ({
     };
     return updatedForm;
   };
-
-  useEffect(() => {
-    if (form.beneficiary) {
-      const updatedForm = { ...form };
-      setForm(updateBeneficiaryInfo(updatedForm));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.beneficiary]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -69,6 +62,27 @@ export const TitularForm = ({
     setErrorForm(null);
   };
 
+  const handleBeneficiaryChange = (event) => {
+    const isChecked = event.target.checked;
+    const updatedForm = { ...form };
+    updatedForm.beneficiary = isChecked;
+    
+    if (isChecked) {
+      setForm(updateBeneficiaryInfo(updatedForm));
+    } else {
+      updatedForm.beneficiariesInfo[0] = {
+        beneficiaryName: "",
+        beneficiaryLastname: "",
+        documentNumber: "",
+        documentType: 76,
+        email: "",
+        countryCode: 6,
+        phoneNumber: "",
+      };
+      setForm(updatedForm);
+    }
+  };
+
   const validateForm = () => {
     const isValid =
       form.documentType &&
@@ -81,6 +95,7 @@ export const TitularForm = ({
 
     setIsFormValid(isValid);
   };
+
   useEffect(() => {
     validateForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,12 +228,7 @@ export const TitularForm = ({
             borderColor={theme.colors.gray1000}
             width="22px"
             checked={form.beneficiary}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                beneficiary: event.target.checked,
-              })
-            }
+            onChange={handleBeneficiaryChange}
           />
           <Text
             color={theme.colors.gray1000}

@@ -160,7 +160,7 @@ const TransactionState = ({ isMobile }) => {
     },
     {
       label: "Monto pagado:",
-      value: `$${numberFormat(transactionInfo?.paymentAmount)}`,
+      value: `$${numberFormat(transactionInfo?.paymentAmount)}*`,
     },
     {
       label: "Método de pago:",
@@ -256,12 +256,12 @@ const TransactionState = ({ isMobile }) => {
                       }
                       align="right"
                       style={{
-                        width: "300px",
+                        width: isMobile ? "150px" : "300px",
                         justifyItems: "right",
                         wordBreak: "break-word",
                         whiteSpace: "normal",
                         display: "block",
-                        flexShrink: 0,
+                        flexShrink: !isMobile ? 0 : null,
                       }}
                     >
                       {detail.value}
@@ -299,6 +299,13 @@ const TransactionState = ({ isMobile }) => {
               </>
             )}
           </Card>
+          <Text
+            color={theme.colors.gray150}
+            size={theme.fonts.size.default2}
+            mt="20px"
+          >
+            *El valor de la asistencia se cobrará automáticamente a tu método de pago al inicio de cada período, de acuerdo con el plan que elijas. El valor ya incluye IVA
+          </Text>
         </Div>
       </Wrapper>
     </>

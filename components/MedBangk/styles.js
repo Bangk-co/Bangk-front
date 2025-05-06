@@ -216,5 +216,6 @@ export const OrangeCard = styled.div`
 
   &:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background-color: ${theme.colors.yellow};
   }
 `;

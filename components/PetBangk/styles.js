@@ -369,7 +369,7 @@ export const OrangeCard = styled.div`
   margin-top: 60px;
   cursor: pointer;
 
-  color: ${theme.colors.white};
+  color: ${theme.colors.green};
   font-size: ${theme.fonts.size.h5};
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -381,5 +381,6 @@ export const OrangeCard = styled.div`
 
   &:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background-color: ${theme.colors.yellow};
   }
 `;

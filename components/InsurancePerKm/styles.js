@@ -165,6 +165,7 @@ export const HoverDiv = styled.div`
 
   &:hover {
     background-color: ${theme.colors.orange100};
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {

@@ -11,14 +11,17 @@ import { Div } from "@/styles/Common";
 export const PetInfoForm = ({ 
   labelsProps,
   buttonProps,
-  handleContinue,
   setPetsForm,
   petsForm,
   index,
   isMobile,
   petTypeOptions,
   errorForm,
-  setErrorForm
+  setErrorForm,
+  setActiveKey,
+  activeKey,
+  errorAge,
+  setErrorAge
 }) => {
   const ageTimeOptions = [
     { label: "Meses", value: "Meses" },
@@ -66,6 +69,28 @@ export const PetInfoForm = ({
       updatedPets[index] = { ...updatedPets[index], [id]: { error: false, message: "" } };
       return { ...prev, pets: updatedPets };
     });
+
+    if (id === "age") {
+      const ageValue = parseInt(cleanedValue, 10);
+      const isAgeInMonths = petsForm.pets[index].ageTime === "Meses";
+      const ageInMonths = isAgeInMonths ? ageValue : ageValue * 12;
+      
+      if (ageInMonths < 6 || ageInMonths > 120) {
+        const newErrorAge = [...errorAge];
+        newErrorAge[index] = {
+          error: true,
+          message: "La edad de tu mascota debe estar entre 6 meses y 10 años para poder adquirir esta asistencia."
+        };
+        setErrorAge(newErrorAge);
+      } else {
+        const newErrorAge = [...errorAge];
+        newErrorAge[index] = {
+          error: false,
+          message: ""
+        };
+        setErrorAge(newErrorAge);
+      }
+    }
   };
 
   const handleSelect = (id, event) => {
@@ -75,12 +100,46 @@ export const PetInfoForm = ({
       updatedPets[index] = { ...updatedPets[index], [id]: value };
       return { ...prev, pets: updatedPets };
     });
+
+    if (id === "ageTime") {
+      const ageValue = petsForm.pets[index].age;
+      const isAgeInMonths = value === "Meses";
+      const ageInMonths = isAgeInMonths ? ageValue : ageValue * 12;
+      
+      if (ageInMonths < 6 || ageInMonths > 120) {
+        const newErrorAge = [...errorAge];
+        newErrorAge[index] = {
+          error: true,
+          message: "La edad de tu mascota debe estar entre 6 meses y 10 años para poder adquirir esta asistencia."
+        };
+        setErrorAge(newErrorAge);
+      } else {
+        const newErrorAge = [...errorAge];
+        newErrorAge[index] = {
+          error: false,
+          message: ""
+        };
+        setErrorAge(newErrorAge);
+      }
+    }
   };
 
   const isFormValid = () => {
-    return petsForm.pets.every(pet => 
-      pet.name && pet.breed && pet.age && pet.ageTime && pet.color && pet.petTypeId
+    const currentPet = petsForm.pets[index];
+    return Boolean(
+      currentPet?.petTypeId &&
+      currentPet?.name?.trim() &&
+      currentPet?.breed?.trim() &&
+      currentPet?.age?.trim() &&
+      currentPet?.ageTime &&
+      currentPet?.color?.trim() &&
+      errorAge[index]?.error === false
     );
+  };
+
+  const handleNextCollapse = () => {
+    const nextKey = Number(activeKey) + 1;
+    setActiveKey(nextKey.toString());
   };
 
   return (
@@ -148,8 +207,8 @@ export const PetInfoForm = ({
             placeholder={"Ingresa el número"}
             value={petsForm.pets[index]?.age}
             onChange={handleChangeNumber}
-            error={errorForm?.age?.error}
-            helperText={errorForm?.age?.message}
+            error={errorAge[index]?.error}
+            helperText={errorAge[index]?.message}
             inputProps={{
               maxLength: 3,
             }}
@@ -187,10 +246,10 @@ export const PetInfoForm = ({
       </Grid>
       <Grid item xs={12} md={6}></Grid>
       <Grid item xs={12} md={6}>
-        <Button 
+        <Button
           {...buttonProps}
           width={isMobile ? "100%" : "124px"}
-          onClick={handleContinue}
+          onClick={handleNextCollapse}
           style={{ marginTop: "20px" }}
           disabled={!isFormValid()}
         >

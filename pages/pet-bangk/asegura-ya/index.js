@@ -20,8 +20,7 @@ import {
   validatePetFormStep1,
   validatePetFormStep2,
 } from "@/utilities/validations";
-import { CircularProgress, Modal } from "@mui/material";
-import { ModalAgeError } from "@/components/SecureItNow/ModalAgeError";
+import { CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setPetsFormInfo } from "@/store/pets";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
@@ -168,9 +167,6 @@ const SecureItNow = ({ isMobile }) => {
   }, [petsFormStore]);
 
   const [treatPersonalDataDate, setTreatPersonalDataDate] = useState(null);
-  const [showAgeErrorModal, setShowAgeErrorModal] = useState(false);
-  const [invalidPetsNames, setInvalidPetsNames] = useState([]);
-  const [invalidPetsIndex, setInvalidPetsIndex] = useState([]);
 
   const labelsProps = {
     labelColor: theme.colors.gray1000,
@@ -383,33 +379,9 @@ const SecureItNow = ({ isMobile }) => {
           };
         });
       } else {
-        const ageErrors = petsForm.pets.map((pet, index) => {
-          const ageValue = parseInt(pet.age, 10);
-          const isAgeInMonths = pet.ageTime === "Meses";
-          const ageInMonths = isAgeInMonths ? ageValue : ageValue * 12;
-
-          if (ageInMonths < 6 || ageValue > 10) {
-            return { index, error: true, name: pet.name };
-          }
-          return { index, error: false };
-        });
-
-        const invalidPets = ageErrors
-          .filter((error) => error.error)
-          .map((error) => error.name);
-        const invalidIndexes = ageErrors
-          .filter((error) => error.error)
-          .map((error) => error.index);
-
-        if (invalidPets.length > 0) {
-          setShowAgeErrorModal(true);
-          setInvalidPetsNames(invalidPets.join(", "));
-          setInvalidPetsIndex(invalidIndexes);
-          return;
-        } else {
-          setSelectedTab(2);
-        }
+        setSelectedTab(2);
       }
+      return;
     }
 
     if (selectedTab === 2) {
@@ -441,45 +413,6 @@ const SecureItNow = ({ isMobile }) => {
       dispatch(setPetsFormInfo(payload));
       setShowPaymentModal(true);
     }
-  };
-
-  const handleRemovePet = (invalidPetsIndex) => {
-    if (petsForm.pets.length === 1) {
-      setPetsForm((prevPetsForm) => ({
-        ...prevPetsForm,
-        petsAmount: 1,
-        pets: [
-          {
-            id: 0,
-            petTypeId: "",
-            name: "",
-            breed: "",
-            age: "",
-            ageTime: "Años",
-            color: "",
-          },
-        ],
-      }));
-    } else {
-      setPetsForm((prevPetsForm) => ({
-        ...prevPetsForm,
-        petsAmount: prevPetsForm.pets.filter(
-          (ele, index) => !invalidPetsIndex.includes(ele.id)
-        ).length,
-        pets: prevPetsForm.pets.filter(
-          (ele, index) => !invalidPetsIndex.includes(ele.id)
-        ),
-      }));
-      setErrorForm((prevErrorForm) => ({
-        ...prevErrorForm,
-        pets: prevErrorForm.pets.filter(
-          (ele, index) => !invalidPetsIndex.includes(ele.id)
-        ),
-      }));
-    }
-    setShowAgeErrorModal(false);
-    setInvalidPetsIndex([]);
-    setActiveKey(1);
   };
 
   if (isLoadingPaymentOcurrency) {
@@ -550,14 +483,6 @@ const SecureItNow = ({ isMobile }) => {
   return (
     <>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
-      <Modal open={showAgeErrorModal}>
-        <ModalAgeError
-          handleClose={() => setShowAgeErrorModal(false)}
-          handleRemovePet={handleRemovePet}
-          invalidPetsNames={invalidPetsNames}
-          invalidPetsIndex={invalidPetsIndex}
-        />
-      </Modal>
       <ModalPaymentMethod
         showModal={showPaymentModal}
         handleCloseModal={() => setShowPaymentModal(false)}

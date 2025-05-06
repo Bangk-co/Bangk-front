@@ -392,3 +392,5 @@ export const initDataLoanInsurancePolicy = {
   vehicleLicensePlate: null,
   weight: null,
 };
+
+export const whatsappNumber = "573117050799";

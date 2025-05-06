@@ -24,6 +24,7 @@ import loading from "../../assets/img/loading.png";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { blogsInfo } from "@/utilities/blogsInfo";
+import { whatsappNumber } from "@/utilities/helpers";
 
 const BlogDetailDesktop = ({ isTablet }) => {
   const router = useRouter();
@@ -49,7 +50,7 @@ const BlogDetailDesktop = ({ isTablet }) => {
       modifiedBlog.id === 1
         ? modifiedBlog.text.replace(
             "escríbenos",
-            '<a href="https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>'
+            `<a href="https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk,%20Quiero%20Ahorrar!" target="_blank" rel="noreferrer" style="text-decoration: underline; color: #024240;">escríbenos</a>`
           )
         : modifiedBlog.text;
 

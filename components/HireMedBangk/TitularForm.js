@@ -20,6 +20,7 @@ export const TitularForm = ({
   setErrorForm,
 }) => {
   const [isFormValid, setIsFormValid] = useState(false);
+  const titularDocumentType = documentTypeOptions.filter((ele) => ele.value !== 723);
 
   const updateBeneficiaryInfo = (updatedForm) => {
     updatedForm.beneficiariesInfo[0] = {
@@ -117,7 +118,7 @@ export const TitularForm = ({
           error={errorForm?.documentType?.error}
           helper={errorForm?.documentType?.message}
         >
-          {documentTypeOptions.map((ele, indx) => (
+          {titularDocumentType.map((ele, indx) => (
             <MenuItem
               key={indx}
               value={ele.value}

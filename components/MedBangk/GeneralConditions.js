@@ -7,7 +7,9 @@ import { OrangeCard } from "./styles";
 
 export const GeneralConditions = ({ isMobile, isTablet }) => {
   const router = useRouter();
-  const navigateToConditions = () => {};
+  const navigateToConditions = () => {
+    router.push("/ahorra-en-tus-seguros/med-bangk/condiciones");
+  };
 
   return (
     <Div

@@ -6,6 +6,7 @@ import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
 import { Div, Row, Text } from "@/styles/Common";
 import { Checkbox } from "../Common/Checkbox";
+import { Autocomplete } from "../Common/Autocomplete";
 
 export const TitularForm = ({
   labelsProps,
@@ -82,6 +83,22 @@ export const TitularForm = ({
       };
       setForm(updatedForm);
     }
+  };
+
+  const handleAutocomplete = (field, value) => {
+    const phoneCodeId = phoneCodesOptions.find(
+      (ele) => ele.label === value
+    )?.value;
+    
+    const updatedForm = { ...form };
+    updatedForm[field] = phoneCodeId;
+
+    if (form.beneficiary) {
+      setForm(updateBeneficiaryInfo(updatedForm));
+    } else {
+      setForm(updatedForm);
+    }
+    setErrorForm(null);
   };
 
   const validateForm = () => {
@@ -185,28 +202,31 @@ export const TitularForm = ({
       <Grid item xs={12} md={6}>
         <Div direction={isMobile ? "column" : "row"}>
           <Div width={isMobile ? "100%" : "25%"}>
-            <Select
+            <Autocomplete
               {...labelsProps}
-              label={"Indicativo"}
-              value={form.countryCode}
-              onChange={(event) => handleSelect("countryCode", event)}
-              error={errorForm?.countryCode?.error}
-              helper={
-                errorForm?.countryCode?.error
-                  ? errorForm?.countryCode?.message
-                  : ""
+              disablePortal
+              disableClearable
+              noOptionsText="No hay opciones"
+              width={"100%"}
+              name="countryCode"
+              label="Indicativo"
+              options={phoneCodesOptions}
+              getOptionLabel={(option) => `${option.label}`}
+              defaultValue={{ label: '+57', value: 6 }}
+              value={phoneCodesOptions.find(
+                (ele) => ele.value === form.countryCode
+              )}
+              onInputChange={(event, value) =>
+                handleAutocomplete("countryCode", value)
               }
-            >
-              {phoneCodesOptions.map((ele, indx) => (
-                <MenuItem
-                  key={indx}
-                  value={ele.value}
-                  style={{ fontFamily: theme.fonts.family.primary }}
-                >
-                  {ele.label}
-                </MenuItem>
-              ))}
-            </Select>
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  {...labelsProps}
+                  value={form.countryCode}
+                />
+              )}
+            />
           </Div>
           <Div width={isMobile ? "100%" : "72%"}>
             <TextField

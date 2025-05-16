@@ -190,12 +190,12 @@ export const Step1 = ({
                     beneficiariesInfo: [
                       ...form.beneficiariesInfo,
                       {
-                        documentType: "",
+                        documentType: 76,
                         documentNumber: "",
                         email: "",
                         beneficiaryName: "",
                         beneficiaryLastname: "",
-                        countryCode: "",
+                        countryCode: 6,
                         phoneNumber: "",
                       },
                     ],

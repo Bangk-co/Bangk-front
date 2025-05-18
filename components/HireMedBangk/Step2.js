@@ -36,17 +36,19 @@ export const Step2 = ({
   };
 
   const handleDelete = (index) => {
-    const updatedBeneficiaries = form.beneficiariesInfo.filter(
-      (_, idx) => idx !== index
-    );
-    const updatedPlanAmount =
-      updatedBeneficiaries.length > 0 ? updatedBeneficiaries.length : 1;
+    if (form.beneficiariesInfo.length > 1) {
+      const updatedBeneficiaries = form.beneficiariesInfo.filter(
+        (_, idx) => idx !== index
+      );
+      const updatedPlanAmount = updatedBeneficiaries.length;
 
-    setForm((prevForm) => ({
-      ...prevForm,
-      beneficiariesInfo: updatedBeneficiaries,
-      planAmount: updatedPlanAmount,
-    }));
+      setForm((prevForm) => ({
+        ...prevForm,
+        beneficiariesInfo: updatedBeneficiaries,
+        planAmount: updatedPlanAmount,
+        beneficiary: index === 0 ? false : prevForm.beneficiary
+      }));
+    }
   };
 
   const handlePay = () => {
@@ -239,9 +241,9 @@ export const Step2 = ({
                   src={trash}
                   alt="trash"
                   style={{
-                    cursor: index !== 0 ? "pointer" : "not-allowed",
+                    cursor: form.beneficiariesInfo.length > 1 ? "pointer" : "not-allowed",
                   }}
-                  onClick={() => index !== 0 && handleDelete(index)}
+                  onClick={() => handleDelete(index)}
                 />
               </Div>
             </ResumeCard>

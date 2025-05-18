@@ -89,7 +89,7 @@ export const TitularForm = ({
     const phoneCodeId = phoneCodesOptions.find(
       (ele) => ele.label === value
     )?.value;
-    
+
     const updatedForm = { ...form };
     updatedForm[field] = phoneCodeId;
 
@@ -207,23 +207,31 @@ export const TitularForm = ({
               disablePortal
               disableClearable
               noOptionsText="No hay opciones"
-              width={"100%"}
               name="countryCode"
               label="Indicativo"
               options={phoneCodesOptions}
-              getOptionLabel={(option) => `${option.label}`}
-              defaultValue={{ label: '+57', value: 6 }}
+              getOptionLabel={(option) => option?.label || ""}
               value={phoneCodesOptions.find(
                 (ele) => ele.value === form.countryCode
-              )}
-              onInputChange={(event, value) =>
-                handleAutocomplete("countryCode", value)
-              }
+              ) || null}
+              onInputChange={(event, value) => {
+                const selectedOption = phoneCodesOptions.find(
+                  (ele) => ele.label === value
+                );
+                if (selectedOption) {
+                  handleSelect("countryCode", { target: { value: selectedOption.value } });
+                }
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   {...labelsProps}
-                  value={form.countryCode}
+                  error={errorForm?.countryCode?.error}
+                  helper={
+                    errorForm?.countryCode?.error
+                      ? errorForm?.countryCode?.message
+                      : ""
+                  }
                 />
               )}
             />

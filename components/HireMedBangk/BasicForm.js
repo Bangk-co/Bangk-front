@@ -4,7 +4,8 @@ import { Grid, MenuItem } from "@mui/material";
 import { Select } from "../Common/Select";
 import { TextField } from "../Common/TextField";
 import { Button } from "../Common/Button";
-import { Div, Row, Text } from "@/styles/Common";
+import { Div, Text } from "@/styles/Common";
+import { Autocomplete } from "../Common/Autocomplete";
 
 export const BasicForm = ({
   labelsProps,
@@ -38,6 +39,21 @@ export const BasicForm = ({
     updatedBeneficiaries[index] = {
       ...updatedBeneficiaries[index],
       [field]: value,
+    };
+
+    setForm({ ...form, beneficiariesInfo: updatedBeneficiaries });
+    setErrorForm({});
+  };
+
+  const handleAutocomplete = (field, value) => {
+    const phoneCodeId = phoneCodesOptions.find(
+      (ele) => ele.label === value
+    )?.value;
+
+    const updatedBeneficiaries = [...form.beneficiariesInfo];
+    updatedBeneficiaries[index] = {
+      ...updatedBeneficiaries[index],
+      [field]: phoneCodeId,
     };
 
     setForm({ ...form, beneficiariesInfo: updatedBeneficiaries });
@@ -168,32 +184,30 @@ export const BasicForm = ({
       <Grid item xs={12} md={6}>
         <Div direction={isMobile ? "column" : "row"}>
           <Div width={isMobile ? "100%" : "25%"}>
-            <Select
+            <Autocomplete
               {...labelsProps}
-              label={"Indicativo"}
-              value={form.beneficiariesInfo[index]?.countryCode}
-              onChange={(event) => handleSelect("countryCode", event)}
-              disabled={index === 0 && form.beneficiary}
-              error={
-                errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
+              disablePortal
+              disableClearable
+              noOptionsText="No hay opciones"
+              width={"100%"}
+              name="countryCode"
+              label="Indicativo"
+              options={phoneCodesOptions}
+              getOptionLabel={(option) => `${option.label}`}
+              value={phoneCodesOptions.find(
+                (ele) => ele.value === form.beneficiariesInfo[index]?.countryCode
+              )}
+              onInputChange={(event, value) =>
+                handleAutocomplete("countryCode", value)
               }
-              helper={
-                errorForm?.[`beneficiariesInfo[${index}].countryCode`]?.error
-                  ? errorForm?.[`beneficiariesInfo[${index}].countryCode`]
-                      ?.message
-                  : ""
-              }
-            >
-              {phoneCodesOptions.map((ele, indx) => (
-                <MenuItem
-                  key={indx}
-                  value={ele.value}
-                  style={{ fontFamily: theme.fonts.family.primary }}
-                >
-                  {ele.label}
-                </MenuItem>
-              ))}
-            </Select>
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  {...labelsProps}
+                  value={form.beneficiariesInfo[index]?.countryCode}
+                />
+              )}
+            />
           </Div>
           <Div width={isMobile ? "100%" : "72%"}>
             <TextField

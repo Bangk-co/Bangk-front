@@ -114,7 +114,9 @@ export const Services = ({ isMobile, isTablet }) => {
       background: theme.colors.blue200,
       onClick: (value) => setSelectedAsistance(value),
       buttonText: "Protege a tu mascota ahora!",
+      buttonText2: "Conoce las coberturas",
       handleClick: () => router.push(`/pet-bangk/asegura-ya?selectedPlan=${selectedAsistance}&&petsAmount=${petBangkAmount}`),
+      handleClick2: () => router.push(`/pet-bangk/info-petbangk`),
       countButtonsColor: theme.colors.orange500,
       amount: petBangkAmount,
       setAmount: setPetBangkAmount
@@ -133,7 +135,9 @@ export const Services = ({ isMobile, isTablet }) => {
       background: theme.colors.orange500,
       onClick: (value) => setSelectedSearch(value),
       buttonText: "Anunciar mi mascota perdida",
+      buttonText2: "Conoce cómo funciona",
       handleClick: handleClickSearch,
+      handleClick2: () => router.push(`/pet-bangk/buscamos-tu-mascota`),
       amount: searchAmount,
       setAmount: setSearchAmount,
       countButtonsColor: theme.colors.purple,
@@ -250,23 +254,40 @@ export const Services = ({ isMobile, isTablet }) => {
                 {option.id === 1 ? `$${getPrice(option.amount, selectedAsistance).toLocaleString('es-ES') }*` : `$${getPriceSearch(selectedSearch).toLocaleString('es-ES') }`}
               </Text>
             </Div>
-            <Button
-              width={isMobile ? "100%" : "352px"}
-              height={isMobile ? "max-content" : "40px"}
-              background={"transparent"}
-              hover={"transparent"}
-              labelColor={theme.colors.white}
-              font={theme.fonts.family.primary}
-              size={theme.fonts.size.h6}
-              border={theme.colors.white}
-              borderHover={theme.colors.white}
-              borderRadius={"50px"}
-              style={{ marginTop: "30px" }}
-              onClick={option.handleClick}
-            >
-              {option.buttonText}
-              <Image src={arrowRight} alt="arrowRight" />
-            </Button>
+            <Div direction="column" align="center" gap="12px" m="30px 0 0 0">
+              <Button
+                width={isMobile ? "100%" : "352px"}
+                height={isMobile ? "max-content" : "40px"}
+                background={"transparent"}
+                hover={"transparent"}
+                labelColor={theme.colors.white}
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.h6}
+                border={theme.colors.white}
+                borderHover={theme.colors.white}
+                borderRadius={"50px"}
+                onClick={option.handleClick2}
+              >
+                {option.buttonText2}
+                <Image src={arrowRight} alt="arrowRight" />
+              </Button>
+              <Button
+                width={isMobile ? "100%" : "352px"}
+                height={isMobile ? "max-content" : "40px"}
+                background={option.countButtonsColor}
+                hover={option.countButtonsColor}
+                labelColor={theme.colors.white}
+                font={theme.fonts.family.primary}
+                size={theme.fonts.size.h6}
+                border={option.countButtonsColor}
+                borderHover={option.countButtonsColor}
+                borderRadius={"50px"}
+                onClick={option.handleClick}
+              >
+                {option.buttonText}
+                <Image src={arrowRight} alt="arrowRight" />
+              </Button>
+            </Div>
           </CardServices>
         ))}
       </Div>

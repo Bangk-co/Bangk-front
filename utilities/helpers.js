@@ -253,6 +253,8 @@ export const documentTypeAbbreviation = (documentType) => {
       return "C.E.";
     case "Número de pasaporte":
       return "PA";
+    case "Tarjeta Identidad":
+      return "T.I.";
     default:
       return "C.C.";
   }

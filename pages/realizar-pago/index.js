@@ -8,6 +8,7 @@ import { Grid } from "@mui/material";
 import { TextField } from "@/components/Common/TextField";
 import masterCard from "@/assets/icons/mastercard.svg";
 import visa from "@/assets/icons/visa.svg";
+import amex from "@/assets/icons/amex.svg";
 import Image from "next/image";
 import { encrypt, numberFormat } from "@/utilities/helpers";
 import { Button } from "@/components/Common/Button";
@@ -84,6 +85,7 @@ const RealizarPago = ({ isMobile }) => {
       <Div gap="12px">
         <Image src={visa} alt="visa" />
         <Image src={masterCard} alt="mastercard" />
+        <Image src={amex} alt="amex" />
       </Div>
     )
   };
@@ -247,6 +249,35 @@ const RealizarPago = ({ isMobile }) => {
     const { value, id } = e.target;
     const formattedValue = value.replace(/\D/g, '');
     setCardPaymentForm({ ...cardPaymentForm, [id]: formattedValue });
+  };
+
+  const formatCardNumber = (value) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    
+    if (v.startsWith('3') && v.length <= 15) {
+      const parts = [
+        v.slice(0, 4),
+        v.slice(4, 10),
+        v.slice(10, 15)
+      ].filter(part => part.length > 0);
+      return parts.join(' ');
+    }
+
+    const parts = [];
+    for (let i = 0; i < v.length && i < 16; i += 4) {
+      parts.push(v.slice(i, i + 4));
+    }
+    return parts.join(' ');
+  };
+  
+  const handleChangeCard = (e) => {
+    const { value, id } = e.target;
+    const formatted = formatCardNumber(value);
+
+    setCardPaymentForm(prev => ({
+      ...prev,
+      [id]: formatted,
+    }));
   };
 
   const isValidButton = () => {
@@ -419,9 +450,9 @@ const RealizarPago = ({ isMobile }) => {
                     placeholder="Ej: 567909090 - XX"
                     suffix={returnIcon()}
                     value={cardPaymentForm.cardNumber}
-                    onChange={handleChangeNumber}
+                    onChange={handleChangeCard}
                     inputProps={{
-                      maxLength: 20
+                      maxLength: 23
                     }}
                   />
                 </Grid>

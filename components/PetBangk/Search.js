@@ -11,18 +11,6 @@ import footprint from "@/assets/img/footprintOrange.png";
 const Search = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
-  const returnWidthButton1 = () => {
-    if (isMobile) return "100%";
-    if (isTablet) return "330px";
-    return "330px";
-  };
-
-  const returnWidthButton2 = () => {
-    if (isMobile) return "100%";
-    if (isTablet) return "150px";
-    return "163px";
-  };
-
   const buttonProps = {
     labelColor: theme.colors.purple,
     labelWeight: theme.fonts.weight.bold,
@@ -99,23 +87,11 @@ const Search = ({ isMobile, isTablet }) => {
                 hover={theme.colors.yellow}
                 border={theme.colors.yellow}
                 borderHover={theme.colors.yellow}
-                width={returnWidthButton1()}
-                height={"42.74px"}
-                onClick={handleClickSearch}
-              >
-                Anunciar a mi mascota perdida
-              </Button>
-              <Button 
-                {...buttonProps} 
-                background={theme.colors.orange500} 
-                hover={theme.colors.orange500}
-                border={theme.colors.orange500}
-                borderHover={theme.colors.orange500}
-                width={returnWidthButton2()}
+                width={isMobile ? "100%" : "260px"}
                 height={isMobile ? "28.53px" : "42.74px"}
                 onClick={() => router.push("/pet-bangk/buscamos-tu-mascota")}
               >
-                Más info
+                Conoce como funciona
               </Button>
             </Div>
           )}
@@ -133,21 +109,10 @@ const Search = ({ isMobile, isTablet }) => {
             hover={theme.colors.yellow}
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
-            width={returnWidthButton1()}
-            onClick={handleClickSearch}
-          >
-            Anunciar a mi mascota perdida
-          </Button>
-          <Button 
-            {...buttonProps} 
-            background={theme.colors.orange500} 
-            hover={theme.colors.orange500}
-            border={theme.colors.orange500}
-            borderHover={theme.colors.orange500}
-            width={returnWidthButton2()}
+            width={isMobile ? "100%" : "260px"}
             onClick={() => router.push("/pet-bangk/buscamos-tu-mascota")}
           >
-            Más info
+            Conoce como funciona
           </Button>
         </Div>
       )}

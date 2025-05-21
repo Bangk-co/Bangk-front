@@ -10,18 +10,6 @@ import { useRouter } from "next/router";
 const Banner = ({ isMobile, isTablet }) => {
   const router = useRouter();
 
-  const returnWidthButton1 = () => {
-    if (isMobile) return "100%";
-    if (isTablet) return "150px";
-    return "330px";
-  };
-
-  const returnWidthButton2 = () => {
-    if (isMobile) return "100%";
-    if (isTablet) return "150px";
-    return "163px";
-  };
-
   const buttonProps = {
     labelColor: theme.colors.purple,
     labelWeight: theme.fonts.weight.bold,
@@ -77,21 +65,10 @@ const Banner = ({ isMobile, isTablet }) => {
                 hover={theme.colors.yellow}
                 border={theme.colors.yellow}
                 borderHover={theme.colors.yellow}
-                width={returnWidthButton1()}
-                onClick={() => router.push("/pet-bangk/asegura-ya")}
-              >
-                Protege a tu mascota ahora!
-              </Button>
-              <Button 
-                {...buttonProps}
-                background={theme.colors.orange500}
-                hover={theme.colors.orange500}
-                border={theme.colors.orange500}
-                borderHover={theme.colors.orange500}
-                width={returnWidthButton2()}
+                width={isMobile ? "100%" : "260px"}
                 onClick={() => router.push("/pet-bangk/info-petbangk")}
               >
-                Más info
+                Conoce las coberturas
               </Button>
             </Div>
           )}
@@ -113,21 +90,10 @@ const Banner = ({ isMobile, isTablet }) => {
             hover={theme.colors.yellow}
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
-            width={returnWidthButton1()}
-            onClick={() => router.push("/pet-bangk/asegura-ya")}
-          >
-            Protege a tu mascota ahora!
-          </Button>
-          <Button 
-            {...buttonProps}
-            background={theme.colors.orange500}
-            hover={theme.colors.orange500}
-            border={theme.colors.orange500}
-            borderHover={theme.colors.orange500}
-            width={returnWidthButton2()}
+            width={isMobile ? "100%" : "260px"}
             onClick={() => router.push("/pet-bangk/info-petbangk")}
           >
-            Más info
+            Conoce las coberturas
           </Button>
         </Div>
       )}

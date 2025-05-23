@@ -28,15 +28,19 @@ import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setMedFormInfo } from "@/store/med";
 import toast from "react-hot-toast";
+import { IdentityValidation } from "@/components/SecureItNow/IdentityValidation";
+import useSendCode from "@/hooks/QuoteSavings/useSendCode";
+import { setValidCode } from "@/store/balance";
 
 const SecureItNow = ({ isMobile }) => {
+  const sendCode = useSendCode();
   const router = useRouter();
   const dispatch = useDispatch();
   const createPetInsurance = useCreatePetInsurance();
   const createBancolombiaToken = useGenerateTknTrxBancolombia();
   const { petsForm: petsFormStore } = useSelector((state) => state.pets);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [activeKey, setActiveKey] = useState(1);
+  const [activeKey, setActiveKey] = useState(0);
   const { petsAmount, selectedPlan } = router.query;
   const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
     useGetIndicatives();
@@ -211,12 +215,14 @@ const SecureItNow = ({ isMobile }) => {
 
   const tabs = [
     { label: "Información general" },
+    { label: "Validación de identidad" },
     { label: "Datos de tu mascota" },
     { label: "Resumen de tu asistencia" },
   ];
 
   const steps = [
     "Información general",
+    "Validación de identidad",
     "Datos de tu mascota",
     "Resumen de tu asistencia",
   ];
@@ -330,12 +336,26 @@ const SecureItNow = ({ isMobile }) => {
           }));
         });
       } else {
+        sendCode.reset();
+        sendCode.mutate(        
+        {
+          email: petsForm.email,
+          identificationNumber: petsForm.documentNumber,
+        }, {
+          onSuccess: (res) => {
+            dispatch(setValidCode(res.data.code));
+          },
+        });
         setSelectedTab(1);
       }
       return;
     }
 
     if (selectedTab === 1) {
+      setSelectedTab(2);
+    }
+
+    if (selectedTab === 2) {
       if (validationStep2.error) {
         setErrorForm((prevErrorForm) => {
           const newPetsErrors = Array.isArray(prevErrorForm.pets)
@@ -379,12 +399,12 @@ const SecureItNow = ({ isMobile }) => {
           };
         });
       } else {
-        setSelectedTab(2);
+        setSelectedTab(3);
       }
       return;
     }
 
-    if (selectedTab === 2) {
+    if (selectedTab === 3) {
       const payload = {
         paymentOcurrencyId: petsForm.paymentOcurrencyId,
         documentTypeId: petsForm.documentTypeId,
@@ -562,6 +582,13 @@ const SecureItNow = ({ isMobile }) => {
           />
         )}
         {selectedTab === 1 && (
+          <IdentityValidation 
+            email={petsForm.email} 
+            isMobile={isMobile} 
+            handleContinue={handleContinue}
+          />
+        )}
+        {selectedTab === 2 && (
           <Step2
             isMobile={isMobile}
             buttonProps={buttonProps}
@@ -576,7 +603,7 @@ const SecureItNow = ({ isMobile }) => {
             setActiveKey={setActiveKey}
           />
         )}
-        {selectedTab === 2 && (
+        {selectedTab === 3 && (
           <Step3
             isMobile={isMobile}
             buttonProps={buttonProps}

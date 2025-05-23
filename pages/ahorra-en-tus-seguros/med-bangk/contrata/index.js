@@ -17,9 +17,13 @@ import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
 import { setMedFormInfo } from "@/store/med";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setPetsFormInfo } from "@/store/pets";
+import { ValidateIdentity } from "@/components/ValidateIdentity";
+import useSendCode from "@/hooks/QuoteSavings/useSendCode";
+import { setValidCode } from "@/store/balance";
 
 const HireAssistance = ({ isMobile }) => {
   const router = useRouter();
+  const sendCode = useSendCode();
   const createInsurance = useCreateInsurance();
   const createBancolombiaToken = useGenerateTknTrxBancolombia();
   const dispatch = useDispatch();
@@ -148,10 +152,27 @@ const HireAssistance = ({ isMobile }) => {
   }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
 
   const handleContinue = () => {
-    if (actualStep === 2) {
+    if (actualStep === 1) {
+      sendCode.reset();
+      sendCode.mutate(        
+      {
+        email: form.email,
+        identificationNumber: form.documentNumber,
+      }, {
+        onSuccess: (res) => {
+          dispatch(setValidCode(res.data.code));
+        },
+      });
+      setActualStep(2);
       return;
     }
-    setActualStep(actualStep + 1);
+    if (actualStep === 2) {
+      setActualStep(3);
+      return;
+    }
+    if (actualStep === 3) {
+      return;
+    }
   };
 
   const handleEdit = (keyToEdit) => {
@@ -236,6 +257,14 @@ const HireAssistance = ({ isMobile }) => {
           />
         )}
         {actualStep === 2 && (
+          <ValidateIdentity
+            source="med"
+            email={form.email}
+            isMobile={isMobile}
+            handleContinue={handleContinue}
+          />
+        )}
+        {actualStep === 3 && (
           <Step2
             isMobile={isMobile}
             buttonProps={buttonProps}

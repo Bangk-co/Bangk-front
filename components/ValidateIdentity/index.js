@@ -3,23 +3,23 @@ import { Card, InputCode, WrapperCodeNumber, WrapperCounter, WrapperError, Wrapp
 import { Col, Div, Text } from "@/styles/Common";
 import Image from "next/image";
 import phoneIcon from "@/assets/icons/phone-code-blue.svg";
+import phoneIconGreen from "@/assets/icons/phone-code-green.svg";
 import clock from "@/assets/icons/clock.svg";
 import { Button } from "@/components/Common/Button";
 import { theme } from "@/styles/theme";
 import useReSendCode from "@/hooks/QuoteSavings/useReSendCode";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { setValidCode } from "@/store/balance";
 import { Link } from "../Common/Link";
 import { decrypt } from "@/utilities/helpers";
 
-export const IdentityValidation = ({ 
+export const ValidateIdentity = ({ 
+  source,
   email: userEmail, 
   isMobile, 
   handleContinue,
 }) => {
   const reSendCode = useReSendCode();
-  const router = useRouter();
   const dispatch = useDispatch();
   const {
     validCode,
@@ -140,7 +140,7 @@ export const IdentityValidation = ({
     <Card style={{ padding: isMobile ? "20px" : "40px" }}>
       <Div justify="center" width="100%">
         <Col align="center" width={isMobile ? "312px" : "549px"}>
-          <Image alt="phone" src={phoneIcon} />
+          <Image alt="phone" src={source === "pet" ? phoneIcon : phoneIconGreen} />
           <Text
             color={theme.colors.orange500}
             size={isMobile ? theme.fonts.size.h5 : theme.fonts.size.h3}
@@ -207,7 +207,7 @@ export const IdentityValidation = ({
             style={{
               background: showResendButton
                 ? theme.colors.error
-                : theme.colors.blue200,
+                : source === "pet" ? theme.colors.blue200 : theme.colors.green1000,
             }}
           >
             <Image alt="clock" src={clock} />

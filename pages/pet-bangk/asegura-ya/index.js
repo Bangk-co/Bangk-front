@@ -28,9 +28,9 @@ import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setMedFormInfo } from "@/store/med";
 import toast from "react-hot-toast";
-import { IdentityValidation } from "@/components/SecureItNow/IdentityValidation";
 import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import { setValidCode } from "@/store/balance";
+import { ValidateIdentity } from "@/components/ValidateIdentity";
 
 const SecureItNow = ({ isMobile }) => {
   const sendCode = useSendCode();
@@ -40,7 +40,7 @@ const SecureItNow = ({ isMobile }) => {
   const createBancolombiaToken = useGenerateTknTrxBancolombia();
   const { petsForm: petsFormStore } = useSelector((state) => state.pets);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [activeKey, setActiveKey] = useState(0);
+  const [activeKey, setActiveKey] = useState(1);
   const { petsAmount, selectedPlan } = router.query;
   const { data: dataIndicatives, isSuccess: isSuccessIndicatives } =
     useGetIndicatives();
@@ -582,7 +582,8 @@ const SecureItNow = ({ isMobile }) => {
           />
         )}
         {selectedTab === 1 && (
-          <IdentityValidation 
+          <ValidateIdentity
+            source="pet"
             email={petsForm.email} 
             isMobile={isMobile} 
             handleContinue={handleContinue}

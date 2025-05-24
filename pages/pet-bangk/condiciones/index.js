@@ -1,17 +1,9 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import arrow from "@/assets/icons/green-arrow.svg";
-import { BulletPoint, Title, Wrapper } from "@/styles/Legales";
-import { Col, Div, Text } from "@/styles/Common";
+import { Wrapper } from "@/styles/Legales";
+import { Col, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
-import {
-  cookies,
-  cookiesSettings,
-  definitions,
-  minorsData,
-  personalData,
-  personalData2,
-} from "@/utilities/options";
 import { useRouter } from "next/router";
 
 const PetConditions = ({ isMobile, isTablet }) => {

@@ -5,14 +5,30 @@ import { OrangeCard } from "./style";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/router";
 
-const GeneralConditions = ({ isMobile, isTablet }) => {
+const GeneralConditions = ({ isMobile, isTablet, source }) => {
   const router = useRouter();
+  
   const navigateToConditions = () => {
-    router.push("/pet-bangk/condiciones");
+    if (source === "lookingPet") {
+      router.push("/pet-bangk/buscamos-tu-mascota/condiciones");
+    } else {
+      router.push("/pet-bangk/condiciones");
+    }
   };
+
+  const returnPadding = () => {
+    if (isMobile) {
+      return "100px 20px 50px 20px"
+    }
+    if (source === "lookingPet") {
+      return "150px 90px 100px 90px"
+    }
+    return "300px 90px 100px 90px"
+  }
+
   return (
     <Div
-      p={isMobile ? "100px 20px 50px 20px" : "300px 90px 100px 90px"}
+      p={returnPadding()}
       direction="column"
       align="center"
       justify="center"
@@ -31,7 +47,7 @@ const GeneralConditions = ({ isMobile, isTablet }) => {
         </span>
       </Text>
       <Text color={theme.colors.blue200} mt="18px">
-        Consulta
+        Consulta{" "}
         <Link
           color={theme.colors.blue200}
           size={theme.fonts.size.default}
@@ -40,6 +56,7 @@ const GeneralConditions = ({ isMobile, isTablet }) => {
         >
           aquí
         </Link>
+        {" "}
         las Condiciones Generales del plan de asistencia
       </Text>
       <OrangeCard onClick={navigateToConditions}>

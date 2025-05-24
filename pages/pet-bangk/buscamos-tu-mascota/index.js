@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/Common/Breadcrumbs";
+import GeneralConditions from "@/components/InfoPetBangk/GeneralConditions";
 import Banner from "@/components/LookingPet/Banner";
 import Footer from "@/components/LookingPet/Footer";
 import HowWorks from "@/components/LookingPet/HowWorks";
@@ -30,6 +31,7 @@ const LookingForYourPet = ({ isMobile, isTablet }) => {
       <HowWorks isMobile={isMobile} isTablet={isTablet} />
       <SearchPackages isMobile={isMobile} isTablet={isTablet} />
       <Footer isMobile={isMobile} isTablet={isTablet} />
+      <GeneralConditions isMobile={isMobile} isTablet={isTablet} source="lookingPet" />
     </>
   )
 }

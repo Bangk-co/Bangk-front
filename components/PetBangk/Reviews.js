@@ -126,6 +126,7 @@ const Reviews = ({ isMobile, isTablet }) => {
           <Link
             color={theme.colors.blue200}
             size={theme.fonts.size.default}
+            font={theme.fonts.family.primary}
             style={{ textDecoration: "underline" }}
             onClick={navigateToConditions}
           >

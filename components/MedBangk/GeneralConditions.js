@@ -32,15 +32,16 @@ export const GeneralConditions = ({ isMobile, isTablet }) => {
         </span>
       </Text>
       <Text color={theme.colors.green} mt="18px">
-        Consulta
+        Consulta{" "}
         <Link
           color={theme.colors.green}
           size={theme.fonts.size.default}
           style={{ textDecoration: "underline" }}
           onClick={navigateToConditions}
         >
-          aquí
+          aqui
         </Link>
+        {" "}
         las Condiciones Generales del plan de asistencia
       </Text>
       <OrangeCard onClick={navigateToConditions}>

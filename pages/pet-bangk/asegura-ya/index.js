@@ -28,12 +28,14 @@ import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setMedFormInfo } from "@/store/med";
 import toast from "react-hot-toast";
-import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import { setValidCode } from "@/store/balance";
 import { ValidateIdentity } from "@/components/ValidateIdentity";
+import useValidateUser from "@/hooks/Common/useValidateUser";
+import useSendOtp from "@/hooks/Common/useSendOtp";
 
 const SecureItNow = ({ isMobile }) => {
-  const sendCode = useSendCode();
+  const validateUser = useValidateUser();
+  const sendCode = useSendOtp();
   const router = useRouter();
   const dispatch = useDispatch();
   const createPetInsurance = useCreatePetInsurance();
@@ -57,6 +59,10 @@ const SecureItNow = ({ isMobile }) => {
   } = useGetMethodPayment();
   const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [errorValidateUser, setErrorValidateUser] = useState({
+    error: false,
+    message: "",
+  });
 
   const getPrice = (amount, frequency, paymentOcurrencyId) => {
     const paymentOcurrency = Number(frequency);
@@ -301,6 +307,11 @@ const SecureItNow = ({ isMobile }) => {
   };
 
   const handleContinue = () => {
+    setErrorValidateUser({
+      error: false,
+      message: "",
+    });
+    
     const validationStep1 = validatePetFormStep1.validate(step1Data, {
       abortEarly: false,
     });
@@ -336,17 +347,33 @@ const SecureItNow = ({ isMobile }) => {
           }));
         });
       } else {
-        sendCode.reset();
-        sendCode.mutate(        
-        {
+        validateUser.reset();
+        validateUser.mutate({
+          documentNumber: petsForm.documentNumber,
+          documentType: petsForm.documentTypeId,
           email: petsForm.email,
-          identificationNumber: petsForm.documentNumber,
         }, {
-          onSuccess: (res) => {
-            dispatch(setValidCode(res.data.code));
+          onSuccess: () => {
+            sendCode.reset();
+            sendCode.mutate(        
+            {
+              email: petsForm.email,
+              identificationNumber: petsForm.documentNumber,
+              name: petsForm.name,
+            }, {
+              onSuccess: (res) => {
+                dispatch(setValidCode(res.data.code));
+              },
+            });
+            setSelectedTab(1);
           },
-        });
-        setSelectedTab(1);
+          onError: (err) => {
+            setErrorValidateUser({
+              error: true,
+              message: err?.response?.data?.errors[0],
+            })
+          }
+        })
       }
       return;
     }
@@ -451,6 +478,7 @@ const SecureItNow = ({ isMobile }) => {
   const handlePayBancolombia = () => {
     const petPayload = {
       ...petsForm,
+      treatPersonalDataDate: treatPersonalDataDate,
       pets: petsForm.pets.map((pet) => ({
         petTypeId: pet.petTypeId,
         breed: pet.breed,
@@ -579,6 +607,7 @@ const SecureItNow = ({ isMobile }) => {
             setTreatPersonalDataDate={setTreatPersonalDataDate}
             setErrorForm={setErrorForm}
             errorForm={errorForm}
+            errorValidateUser={errorValidateUser}
           />
         )}
         {selectedTab === 1 && (

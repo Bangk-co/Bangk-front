@@ -18,17 +18,23 @@ import { setMedFormInfo } from "@/store/med";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
 import { setPetsFormInfo } from "@/store/pets";
 import { ValidateIdentity } from "@/components/ValidateIdentity";
-import useSendCode from "@/hooks/QuoteSavings/useSendCode";
 import { setValidCode } from "@/store/balance";
+import useSendOtp from "@/hooks/Common/useSendOtp";
+import useValidateUser from "@/hooks/Common/useValidateUser";
 
 const HireAssistance = ({ isMobile }) => {
   const router = useRouter();
-  const sendCode = useSendCode();
+  const validateUser = useValidateUser();
+  const sendCode = useSendOtp();
   const createInsurance = useCreateInsurance();
   const createBancolombiaToken = useGenerateTknTrxBancolombia();
   const dispatch = useDispatch();
   const { medForm } = useSelector((state) => state.med);
 
+  const [errorValidateUser, setErrorValidateUser] = useState({
+    error: false,
+    message: "",
+  });
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -152,18 +158,39 @@ const HireAssistance = ({ isMobile }) => {
   }, [isSuccessPaymentOcurrency, dataPaymentOcurrency]);
 
   const handleContinue = () => {
+    setErrorValidateUser({
+      error: false,
+      message: "",
+    });
+    
     if (actualStep === 1) {
-      sendCode.reset();
-      sendCode.mutate(        
-      {
+      validateUser.reset();
+      validateUser.mutate({
+        documentNumber: form.documentNumber,
+        documentType: form.documentType,
         email: form.email,
-        identificationNumber: form.documentNumber,
       }, {
-        onSuccess: (res) => {
-          dispatch(setValidCode(res.data.code));
+        onSuccess: () => {
+          sendCode.reset();
+          sendCode.mutate(        
+          {
+            email: form.email,
+            identificationNumber: form.documentNumber,
+            name: form.name,
+          }, {
+            onSuccess: (res) => {
+              dispatch(setValidCode(res.data.code));
+            },
+          });
+          setActualStep(2);
         },
-      });
-      setActualStep(2);
+        onError: (err) => {
+          setErrorValidateUser({
+            error: true,
+            message: err?.response?.data?.errors[0],
+          })
+        }
+      })
       return;
     }
     if (actualStep === 2) {
@@ -254,6 +281,7 @@ const HireAssistance = ({ isMobile }) => {
             documentTypeOptions={documentTypeOptions}
             phoneCodesOptions={phoneCodesOptions}
             paymentOcurrencyOptions={paymentOcurrencyOptions}
+            errorValidateUser={errorValidateUser}
           />
         )}
         {actualStep === 2 && (

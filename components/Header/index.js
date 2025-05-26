@@ -28,7 +28,7 @@ const Header = ({ isMobile, isTablet }) => {
   const [subMenuLoginOpen, setSubMenuLoginOpen] = useState(false);
 
   const headerButtons = [
-    { key: 0, label: "Ahorro Hipotecario", url: null },
+    // { key: 0, label: "Ahorro Hipotecario", url: null },
     {
       key: 1,
       label: "Seguros y Asistencias",
@@ -266,7 +266,7 @@ const Header = ({ isMobile, isTablet }) => {
                 )}
               </Div>
             ))}
-            <Button
+            {/* <Button
               style={{ position: "relative" }}
               onClick={handleToggleSubMenuLogin}
               borderHover={theme.colors.orange900}
@@ -313,7 +313,7 @@ const Header = ({ isMobile, isTablet }) => {
                   ))}
                 </Div>
               )}
-            </Button>
+            </Button> */}
           </Div>
         </>
       )}

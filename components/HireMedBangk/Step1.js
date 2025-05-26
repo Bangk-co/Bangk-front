@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Signs, WrapperAmount } from "./styles";
 import toast from "react-hot-toast";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import { RadioGroup } from "../Common/Radio/Group";
 import { Radio } from "../Common/Radio";
 import { Col, Div, Row, Text } from "@/styles/Common";
@@ -27,6 +27,7 @@ export const Step1 = ({
   documentTypeOptions,
   phoneCodesOptions,
   paymentOcurrencyOptions,
+  errorValidateUser,
 }) => {
   const [panels, setPanels] = useState([]);
   const [errorForm, setErrorForm] = useState({});
@@ -243,7 +244,13 @@ export const Step1 = ({
             y poder ser contactado para la oferta del servicio.
           </Text>
         </Row>
-
+        {errorValidateUser.error && (
+          <Div width="100%">
+            <Alert severity="error">
+              {errorValidateUser.message}
+            </Alert>
+          </Div>
+        )}
         <Button
           {...buttonProps}
           width={isMobile ? "100%" : "230px"}

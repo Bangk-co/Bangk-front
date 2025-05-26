@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Signs, WrapperAmount } from "./styles";
-import { Grid, MenuItem } from "@mui/material";
+import { Alert, Grid, MenuItem } from "@mui/material";
 import { RadioGroup } from "../Common/Radio/Group";
 import { Radio } from "../Common/Radio";
 import { Div, Row, Text } from "@/styles/Common";
@@ -25,6 +25,7 @@ export const Step1 = ({
   setTreatPersonalDataDate,
   setErrorForm,
   errorForm,
+  errorValidateUser,
 }) => {
   const handleRadio = (event) => {
     setPetsForm({
@@ -273,6 +274,13 @@ export const Step1 = ({
                 }}
               />
             </Div>
+          </Grid>
+        )}
+        {errorValidateUser.error && (
+          <Grid item xs={12} md={12}>
+            <Alert severity="error">
+              {errorValidateUser.message}
+            </Alert>
           </Grid>
         )}
         <Grid item xs={12} md={6}>

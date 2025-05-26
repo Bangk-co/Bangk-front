@@ -24,7 +24,7 @@ import ReactPlayer from "react-player/lazy";
 import { Div, Text } from "@/styles/Common";
 import { theme } from "@/styles/theme";
 import { Link } from "../Common/Link";
-import marcela from "../../assets/img/marcela.jpg";
+import reviewPhoto from "../../assets/img/reviewPhoto.png";
 import { useRouter } from "next/router";
 
 const Reviews = ({ isMobile, isTablet }) => {
@@ -55,16 +55,14 @@ const Reviews = ({ isMobile, isTablet }) => {
                 <Image alt="message" src={message} width={49} />
               </WrapperComment>
               <CommentText>
-                &quot;Toby ha tenido problemas de salud desde tiempo atrás,
-                gracias a Petbangk he podido prevenir y cuidarlo de la mejor
-                manera.&quot;
+                &quot;Ellos me ayudaron a resolver un problema que tenia Toby sin tener que transportarme y sin tener que gastar altas cantidades de dinero, con Bangk la solución para tu mascota está aquí.&quot;
               </CommentText>
               <Line />
               <WrapperPerson>
                 <WrapperAvatar>
                   <Image
-                    alt="marcela"
-                    src={marcela}
+                    alt="reviewPhoto"
+                    src={reviewPhoto}
                     style={{ borderRadius: "100%" }}
                     width={69}
                     height={69}
@@ -83,18 +81,18 @@ const Reviews = ({ isMobile, isTablet }) => {
                   borderRadius: "24px",
                   overflow: "hidden",
                   marginLeft: isTablet ? "50px" : "0px",
-                  height: isTablet ? "199px" : "422px",
+                  height: isTablet ? "199px" : "372px",
                 }}
               >
                 {showPlayer ? (
                   <ReactPlayer
-                    url={
-                      "https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"
-                    }
+                    url="/video/petBangkReview.mp4"
                     width={isTablet ? 309 : 656}
-                    height={isTablet ? 199 : 422}
+                    height={isTablet ? 199 : 372}
                     controls
                     suppressHydrationWarning={true}
+                    style={{ borderRadius: "24px" }}
+                    wrapperStyle={{ borderRadius: "24px" }}
                   />
                 ) : null}
               </div>
@@ -118,7 +116,7 @@ const Reviews = ({ isMobile, isTablet }) => {
           Los servicios del plan de asistencias de MedBangk/PetBangk son
           prestados por{" "}
           <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
-            GEA, “Grupo Especializado de Asistencias Colombia S.A.S.”
+            GEA, &quot;Grupo Especializado de Asistencias Colombia S.A.S.&quot;
           </span>
         </Text>
         <Text color={theme.colors.blue200} mt="18px">

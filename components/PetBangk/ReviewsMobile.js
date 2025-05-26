@@ -13,7 +13,7 @@ import {
 } from "./styles";
 import message from "../../assets/img/message.png";
 import ReactPlayer from "react-player/lazy";
-import marcela from "../../assets/img/marcela.jpg";
+import reviewPhoto from "../../assets/img/reviewPhoto.png";
 
 const ReviewsMobile = () => {
   const [showPlayer, setShowPlayer] = useState(false);
@@ -31,14 +31,14 @@ const ReviewsMobile = () => {
           borderRadius: "24px",
           overflow: "hidden",
           marginBottom: "16px",
-          height: "142px",
+          height: "122px",
         }}
       >
         {showPlayer ? (
           <ReactPlayer
-            url={"https://www.youtube.com/watch?v=ay7WaSaPp0k&ab_channel=Bangk"}
+            url={"/video/petBangkReview.mp4"}
             width={219}
-            height={142}
+            height={122}
             controls
             suppressHydrationWarning={true}
           />
@@ -49,14 +49,13 @@ const ReviewsMobile = () => {
       </WrapperComment>
       <SubTitleReviews>Comentarios sobre Bangk</SubTitleReviews>
       <CommentText>
-        &quot;Toby ha tenido problemas de salud desde tiempo atrás, gracias a
-        Petbangk he podido prevenir y cuidarlo de la mejor manera.&quot;
+        &quot;Ellos me ayudaron a resolver un problema que tenia Toby sin tener que transportarme y sin tener que gastar altas cantidades de dinero, con Bangk la solución para tu mascota está aquí.&quot;
       </CommentText>
       <WrapperPerson>
         <WrapperAvatar>
           <Image
-            alt="marcela"
-            src={marcela}
+            alt="reviewPhoto"
+            src={reviewPhoto}
             style={{ borderRadius: "100%" }}
             width={22}
             height={22}

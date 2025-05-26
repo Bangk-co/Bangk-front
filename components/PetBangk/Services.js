@@ -256,7 +256,8 @@ export const Services = ({ isMobile, isTablet }) => {
             </Div>
             <Div direction="column" align="center" gap="12px" m="30px 0 0 0">
               <Button
-                width={isMobile ? "100%" : "352px"}
+                width={"352px"}
+                mobileWidth={"100%"}
                 height={isMobile ? "max-content" : "40px"}
                 background={"transparent"}
                 hover={"transparent"}
@@ -272,7 +273,8 @@ export const Services = ({ isMobile, isTablet }) => {
                 <Image src={arrowRight} alt="arrowRight" />
               </Button>
               <Button
-                width={isMobile ? "100%" : "352px"}
+                width={"352px"}
+                mobileWidth={"100%"}
                 height={isMobile ? "max-content" : "40px"}
                 background={option.countButtonsColor}
                 hover={option.countButtonsColor}

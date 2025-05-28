@@ -73,17 +73,6 @@ export const Step1 = ({
     setErrorForm({...errorForm, [id]: { error: false, message: "" }});
   };
 
-  const handleChangeDocument = (event) => {
-    const { id, value } = event.target;
-    const cleanedValue = value.replace(/[^a-zA-Z0-9]/g, '');
-
-    setPetsForm({
-      ...petsForm,
-      [id]: cleanedValue
-    });
-    setErrorForm({...errorForm, [id]: { error: false, message: "" }});
-  };
-
   const handleAuthorization = (event) => {
     const { checked } = event.target;
     const acceptDate = new Date();
@@ -163,7 +152,7 @@ export const Step1 = ({
             label="Número de documento"
             placeholder={"Ingresa el número"}
             value={petsForm.documentNumber}
-            onChange={handleChangeDocument}
+            onChange={handleChangeNumber}
             error={errorForm?.documentNumber?.error}
             helperText={errorForm?.documentNumber?.message}
             inputProps={{

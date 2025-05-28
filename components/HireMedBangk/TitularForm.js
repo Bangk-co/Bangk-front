@@ -51,6 +51,22 @@ export const TitularForm = ({
     setErrorForm({});
   };
 
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target;
+    const updatedForm = { ...form };
+    const cleanedValue = value.replace(/[^0-9]/g, '');
+
+    updatedForm[id] = cleanedValue;
+
+    if (form.beneficiary) {
+      setForm(updateBeneficiaryInfo(updatedForm));
+    } else {
+      setForm(updatedForm);
+    }
+
+    setErrorForm({});
+  };
+
   const handleSelect = (field, event) => {
     const { value } = event.target;
     const updatedForm = { ...form };
@@ -151,16 +167,18 @@ export const TitularForm = ({
           {...labelsProps}
           id="documentNumber"
           label="Número de documento"
-          type="number"
           placeholder={"Ingresa el número"}
           value={form.documentNumber}
-          onChange={handleChange}
+          onChange={handleChangeNumber}
           error={errorForm?.documentNumber?.error}
           helper={
             errorForm?.documentNumber?.error
               ? errorForm?.documentNumber?.message
               : ""
           }
+          inputProps={{
+            maxLength: 13,
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6}>

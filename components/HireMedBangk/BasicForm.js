@@ -32,6 +32,19 @@ export const BasicForm = ({
     setErrorForm({});
   };
 
+  const handleChangeNumber = (event) => {
+    const { id, value } = event.target;
+    const cleanedValue = value.replace(/[^0-9]/g, '');
+
+    const updatedBeneficiaries = [...form.beneficiariesInfo];
+    updatedBeneficiaries[index] = {
+      ...updatedBeneficiaries[index],
+      [id]: cleanedValue
+    };
+    setForm({ ...form, beneficiariesInfo: updatedBeneficiaries });
+    setErrorForm({});
+  };
+
   const handleSelect = (field, event) => {
     const { value } = event.target;
 
@@ -106,10 +119,9 @@ export const BasicForm = ({
           {...labelsProps}
           id="documentNumber"
           label="Número de documento"
-          type="number"
           placeholder={"Ingresa el número"}
           value={form.beneficiariesInfo[index]?.documentNumber}
-          onChange={handleChange}
+          onChange={handleChangeNumber}
           disabled={index === 0 && form.beneficiary}
           error={
             errorForm?.[`beneficiariesInfo[${index}].documentNumber`]?.error
@@ -120,6 +132,9 @@ export const BasicForm = ({
                   ?.message
               : ""
           }
+          inputProps={{
+            maxLength: 13,
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6}>

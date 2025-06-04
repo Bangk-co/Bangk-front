@@ -214,6 +214,7 @@ export const renderDocumentStateDiv = (stateName) => {
     case "Rechazado":
     case "Vencido":
     case "Cliente no asegurable":
+    case "Pago Rechazado":
       borderColor = theme.colors.red500;
       color = theme.colors.red500;
       break;
@@ -252,6 +253,8 @@ export const documentTypeAbbreviation = (documentType) => {
       return "C.E.";
     case "Número de pasaporte":
       return "PA";
+    case "Tarjeta Identidad":
+      return "T.I.";
     default:
       return "C.C.";
   }
@@ -288,7 +291,7 @@ export const historyStatus = {
   CotizaciónNoRespondida: "Cotización no respondida",
   ClienteNoAsegurable: "Cliente no asegurable",
   SolicitudEmisionPoliza: "Solicitud emisión de póliza",
-  PagoRechazado: "Pago rechazado"
+  PagoRechazado: "Pago rechazado",
 };
 
 export const getFileType = (url) => {
@@ -392,3 +395,39 @@ export const initDataLoanInsurancePolicy = {
   vehicleLicensePlate: null,
   weight: null,
 };
+
+export const getMedBangkPrice = (
+  amount,
+  frequency,
+  paymentOcurrencyOptions
+) => {
+  if (!paymentOcurrencyOptions || paymentOcurrencyOptions.length < 3) {
+    return 0;
+  }
+
+  const prices = {
+    monthly: [22610, 42959, 65569],
+    semiannual: [128880, 244866, 373743],
+    annual: [244188, 463956, 723882],
+  };
+
+  const frequencyMap = {
+    [paymentOcurrencyOptions[0]?.value]: "monthly",
+    [paymentOcurrencyOptions[1]?.value]: "semiannual",
+    [paymentOcurrencyOptions[2]?.value]: "annual",
+  };
+  const frequencyKey = frequencyMap[frequency];
+  if (!frequencyKey || !prices[frequencyKey]) {
+    return 0;
+  }
+
+  const index = amount > 2 ? 2 : amount - 1;
+  const basePrice = prices[frequencyKey][index];
+
+  if (index < 0 || index >= prices[frequencyKey].length) {
+    return 0;
+  }
+
+  return basePrice;
+};
+export const whatsappNumber = "573117050799";

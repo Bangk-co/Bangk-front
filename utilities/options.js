@@ -3,13 +3,14 @@ import photoBlog from "../assets/img/photo-blog.jpg";
 import photoBlog2 from "../assets/img/photo-blog2.jpg";
 import photoBlog3 from "../assets/img/photo-blog3.jpg";
 import photoBlog4 from "../assets/img/photo-blog4.jpg";
+import { whatsappNumber } from "./helpers";
 
 export const wappLink =
-  "https://api.whatsapp.com/send?phone=573009136761&text=Hola%20Bangk,%20Quiero%20Ahorrar!";
+  `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk,%20Quiero%20Ahorrar!`;
 
 export const email = "soporte@bangk.co";
 
-export const phone = "tel:+573009136761";
+export const phone = `tel:+${whatsappNumber}`;
 
 export const footerList = [
   {
@@ -24,7 +25,7 @@ export const footerList = [
     width: "110px",
     list: [
       {
-        label: "Disminuye el valor de las cuotas de tus créditos.",
+        label: "Ahorra endosando los seguros de tus créditos",
         link: "/ahorra-en-tus-seguros",
         isExtern: false,
       },
@@ -53,7 +54,7 @@ export const footerList = [
   },
   {
     title: "Contáctanos",
-    width: "64px",
+    width: "90px",
     list: [
       {
         label: "Déjanos un mensaje.",
@@ -73,7 +74,7 @@ export const footerList = [
 export const footerListResponsive = [
   {
     title: "Nosotros",
-    width: "108px",
+    width: "200px",
     height: "25px",
     list: [
       { label: "Queremos Hacer Bangk!", link: "/conocenos", isExtern: false },
@@ -81,11 +82,11 @@ export const footerListResponsive = [
   },
   {
     title: "Seguros",
-    width: "80px",
+    width: "200px",
     height: "25px",
     list: [
       {
-        label: "Disminuye el valor de las cuotas de tus créditos.",
+        label: "Ahorra endosando los seguros de tus créditos",
         link: "/ahorra-en-tus-seguros",
         isExtern: false,
       },
@@ -93,7 +94,7 @@ export const footerListResponsive = [
   },
   {
     title: "Legales",
-    width: "110px",
+    width: "200px",
     height: "37.5px",
     list: [
       {
@@ -115,7 +116,7 @@ export const footerListResponsive = [
   },
   {
     title: "Contáctanos",
-    width: "64px",
+    width: "200px",
     height: "50px",
     list: [
       {

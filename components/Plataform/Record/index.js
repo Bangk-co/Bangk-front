@@ -468,7 +468,7 @@ export const Record = ({
           },
           {
             onSuccess: () => {
-              queryClient.invalidateQueries(["clientInfo"]);
+              queryClient.invalidateQueries(["clientInfo", application?.clientId]);
               queryClient.invalidateQueries(["LoanInformation"]);
             },
             onError: (err) => {

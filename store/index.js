@@ -7,6 +7,9 @@ import applications from "./applications";
 import requests from "./requests";
 import auth from "./auth";
 import policy from "./policy";
+import pets from "./pets";
+import payment from "./payment";
+import med from "./med";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +18,9 @@ const persistConfig = {
 
 const persistedBalanceReducer = persistReducer(persistConfig, balance);
 const persistedRequestsReducer = persistReducer(persistConfig, requests);
+const persistedPetsReducer = persistReducer(persistConfig, pets);
+const persistedPaymentReducer = persistReducer(persistConfig, payment);
+const persistedMedReducer = persistReducer(persistConfig, med);
 
 const store = configureStore({
   reducer: {
@@ -24,6 +30,9 @@ const store = configureStore({
     requests: persistedRequestsReducer,
     auth,
     policy,
+    pets: persistedPetsReducer,
+    payment: persistedPaymentReducer,
+    med: persistedMedReducer,
   },
 });
 

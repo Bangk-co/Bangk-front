@@ -10,18 +10,28 @@ import BlogSection from "@/components/Home/BlogSection";
 import Reviews from "@/components/Home/Reviews";
 import { useDispatch } from "react-redux";
 import { initDataLoanInsurancePolicy } from "@/utilities/helpers";
-import { setRequestInfo, setSelectedRequestInformation } from "@/store/requests";
+import {
+  setRequestInfo,
+  setSelectedRequestInformation,
+} from "@/store/requests";
+import CarBangk from "@/components/Home/CarBangk";
+import PetBangk from "@/components/Home/PetBangk";
+import MedBangk from "@/components/Home/MedBangk";
+import { setPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
 
 const Home = ({ isMobile, isTablet }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
     if (window.location.pathname !== router.pathname) {
       router.push(`/${window.location.pathname}`);
-    };
+    }
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
     dispatch(setSelectedRequestInformation({}));
+    dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
   }, []);
 
   return (
@@ -30,6 +40,9 @@ const Home = ({ isMobile, isTablet }) => {
       <Stepper isHome={true} isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt isMobile={isMobile} />
       <Bangk isMobile={isMobile} />
+      <CarBangk isMobile={isMobile} />
+      <PetBangk isMobile={isMobile} />
+      <MedBangk isMobile={isMobile} />
       <BlogSection isTablet={isTablet} isMobile={isMobile} />
       <Reviews isMobile={isMobile} isTablet={isTablet} />
     </Div>

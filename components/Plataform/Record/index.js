@@ -115,11 +115,17 @@ export const Record = ({
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();
+
+  const loanInformation = Object.keys(loanInfo).length === 0 ? loanApplicationInfo : loanInfo;
+
   useEffect(() => {
     if (dataLoanApplication && dataLoanApplication.data) {
       setLoanApplicationInfo({
         loanType: dataLoanApplication?.data?.loanTypeName,
         loanBalance: dataLoanApplication?.data?.loanBalance,
+        monthlyCostInsurance: dataLoanApplication?.data?.monthlyCostInsurance,
+        yearlyFee: dataLoanApplication?.data?.yearlyFee,
+        loanApplicationId: dataLoanApplication?.data?.loanApplicationId,
       });
     }
   }, [dataLoanApplication, isLoading]);
@@ -128,13 +134,13 @@ export const Record = ({
 
   const [showDrawerValidateInfo, setShowDrawerValidateInfo] = useState(false);
   const insuranceAnnual = _.multiply(
-    Number(loanInfo?.loanBalance),
+    Number(loanInformation?.loanBalance),
     Number(quoteRate)
   );
   const insuranceAnnualFinal = insuranceAnnual.toFixed();
   const insuranceMonthly = Number(_.divide(insuranceAnnual, 12).toFixed());
   const insuranceMonthlyFinal = insuranceMonthly.toFixed();
-  const monthlyCostInsurance = Number(loanInfo?.monthlyCostInsurance);
+  const monthlyCostInsurance = Number(loanInformation?.monthlyCostInsurance);
   const monthlyCostInsurance2 = Number(
     dataLoanApplication?.data?.monthlyCostInsurance
   );
@@ -164,7 +170,7 @@ export const Record = ({
 
   useEffect(() => {
     setCurrentInsuranceData([
-      Object.keys(loanInfo).length === 0
+      loanInformation && Object.keys(loanInformation).length === 0
         ? {
             label: "Seguro mensual",
             value: `$ ${numberFormat(monthlyCostInsurance2)}`,
@@ -173,7 +179,7 @@ export const Record = ({
             label: "Seguro mensual",
             value: `$ ${numberFormat(monthlyCostInsurance)}`,
           },
-      Object.keys(loanInfo).length === 0
+      loanInformation && Object.keys(loanInformation).length === 0
         ? {
             label: "Seguro anual",
             value: `$ ${numberFormat(_.multiply(monthlyCostInsurance2, 12))}`,
@@ -185,7 +191,7 @@ export const Record = ({
     ]);
     if (insurer === 114) {
       setBangkInsuranceData([
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? {
               label: "Seguro mensual",
               value: `$ ${numberFormat(
@@ -196,7 +202,7 @@ export const Record = ({
               label: "Seguro mensual",
               value: `$ ${numberFormat(Number(insuranceMonthlyFinal))}`,
             },
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? {
               label: "Seguro anual",
               value: `$ ${numberFormat(bangkYearlyFee)}`,
@@ -207,7 +213,7 @@ export const Record = ({
             },
       ]);
       setSaveValue(
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? `$ ${numberFormat(
               _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
             )}`
@@ -218,7 +224,7 @@ export const Record = ({
       );
     } else {
       setBangkInsuranceData([
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? {
               label: "Seguro mensual",
               value: `$ ${numberFormat(
@@ -231,7 +237,7 @@ export const Record = ({
                 Number(_.divide(yearlyFee, 12).toFixed())
               )}`,
             },
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? {
               label: "Seguro anual",
               value: `$ ${numberFormat(bangkYearlyFee)}`,
@@ -242,7 +248,7 @@ export const Record = ({
             },
       ]);
       setSaveValue(
-        Object.keys(loanInfo).length === 0
+        loanInformation && Object.keys(loanInformation).length === 0
           ? `$ ${numberFormat(
               _.multiply(monthlyCostInsurance2, 12) - bangkYearlyFee
             )}`
@@ -253,7 +259,7 @@ export const Record = ({
     }
   }, [
     insurer,
-    loanInfo,
+    loanInformation,
     yearlyFee,
     insuranceAnnualFinal,
     insuranceMonthlyFinal,

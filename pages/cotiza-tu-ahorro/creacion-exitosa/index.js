@@ -3,17 +3,26 @@ import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import { Col, Container, WrapperQuote } from "@/styles/Quote";
 import Image from "next/image";
-import woman from "@/assets/img/woman-success.svg"
+import woman from "@/assets/img/woman-success.svg";
 import { theme } from "@/styles/theme";
 import { Button } from "@/components/Common/Button";
 import { useRouter } from "next/router";
 
 const CreationSuceess = ({ isMobile }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleBangk = () => {
-    router.push("/")
-  }
+    router.push("/");
+  };
+
+  useEffect(() => {
+    import("react-facebook-pixel")
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init("278194147905078");
+        ReactPixel.track("Lead");
+      });
+  }, []);
 
   return (
     <Container>
@@ -21,7 +30,12 @@ const CreationSuceess = ({ isMobile }) => {
       <WrapperQuote>
         <Div justify="center" width="100%">
           <Col align="center">
-            <Image alt="success" src={woman} width={isMobile ? 318.19 : 420} height={isMobile ? 318.68 : 420.64} />
+            <Image
+              alt="success"
+              src={woman}
+              width={isMobile ? 318.19 : 420}
+              height={isMobile ? 318.68 : 420.64}
+            />
             <Text
               size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h3}
               color={theme.colors.white}
@@ -29,8 +43,16 @@ const CreationSuceess = ({ isMobile }) => {
               weight={theme.fonts.weight.bold}
               mt="24px"
             >
-              ¡Hemos recibido tu información!
-              Dentro de las próximas <span style={{ fontFamily: theme.fonts.family.primaryBold , color: theme.colors.yellow500 }}>24 horas</span> estaremos analizando tu caso.
+              ¡Hemos recibido tu información! Dentro de las próximas{" "}
+              <span
+                style={{
+                  fontFamily: theme.fonts.family.primaryBold,
+                  color: theme.colors.yellow500,
+                }}
+              >
+                24 horas
+              </span>{" "}
+              estaremos analizando tu caso.
             </Text>
             <Text
               size={isMobile ? theme.fonts.size.sm : theme.fonts.size.default2}
@@ -38,7 +60,8 @@ const CreationSuceess = ({ isMobile }) => {
               mt="16px"
               mb="46px"
             >
-              Pronto te notificaremos a tu correo para que conozcas tu cotización y los ahorros que puedes lograr con Bangk
+              Pronto te notificaremos a tu correo para que conozcas tu
+              cotización y los ahorros que puedes lograr con Bangk
             </Text>
             <Button
               font={theme.fonts.family.primaryBold}
@@ -59,7 +82,7 @@ const CreationSuceess = ({ isMobile }) => {
         </Div>
       </WrapperQuote>
     </Container>
-  )
-}
+  );
+};
 
-export default CreationSuceess
+export default CreationSuceess;

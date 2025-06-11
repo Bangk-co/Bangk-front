@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "@/components/Common/Header";
 import { Div, Text } from "@/styles/Common";
 import { Col, Container, WrapperQuote } from "@/styles/Quote";

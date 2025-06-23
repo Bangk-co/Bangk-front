@@ -130,7 +130,7 @@ const ModalPaymentMethod = ({
                 />
               ) : null
             }
-            disabled={!paymentMethod}
+            disabled={!paymentMethod || loading}
           >
             Pagar ahora
           </Button>

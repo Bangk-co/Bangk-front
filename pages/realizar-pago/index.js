@@ -116,8 +116,9 @@ const RealizarPago = ({ isMobile }) => {
       toast.custom(
         <CustomErrorToast
           message={"Ha ocurrido un error con el método de pago. Por favor inténtalo nuevamente"}
+          
         />,
-        { duration: 1000 }
+        { duration: 5000 }
       )
       setTransactionReference(null);
       setTransactionId(null);
@@ -323,8 +324,13 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setPetsFormInfo({}));
           },
-          onError: () => {
-            console.log("Error");
+          onError: (err) => {
+            toast.custom(
+              <CustomErrorToast
+                message={err?.response?.data?.errors[0]}
+              />,
+              { duration: 5000 }
+            )
             setLoading(false);
           }
         });
@@ -366,8 +372,13 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setMedFormInfo({}));
           },
-          onError: () => {
-            console.log("Error");
+          onError: (err) => {
+            toast.custom(
+              <CustomErrorToast
+                message={err?.response?.data?.errors[0]}
+              />,
+              { duration: 5000 }
+            )
             setLoading(false);
           }
         });
@@ -535,7 +546,7 @@ const RealizarPago = ({ isMobile }) => {
               <Div height="100%" align="flex-end">
                 <Button 
                   {...buttonProps} 
-                  disabled={!isValidButton()}
+                  disabled={!isValidButton() || createInsurance.isLoading || createPetInsurance.isLoading || cardPayment.isLoading}
                   onClick={petAssistance ? handlePayPets : handlePay}
                 >
                   Realizar pago

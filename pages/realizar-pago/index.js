@@ -546,9 +546,8 @@ const RealizarPago = ({ isMobile }) => {
               <Div height="100%" align="flex-end">
                 <Button 
                   {...buttonProps} 
-                  disabled={!isValidButton()}
+                  disabled={!isValidButton() || createInsurance.isLoading || createPetInsurance.isLoading || cardPayment.isLoading}
                   onClick={petAssistance ? handlePayPets : handlePay}
-                  loading={createInsurance.isLoading || createPetInsurance.isLoading || cardPayment.isLoading}
                 >
                   Realizar pago
                 </Button>

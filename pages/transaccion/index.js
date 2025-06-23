@@ -30,6 +30,7 @@ const TransactionState = ({ isMobile }) => {
   const [transactionReference, setTransactionReference] = useState(null);
   const [transactionInfo, setTransactionInfo] = useState({});
   const [hasErrors, setHasErrors] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   const petAssistance =
     payAssistance === "pet" || (petsForm && Object.keys(petsForm).length !== 0);
@@ -81,6 +82,7 @@ const TransactionState = ({ isMobile }) => {
             if (loadingPayment) {
               setHasErrors(true);
               setLoadingPayment(false);
+              setForceUpdate(!forceUpdate);
             }
           }
         },
@@ -105,7 +107,9 @@ const TransactionState = ({ isMobile }) => {
     if (paymentInfo && Object.keys(paymentInfo).length > 0) {
       setLoadingPayment(false);
       setTransactionInfo(paymentInfo);
+      setForceUpdate(!forceUpdate);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentInfo]);
 
   const buttonProps = {

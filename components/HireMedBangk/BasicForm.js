@@ -198,7 +198,7 @@ export const BasicForm = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <Div direction={isMobile ? "column" : "row"}>
-          <Div width={isMobile ? "100%" : "25%"}>
+          <Div width={isMobile ? "100%" : "30%"}>
             <Autocomplete
               {...labelsProps}
               disablePortal
@@ -224,7 +224,7 @@ export const BasicForm = ({
               )}
             />
           </Div>
-          <Div width={isMobile ? "100%" : "72%"}>
+          <Div width={isMobile ? "100%" : "66%"}>
             <TextField
               {...labelsProps}
               id="phoneNumber"

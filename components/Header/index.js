@@ -14,8 +14,9 @@ import chevron from "@/assets/icons/arrow-up.svg";
 import chevronDown from "@/assets/icons/chevron-down.svg";
 import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
 import { useDispatch } from "react-redux";
-import { resetMedFormInfo } from "@/store/med";
-import { resetPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setPaymentSource } from "@/store/payment";
 
 const Header = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -57,8 +58,9 @@ const Header = ({ isMobile, isTablet }) => {
   };
 
   const handleGo = (url, key) => {
-    dispatch(resetPetsFormInfo());
-    dispatch(resetMedFormInfo());
+    dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
     if (url) {
       setOptionSelected(key);
       router.push(url);
@@ -75,8 +77,9 @@ const Header = ({ isMobile, isTablet }) => {
     setOpenMenu(false);
     setSubMenuOpen(false);
     setSubMenuLoginOpen(false);
-    dispatch(resetPetsFormInfo());
-    dispatch(resetMedFormInfo());
+    dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
     setForceUpdate(!forceUpdate);
   };
 
@@ -86,8 +89,9 @@ const Header = ({ isMobile, isTablet }) => {
     setOpenMenu(false);
     setSubMenuOpen(false);
     setSubMenuLoginOpen(false);
-    dispatch(resetPetsFormInfo());
-    dispatch(resetMedFormInfo());
+    dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
     setForceUpdate(!forceUpdate);
   };
 

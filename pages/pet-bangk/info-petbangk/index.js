@@ -7,15 +7,17 @@ import AttendanceSummary from "@/components/InfoPetBangk/AttendanceSummary";
 import AssistanceAreas from "@/components/InfoPetBangk/AssistanceAreas";
 import GeneralConditions from "@/components/InfoPetBangk/GeneralConditions";
 import { useDispatch } from "react-redux";
-import { resetPetsFormInfo } from "@/store/pets";
-import { resetMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
+import { setPaymentSource } from "@/store/payment";
 
 const InfoPetBangk = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(resetPetsFormInfo());
-    dispatch(resetMedFormInfo());
+    dispatch(setPetsFormInfo({}));
+    dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
   }, [dispatch]);
 
   const breadcrumbs = [

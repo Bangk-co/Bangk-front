@@ -6,15 +6,17 @@ import FormInfo from "@/components/Insurance/FormInfo";
 import Save from "@/components/Insurance/Save";
 import { Div } from "@/styles/Common";
 import { useDispatch } from "react-redux";
-import { resetMedFormInfo } from "@/store/med";
-import { resetPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setPaymentSource } from "@/store/payment";
 
 const Insurance = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(resetMedFormInfo());
-    dispatch(resetPetsFormInfo());
+    dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
+    dispatch(setPaymentSource(""));
   }, [dispatch]);
 
   return (

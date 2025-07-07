@@ -16,7 +16,7 @@ import useGetMethodPayment from "@/hooks/Pets/useGetMethodPayment";
 import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
 import { setMedFormInfo } from "@/store/med";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
-import { resetPetsFormInfo } from "@/store/pets";
+import { setPetsFormInfo } from "@/store/pets";
 import { ValidateIdentity } from "@/components/ValidateIdentity";
 import { setValidCode } from "@/store/balance";
 import useSendOtp from "@/hooks/Common/useSendOtp";
@@ -223,7 +223,7 @@ const HireAssistance = ({ isMobile }) => {
           {},
           {
             onSuccess: (resToken) => {
-              dispatch(resetPetsFormInfo());
+              dispatch(setPetsFormInfo({}));
               dispatch(
                 setMedFormInfo({
                   ...medForm,

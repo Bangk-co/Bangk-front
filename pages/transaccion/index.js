@@ -12,10 +12,10 @@ import Image from "next/image";
 import { formattedDate, numberFormat } from "@/utilities/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentInfo, setPaymentSource } from "@/store/payment";
-import { resetMedFormInfo } from "@/store/med";
+import { setMedFormInfo } from "@/store/med";
 import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
-import { resetPetsFormInfo } from "@/store/pets";
+import { setPetsFormInfo } from "@/store/pets";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
@@ -39,9 +39,6 @@ const TransactionState = ({ isMobile }) => {
 
   const formToSend =
     paymentSource === "med" ? medForm : petsForm;
-
-  console.log("paymentSource", paymentSource);
-  console.log("formToSend", formToSend);
 
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
@@ -177,8 +174,8 @@ const TransactionState = ({ isMobile }) => {
 
   const handleBack = () => {
     dispatch(setPaymentInfo({}));
-    dispatch(resetMedFormInfo());
-    dispatch(resetPetsFormInfo());
+    dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
     dispatch(setPaymentSource(""));
     router.push("/");
     setForceUpdate(!forceUpdate);
@@ -186,8 +183,8 @@ const TransactionState = ({ isMobile }) => {
 
   const handleRetry = () => {
     dispatch(setPaymentInfo({}));
-    dispatch(resetMedFormInfo());
-    dispatch(resetPetsFormInfo());
+    dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
     dispatch(setPaymentSource(""));
     router.push(
       petAssistance

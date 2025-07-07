@@ -12,16 +12,10 @@ export const slice = createSlice({
         medForm: action.payload,
       };
     },
-    resetMedFormInfo: (state) => {
-      return {
-        ...state,
-        medForm: {},
-      };
-    },
   },
 });
 
 export default slice.reducer;
 
-export const { setMedFormInfo, resetMedFormInfo } = slice.actions;
+export const { setMedFormInfo } = slice.actions;
 

@@ -5,15 +5,17 @@ import Reviews from "@/components/PetBangk/Reviews";
 import Search from "@/components/PetBangk/Search";
 import { Services } from "@/components/PetBangk/Services";
 import { useDispatch } from "react-redux";
-import { resetPetsFormInfo } from "@/store/pets";
-import { resetMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
+import { setPaymentSource } from "@/store/payment";
 
 const PetBangk = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(resetMedFormInfo());
-    dispatch(resetPetsFormInfo());
+    dispatch(setMedFormInfo({}));
+    dispatch(setPetsFormInfo({}));
+    dispatch(setPaymentSource(""));
   }, [dispatch]);
 
   const breadcrumbs = [

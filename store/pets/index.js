@@ -6,7 +6,7 @@ export const slice = createSlice({
     petsForm: {},
   },
   reducers: {
-    setPetsForm: (state, action) => {
+    setPetsFormInfo: (state, action) => {
       return {
         ...state,
         petsForm: action.payload,
@@ -17,8 +17,4 @@ export const slice = createSlice({
 
 export default slice.reducer;
 
-export const { setPetsForm } = slice.actions;
-
-export const setPetsFormInfo = (data) => async (dispatch) => {
-  dispatch(setPetsForm(data));
-};
+export const { setPetsFormInfo } = slice.actions;

@@ -14,8 +14,8 @@ import chevron from "@/assets/icons/arrow-up.svg";
 import chevronDown from "@/assets/icons/chevron-down.svg";
 import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
 import { useDispatch } from "react-redux";
-import { setPetsFormInfo } from "@/store/pets";
 import { setMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
 
 const Header = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();

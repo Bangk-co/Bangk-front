@@ -11,7 +11,7 @@ import closeErrorIcon from "@/assets/icons/close-error.svg";
 import Image from "next/image";
 import { formattedDate, numberFormat } from "@/utilities/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { setPaymentInfo } from "@/store/payment";
+import { setPaymentInfo, setPaymentSource } from "@/store/payment";
 import { setMedFormInfo } from "@/store/med";
 import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
@@ -21,7 +21,7 @@ const TransactionState = ({ isMobile }) => {
   const router = useRouter();
   const { paymentMethod, payAssistance } = router.query;
   const dispatch = useDispatch();
-  const { paymentInfo } = useSelector((state) => state.payment);
+  const { paymentInfo, paymentSource } = useSelector((state) => state.payment);
   const { medForm } = useSelector((state) => state.med);
   const { petsForm } = useSelector((state) => state.pets);
   const bancolombiaPayment = useBancolombiaPayment();
@@ -33,12 +33,12 @@ const TransactionState = ({ isMobile }) => {
   const [forceUpdate, setForceUpdate] = useState(false);
 
   const petAssistance =
-    payAssistance === "pet" || (petsForm && Object.keys(petsForm).length !== 0);
+    payAssistance === "pet" || paymentSource === "pet";
   const medAssistance =
-    payAssistance === "med" || (medForm && Object.keys(medForm).length !== 0);
+    payAssistance === "med" || paymentSource === "med";
 
   const formToSend =
-    medForm && Object.keys(medForm).length !== 0 ? medForm : petsForm;
+    paymentSource === "med" ? medForm : petsForm;
 
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
     paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
@@ -176,6 +176,7 @@ const TransactionState = ({ isMobile }) => {
     dispatch(setPaymentInfo({}));
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
+    dispatch(setPaymentSource(""));
     router.push("/");
     setForceUpdate(!forceUpdate);
   };
@@ -184,6 +185,7 @@ const TransactionState = ({ isMobile }) => {
     dispatch(setPaymentInfo({}));
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
+    dispatch(setPaymentSource(""));
     router.push(
       petAssistance
         ? "/pet-bangk/asegura-ya/?selectedPlan=1&&petsAmount=1"

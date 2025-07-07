@@ -21,6 +21,7 @@ import { ValidateIdentity } from "@/components/ValidateIdentity";
 import { setValidCode } from "@/store/balance";
 import useSendOtp from "@/hooks/Common/useSendOtp";
 import useValidateUser from "@/hooks/Common/useValidateUser";
+import { setPaymentSource } from "@/store/payment";
 
 const HireAssistance = ({ isMobile }) => {
   const router = useRouter();
@@ -230,6 +231,7 @@ const HireAssistance = ({ isMobile }) => {
                   applicationId: resInsurance?.data?.medEnsuranceApplicationId,
                 })
               );
+              dispatch(setPaymentSource("med"));
               setShowModal(false);
               window.location.href = resToken?.data?.result?.data?.authorization_Url;
               setForceUpdate(!forceUpdate);

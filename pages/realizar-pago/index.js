@@ -17,12 +17,12 @@ import useCardPayment from "@/hooks/WompiPayment/useCardPayment";
 import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import { CircularProgress } from "@/components/Common/CircularProgress";
 import toast from "react-hot-toast";
-import { setPetsFormInfo } from "@/store/pets";
+import { setPetsFormInfo, resetPetsFormInfo } from "@/store/pets";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 import { CustomErrorToast } from "@/components/Common/CustomErrorToast";
 import { setPaymentInformation } from "@/store/payment";
 import useCreateInsurance from "@/hooks/Med/useCreateInsurance";
-import { setMedFormInfo } from "@/store/med";
+import { setMedFormInfo, resetMedFormInfo } from "@/store/med";
 
 const RealizarPago = ({ isMobile }) => {
   const router = useRouter();
@@ -323,7 +323,7 @@ const RealizarPago = ({ isMobile }) => {
           onSuccess: (res) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
-            dispatch(setPetsFormInfo({}));
+            dispatch(resetPetsFormInfo());
             setForceUpdate(!forceUpdate);
           },
           onError: (err) => {
@@ -372,7 +372,7 @@ const RealizarPago = ({ isMobile }) => {
           onSuccess: (res) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
-            dispatch(setMedFormInfo({}));
+            dispatch(resetMedFormInfo());
             setForceUpdate(!forceUpdate);
           },
           onError: (err) => {

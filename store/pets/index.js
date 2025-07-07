@@ -12,9 +12,15 @@ export const slice = createSlice({
         petsForm: action.payload,
       };
     },
+    resetPetsFormInfo: (state) => {
+      return {
+        ...state,
+        petsForm: {},
+      };
+    },
   },
 });
 
 export default slice.reducer;
 
-export const { setPetsFormInfo } = slice.actions;
+export const { setPetsFormInfo, resetPetsFormInfo } = slice.actions;

@@ -26,7 +26,7 @@ import { setPetsFormInfo } from "@/store/pets";
 import ModalPaymentMethod from "@/components/ModalPaymentMethod";
 import useCreatePetInsurance from "@/hooks/Pets/useCreatePetInsurance";
 import useGenerateTknTrxBancolombia from "@/hooks/WompiPayment/useGenerateTknTrxBancolombia";
-import { setMedFormInfo } from "@/store/med";
+import { resetMedFormInfo } from "@/store/med";
 import toast from "react-hot-toast";
 import { setValidCode } from "@/store/balance";
 import { ValidateIdentity } from "@/components/ValidateIdentity";
@@ -500,7 +500,7 @@ const SecureItNow = ({ isMobile }) => {
           {},
           {
             onSuccess: (resToken) => {
-              dispatch(setMedFormInfo({}));
+              dispatch(resetMedFormInfo());
               dispatch(
                 setPetsFormInfo({
                   ...petsForm,

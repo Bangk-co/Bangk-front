@@ -7,15 +7,15 @@ import { Prices } from "@/components/MedBangk/Prices";
 import { Benefits } from "@/components/MedBangk/Benefits";
 import { GeneralConditions } from "@/components/MedBangk/GeneralConditions";
 import { useDispatch } from "react-redux";
-import { setMedFormInfo } from "@/store/med";
-import { setPetsFormInfo } from "@/store/pets";
+import { resetMedFormInfo } from "@/store/med";
+import { resetPetsFormInfo } from "@/store/pets";
 
 const MedBangk = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setMedFormInfo({}));
-    dispatch(setPetsFormInfo({}));
+    dispatch(resetMedFormInfo());
+    dispatch(resetPetsFormInfo());
   }, [dispatch]);
 
   const breadcrumbs = [

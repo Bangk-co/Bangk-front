@@ -17,8 +17,8 @@ import {
 import CarBangk from "@/components/Home/CarBangk";
 import PetBangk from "@/components/Home/PetBangk";
 import MedBangk from "@/components/Home/MedBangk";
-import { setPetsFormInfo } from "@/store/pets";
-import { setMedFormInfo } from "@/store/med";
+import { resetPetsFormInfo } from "@/store/pets";
+import { resetMedFormInfo } from "@/store/med";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -31,8 +31,8 @@ const Home = ({ isMobile, isTablet }) => {
     }
     dispatch(setRequestInfo(initDataLoanInsurancePolicy));
     dispatch(setSelectedRequestInformation({}));
-    dispatch(setPetsFormInfo({}));
-    dispatch(setMedFormInfo({}));
+    dispatch(resetPetsFormInfo());
+    dispatch(resetMedFormInfo());
     setForceUpdate(!forceUpdate);
   }, []);
 

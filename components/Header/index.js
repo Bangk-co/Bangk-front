@@ -13,7 +13,6 @@ import MenuMobile from "./MenuMobile";
 import chevron from "@/assets/icons/arrow-up.svg";
 import chevronDown from "@/assets/icons/chevron-down.svg";
 import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
-import { Button } from "../Common/Button";
 import { useDispatch } from "react-redux";
 import { setPetsFormInfo } from "@/store/pets";
 import { setMedFormInfo } from "@/store/med";

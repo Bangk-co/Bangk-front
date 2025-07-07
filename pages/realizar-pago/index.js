@@ -40,6 +40,7 @@ const RealizarPago = ({ isMobile }) => {
   const [transactionReference, setTransactionReference] = useState(null);
   const { data: statusTransaction, isSuccess: isSuccessStatusTransaction } = useGetStatusTransaction(transactionReference);
   const [transactionStatus, setTransactionStatus] = useState("");
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [cardPaymentForm, setCardPaymentForm] = useState({
     email: "",
     name: "",
@@ -371,6 +372,7 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setMedFormInfo({}));
+            setForceUpdate(!forceUpdate);
           },
           onError: (err) => {
             toast.custom(

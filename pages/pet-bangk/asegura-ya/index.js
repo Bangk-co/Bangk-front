@@ -63,6 +63,7 @@ const SecureItNow = ({ isMobile }) => {
     error: false,
     message: "",
   });
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   const getPrice = (amount, frequency, paymentOcurrencyId) => {
     const paymentOcurrency = Number(frequency);
@@ -512,6 +513,7 @@ const SecureItNow = ({ isMobile }) => {
               );
               setShowPaymentModal(false);
               window.location.href = resToken?.data?.result?.data?.authorization_Url;
+              setForceUpdate(!forceUpdate);
             },
             onError: (error) => {
               toast.error(

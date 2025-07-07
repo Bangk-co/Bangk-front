@@ -46,6 +46,9 @@ const TransactionState = ({ isMobile }) => {
   const { data: dataBancolombia, isSuccess: isSuccessBancolombia } =
     getTrxBancolombiaStatus;
 
+  console.log("petsForm", petsForm);
+  console.log("medForm", medForm);
+
   useEffect(() => {
     if (
       isSuccessBancolombia &&
@@ -177,6 +180,7 @@ const TransactionState = ({ isMobile }) => {
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
     router.push("/");
+    setForceUpdate(!forceUpdate);
   };
 
   const handleRetry = () => {
@@ -188,6 +192,7 @@ const TransactionState = ({ isMobile }) => {
         ? "/pet-bangk/asegura-ya/?selectedPlan=1&&petsAmount=1"
         : "/ahorra-en-tus-seguros/med-bangk/contrata/?selectedPlan=1&&planAmount=1"
     );
+    setForceUpdate(!forceUpdate);
   };
 
   return (

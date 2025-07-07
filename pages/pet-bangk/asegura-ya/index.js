@@ -59,11 +59,11 @@ const SecureItNow = ({ isMobile }) => {
   } = useGetMethodPayment();
   const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [errorValidateUser, setErrorValidateUser] = useState({
     error: false,
     message: "",
   });
-  const [forceUpdate, setForceUpdate] = useState(false);
 
   const getPrice = (amount, frequency, paymentOcurrencyId) => {
     const paymentOcurrency = Number(frequency);
@@ -460,6 +460,7 @@ const SecureItNow = ({ isMobile }) => {
 
       dispatch(setPetsFormInfo(payload));
       setShowPaymentModal(true);
+      setForceUpdate(!forceUpdate);
     }
   };
 

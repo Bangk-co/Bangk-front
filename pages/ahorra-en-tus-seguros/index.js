@@ -15,7 +15,7 @@ const Insurance = ({ isMobile, isTablet }) => {
   useEffect(() => {
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
-  }, []);
+  }, [dispatch]);
 
   return (
     <Div direction="column">

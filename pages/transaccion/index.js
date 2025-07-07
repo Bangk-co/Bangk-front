@@ -46,9 +46,6 @@ const TransactionState = ({ isMobile }) => {
   const { data: dataBancolombia, isSuccess: isSuccessBancolombia } =
     getTrxBancolombiaStatus;
 
-  console.log("petsForm", petsForm);
-  console.log("medForm", medForm);
-
   useEffect(() => {
     if (
       isSuccessBancolombia &&

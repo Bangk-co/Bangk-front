@@ -25,7 +25,8 @@ const Header = ({ isMobile, isTablet }) => {
   const [optionSelected, setOptionSelected] = useState(null);
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuLoginOpen, setSubMenuLoginOpen] = useState(false);
-
+  const [forceUpdate, setForceUpdate] = useState(false);
+  
   const headerButtons = [
     // { key: 0, label: "Ahorro Hipotecario", url: null },
     {
@@ -65,6 +66,7 @@ const Header = ({ isMobile, isTablet }) => {
       setSubMenuOpen(false);
       setSubMenuLoginOpen(false);
     }
+    setForceUpdate(!forceUpdate);
   };
 
   const handleHome = () => {
@@ -75,6 +77,7 @@ const Header = ({ isMobile, isTablet }) => {
     setSubMenuLoginOpen(false);
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    setForceUpdate(!forceUpdate);
   };
 
   const handlePetHome = () => {
@@ -85,6 +88,7 @@ const Header = ({ isMobile, isTablet }) => {
     setSubMenuLoginOpen(false);
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    setForceUpdate(!forceUpdate);
   };
 
   const handleToggleSubMenu = () => {

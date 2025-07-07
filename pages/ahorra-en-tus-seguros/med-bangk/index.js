@@ -16,7 +16,7 @@ const MedBangk = ({ isMobile, isTablet }) => {
   useEffect(() => {
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
-  }, []);
+  }, [dispatch]);
 
   const breadcrumbs = [
     {

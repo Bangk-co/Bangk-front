@@ -324,6 +324,7 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setPetsFormInfo({}));
+            setForceUpdate(!forceUpdate);
           },
           onError: (err) => {
             toast.custom(

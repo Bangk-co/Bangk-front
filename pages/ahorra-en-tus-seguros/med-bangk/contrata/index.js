@@ -38,6 +38,7 @@ const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
@@ -231,6 +232,7 @@ const HireAssistance = ({ isMobile }) => {
               );
               setShowModal(false);
               window.location.href = resToken?.data?.result?.data?.authorization_Url;
+              setForceUpdate(!forceUpdate);
             },
             onError: (error) => {
               toast.error(

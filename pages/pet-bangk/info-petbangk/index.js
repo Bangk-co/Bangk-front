@@ -16,7 +16,7 @@ const InfoPetBangk = ({ isMobile, isTablet }) => {
   useEffect(() => {
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
-  }, []);
+  }, [dispatch]);
 
   const breadcrumbs = [
     {

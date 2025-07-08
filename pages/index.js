@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Div } from "@/styles/Common";
 import Banner from "@/components/Home/Banner";
@@ -19,10 +19,12 @@ import PetBangk from "@/components/Home/PetBangk";
 import MedBangk from "@/components/Home/MedBangk";
 import { setPetsFormInfo } from "@/store/pets";
 import { setMedFormInfo } from "@/store/med";
+import { setPaymentSource } from "@/store/payment";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   useEffect(() => {
     if (window.location.pathname !== router.pathname) {
@@ -32,6 +34,8 @@ const Home = ({ isMobile, isTablet }) => {
     dispatch(setSelectedRequestInformation({}));
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
+    setForceUpdate(!forceUpdate);
   }, []);
 
   return (

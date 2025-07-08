@@ -13,10 +13,10 @@ import MenuMobile from "./MenuMobile";
 import chevron from "@/assets/icons/arrow-up.svg";
 import chevronDown from "@/assets/icons/chevron-down.svg";
 import chevronDownOrange from "@/assets/icons/chevron-down-orange.svg";
-import { Button } from "../Common/Button";
 import { useDispatch } from "react-redux";
-import { setPetsFormInfo } from "@/store/pets";
 import { setMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setPaymentSource } from "@/store/payment";
 
 const Header = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -26,7 +26,8 @@ const Header = ({ isMobile, isTablet }) => {
   const [optionSelected, setOptionSelected] = useState(null);
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [subMenuLoginOpen, setSubMenuLoginOpen] = useState(false);
-
+  const [forceUpdate, setForceUpdate] = useState(false);
+  
   const headerButtons = [
     // { key: 0, label: "Ahorro Hipotecario", url: null },
     {
@@ -59,6 +60,7 @@ const Header = ({ isMobile, isTablet }) => {
   const handleGo = (url, key) => {
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
     if (url) {
       setOptionSelected(key);
       router.push(url);
@@ -66,6 +68,7 @@ const Header = ({ isMobile, isTablet }) => {
       setSubMenuOpen(false);
       setSubMenuLoginOpen(false);
     }
+    setForceUpdate(!forceUpdate);
   };
 
   const handleHome = () => {
@@ -76,6 +79,8 @@ const Header = ({ isMobile, isTablet }) => {
     setSubMenuLoginOpen(false);
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
+    setForceUpdate(!forceUpdate);
   };
 
   const handlePetHome = () => {
@@ -86,6 +91,8 @@ const Header = ({ isMobile, isTablet }) => {
     setSubMenuLoginOpen(false);
     dispatch(setPetsFormInfo({}));
     dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
+    setForceUpdate(!forceUpdate);
   };
 
   const handleToggleSubMenu = () => {

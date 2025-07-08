@@ -6,7 +6,7 @@ export const slice = createSlice({
     medForm: {},
   },
   reducers: {
-    setMedForm: (state, action) => {
+    setMedFormInfo: (state, action) => {
       return {
         ...state,
         medForm: action.payload,
@@ -17,8 +17,5 @@ export const slice = createSlice({
 
 export default slice.reducer;
 
-export const { setMedForm } = slice.actions;
+export const { setMedFormInfo } = slice.actions;
 
-export const setMedFormInfo = (data) => async (dispatch) => {
-  dispatch(setMedForm(data));
-};

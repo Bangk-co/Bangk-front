@@ -21,6 +21,7 @@ import { ValidateIdentity } from "@/components/ValidateIdentity";
 import { setValidCode } from "@/store/balance";
 import useSendOtp from "@/hooks/Common/useSendOtp";
 import useValidateUser from "@/hooks/Common/useValidateUser";
+import { setPaymentSource } from "@/store/payment";
 
 const HireAssistance = ({ isMobile }) => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const HireAssistance = ({ isMobile }) => {
   const [actualStep, setActualStep] = useState(1);
   const [activeKey, setActiveKey] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
   const { planAmount, selectedPlan } = router.query;
   const [form, setForm] = useState({
     methodOfPayment: selectedPlan || "",
@@ -229,8 +231,10 @@ const HireAssistance = ({ isMobile }) => {
                   applicationId: resInsurance?.data?.medEnsuranceApplicationId,
                 })
               );
+              dispatch(setPaymentSource("med"));
               setShowModal(false);
               window.location.href = resToken?.data?.result?.data?.authorization_Url;
+              setForceUpdate(!forceUpdate);
             },
             onError: (error) => {
               toast.error(

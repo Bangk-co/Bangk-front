@@ -8,13 +8,17 @@ import AssistanceAreas from "@/components/InfoPetBangk/AssistanceAreas";
 import GeneralConditions from "@/components/InfoPetBangk/GeneralConditions";
 import { useDispatch } from "react-redux";
 import { setPetsFormInfo } from "@/store/pets";
+import { setMedFormInfo } from "@/store/med";
+import { setPaymentSource } from "@/store/payment";
 
 const InfoPetBangk = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setPetsFormInfo({}));
-  }, []);
+    dispatch(setMedFormInfo({}));
+    dispatch(setPaymentSource(""));
+  }, [dispatch]);
 
   const breadcrumbs = [
     {

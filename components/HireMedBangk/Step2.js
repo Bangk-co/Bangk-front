@@ -29,6 +29,7 @@ export const Step2 = ({
   setShowModal,
 }) => {
   const dispatch = useDispatch();
+  const [forceUpdate, setForceUpdate] = useState(false);
 
   const getLabelFromValue = (value, options) => {
     const selectedOption = options.find((option) => option.value === value);
@@ -82,6 +83,7 @@ export const Step2 = ({
 
     dispatch(setMedFormInfo(payload));
     setShowModal(true);
+    setForceUpdate(!forceUpdate);
   };
 
   return (

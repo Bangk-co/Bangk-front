@@ -7,13 +7,17 @@ import Save from "@/components/Insurance/Save";
 import { Div } from "@/styles/Common";
 import { useDispatch } from "react-redux";
 import { setMedFormInfo } from "@/store/med";
+import { setPetsFormInfo } from "@/store/pets";
+import { setPaymentSource } from "@/store/payment";
 
 const Insurance = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(setMedFormInfo({}));
-  }, []);
+    dispatch(setPetsFormInfo({}));
+    dispatch(setPaymentSource(""));
+  }, [dispatch]);
 
   return (
     <Div direction="column">

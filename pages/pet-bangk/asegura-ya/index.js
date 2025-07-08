@@ -32,6 +32,7 @@ import { setValidCode } from "@/store/balance";
 import { ValidateIdentity } from "@/components/ValidateIdentity";
 import useValidateUser from "@/hooks/Common/useValidateUser";
 import useSendOtp from "@/hooks/Common/useSendOtp";
+import { setPaymentSource } from "@/store/payment";
 
 const SecureItNow = ({ isMobile }) => {
   const validateUser = useValidateUser();
@@ -59,6 +60,7 @@ const SecureItNow = ({ isMobile }) => {
   } = useGetMethodPayment();
   const [paymentOcurrencyOptions, setPaymentOcurrencyOptions] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [errorValidateUser, setErrorValidateUser] = useState({
     error: false,
     message: "",
@@ -459,6 +461,7 @@ const SecureItNow = ({ isMobile }) => {
 
       dispatch(setPetsFormInfo(payload));
       setShowPaymentModal(true);
+      setForceUpdate(!forceUpdate);
     }
   };
 
@@ -510,8 +513,10 @@ const SecureItNow = ({ isMobile }) => {
                   ),
                 })
               );
+              dispatch(setPaymentSource("pet"));
               setShowPaymentModal(false);
               window.location.href = resToken?.data?.result?.data?.authorization_Url;
+              setForceUpdate(!forceUpdate);
             },
             onError: (error) => {
               toast.error(

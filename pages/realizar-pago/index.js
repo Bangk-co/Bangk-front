@@ -40,6 +40,7 @@ const RealizarPago = ({ isMobile }) => {
   const [transactionReference, setTransactionReference] = useState(null);
   const { data: statusTransaction, isSuccess: isSuccessStatusTransaction } = useGetStatusTransaction(transactionReference);
   const [transactionStatus, setTransactionStatus] = useState("");
+  const [forceUpdate, setForceUpdate] = useState(false);
   const [cardPaymentForm, setCardPaymentForm] = useState({
     email: "",
     name: "",
@@ -116,8 +117,9 @@ const RealizarPago = ({ isMobile }) => {
       toast.custom(
         <CustomErrorToast
           message={"Ha ocurrido un error con el método de pago. Por favor inténtalo nuevamente"}
+          
         />,
-        { duration: 1000 }
+        { duration: 5000 }
       )
       setTransactionReference(null);
       setTransactionId(null);
@@ -322,9 +324,15 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setPetsFormInfo({}));
+            setForceUpdate(!forceUpdate);
           },
-          onError: () => {
-            console.log("Error");
+          onError: (err) => {
+            toast.custom(
+              <CustomErrorToast
+                message={err?.response?.data?.errors[0]}
+              />,
+              { duration: 5000 }
+            )
             setLoading(false);
           }
         });
@@ -365,9 +373,15 @@ const RealizarPago = ({ isMobile }) => {
             setTransactionReference(res?.data?.result?.transactionReference);
             setTransactionId(res?.data?.result?.transactionId);
             dispatch(setMedFormInfo({}));
+            setForceUpdate(!forceUpdate);
           },
-          onError: () => {
-            console.log("Error");
+          onError: (err) => {
+            toast.custom(
+              <CustomErrorToast
+                message={err?.response?.data?.errors[0]}
+              />,
+              { duration: 5000 }
+            )
             setLoading(false);
           }
         });
@@ -535,7 +549,7 @@ const RealizarPago = ({ isMobile }) => {
               <Div height="100%" align="flex-end">
                 <Button 
                   {...buttonProps} 
-                  disabled={!isValidButton()}
+                  disabled={!isValidButton() || createInsurance.isLoading || createPetInsurance.isLoading || cardPayment.isLoading}
                   onClick={petAssistance ? handlePayPets : handlePay}
                 >
                   Realizar pago

@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { BannerCard, BannerText, Col1, Col2, WrapperBanner } from "./styles";
+import { BannerCard, BannerText, Col1, Col2, WrapperBanner, WrapperBigStar } from "./styles";
 import { theme } from "@/styles/theme";
 import woman from "../../assets/img/green-woman.svg";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
+import star from "@/assets/icons/orange-star.svg";
 
 const Banner = ({ isMobile }) => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const Banner = ({ isMobile }) => {
   };
 
   return (
-    <WrapperBanner>
+    <WrapperBanner style={{ position: "relative" }}>
       <BannerCard>
         <Col1>
           <BannerText>
@@ -39,6 +40,14 @@ const Banner = ({ isMobile }) => {
           />
         </Col2>
       </BannerCard>
+      <WrapperBigStar>
+        <Image
+          alt="star"
+          src={star}
+          width={isMobile ? 110 : 283}
+          height={isMobile ? 110 : 283}
+        />
+      </WrapperBigStar>
     </WrapperBanner>
   );
 };

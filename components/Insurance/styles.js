@@ -273,14 +273,14 @@ export const WrapperBigStar = styled.div`
     font-size: ${theme.fonts.size.xxxs};
     width: 110px;
     height: 110px;
-    bottom: -55px;
+    bottom: -100px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     width: 110px;
     height: 116px;
-    bottom: -58px;
+    bottom: -80px;
   }
 `;
 

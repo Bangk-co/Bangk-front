@@ -15,6 +15,7 @@ export const theme = {
     green700: "#052C2B",
     green900: "#074240",
     green1000: "#00953B",
+    green1100: "#00B1A6",
     greeLigth: "#b2dfc4",
     orange: "#FD6700",
     orange100: "#FF8400",

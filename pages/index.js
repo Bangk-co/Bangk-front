@@ -20,6 +20,7 @@ import MedBangk from "@/components/Home/MedBangk";
 import { setPetsFormInfo } from "@/store/pets";
 import { setMedFormInfo } from "@/store/med";
 import { setPaymentSource } from "@/store/payment";
+import HousingLaw from "@/components/Home/HousingLaw";
 
 const Home = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
       <Banner isMobile={isMobile} />
-      <Stepper isHome={true} isMobile={isMobile} isTablet={isTablet} />
+      <HousingLaw isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt isMobile={isMobile} />
       <Bangk isMobile={isMobile} />
       <CarBangk isMobile={isMobile} />

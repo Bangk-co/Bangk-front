@@ -334,7 +334,7 @@ export const WrapperBlog = styled.div`
   display: flex;
   flex-direction: column;
   height: 835px;
-  background: ${theme.colors.light};
+  background: ${theme.colors.light4};
   padding: 33px 0px 0px 0px;
   align-items: center;
 
@@ -347,7 +347,7 @@ export const WrapperBlog = styled.div`
 export const WrapperBlogTablet = styled.div`
   display: flex;
   height: 406px;
-  background: ${theme.colors.light};
+  background: ${theme.colors.light4};
 `;
 
 export const WrapperRow = styled.div`

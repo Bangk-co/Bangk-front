@@ -42,7 +42,7 @@ const Home = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
       <Banner isMobile={isMobile} />
-      <HousingLaw isMobile={isMobile} />
+      <HousingLaw isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt isMobile={isMobile} />
       <Bangk isMobile={isMobile} />
       <CarBangk isMobile={isMobile} />

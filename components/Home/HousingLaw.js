@@ -4,7 +4,7 @@ import { theme } from "@/styles/theme";
 import housingLawImg from "@/assets/img/housingLaw.svg";
 import Image from "next/image";
 
-const HousingLaw = ({ isMobile }) => {
+const HousingLaw = ({ isMobile, isTablet }) => {
   return (
     <Div
       direction="column"
@@ -31,7 +31,7 @@ const HousingLaw = ({ isMobile }) => {
       >
         En Bangk, te ayudamos a usar la Ley de Vivienda para obtener beneficios en tus créditos
       </Text>
-      <Image src={housingLawImg} alt="housing-law" width={isMobile ? 350 : "100%"} />
+      <Image src={housingLawImg} alt="housing-law" width={isMobile ? 350 : isTablet ? 700 : "100%"} />
     </Div>
   );
 };

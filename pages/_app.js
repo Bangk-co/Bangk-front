@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider as MUIThemeProvider } from "@mui/material";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
 import "./app.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import Layout from "../components/Layout";
 import { Link } from "@/components/Common/Link";

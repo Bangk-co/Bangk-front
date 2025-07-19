@@ -6,6 +6,7 @@ import medBg from "@/assets/img/old-man-cross.png";
 //Banner
 export const Wrapper = styled.div`
   display: flex;
+  height: 597px;
   background: ${theme.colors.green};
   padding: 90px 40px 60px 70px;
 
@@ -16,6 +17,26 @@ export const Wrapper = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: 40px 10px 20px 30px;
+    height: 420px;
+  }
+`;
+
+export const Wrapper2 = styled.div`
+  position: relative;
+  flex-direction: column;
+  display: flex;
+  height: 597px;
+  background: ${theme.colors.green50};
+  padding: 90px 40px 60px 70px;
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
+    padding: 70px 20px 40px 50px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 40px 10px 20px 30px;
+    height: 420px;
   }
 `;
 

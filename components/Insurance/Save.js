@@ -13,15 +13,13 @@ import logo from "../../assets/icons/single-green-logo.svg";
 import { theme } from "@/styles/theme";
 import SaveMobile from "./SaveMobile";
 import { Button } from "../Button";
-import { wappLink } from "@/utilities/options";
+import { useRouter } from "next/router";
 
 const Save = ({ isMobile, isTablet }) => {
-  const handleWapp = () => {
-    const a = document.createElement("a");
-    a.href = `${wappLink}`;
-    document.body.appendChild(a);
-    a.target = "_blank";
-    a.click();
+  const router = useRouter();
+
+  const handleGo = () => {
+    router.push("/cotiza-tu-ahorro/");
   };
 
   return (
@@ -65,7 +63,7 @@ const Save = ({ isMobile, isTablet }) => {
               condiciones que pide el banco o la entidad ﬁnanciera, pero que te
               cueste mucho menos.
             </MessageSave>
-            <Button onClick={handleWapp}>Ahorra ya!</Button>
+            <Button onClick={handleGo}>Ahorra ya!</Button>
           </Col4>
         </>
       )}

@@ -205,12 +205,13 @@ const TransactionState = ({ isMobile }) => {
             top: 0,
             left: 0,
             width: "100vw",
-            height: "100vh",
+            height: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             zIndex: 9999,
+            padding: "0 30px",
           }}
         >
           <CircularProgress style={{ color: theme.colors.white }} />

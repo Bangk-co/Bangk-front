@@ -16,9 +16,7 @@ export const Card = styled.div`
 export const WrapperCodeNumber = styled.div`
   width: 99.25px;
   height: 72px;
-  padding: 10px;
   border-radius: 10px;
-  gap: 10px;
   background: ${theme.colors.primary25};
 
   @media (max-width: ${theme.breakpoints.sm}) {

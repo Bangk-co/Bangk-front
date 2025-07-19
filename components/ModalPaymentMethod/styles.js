@@ -15,4 +15,10 @@ export const WrapperModal = styled.div`
   gap: 10px;
   background: ${theme.colors.white};
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 80%;
+    height: 450px;
+    padding: 16px 20px;
+  }
 `;

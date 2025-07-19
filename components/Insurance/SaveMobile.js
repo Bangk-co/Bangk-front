@@ -5,15 +5,13 @@ import { Col3, Col4, MessageSave, TitleSave } from "./styles";
 import { theme } from "@/styles/theme";
 import woman from "../../assets/img/white-woman.svg";
 import { Button } from "../Button";
-import { wappLink } from "@/utilities/options";
+import { useRouter } from "next/router";
 
 const SaveMobile = () => {
-  const handleWapp = () => {
-    const a = document.createElement("a");
-    a.href = `${wappLink}`;
-    document.body.appendChild(a);
-    a.target = "_blank";
-    a.click();
+  const router = useRouter();
+
+  const handleGo = () => {
+    router.push("/cotiza-tu-ahorro/");
   };
 
   return (
@@ -46,7 +44,7 @@ const SaveMobile = () => {
               condiciones que pide el banco o la entidad ﬁnanciera, pero que te
               cueste mucho menos.
             </MessageSave>
-            <Button onClick={handleWapp}>Ahorra ya!</Button>
+            <Button onClick={handleGo}>Ahorra ya!</Button>
           </Col4>
         </Div>
       </Div>

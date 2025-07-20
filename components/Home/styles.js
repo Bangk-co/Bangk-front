@@ -132,26 +132,22 @@ export const WrapperWhy = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 747px;
+  height: 100%;
 
   @media (max-width: ${theme.breakpoints.sm}) {
     flex-direction: column;
-    height: 810px;
-  }
-
-  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
-      .breakpoints.md}) {
-    height: 356px;
   }
 `;
 
 export const Col1 = styled.div`
   display: flex;
+  position: relative;
   width: 50%;
   background: ${theme.colors.green};
   order: 1;
 
   @media (max-width: ${theme.breakpoints.sm}) {
+    height: 400px;
     width: 100%;
     order: 2;
   }
@@ -167,8 +163,7 @@ export const Col2 = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
-    height: 400px;
-    padding: 38px 121px 22px 59.27px;
+    padding: 38px 80px 22px 59.27px;
     order: 1;
   }
 
@@ -197,24 +192,36 @@ export const TitleWhy = styled.div`
   }
 `;
 
-export const WrapperStarWhy = styled.div`
-  display: flex;
-  width: 41px;
-  height: 43px;
-  margin: 31px 0px 57px 0px;
+export const SubtitleWhy = styled.div`
+  font-family: Gilroy Bold;
+  font-size: ${theme.fonts.size.h4s};
+  line-height: 36px;
+  color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    position: absolute;
-    width: 19.48px;
-    height: 20.44px;
-    top: 103em;
-    left: 1.6em;
+    font-size: ${theme.fonts.size.default};
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    width: 18px;
-    height: 19px;
+    font-size: ${theme.fonts.size.h6};
+  }
+`;
+
+export const WrapperStarWhy = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  margin: 31px 0px 37px 0px;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    gap: 10px;
+    margin: 20px 0px;
+  }
+
+  @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
+      .breakpoints.md}) {
     margin: 10.87px 0px 20px 0px;
   }
 `;

@@ -100,11 +100,11 @@ export const Slider2 = ({ isMobile }) => {
             </Text>
           </Div>
         </Div>
-        {/* {!isMobile && (
-          <Div width="20%">
-            <Image alt="wow-banner" src={wowBanner} />
+        {!isMobile && (
+          <Div width="40%">
+            <Image alt="wow-banner" height={400} src={wowBanner} />
           </Div>
-        )} */}
+        )}
       </Div>
     </Wrapper2>
   );

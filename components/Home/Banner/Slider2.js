@@ -5,7 +5,7 @@ import Image from "next/image";
 import bangkFlag from "@/assets/img/bangkFlag.svg";
 import orangeLine from "@/assets/img/orangeLine.svg";
 import ovalYellow from "@/assets/img/ovalYellow.svg";
-import wowBanner from "@/assets/img/wowBanner.svg";
+import wowBanner from "@/assets/img/wowBanner.png";
 import bannerButton from "@/assets/img/bannerButton.svg";
 import { theme } from "@/styles/theme";
 import { wappLink } from "@/utilities/options";

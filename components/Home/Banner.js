@@ -1,70 +1,35 @@
 import React from "react";
-import Image from "next/image";
-import { Col, Row } from "antd";
-import {
-  Message,
-  Title,
-  Wrapper,
-  WrapperImage,
-  WrapperStar,
-  WrapperText,
-} from "./styles";
-import man from "../../assets/img/surprised-man.svg";
-import star from "../../assets/icons/orange-star.svg";
-import text from "../../assets/icons/text.png";
-import { theme } from "@/styles/theme";
-import { Button } from "../Button";
-import { wappLink } from "@/utilities/options";
-import { useRouter } from "next/router";
-import { Div } from "@/styles/Common";
+import Slider from "react-slick";
+import { Slider1 } from "./Banner/Slider1";
+import { Slider2 } from "./Banner/Slider2";
 
 const Banner = ({ isMobile }) => {
-  const router = useRouter();
 
-  const handleQuote = () => {
-    router.push("/cotiza-tu-ahorro");
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          dots: true,
+          arrows: true,
+        }
+      }
+    ]
   };
 
   return (
-    <Wrapper>
-      <Div
-        style={{ width: "100%" }}
-        direction={isMobile ? "column" : "row"}
-        justify={!isMobile && "space-between"}
-      >
-        <Div direction="column">
-          <Title>Misma cobertura</Title>
-          <Title color={theme.colors.yellow}>Menos cuota!</Title>
-          <Message>
-            Buscamos el mejor precio posible para el seguro de vida de tus
-            deudas y de incendio y terremoto, así ahorras en la cuota mensual
-            que pagas al banco sin cambiar la cobertura
-          </Message>
-          <WrapperText>
-            <Image
-              alt="text"
-              src={text}
-              width={isMobile ? 250 : 560}
-              height={isMobile ? 19 : 44}
-            />
-          </WrapperText>
-          <Button onClick={handleQuote}>Ahorra ya!</Button>
-        </Div>
-        <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
-          <WrapperStar>
-            <Image alt="star" src={star} width={48} height={48} />
-          </WrapperStar>
-          <WrapperImage>
-            <Image
-              alt="surprised-man"
-              src={man}
-              width={isMobile ? 167 : 413}
-              height={isMobile ? 167 : 412}
-            />
-          </WrapperImage>
-        </Col>
-      </Div>
-    </Wrapper>
+    <Slider {...settings}>
+      <Slider1 isMobile={isMobile} />
+      <Slider2 isMobile={isMobile} />
+    </Slider>
   );
 };
 

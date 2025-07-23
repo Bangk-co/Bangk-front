@@ -254,7 +254,7 @@ export const TitularForm = ({
               )}
             />
           </Div>
-          <Div width={isMobile ? "100%" : "72%"}>
+          <Div width={isMobile ? "100%" : "72%"} m={isMobile ? "22px 0 0 0" : "0"}>
             <TextField
               {...labelsProps}
               id="phoneNumber"

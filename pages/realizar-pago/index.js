@@ -78,7 +78,8 @@ const RealizarPago = ({ isMobile }) => {
     hover: theme.colors.orange1000,
     borderHover: theme.colors.orange1000,
     height: "40px",
-    borderRadius: "50px"
+    borderRadius: "50px",
+    width: isMobile ? "100%" : "163px",
   };
 
   const returnIcon = () => {
@@ -405,12 +406,13 @@ const RealizarPago = ({ isMobile }) => {
             top: 0,
             left: 0,
             width: "100vw",
-            height: "100vh",
+            height: "100%",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             zIndex: 9999,
+            padding: "0 30px",
           }}
         >
           <CircularProgress lineColor={theme.colors.white} />
@@ -546,7 +548,7 @@ const RealizarPago = ({ isMobile }) => {
                   </Text>
                 </Div>
               </Div>
-              <Div height="100%" align="flex-end">
+              <Div height="100%" align="flex-end" m={isMobile ? "20px 0 0 0" : "0"}>
                 <Button 
                   {...buttonProps} 
                   disabled={!isValidButton() || createInsurance.isLoading || createPetInsurance.isLoading || cardPayment.isLoading}

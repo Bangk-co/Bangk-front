@@ -22,9 +22,9 @@ const Insurance = ({ isMobile, isTablet }) => {
   return (
     <Div direction="column">
       <Banner isMobile={isMobile} />
+      <Stepper isMobile={isMobile} isTablet={isTablet} />
       <Save isMobile={isMobile} isTablet={isTablet} />
       <BangkData isMobile={isMobile} isTablet={isTablet} />
-      <Stepper isMobile={isMobile} isTablet={isTablet} />
       <FormInfo isMobile={isMobile} />
     </Div>
   );

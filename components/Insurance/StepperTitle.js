@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { Div } from "@/styles/Common";
 import { Title1, Title2, WrapperTitle, WrapperUy } from "../Common/styles";
 import { theme } from "@/styles/theme";
 import uy from "../../assets/icons/uy.svg";

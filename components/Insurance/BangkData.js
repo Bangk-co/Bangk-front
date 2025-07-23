@@ -5,7 +5,6 @@ import {
   LineData,
   RowData,
   TitleData,
-  WrapperBigStar,
   WrapperData,
   WrapperStar,
 } from "./styles";
@@ -80,14 +79,6 @@ const BangkData = ({ isMobile, isTablet }) => {
           <br></br>
         </InfoText>
       </RowData>
-      <WrapperBigStar>
-        <Image
-          alt="star"
-          src={star}
-          width={isMobile ? 110 : 283}
-          height={isMobile ? 110 : 283}
-        />
-      </WrapperBigStar>
     </WrapperData>
   );
 };

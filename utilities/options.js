@@ -5,6 +5,7 @@ import photoBlog3 from "../assets/img/photo-blog3.jpg";
 import photoBlog4 from "../assets/img/photo-blog4.jpg";
 import { whatsappNumber } from "./helpers";
 
+
 export const wappLink =
   `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=Hola%20Bangk,%20Quiero%20Ahorrar!`;
 

@@ -1,6 +1,15 @@
 {
   "navigationFallback": {
     "rewrite": "index.html",
+
     "exclude": ["*.{png,jpg,gif,svg,mp4}", "*.css"]
-  }
+  },
+  "routes": [
+    {
+      "route": "bangk.co",
+      "redirect": "https://www.bangk.co",
+      "statusCode": 301
+    }
+  ]
 }
+

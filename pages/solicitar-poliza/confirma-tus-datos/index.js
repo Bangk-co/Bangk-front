@@ -66,10 +66,12 @@ const UserInfoConfirmation = ({ isMobile }) => {
   useEffect(() => {
     if (isSuccessDocument && dataDocument?.data?.groupSettings.length > 0)
       setDocumentTypeOptions(
-        dataDocument?.data?.groupSettings.map((ele) => ({
-          label: ele.name,
-          value: ele.id,
-        }))
+        dataDocument?.data?.groupSettings
+          .filter((ele) => ele.id !== 723)
+          .map((ele) => ({
+            label: ele.name,
+            value: ele.id,
+          }))
       );
   }, [dataDocument, isSuccessDocument]);
 

@@ -13,10 +13,12 @@ export const AdditionalData = ({ additionalInfo }) => {
   useEffect(() => {
     if (isSuccessDocument && dataDocument?.data?.groupSettings.length > 0)
       setDocumentTypeOptions(
-        dataDocument?.data?.groupSettings.map((ele) => ({
-          name: ele.name,
-          id: ele.id,
-        }))
+        dataDocument?.data?.groupSettings
+          .filter((ele) => ele.id !== 723)
+          .map((ele) => ({
+            name: ele.name,
+            id: ele.id,
+          }))
       );
   }, [dataDocument, isSuccessDocument]);
 

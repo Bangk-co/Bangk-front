@@ -21,15 +21,15 @@ import BannerCalc from "@/components/ViewQuote/BannerCalc";
 
 const ViewQuote = ({ isMobile, isTablet }) => {
   const router = useRouter();
+  const { requestId } = router.query;
   const dispatch = useDispatch();
   const { requests } = useSelector((state) => state);
   const { otpDate } = useSelector((state) => state)?.balance;
-
   const acceptLoanQuote = useAcceptLoanQuote();
   const rejectLoanQuote = useRejectLoanQuote();
 
   const loanApplications = useGetLoanQuoteByApplicationId(
-    requests?.selectedRequest
+    requestId || requests?.selectedRequest
   );
   const { data: dataLoanApplication, isLoading } = loanApplications;
   const [loanApplicationInfo, setLoanApplicationInfo] = useState();
@@ -118,7 +118,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     acceptLoanQuote.reset();
     acceptLoanQuote.mutate(
       {
-        loanApplicationId: requests?.selectedRequest,
+        loanApplicationId: requestId || requests?.selectedRequest,
         terms: dayjs(termsDate),
         otpDate: dayjs(otpDate),
         sbsPrivacyPolicies: termsSBS ? dayjs(termsSBSDate) : null,
@@ -142,7 +142,7 @@ const ViewQuote = ({ isMobile, isTablet }) => {
     rejectLoanQuote.reset();
     rejectLoanQuote.mutate(
       {
-        loanApplicationId: requests?.selectedRequest,
+        loanApplicationId: requestId || requests?.selectedRequest,
         observations: reasonToReject,
       },
       {

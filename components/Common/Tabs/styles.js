@@ -11,8 +11,9 @@ export const CustomTab = styled(Tab)`
     text-transform: none;
 
     &.Mui-selected {
-      color: ${theme.colors.neutralGray900};
+      color: ${({ source }) => source === "pet" ? theme.colors.gray150 : theme.colors.neutralGray900};
       font-family: ${theme.fonts.family.primaryBold};
+      font-size: ${({ source }) => source === "pet" ? theme.fonts.size.h5s : theme.fonts.size.h6};
     }
   }
 `;

@@ -12,6 +12,7 @@ import { BackButton } from "@/components/Quote/BackButton";
 import { Button } from "@/components/Common/Button";
 import { setSelectedRequestInformation } from "@/store/requests";
 import { useRouter } from "next/router";
+import { whatsappNumber } from "@/utilities/helpers";
 
 const ContinueQuoting = ({ isMobile }) => {
   const dispatch = useDispatch();
@@ -19,13 +20,11 @@ const ContinueQuoting = ({ isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleWapp = () => {
-    const phoneNumber = "3009136761";
-    const message = "Hola! quiero cotizar mi seguro de vida deudores";
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
-
-    window.open(url, "_blank");
+    const phoneNumber = whatsappNumber;
+    const message = 'Hola! quiero cotizar mi seguro de vida deudores';
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(url, '_blank');
 
     dispatch(resetInitData());
     dispatch(setOtpDate(null));

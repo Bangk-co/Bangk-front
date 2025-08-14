@@ -13,9 +13,11 @@ import { setSelectedRequestInformation } from "@/store/requests";
 export const BackButton = ({ isHovered, setIsHovered }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const isAuth = !!localStorage.getItem("user");
+  
   const handleBack = () => {
-    router.push("/");
+    const homeRoute = isAuth ? "/plataforma-cliente/home" : "/";
+    router.push(homeRoute);
     dispatch(resetInitData());
     dispatch(setSelectedRequestInformation({}));
   };

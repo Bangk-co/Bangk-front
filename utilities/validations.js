@@ -141,3 +141,85 @@ export const validateEditVehiculeInfo = Joi.object({
   cityVehiculeId: Joi.number().required(),
   vehicleLicensePlate: Joi.string().required(),
 });
+
+export const validateMedBangkForm = Joi.object({
+  methodOfPayment: Joi.number().required(),
+  planAmount: Joi.number().integer().min(1).required(),
+  documentType: Joi.number().required(),
+  documentNumber: Joi.string().min(5).max(13).required(),
+  email: validateEmailRequired,
+  name: Joi.string().min(2).max(50).required(),
+  lastName: Joi.string().min(2).max(50).required(),
+  countryCode: Joi.number().required(),
+  phoneNumber: Joi.string().min(7).max(15).required(),
+  beneficiary: Joi.boolean(),
+  authorization: Joi.boolean().valid(true).required(),
+
+  beneficiariesInfo: Joi.array()
+    .items(
+      Joi.object({
+        documentType: Joi.number().required(),
+        documentNumber: Joi.string().min(5).max(13).required(),
+        email: validateEmailRequired,
+        beneficiaryName: Joi.string().min(2).max(50).required(),
+        beneficiaryLastname: Joi.string().min(2).max(50).required(),
+        countryCode: Joi.number().required(),
+        phoneNumber: Joi.string().min(7).max(15).required(),
+      })
+    )
+    .min(1),
+});
+
+export const validatePetFormStep1 = Joi.object({
+  paymentOcurrencyId: Joi.number().required(),
+  documentTypeId: Joi.number().required(),
+  documentNumber: Joi.string()
+    .min(5)
+    .max(13)
+    .required()
+    .pattern(/^[a-zA-Z0-9]+$/),
+  email: validateEmailRequired.min(4).max(256),
+  name: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+  lastName: Joi.string()
+    .min(2)
+    .max(50)
+    .required()
+    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+  countryCodePhoneId: Joi.number().required(),
+  phoneNumber: Joi.string()
+    .min(7)
+    .max(15)
+    .required()
+    .pattern(/^[0-9]+$/),
+  authorization: Joi.boolean().valid(true).required(),
+});
+
+export const validatePetFormStep2 = Joi.object({
+  pets: Joi.array().items(
+    Joi.object({
+      id: Joi.number().required(),
+      petTypeId: Joi.number().required(),
+      name: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+      breed: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+      age: Joi.number().min(1).max(100).required(),
+      ageTime: Joi.string().required(),
+      color: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+    })
+  ),
+});

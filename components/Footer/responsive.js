@@ -42,7 +42,7 @@ const FooterResponsive = ({ isMobile }) => {
           <span
             style={{
               color: theme.colors.white,
-              fontSize: theme.fonts.size.xxxs,
+              fontSize: theme.fonts.size.xs,
               fontWeight: theme.fonts.weight.medium,
               lineHeight: "9px",
               width: "110px",
@@ -50,18 +50,18 @@ const FooterResponsive = ({ isMobile }) => {
               textAlign: "-webkit-center",
             }}
           >
-            Una plataforma{" "}
+            Un aliado para{" "}
             <span style={{ color: theme.colors.orange }}>
-              en la que ahorras tiempo y dinero
+              ahorrar tiempo y dinero
             </span>
           </span>
         ) : (
           <>
             <MessageText style={{ marginBottom: 0 }}>
-              Una plataforma{" "}
+              Un aliado para{" "}
             </MessageText>
             <MessageText style={{ color: theme.colors.orange, marginTop: 0 }}>
-              en la que ahorras <br></br> tiempo y dinero
+              ahorrar <br></br> tiempo y dinero
             </MessageText>
           </>
         )}
@@ -93,7 +93,7 @@ const FooterResponsive = ({ isMobile }) => {
                 {ele.list.map((elem, index) => (
                   <Link
                     key={index}
-                    size={"8px"}
+                    size={theme.fonts.size.xs}
                     color={theme.colors.white}
                     onClick={() => goLink(elem.link, elem.isExtern, elem.email)}
                     style={{

@@ -7,14 +7,45 @@ import applications from "./applications";
 import requests from "./requests";
 import auth from "./auth";
 import policy from "./policy";
+import pets from "./pets";
+import payment from "./payment";
+import med from "./med";
 
-const persistConfig = {
-  key: "root",
+// Configuración de persistencia para cada reducer (con keys únicas)
+const balancePersistConfig = {
+  key: "balance",
   storage,
 };
 
-const persistedBalanceReducer = persistReducer(persistConfig, balance);
-const persistedRequestsReducer = persistReducer(persistConfig, requests);
+const requestsPersistConfig = {
+  key: "requests",
+  storage,
+};
+
+const petsPersistConfig = {
+  key: "pets",
+  storage,
+};
+
+const paymentPersistConfig = {
+  key: "payment",
+  storage,
+};
+
+const medPersistConfig = {
+  key: "med",
+  storage,
+};
+
+// Aplicar persistencia a cada reducer con su propia configuración
+const persistedBalanceReducer = persistReducer(balancePersistConfig, balance);
+const persistedRequestsReducer = persistReducer(
+  requestsPersistConfig,
+  requests
+);
+const persistedPetsReducer = persistReducer(petsPersistConfig, pets);
+const persistedPaymentReducer = persistReducer(paymentPersistConfig, payment);
+const persistedMedReducer = persistReducer(medPersistConfig, med);
 
 const store = configureStore({
   reducer: {
@@ -24,6 +55,9 @@ const store = configureStore({
     requests: persistedRequestsReducer,
     auth,
     policy,
+    pets: persistedPetsReducer,
+    payment: persistedPaymentReducer,
+    med: persistedMedReducer,
   },
 });
 

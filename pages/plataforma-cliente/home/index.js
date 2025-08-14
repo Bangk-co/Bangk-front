@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import Header from "@/components/ClientPlatform/Header";
 import { Layout } from "@/components/ClientPlatform/Layout";
 import { useAuth } from "@/hooks/useAuth";
-import { Text } from "@/styles/Common";
 import { FooterNav } from "@/components/ClientPlatform/FooterNav";
+import { Home } from "@/components/ClientPlatform/Home";
 
 const ClientHome = ({ isMobile, isTablet }) => {
   const router = useRouter();
@@ -23,12 +23,12 @@ const ClientHome = ({ isMobile, isTablet }) => {
       <Header isMobile={isMobile} />
       {isMobile ? (
         <>
-          <Text>Home mobile</Text>
+          <Home isMobile={isMobile} />
           <FooterNav />
         </>
       ) : (
         <Layout>
-          <Text>home</Text>
+          <Home isMobile={isMobile} />
         </Layout>
       )}
     </div>

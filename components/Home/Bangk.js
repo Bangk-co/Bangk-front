@@ -55,8 +55,8 @@ const Bangk = ({ isMobile }) => {
         <Image
           alt="coin"
           src={greenCoin}
-          width={isMobile ? 336 : 511}
-          height={isMobile ? 321 : 562}
+          width={isMobile ? 300 : 511}
+          height={isMobile ? 329 : 562}
         />
       </Col4>
     </WrapperBangk>

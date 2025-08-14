@@ -29,13 +29,14 @@ export const WrapperMenu = styled.div`
   right: 0px;
   left: 0px;
   width: 100%;
-  height: 93%;
+  height: auto;
   background: ${theme.colors.green};
-  z-index: 5;
+  z-index: 15;
+  padding: 20px 0 20px 0;
 `;
 
 export const Text = styled.div`
-  font-size: ${theme.fonts.size.xxxs};
+  font-size: ${theme.fonts.size.xs};
   line-height: 9px;
   color: ${theme.colors.white};
   text-align: center;

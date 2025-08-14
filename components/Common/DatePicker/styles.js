@@ -38,6 +38,27 @@ export const CustomDatePicker = styled(DatePicker)`
     font-size: ${({ size }) => size || theme.fonts.size.sm};
     text-transform: lowercase;
   }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    .MuiPaper-root {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      margin: 0 !important;
+      max-height: 90vh !important;
+      overflow-y: auto !important;
+    }
+    
+    .MuiDialog-root {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+    }
+  }
 `;
 
 export const CustomCalendarIcon = styled(CalendarTodayOutlinedIcon)`

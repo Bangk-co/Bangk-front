@@ -68,6 +68,7 @@ const MedBangk = ({ isMobile }) => {
       >
         <Button
           height={"40px"}
+          width={isMobile ? "160px" : "167px"}
           font={theme.fonts.family.primaryBold}
           size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
           background={theme.colors.green1000}

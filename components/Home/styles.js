@@ -163,7 +163,7 @@ export const Col2 = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
-    padding: 38px 80px 22px 59.27px;
+    padding: 38px 59.27px 22px 59.27px;
     order: 1;
   }
 
@@ -199,7 +199,7 @@ export const SubtitleWhy = styled.div`
   color: ${theme.colors.green};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.default};
+    font-size: ${theme.fonts.size.h6};
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -234,14 +234,12 @@ export const TextWhy = styled.div`
   margin-bottom: 30px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.sm};
-    line-height: 12px;
+    font-size: ${theme.fonts.size.h6};
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.sm};
-    line-height: 12px;
+    font-size: ${theme.fonts.size.h6};
   }
 `;
 

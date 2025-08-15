@@ -9,7 +9,7 @@ const HousingLaw = ({ isMobile, isTablet }) => {
     <Div
       direction="column"
       width="100%"
-      padding={isMobile ? "60px 50px 90px 50px" : "70px 72px"}
+      padding={isMobile ? "60px 50px 0px 50px" : "70px 72px"}
       justify="center"
       align="center"
     >
@@ -19,7 +19,15 @@ const HousingLaw = ({ isMobile, isTablet }) => {
         font={theme.fonts.family.primaryBold}
         mb={isMobile ? "30px" : "50px"}
       >
-        Descubre cómo <span style={{ color: theme.colors.green1100, fontFamily: theme.fonts.family.primaryBold }}>ahorrar millones</span>{" "}
+        Descubre cómo{" "}
+        <span
+          style={{
+            color: theme.colors.green1100,
+            fontFamily: theme.fonts.family.primaryBold,
+          }}
+        >
+          ahorrar millones
+        </span>{" "}
         {!isMobile && <br />}
         con tu crédito!
       </Text>
@@ -29,9 +37,14 @@ const HousingLaw = ({ isMobile, isTablet }) => {
         font={theme.fonts.family.primaryMedium}
         mb={isMobile ? "50px" : "70px"}
       >
-        En Bangk, te ayudamos a usar la Ley de Vivienda para obtener beneficios en tus créditos
+        En Bangk, te ayudamos a usar la Ley de Vivienda para obtener beneficios
+        en tus créditos
       </Text>
-      <Image src={housingLawImg} alt="housing-law" width={isMobile ? 350 : isTablet ? 700 : "100%"} />
+      <Image
+        src={housingLawImg}
+        alt="housing-law"
+        width={isMobile ? 300 : isTablet ? 700 : "100%"}
+      />
     </Div>
   );
 };

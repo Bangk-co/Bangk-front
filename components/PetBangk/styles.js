@@ -46,7 +46,7 @@ export const Title = styled.div`
   height: 75px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.default};
+    font-size: ${theme.fonts.size.h5s};
     height: 25px;
   }
 

@@ -32,14 +32,18 @@ const FormInfo = ({ isMobile }) => {
         &nbsp;Nuestro Formulario
       </WrapperTitle>
       <WrapperInfoText>
-        <Row gutter={[40, 40]}>
+        <Row gutter={isMobile ? [20, 20] : [40, 40]}>
           {infoList.map((ele, indx) => (
             <Col
               key={indx}
               lg={12}
               md={12}
               sm={24}
-              style={{ display: "flex", flexDirection: "row", gap: "16px" }}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: isMobile ? "5px" : "16px",
+              }}
             >
               <WrapperStarInfo>
                 <Image

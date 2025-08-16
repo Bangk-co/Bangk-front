@@ -326,7 +326,7 @@ export const Text1Bangk = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.default2};
     line-height: 18px;
-    margin: 10px 0px 18px 0px;
+    margin: 10px 0px 20px 0px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -781,7 +781,7 @@ export const WrapperMedBangk = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: ${(props) => (props.isMobile ? "40px 22px" : "70px 72px")};
+  padding: ${(props) => (props.isMobile ? "10px 22px 40px 22px" : "70px 72px")};
   background-image: url(${backgroundImageUrlMed});
   background-position: center;
   background-repeat: no-repeat;

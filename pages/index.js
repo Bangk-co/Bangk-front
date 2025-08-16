@@ -40,7 +40,7 @@ const Home = ({ isMobile, isTablet }) => {
   }, []);
 
   return (
-    <Div direction="column">
+    <Div direction="column" style={{ overflowX: isMobile && "hidden" }}>
       <Banner isMobile={isMobile} />
       <HousingLaw isMobile={isMobile} isTablet={isTablet} />
       <WhyWeDoIt isMobile={isMobile} />

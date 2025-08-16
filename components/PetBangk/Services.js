@@ -143,7 +143,7 @@ export const Services = ({ isMobile, isTablet }) => {
         "Buscamos tu <span style='font-family: Gilroy Bold; color: #563f88'>mascota</span>",
       color: theme.colors.purple,
       description:
-        "Servicio el cual hace viral la busqueda de tu mascota en la zona del percance, siendo rápido y efectivo la divulgación, ahorrando tiempo y esfuerzos.",
+        "Servicio el cual hace viral la búsqueda de tu mascota en la zona del percance, siendo rápido y efectivo la divulgación, ahorrando tiempo y esfuerzos.",
       butttons: [
         { label: "Básico", id: 1 },
         { label: "Avanzado", id: 2 },

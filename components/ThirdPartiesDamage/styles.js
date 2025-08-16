@@ -32,6 +32,10 @@ export const WrapperCoverage = styled.div`
   align-items: left;
   background: ${theme.colors.light4};
   position: relative;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: 80px 35px;
+  }
 `;
 
 export const WrapperFaqs = styled.div`

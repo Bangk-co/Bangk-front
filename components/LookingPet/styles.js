@@ -20,7 +20,7 @@ export const WrapperSearchPackages = styled.div`
   padding: 90px 80px 120px 120px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 90px 80px;
+    padding: 45px 80px;
   }
 `;
 

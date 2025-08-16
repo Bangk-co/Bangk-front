@@ -56,7 +56,7 @@ const MedBangk = ({ isMobile }) => {
         justify={"space-between"}
         align={isMobile && "center"}
         width="100%"
-        m={isMobile ? "0 0 230px 0" : "0 0 430px 0"}
+        m={isMobile ? "0 0 680px 0" : "0 0 430px 0"}
         direction={isMobile ? "column" : "row"}
         background={isMobile && theme.colors.white}
         p={isMobile && "10px"}
@@ -68,6 +68,7 @@ const MedBangk = ({ isMobile }) => {
       >
         <Button
           height={"40px"}
+          width={isMobile ? "160px" : "167px"}
           font={theme.fonts.family.primaryBold}
           size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
           background={theme.colors.green1000}
@@ -115,7 +116,7 @@ const MedBangk = ({ isMobile }) => {
             src={medLogo}
             alt="medBangk"
             width={isMobile ? 217 : 380}
-            height={isMobile ? 51 : 90}
+            height={isMobile ? 41 : 90}
           />
         </Col>
         <Col

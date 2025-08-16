@@ -18,7 +18,7 @@ export const Benefits = ({ isMobile }) => {
     },
     {
       title: "Médico a domicilio",
-      text: "En caso de una emergencia médica que pueda tratarse en el domicilio del Afiliado y que no requiera traslado hospitalario (según criterio y autorización del equipo médico telefónico de GEA), Se coordinará el envío de un médico al domicilio para realizar un chequeo, revisión o diagnóstico basado en la emergencia médica reportada previamente."
+      text: "En caso de una emergencia médica que pueda tratarse en el domicilio del Afiliado y que no requiera traslado hospitalario (según criterio y autorización del equipo médico telefónico de GEA), Se coordinará el envío de un médico al domicilio para realizar un chequeo, revisión o diagnóstico basado en la emergencia médica reportada previamente.",
     },
     {
       title: "Acompañamiento a citas médicas",
@@ -55,7 +55,7 @@ export const Benefits = ({ isMobile }) => {
           >
             Beneficios
             <br />
-            para la 
+            para la
             <br />
             salud
           </Text>
@@ -65,7 +65,8 @@ export const Benefits = ({ isMobile }) => {
             mb={isMobile ? "40px" : "120px"}
             style={{ width: "200px" }}
           >
-            Con este plan de cobertura individual puedes tener todos estos befenicios y más.
+            Con este plan de cobertura individual puedes tener todos estos
+            befenicios y más.
           </Text>
         </Col>
         <Col m="0px 0 20px 0" width="65%" gap="20px">
@@ -73,7 +74,7 @@ export const Benefits = ({ isMobile }) => {
             <>
               <Div
                 key={index}
-                p={isMobile ? "20px" : "50px 90px"}
+                p={isMobile ? "20px 15px" : "50px 90px"}
                 gap="50px"
                 width={isMobile ? "350px" : "100%"}
                 style={{
@@ -101,9 +102,13 @@ export const Benefits = ({ isMobile }) => {
                     {step.list && (
                       <Div direction="column" m="20px 0 0 0">
                         {step.list.map((item, index) => (
-                          <Text 
+                          <Text
                             color={theme.colors.green1000}
-                            size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.ft}
+                            size={
+                              isMobile
+                                ? theme.fonts.size.h6
+                                : theme.fonts.size.ft
+                            }
                             key={index}
                           >
                             - {item}

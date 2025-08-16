@@ -41,7 +41,6 @@ const Bangk = ({ isMobile }) => {
           Las posibilidades financieras están siempre ahí, simplemente no sabías
           dónde buscarlas y cómo compararlas.<br></br>
           <br></br>
-          <br></br>
           <strong>Nuestro trabajo es hacerlo para ti!</strong> <br></br>
           <br></br>Buscamos la mejor opción en el mercado y... Bangk ! Ahorras
           en tu cuota<br></br>
@@ -49,7 +48,14 @@ const Bangk = ({ isMobile }) => {
           flujos mensuales<br></br>
           <br></br> Buscamos el mejor aliado y...Bangk! Es Bangk!
         </Text2Bangk>
-        <Button onClick={goInsurance}>Conoce más</Button>
+        <Button
+          height={isMobile && "25px"}
+          width={isMobile && "150px"}
+          size={isMobile && theme.fonts.size.default2}
+          onClick={goInsurance}
+        >
+          Conoce más
+        </Button>
       </Col3>
       <Col4>
         <Image

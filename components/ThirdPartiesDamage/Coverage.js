@@ -42,8 +42,8 @@ const Coverage = ({ isMobile }) => {
             <Row
               key={index}
               align="center"
-              gap="40px"
-              p={isMobile ? "20px" : "50px 90px"}
+              gap={isMobile ? "20px" : "40px"}
+              p={isMobile ? "20px 10px" : "50px 90px"}
               style={{
                 borderBottom:
                   index + 1 < coveragesText.length &&

@@ -44,7 +44,14 @@ const SaveMobile = () => {
               condiciones que pide el banco o la entidad ﬁnanciera, pero que te
               cueste mucho menos.
             </MessageSave>
-            <Button onClick={handleGo}>Ahorra ya!</Button>
+            <Button
+              height={"25px"}
+              width={"150px"}
+              size={theme.fonts.size.default2}
+              onClick={handleGo}
+            >
+              Ahorra ya!
+            </Button>
           </Col4>
         </Div>
       </Div>

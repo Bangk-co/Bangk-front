@@ -55,7 +55,10 @@ const Reviews = ({ isMobile, isTablet }) => {
                 <Image alt="message" src={message} width={49} />
               </WrapperComment>
               <CommentText>
-                &quot;Ellos me ayudaron a resolver un problema que tenia Toby sin tener que transportarme y sin tener que gastar altas cantidades de dinero, con Bangk la solución para tu mascota está aquí.&quot;
+                &quot;Ellos me ayudaron a resolver un problema que tenia Toby
+                sin tener que transportarme y sin tener que gastar altas
+                cantidades de dinero, con Bangk la solución para tu mascota está
+                aquí.&quot;
               </CommentText>
               <Line />
               <WrapperPerson>
@@ -105,6 +108,8 @@ const Reviews = ({ isMobile, isTablet }) => {
         justify="center"
         direction="column"
         align="center"
+        width={isMobile && "100vw"}
+        p={isMobile && "20px"}
       >
         <Text
           color={theme.colors.blue200}
@@ -122,6 +127,7 @@ const Reviews = ({ isMobile, isTablet }) => {
         <Text color={theme.colors.blue200} mt="18px">
           Consulta
           <Link
+            width={isMobile && "0px"}
             color={theme.colors.blue200}
             size={theme.fonts.size.default}
             font={theme.fonts.family.primary}

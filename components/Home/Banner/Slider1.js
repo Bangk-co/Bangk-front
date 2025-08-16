@@ -1,5 +1,12 @@
 import React from "react";
-import { Message, Title, Wrapper, WrapperImage, WrapperStar, WrapperText } from "../styles";
+import {
+  Message,
+  Title,
+  Wrapper,
+  WrapperImage,
+  WrapperStar,
+  WrapperText,
+} from "../styles";
 import { Div } from "@/styles/Common";
 import Image from "next/image";
 import { Button } from "@/components/Button";
@@ -40,7 +47,14 @@ export const Slider1 = ({ isMobile }) => {
               height={isMobile ? 19 : 44}
             />
           </WrapperText>
-          <Button onClick={handleQuote}>Ahorra ya!</Button>
+          <Button
+            height={isMobile && "25px"}
+            width={isMobile && "150px"}
+            size={isMobile && theme.fonts.size.default2}
+            onClick={handleQuote}
+          >
+            Ahorra ya!
+          </Button>
         </Div>
         <Col lg={8} md={10} xs={10} style={{ alignSelf: "center" }}>
           <WrapperStar>
@@ -50,12 +64,12 @@ export const Slider1 = ({ isMobile }) => {
             <Image
               alt="surprised-man"
               src={man}
-              width={isMobile ? 167 : 413}
-              height={isMobile ? 167 : 412}
+              width={isMobile ? 140 : 413}
+              height={isMobile ? 140 : 412}
             />
           </WrapperImage>
         </Col>
       </Div>
     </Wrapper>
-  )
+  );
 };

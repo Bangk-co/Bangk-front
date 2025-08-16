@@ -30,7 +30,7 @@ const PetBangk = ({ isMobile }) => {
         </Text>
         <Text
           color={theme.colors.white}
-          size={isMobile ? theme.fonts.size.xl : theme.fonts.size.xxxl}
+          size={isMobile ? theme.fonts.size.lgs : theme.fonts.size.xxxl}
           font={theme.fonts.family.primaryBold}
           mb={isMobile ? "30px" : "60px"}
           style={{ lineHeight: 1 }}
@@ -55,8 +55,8 @@ const PetBangk = ({ isMobile }) => {
         <Image
           alt="petbangk"
           src={petbangk}
-          width={isMobile ? 300 : "100%"}
-          height={isMobile ? 81 : "100%"}
+          width={isMobile ? 250 : "100%"}
+          height={isMobile ? 65 : "100%"}
         />
         <Text
           color={theme.colors.white}
@@ -70,12 +70,16 @@ const PetBangk = ({ isMobile }) => {
           cuidados.
         </Text>
       </Col>
-      <Col width={isMobile ? "100%" : "40%"} m={isMobile && "30px 0 0 0"}>
+      <Col
+        width={isMobile ? "100%" : "40%"}
+        m={isMobile && "30px 0 0 0"}
+        align="center"
+      >
         <Image
           alt="cat"
           src={cat}
-          width={isMobile ? 300 : 643}
-          height={isMobile ? 240 : "auto"}
+          width={isMobile ? 250 : 643}
+          height={isMobile ? 200 : "auto"}
         />
         <Button
           width={"300px"}

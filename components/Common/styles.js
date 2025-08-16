@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   align-items: center;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    padding: 60px 77px 86px 83px;
+    padding: 60px 77px 30px 83px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme

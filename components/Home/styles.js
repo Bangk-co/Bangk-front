@@ -104,9 +104,9 @@ export const Message = styled.h6`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.sm};
-    line-height: 12px;
+    font-size: ${theme.fonts.size.default2};
     width: 320px;
+    line-height: 18px;
     margin: 0 0 15px 0;
   }
 `;
@@ -271,12 +271,12 @@ export const Col3 = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
     height: 430px;
-    padding: 29px 87px 15.66px 24px;
+    padding: 29px 24px 15.66px 24px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    padding: 41px 87px 19.66px 81px;
+    padding: 41px 24px 19.66px 81px;
   }
 `;
 
@@ -326,7 +326,7 @@ export const Text1Bangk = styled.div`
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.fonts.size.default2};
     line-height: 18px;
-    margin: 17px 0px 28px 0px;
+    margin: 10px 0px 18px 0px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -344,14 +344,15 @@ export const Text2Bangk = styled.div`
   margin-bottom: 27px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.sm};
-    line-height: 11px;
+    font-size: ${theme.fonts.size.default2};
+    line-height: 15px;
+    margin-bottom: 10px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
-    font-size: ${theme.fonts.size.sm};
-    line-height: 11px;
+    font-size: ${theme.fonts.size.default2};
+    line-height: 15px;
   }
 `;
 

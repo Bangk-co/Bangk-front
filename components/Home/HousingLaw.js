@@ -33,7 +33,7 @@ const HousingLaw = ({ isMobile, isTablet }) => {
       </Text>
       <Text
         color={theme.colors.green}
-        size={isMobile ? theme.fonts.size.default2 : theme.fonts.size.h3s}
+        size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h3s}
         font={theme.fonts.family.primaryMedium}
         mb={isMobile ? "50px" : "70px"}
       >

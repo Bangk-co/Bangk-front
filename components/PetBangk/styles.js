@@ -45,15 +45,15 @@ export const Title = styled.div`
   color: ${(props) => (props.color ? props.color : theme.colors.white)};
   height: 75px;
 
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.fonts.size.h6};
+    height: 25px;
+  }
+
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     font-size: ${theme.fonts.size.h2};
     height: 47px;
-  }
-
-  @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.h5s};
-    height: 25px;
   }
 `;
 

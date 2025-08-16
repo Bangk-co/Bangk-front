@@ -14,7 +14,7 @@ import man from "../../assets/img/yellow-man.svg";
 import star from "../../assets/icons/orange-star.svg";
 import { Button } from "../Button";
 import { useRouter } from "next/router";
-import { Text } from "@/styles/Common";
+import { theme } from "@/styles/theme";
 import { wappLink } from "@/utilities/options";
 
 const WhyWeDoIt = ({ isMobile }) => {
@@ -30,7 +30,7 @@ const WhyWeDoIt = ({ isMobile }) => {
     document.body.appendChild(a);
     a.target = "_blank";
     a.click();
-  }
+  };
 
   return (
     <WrapperWhy>
@@ -49,9 +49,7 @@ const WhyWeDoIt = ({ isMobile }) => {
         />
       </Col1>
       <Col2>
-        <TitleWhy>
-          Conoce nuestro servicio ¡Ahorro Hipotecario!
-        </TitleWhy>
+        <TitleWhy>Conoce nuestro servicio ¡Ahorro Hipotecario!</TitleWhy>
         <WrapperStarWhy>
           <Image
             alt="star"
@@ -71,7 +69,14 @@ const WhyWeDoIt = ({ isMobile }) => {
           <br></br> Este trámite se conoce como endoso. La buena noticia…{" "}
           <br></br>en <strong>Bangk lo hacemos sin costo para ti.</strong>
         </TextWhy>
-        <Button onClick={goInsurance}>Conoce más</Button>
+        <Button
+          height={isMobile && "25px"}
+          width={isMobile && "150px"}
+          size={isMobile && theme.fonts.size.default2}
+          onClick={goInsurance}
+        >
+          Conoce más
+        </Button>
 
         <WrapperStarWhy>
           <Image
@@ -83,9 +88,18 @@ const WhyWeDoIt = ({ isMobile }) => {
           <SubtitleWhy>Optimización de tu crédito</SubtitleWhy>
         </WrapperStarWhy>
         <TextWhy>
-          Reestructuramos legalmente tu plan de pagos para reducir el plazo de tu crédito hipotecario o leasing habitacional, pagando mucho menos en intereses. <br></br>
+          Reestructuramos legalmente tu plan de pagos para reducir el plazo de
+          tu crédito hipotecario o leasing habitacional, pagando mucho menos en
+          intereses. <br></br>
         </TextWhy>
-        <Button onClick={goWapp}>Conoce más</Button>
+        <Button
+          height={isMobile && "25px"}
+          width={isMobile && "150px"}
+          size={isMobile && theme.fonts.size.default2}
+          onClick={goWapp}
+        >
+          Conoce más
+        </Button>
 
         <WrapperStarWhy>
           <Image
@@ -97,9 +111,18 @@ const WhyWeDoIt = ({ isMobile }) => {
           <SubtitleWhy>Compra de cartera</SubtitleWhy>
         </WrapperStarWhy>
         <TextWhy>
-          Si tienes un crédito de vivienda o vehículo, buscamos opciones de compra de cartera con tasas más bajas, lo que reduce tu cuota o el tiempo de pago, o ambas. <br></br>
+          Si tienes un crédito de vivienda o vehículo, buscamos opciones de
+          compra de cartera con tasas más bajas, lo que reduce tu cuota o el
+          tiempo de pago, o ambas. <br></br>
         </TextWhy>
-        <Button onClick={goWapp}>Conoce más</Button>
+        <Button
+          height={isMobile && "25px"}
+          width={isMobile && "150px"}
+          size={isMobile && theme.fonts.size.default2}
+          onClick={goWapp}
+        >
+          Conoce más
+        </Button>
       </Col2>
     </WrapperWhy>
   );

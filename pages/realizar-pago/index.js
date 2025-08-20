@@ -38,9 +38,10 @@ const RealizarPago = ({ isMobile }) => {
   const [loading, setLoading] = useState(false);
   const [transactionId, setTransactionId] = useState(null);
   const [transactionReference, setTransactionReference] = useState(null);
-  const { data: statusTransaction, isSuccess: isSuccessStatusTransaction } = useGetStatusTransaction(transactionReference);
+  const { data: statusTransaction, isSuccess: isSuccessStatusTransaction, refetch } = useGetStatusTransaction(transactionReference);
   const [transactionStatus, setTransactionStatus] = useState("");
   const [forceUpdate, setForceUpdate] = useState(false);
+  const [applicationId, setApplicationId] = useState(null);
   const [cardPaymentForm, setCardPaymentForm] = useState({
     email: "",
     name: "",
@@ -95,9 +96,13 @@ const RealizarPago = ({ isMobile }) => {
   useEffect(() => {
     if (isSuccessStatusTransaction) {
       setTransactionStatus(statusTransaction?.data?.result);
-      setLoading(false);
+
+      if (statusTransaction?.data?.result !== "PENDING") {
+        setLoading(false);
+      }
 
       if (statusTransaction?.data?.result === "APPROVED" || statusTransaction?.data?.result === "DECLINED") {
+        setApplicationId(null);
         setTimeout(() => {
           router.push(`/transaccion?payAssistance=${payAssistance}`);
           dispatch(setPaymentInformation({
@@ -114,6 +119,16 @@ const RealizarPago = ({ isMobile }) => {
   }, [isSuccessStatusTransaction, statusTransaction]);
 
   useEffect(() => {
+    if (transactionStatus === "PENDING") {
+      const interval = setInterval(() => {
+        refetch();
+      }, 5000);
+  
+      return () => clearInterval(interval); 
+    }
+  }, [transactionStatus, refetch]);
+  
+  useEffect(() => {
     if (transactionStatus === "VOIDED" || transactionStatus === "ERROR") {
       toast.custom(
         <CustomErrorToast
@@ -127,6 +142,12 @@ const RealizarPago = ({ isMobile }) => {
       setTransactionStatus("");
     };
   }, [transactionStatus]);
+
+  useEffect(() => {
+    return () => {
+      setApplicationId(null);
+    };
+  }, []);
 
   useEffect(() => {
     if (petAssistance) {
@@ -289,6 +310,43 @@ const RealizarPago = ({ isMobile }) => {
 
   const handlePayPets = () => {
     setLoading(true);
+    
+    if (applicationId) {
+      const cardPayload = {
+        email: cardPaymentForm.email,
+        name: cardPaymentForm.name,
+        applicationId: applicationId,
+        cardNumber: encrypt(cardPaymentForm.cardNumber),
+        expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
+        expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),
+        cardHolder: encrypt(cardPaymentForm.cardHolder),
+        paymentInstallments: 1,
+        cvc: encrypt(cardPaymentForm.cvc),
+        amount: cardPaymentForm.amount,
+        typeApplication: "PET",
+      };
+
+      cardPayment.reset();
+      cardPayment.mutate(cardPayload, {
+        onSuccess: (res) => {
+          setTransactionReference(res?.data?.result?.transactionReference);
+          setTransactionId(res?.data?.result?.transactionId);
+          dispatch(setPetsFormInfo({}));
+          setForceUpdate(!forceUpdate);
+        },
+        onError: (err) => {
+          toast.custom(
+            <CustomErrorToast
+              message={err?.response?.data?.errors[0]}
+            />,
+            { duration: 5000 }
+          )
+          setLoading(false);
+        }
+      });
+      return;
+    }
+
     const petPayload = { 
       ...petsForm, 
       pets: petsForm.pets.map((pet) => ({ 
@@ -304,11 +362,11 @@ const RealizarPago = ({ isMobile }) => {
     createPetInsurance.reset();
     createPetInsurance.mutate(petPayload, {
       onSuccess: (res) => {
-        const applicationId = res?.data?.clientInsuredId;
+        setApplicationId(res?.data?.clientInsuredId)
         const cardPayload = {
           email: cardPaymentForm.email,
           name: cardPaymentForm.name,
-          applicationId: applicationId,
+          applicationId: res?.data?.clientInsuredId,
           cardNumber: encrypt(cardPaymentForm.cardNumber),
           expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
           expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),
@@ -347,17 +405,54 @@ const RealizarPago = ({ isMobile }) => {
 
   const handlePay = () => {
     setLoading(true);
+    
+    if (applicationId) {
+      const cardPayload = {
+        email: cardPaymentForm.email,
+        name: cardPaymentForm.name,
+        applicationId: applicationId,
+        cardNumber: encrypt(cardPaymentForm.cardNumber),
+        expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
+        expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),
+        cardHolder: encrypt(cardPaymentForm.cardHolder),
+        paymentInstallments: 1,
+        cvc: encrypt(cardPaymentForm.cvc),
+        amount: cardPaymentForm.amount,
+        typeApplication: "MED",
+      };
+
+      cardPayment.reset();
+      cardPayment.mutate(cardPayload, {
+        onSuccess: (res) => {
+          setTransactionReference(res?.data?.result?.transactionReference);
+          setTransactionId(res?.data?.result?.transactionId);
+          dispatch(setMedFormInfo({}));
+          setForceUpdate(!forceUpdate);
+        },
+        onError: (err) => {
+          toast.custom(
+            <CustomErrorToast
+              message={err?.response?.data?.errors[0]}
+            />,
+            { duration: 5000 }
+          )
+          setLoading(false);
+        }
+      });
+      return;
+    }
+
     const medPayload = { ...medForm };
     delete medPayload.amount;
 
     createInsurance.reset();
     createInsurance.mutate(medPayload, {
       onSuccess: (res) => {
-        const applicationId = res?.data?.medEnsuranceApplicationId;
+        setApplicationId(res?.data?.medEnsuranceApplicationId)
         const cardPayload = {
           email: cardPaymentForm.email,
           name: cardPaymentForm.name,
-          applicationId: applicationId,
+          applicationId: res?.data?.medEnsuranceApplicationId,
           cardNumber: encrypt(cardPaymentForm.cardNumber),
           expiredMonth: encrypt(cardPaymentForm.expiredDate.slice(0, 2)),
           expiredYear: encrypt(cardPaymentForm.expiredDate.slice(3, 5)),

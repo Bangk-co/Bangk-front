@@ -59,8 +59,8 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
             border={theme.colors.orange500} 
             hover={theme.colors.orange500}
             labelColor={theme.colors.white} 
-            height={"40px"} 
-            width={"max-content"}
+            height={isMobile ? "50px" : "40px"} 
+            width={isMobile ? "100%" : "max-content"}
             padding={"0px 20px"}
             style={{ marginTop: "20px" }}
             onClick={handleCall}

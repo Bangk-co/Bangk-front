@@ -12,31 +12,16 @@ import stethoscope from "@/assets/icons/stethoscope.png";
 const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
   return (
     <WrapperBanner>
-      <Image
-        src={oldMan}
-        alt="oldMan"
-        height={isMobile ? 410 : 610}
-        style={{
-          marginTop: "50px",
-          zIndex: 5,
-          position: "absolute",
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
+      <Image 
+        src={oldMan} alt="oldMan" 
+        height={isMobile ? 350 : 610} 
+        style={{ marginTop: "50px", zIndex: 5, position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)" }} 
       />
-      <Image
-        src={cross}
-        alt="cross"
-        height={isMobile ? 410 : 660}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 1,
-          width: isMobile && "100%",
-        }}
+      <Image 
+        src={cross} 
+        alt="cross" 
+        height={isMobile ? 350 : 660}
+        style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 1 }} 
       />
       <Div
         direction="column"
@@ -55,10 +40,7 @@ const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
             size={theme.fonts.size.h5s}
             family={theme.fonts.family.primary}
             mb="25px"
-            style={{
-              width: isMobile ? "370px" : "420px",
-              textAlign: isMobile ? "center" : "right",
-            }}
+            style={{ width: isMobile ? "100%" : "420px", textAlign: isMobile ? "center" : "right" }}
           >
             A un mensaje, llamada, notificación de distancia cuidarte se hace
             fácil.
@@ -78,12 +60,8 @@ const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
           </Button>
         </Div>
         <Div width="100%" justify="space-between" align="center">
-          <Image alt="logo" src={logo} width={isMobile ? 250 : 290} />
-          <Image
-            alt="stethoscope"
-            src={stethoscope}
-            width={isMobile ? 110 : 120}
-          />
+          <Image alt="logo" src={logo} width={isMobile ? 220 : 290} />
+          <Image alt="stethoscope" src={stethoscope} width={isMobile ? 100 : 120} />
         </Div>
       </Div>
     </WrapperBanner>

@@ -35,6 +35,10 @@ const Banner = ({ isMobile, isTablet }) => {
     return "30px";
   };
 
+  const handleCall = () => {
+    window.open("tel:3336025611", "_blank");
+  };
+
   return (
     <WrapperBanner>
       <Div direction="row">
@@ -66,10 +70,23 @@ const Banner = ({ isMobile, isTablet }) => {
                 hover={theme.colors.yellow}
                 border={theme.colors.yellow}
                 borderHover={theme.colors.yellow}
-                width={isMobile ? "100%" : "260px"}
+                width={"260px"}
                 onClick={() => router.push("/pet-bangk/info-petbangk")}
               >
                 Conoce las coberturas
+              </Button>
+              <Button 
+                {...buttonProps}
+                background={theme.colors.yellow}
+                hover={theme.colors.yellow}
+                border={theme.colors.yellow}
+                borderHover={theme.colors.yellow}
+                labelColor={theme.colors.blue}
+                width={"max-content"}
+                padding={"0px 20px"}
+                onClick={handleCall}
+              >
+                Línea de asistencia mascotas: 333 6025611
               </Button>
             </Div>
           )}
@@ -90,6 +107,19 @@ const Banner = ({ isMobile, isTablet }) => {
             onClick={() => router.push("/pet-bangk/info-petbangk")}
           >
             Conoce las coberturas
+          </Button>
+          <Button 
+            {...buttonProps}
+            background={theme.colors.yellow}
+            hover={theme.colors.yellow}
+            border={theme.colors.yellow}
+            borderHover={theme.colors.yellow}
+            labelColor={theme.colors.blue}
+            width={"100%"}
+            padding={"20px 0px"}
+            onClick={handleCall}
+          >
+            Línea de asistencia mascotas: 333 6025611
           </Button>
         </Div>
       )}

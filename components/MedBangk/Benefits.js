@@ -75,7 +75,7 @@ export const Benefits = ({ isMobile }) => {
                 key={index}
                 p={isMobile ? "20px" : "50px 90px"}
                 gap="50px"
-                width={isMobile ? "350px" : "100%"}
+                width={isMobile ? "320px" : "100%"}
                 style={{
                   borderBottom:
                     index + 1 < benefitsOptions.length &&

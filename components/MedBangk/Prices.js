@@ -114,7 +114,7 @@ export const Prices = ({ isMobile, isTablet }) => {
         </Div>
       </Div>
 
-      <Div direction={isMobile || isTablet ? "column" : "row"} gap="40px">
+      <Div direction={isMobile || isTablet ? "column" : "row"} gap="40px" align="center">
         {plansList.map((plan, index) => (
           <CardPlan
             key={index}
@@ -125,7 +125,7 @@ export const Prices = ({ isMobile, isTablet }) => {
             }
             onClick={() => setSelectedPlan(plan.id)}
             style={{
-              height: selectedPlan === plan.id ? "488px" : "410px",
+              height: isMobile ? "max-content" : (selectedPlan === plan.id ? "488px" : "410px"),
             }}
           >
             {selectedPlan === plan.id && (

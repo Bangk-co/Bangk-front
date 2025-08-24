@@ -46,6 +46,7 @@ export const WrapperLeft = styled.div`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
+    padding: 80px 50px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -161,6 +162,10 @@ export const CardPlan = styled.div`
   width: 378px;
   border: 1px solid ${theme.colors.gray1100};
   cursor: pointer;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    width: 90%;
+  }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {

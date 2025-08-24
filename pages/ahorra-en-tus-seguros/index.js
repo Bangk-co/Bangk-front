@@ -12,7 +12,7 @@ import { setPaymentSource } from "@/store/payment";
 
 const Insurance = ({ isMobile, isTablet }) => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
@@ -20,7 +20,7 @@ const Insurance = ({ isMobile, isTablet }) => {
   }, [dispatch]);
 
   return (
-    <Div direction="column">
+    <Div direction="column" style={{ overflowX: isMobile && "hidden" }}>
       <Banner isMobile={isMobile} />
       <Stepper isMobile={isMobile} isTablet={isTablet} />
       <Save isMobile={isMobile} isTablet={isTablet} />

@@ -38,6 +38,7 @@ export const CustomButton = styled(Button)`
 
     @media (max-width: ${theme.breakpoints.sm}) {
       width: ${({ mobileWidth }) => mobileWidth || "140px"};
+      min-width: ${({ mobileWidth, width }) => mobileWidth || width || "50px"};
       padding: 0 12px;
     }
 

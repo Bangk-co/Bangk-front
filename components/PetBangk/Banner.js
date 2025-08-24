@@ -14,7 +14,7 @@ const Banner = ({ isMobile, isTablet }) => {
     labelColor: theme.colors.purple,
     labelWeight: theme.fonts.weight.bold,
     size: isMobile ? theme.fonts.size.sm : theme.fonts.size.default,
-    height: isMobile ? "28.53px" :"42.74px",
+    height: isMobile ? "28.53px" : "42.74px",
   };
 
   const returnWidthImage = () => {
@@ -44,26 +44,27 @@ const Banner = ({ isMobile, isTablet }) => {
       <Div direction="row">
         <Div width={"60%"} direction="column">
           <Title style={{ marginBottom: isMobile ? "60px" : "100px" }}>
-            Cuidamos a quienes {" "} 
-            <span style={{ color: theme.colors.yellow, fontFamily: theme.fonts.family.primaryBold }}>dejan huella!</span>
+            Cuidamos a quienes{" "}
+            <span
+              style={{
+                color: theme.colors.yellow,
+                fontFamily: theme.fonts.family.primaryBold,
+              }}
+            >
+              dejan huella!
+            </span>
           </Title>
           <Text mt={returnMarginText1()}>
-            Cuidamos no solo tu bolsillo, si no tus seres queridos.
-            Sabemos que tu mascota es uno más de tu familia y se 
-            merece todos los cuidados.
+            Cuidamos no solo tu bolsillo, si no tus seres queridos. Sabemos que
+            tu mascota es uno más de tu familia y se merece todos los cuidados.
           </Text>
           <Text mt={returnMarginText2()}>
-            Con más de 400 proveedores para el cuidado y una
-            cobertura de aprox. 80% del territorio nacional, tus
-            mascotas siempre estarán seguras.
+            Con más de 400 proveedores para el cuidado y una cobertura de aprox.
+            80% del territorio nacional, tus mascotas siempre estarán seguras.
           </Text>
           {!isMobile && (
-            <Div 
-              m="40px 0 0 0" 
-              gap="28px"
-              direction="row"
-            >
-              <Button 
+            <Div m="40px 0 0 0" gap="28px" direction="row">
+              <Button
                 {...buttonProps}
                 background={theme.colors.yellow}
                 hover={theme.colors.yellow}
@@ -95,13 +96,8 @@ const Banner = ({ isMobile, isTablet }) => {
         </Div>
       </Div>
       {isMobile && (
-        <Div 
-          m="20px 0 0 0" 
-          gap="15px"
-          direction="column"
-          width="100%"
-        >
-          <Button 
+        <Div m="20px 0 0 0" gap="15px" direction="column" width="100%">
+          <Button
             {...buttonProps}
             background={theme.colors.yellow}
             hover={theme.colors.yellow}
@@ -128,7 +124,7 @@ const Banner = ({ isMobile, isTablet }) => {
         </Div>
       )}
     </WrapperBanner>
-  )
+  );
 };
 
 export default Banner;

@@ -6,34 +6,37 @@ import HowWorks from "@/components/LookingPet/HowWorks";
 import SearchPackages from "@/components/LookingPet/SearchPackages";
 import React from "react";
 
-
 const LookingForYourPet = ({ isMobile, isTablet }) => {
   const breadcrumbs = [
     {
       label: "Bangk",
       href: "/",
-      type: "link"
+      type: "link",
     },
     {
       label: "PetBangk",
       href: "/pet-bangk",
-      type: "link"
+      type: "link",
     },
     {
       label: "Buscamos tu mascota",
-      type: "text"
-    }
+      type: "text",
+    },
   ];
   return (
-    <>
+    <div style={{ overflowX: isMobile && "hidden" }}>
       <Breadcrumbs items={breadcrumbs} isMobile={isMobile} />
       <Banner isMobile={isMobile} isTablet={isTablet} />
       <HowWorks isMobile={isMobile} isTablet={isTablet} />
       <SearchPackages isMobile={isMobile} isTablet={isTablet} />
       <Footer isMobile={isMobile} isTablet={isTablet} />
-      <GeneralConditions isMobile={isMobile} isTablet={isTablet} source="lookingPet" />
-    </>
-  )
-}
+      <GeneralConditions
+        isMobile={isMobile}
+        isTablet={isTablet}
+        source="lookingPet"
+      />
+    </div>
+  );
+};
 
 export default LookingForYourPet;

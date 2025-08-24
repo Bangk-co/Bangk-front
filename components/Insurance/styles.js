@@ -87,6 +87,10 @@ export const WrapperSave = styled.div`
 export const Col3 = styled.div`
   display: flex;
 
+  @media (max-width: ${theme.breakpoints.sm}) {
+    margin-top: 30px;
+  }
+
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
       .breakpoints.md}) {
     margin-top: -20vh;
@@ -163,8 +167,8 @@ export const MessageSave = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
-    line-height: 12px;
+    font-size: ${theme.fonts.size.default2};
+    line-height: 18px;
     width: 220px;
     margin-bottom: 12px;
   }
@@ -194,7 +198,7 @@ export const RowData = styled.div`
   width: 100%;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    height: 91px;
+    height: 100px;
   }
 
   @media (min-width: ${theme.breakpoints.sm}) and (max-width: ${theme
@@ -229,8 +233,8 @@ export const InfoText = styled.div`
   align-self: center;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxxs};
-    line-height: 10px;
+    font-size: ${theme.fonts.size.xs};
+    line-height: 14px;
     width: 171px;
   }
 
@@ -370,7 +374,7 @@ export const WrapperTitle = styled.div`
     top: 85px;
     left: 45px;
 
-    font-size: ${theme.fonts.size.xxs};
+    font-size: ${theme.fonts.size.default2};
     line-height: 12px;
   }
 
@@ -420,8 +424,8 @@ export const Text2 = styled.div`
   width: 373px;
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    font-size: ${theme.fonts.size.xxs};
-    line-height: 12px;
+    font-size: ${theme.fonts.size.sm};
+    line-height: 14px;
     width: 215px;
   }
 

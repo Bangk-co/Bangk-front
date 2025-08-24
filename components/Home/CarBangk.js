@@ -176,6 +176,7 @@ const CarBangk = ({ isMobile }) => {
             />
             <Button
               height={"40px"}
+              width={isMobile ? "150px" : "163px"}
               font={theme.fonts.family.primaryBold}
               size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
               background={insurance.buttonColor}

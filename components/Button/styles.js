@@ -4,7 +4,7 @@ import { theme } from "../../styles/theme";
 
 export const CustomButton = styled(Button)`
   width: ${({ width }) => width || "163px"} !important;
-  height: 42.74px;
+  height: ${({ height }) => height || "42.74px"};
   background: ${({ background }) => background || theme.colors.yellow} 0% 0%
     no-repeat padding-box;
   border-radius: 43px;
@@ -20,7 +20,7 @@ export const CustomButton = styled(Button)`
   padding: ${({ padding }) => padding || "0px"};
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    width: min-content !important;
+    width: ${({ width }) => width || "min-content"} !important;
     padding: 0 12px;
   }
 
@@ -50,12 +50,13 @@ export const CustomButton = styled(Button)`
       .breakpoints.md}) {
     width: 88px;
     height: 18px;
-    font-size: ${theme.fonts.size.xxs};
+
+    font-size: ${({ size }) => size || theme.fonts.size.xxs};
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    width: 80.83px;
-    height: 16.53px;
-    font-size: ${theme.fonts.size.xxs};
+    width: ${({ width }) => width || "min-content"} !important;
+    height: ${({ height }) => height || "16.53px"};
+    font-size: ${({ size }) => size || theme.fonts.size.xxs};
   }
 `;

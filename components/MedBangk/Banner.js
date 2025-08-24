@@ -23,20 +23,27 @@ const Banner = ({ isMobile, isTablet, handleScrollTo }) => {
         height={isMobile ? 350 : 660}
         style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 1 }} 
       />
-      <Div direction="column" width="100%" height="100%" justify="space-between" style={{ zIndex: 10 }}>
-        <Div 
-          direction="column" 
-          width="100%" 
+      <Div
+        direction="column"
+        width="100%"
+        height="100%"
+        justify="space-between"
+        style={{ zIndex: 10 }}
+      >
+        <Div
+          direction="column"
+          width="100%"
           style={{ alignItems: isMobile ? "center" : "flex-end" }}
         >
-          <Text 
+          <Text
             color={theme.colors.white}
             size={theme.fonts.size.h5s}
             family={theme.fonts.family.primary}
             mb="25px"
             style={{ width: isMobile ? "100%" : "420px", textAlign: isMobile ? "center" : "right" }}
           >
-            A un mensaje, llamada, notificación de distancia cuidarte se hace fácil.
+            A un mensaje, llamada, notificación de distancia cuidarte se hace
+            fácil.
           </Text>
           <Button
             labelColor={theme.colors.orange}

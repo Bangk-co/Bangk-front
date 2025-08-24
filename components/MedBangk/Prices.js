@@ -207,7 +207,7 @@ export const Prices = ({ isMobile, isTablet }) => {
       {isMobile && (
         <Div m="50px 0 0 0" direction="column" align="center">
           <Text size={theme.fonts.size.h6} color={theme.colors.gray150}>
-            Indica el número de mascotas para asegurar
+            Indica el número de personas
           </Text>
           <Div m="10px 0 40px 0" gap="10px">
             <Signs
@@ -232,10 +232,13 @@ export const Prices = ({ isMobile, isTablet }) => {
         mt={isMobile ? "20px" : "40px"}
         style={{
           alignSelf: isMobile ? "center" : "flex-start",
-          marginLeft: isMobile ? "0" : "100px",
+          marginLeft: isMobile ? "20px" : "100px",
+          marginRight: isMobile && "20px",
         }}
       >
-        *El valor de la asistencia se cobrará automáticamente a tu método de pago al inicio de cada período, de acuerdo con el plan que elijas. El valor ya incluye IVA
+        *El valor de la asistencia se cobrará automáticamente a tu método de
+        pago al inicio de cada período, de acuerdo con el plan que elijas. El
+        valor ya incluye IVA
       </Text>
     </Div>
   );

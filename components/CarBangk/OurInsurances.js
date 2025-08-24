@@ -127,6 +127,7 @@ const OurInsurances = ({ isMobile }) => {
             />
             <Button
               height={"40px"}
+              width={isMobile && "200px"}
               font={theme.fonts.family.primaryBold}
               size={isMobile ? theme.fonts.size.default : theme.fonts.size.h6}
               background={insurance.buttonColor}

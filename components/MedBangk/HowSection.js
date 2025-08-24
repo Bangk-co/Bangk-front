@@ -9,6 +9,11 @@ import { Button } from "../Common/Button";
 import wow from "@/assets/img/wow.png";
 
 const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
+  
+  const handleCall = () => {
+    window.open("tel:3336025611", "_blank");
+  };
+
   return (
     <WrapperHowSection>
       <WrapperLeft>
@@ -49,6 +54,19 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
             Contando con una cobertura de cerca del 80% del
             país, y con más de 400 proovedores a tu servicio.
           </Text>
+          <Button 
+            background={theme.colors.orange500} 
+            border={theme.colors.orange500} 
+            hover={theme.colors.orange500}
+            labelColor={theme.colors.white} 
+            height={"40px"} 
+            width={"max-content"}
+            padding={"0px 20px"}
+            style={{ marginTop: "20px" }}
+            onClick={handleCall}
+          >
+            Línea de asistencia médica: 333 6025611
+          </Button>
         </Div>
       </WrapperLeft>
       <Div width={(isMobile || isTablet) ? "100%" : "45%"} style={{ position: "relative" }}>

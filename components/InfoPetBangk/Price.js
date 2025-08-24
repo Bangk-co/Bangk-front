@@ -35,15 +35,15 @@ export const Price = ({ isMobile, isTablet }) => {
 
   const getPrice = (amount, frequency) => {
     const prices = {
-      monthly: [23800, 45220, 63546],
-      semiannual: [135660, 257754, 358399],
-      annual: [257040, 488376, 678671],
+      monthly: [23800, 46172, 68544],
+      semiannual: [139944, 271491, 403039],
+      annual: [274176, 531901, 789627],
     };
 
     const additionalCosts = {
-      monthly: 20825,
-      semiannual: 98175,
-      annual: 222768,
+      monthly: 22848,
+      semiannual: 134346,
+      annual: 263209,
     };
 
     const frequencyMap = {

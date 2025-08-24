@@ -67,7 +67,7 @@ const Search = ({ isMobile, isTablet }) => {
           <Text mt={returnMarginText1()} color={theme.colors.blue200} width="85%">
             Hacemos viral a tu mascota perdida para tener
             resultados rápidos y efectivos! Usamos la misma 
-            tecnologí que las grander empresas para
+            tecnología que las grandes empresas para
             asegurarnos de llegar a todas las zonas de tu sector
             y obtener información de tu mascota mucho más 
             eficaz.
@@ -91,7 +91,7 @@ const Search = ({ isMobile, isTablet }) => {
                 height={isMobile ? "28.53px" : "42.74px"}
                 onClick={() => router.push("/pet-bangk/buscamos-tu-mascota")}
               >
-                Conoce como funciona
+                Conoce cómo funciona
               </Button>
             </Div>
           )}

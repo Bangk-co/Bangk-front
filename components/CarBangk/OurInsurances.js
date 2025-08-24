@@ -26,7 +26,7 @@ const OurInsurances = ({ isMobile }) => {
       background: theme.colors.orange500,
       title: `TRADICIONAL <span style="font-size: ${theme.fonts.size.ft}; font-family: ${theme.fonts.family.primaryBold}">(Todo Riesgos)</span>`,
       titleColor: theme.colors.green,
-      description: `<span style="font-family: ${theme.fonts.family.primaryBold};">Perdidas totales y parciales, daños a terceros hasta $4.000 millones de pesos.</span> Contamos con inspección virtual.`,
+      description: `<span style="font-family: ${theme.fonts.family.primaryBold};">Perdidas totales y parciales, daños a terceros hasta $4.000 millones de pesos.</span>`,
       descriptionColor: theme.colors.green,
       buttonColor: theme.colors.green,
       buttonText: theme.colors.yellow,

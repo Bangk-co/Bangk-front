@@ -63,7 +63,7 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
             width={isMobile ? "100%" : "max-content"}
             padding={"0px 20px"}
             style={{ marginTop: "20px" }}
-            onClick={handleCall}
+            onClick={isMobile ? handleCall : null}
           >
             Línea de asistencia médica: 333 6025611
           </Button>

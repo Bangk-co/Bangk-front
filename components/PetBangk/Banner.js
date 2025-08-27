@@ -84,7 +84,6 @@ const Banner = ({ isMobile, isTablet }) => {
                 labelColor={theme.colors.blue}
                 width={"max-content"}
                 padding={"0px 20px"}
-                onClick={handleCall}
               >
                 Línea de asistencia mascotas: 333 6025611
               </Button>

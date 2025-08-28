@@ -9,7 +9,6 @@ import { Button } from "../Common/Button";
 import wow from "@/assets/img/wow.png";
 
 const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
-  
   const handleCall = () => {
     window.open("tel:3336025611", "_blank");
   };
@@ -31,50 +30,78 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
             font={theme.fonts.family.primary}
             style={{ width: "90%" }}
           >
-            Con nuestro plan de <span style={{ fontFamily: theme.fonts.family.primaryBold }}>asistencia médica,
-            tu mejor aliado.</span>
+            Con nuestro plan de{" "}
+            <span style={{ fontFamily: theme.fonts.family.primaryBold }}>
+              asistencia médica, tu mejor aliado.
+            </span>
           </Text>
         </Div>
         <Div direction="column" gap="20px">
           <Image src={star} alt="star" />
-          <Text 
+          <Text
             color={theme.colors.green1000}
             size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5}
             mt="40px"
           >
-            Nuestro Plan MedBangk por medio de GEA
-            Colombia cuenta con una amplía cobertura y
-            beneficios adicionales. Es ideal para quienes desean
-            una atención médica más completa.
+            Nuestro Plan MedBangk por medio de GEA Colombia cuenta con una
+            amplía cobertura y beneficios adicionales. Es ideal para quienes
+            desean una atención médica más completa.
           </Text>
           <Text
             color={theme.colors.green1000}
             size={isMobile ? theme.fonts.size.h6 : theme.fonts.size.h5}
           >
-            Contando con una cobertura de cerca del 80% del
-            país, y con más de 400 proovedores a tu servicio.
+            Contando con una cobertura de cerca del 80% del país, y con más de
+            400 proovedores a tu servicio.
           </Text>
-          <Button 
-            background={theme.colors.orange500} 
-            border={theme.colors.orange500} 
+          <Button
+            background={theme.colors.orange500}
+            border={theme.colors.orange500}
             hover={theme.colors.orange500}
-            labelColor={theme.colors.white} 
-            height={isMobile ? "50px" : "40px"} 
+            labelColor={theme.colors.white}
+            height={isMobile ? "52px" : "40px"}
             width={isMobile ? "100%" : "max-content"}
             padding={"0px 20px"}
             style={{ marginTop: "20px" }}
             onClick={isMobile ? handleCall : null}
           >
-            Línea de asistencia médica: 333 6025611
+            {isMobile ? (
+              <>
+                Línea de asistencia médica:
+                <br />
+                333 6025611
+              </>
+            ) : (
+              "Línea de asistencia médica: 333 6025611"
+            )}
           </Button>
         </Div>
       </WrapperLeft>
-      <Div width={(isMobile || isTablet) ? "100%" : "45%"} style={{ position: "relative" }}>
-        <Image src={youngMan} alt="youngMan" style={{ width: "100%", height: "100%" }} />
-        <Div style={{ position: "absolute", top: isMobile ? "-20px" : "120px", right: isMobile ? "10px" : "50px" }}>
+      <Div
+        width={isMobile || isTablet ? "100%" : "45%"}
+        style={{ position: "relative" }}
+      >
+        <Image
+          src={youngMan}
+          alt="youngMan"
+          style={{ width: "100%", height: "100%" }}
+        />
+        <Div
+          style={{
+            position: "absolute",
+            top: isMobile ? "-20px" : "120px",
+            right: isMobile ? "10px" : "50px",
+          }}
+        >
           <Image src={wow} alt="wow" />
         </Div>
-        <Div style={{ position: "absolute", bottom: isMobile ? "30px" : "60px", right: isMobile ? "10px" : "50px" }}>
+        <Div
+          style={{
+            position: "absolute",
+            bottom: isMobile ? "30px" : "60px",
+            right: isMobile ? "10px" : "50px",
+          }}
+        >
           <Button
             labelColor={theme.colors.orange}
             background={theme.colors.white}
@@ -91,7 +118,7 @@ const HowSection = ({ isMobile, isTablet, handleScrollTo }) => {
         </Div>
       </Div>
     </WrapperHowSection>
-  )
+  );
 };
 
 export default HowSection;

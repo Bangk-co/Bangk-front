@@ -75,7 +75,7 @@ const Banner = ({ isMobile, isTablet }) => {
               >
                 Conoce las coberturas
               </Button>
-              <Button 
+              <Button
                 {...buttonProps}
                 background={theme.colors.yellow}
                 hover={theme.colors.yellow}
@@ -107,7 +107,7 @@ const Banner = ({ isMobile, isTablet }) => {
           >
             Conoce las coberturas
           </Button>
-          <Button 
+          <Button
             {...buttonProps}
             background={theme.colors.yellow}
             hover={theme.colors.yellow}
@@ -115,10 +115,13 @@ const Banner = ({ isMobile, isTablet }) => {
             borderHover={theme.colors.yellow}
             labelColor={theme.colors.blue}
             width={"100%"}
+            height={"52px"}
             padding={"20px 0px"}
             onClick={handleCall}
           >
-            Línea de asistencia mascotas: 333 6025611
+            Línea de asistencia mascotas:
+            <br />
+            333 6025611
           </Button>
         </Div>
       )}

@@ -47,43 +47,53 @@ const Search = ({ isMobile, isTablet }) => {
   };
 
   return (
-    <Div direction="column" p={returnPadding()} style={{ border: `1px solid ${theme.colors.gray200}`, position: "relative" }}>
+    <Div
+      direction="column"
+      p={returnPadding()}
+      style={{
+        border: `1px solid ${theme.colors.gray200}`,
+        position: "relative",
+      }}
+    >
       <Div>
-        <Image src={footprint} alt="footprint" width={52} style={{ position: "absolute", top: isMobile ? "30px" : "70px", right: isMobile ? "10px" : "30px" }}/>
+        <Image
+          src={footprint}
+          alt="footprint"
+          width={52}
+          style={{
+            position: "absolute",
+            top: isMobile ? "30px" : "70px",
+            right: isMobile ? "10px" : "30px",
+          }}
+        />
         <Div width="50%" align={isMobile || isTablet ? "center" : "flex-start"}>
-          <Image 
-            src={dalmatian} 
-            alt="dalmatian" 
-            width={returnWidthImage()} 
-          />
+          <Image src={dalmatian} alt="dalmatian" width={returnWidthImage()} />
         </Div>
         <Div width="50%" direction="column">
-          <Title color={theme.colors.blue200}>
-            Buscamos tu
-          </Title>
-          <Title color={theme.colors.yellow}>
-            Mascota
-          </Title>
-          <Text mt={returnMarginText1()} color={theme.colors.blue200} width="85%">
-            Hacemos viral a tu mascota perdida para tener
-            resultados rápidos y efectivos! Usamos la misma 
-            tecnología que las grandes empresas para
-            asegurarnos de llegar a todas las zonas de tu sector
-            y obtener información de tu mascota mucho más 
-            eficaz.
+          <Title color={theme.colors.blue200}>Buscamos tu</Title>
+          <Title color={theme.colors.yellow}>Mascota</Title>
+          <Text
+            mt={returnMarginText1()}
+            color={theme.colors.blue200}
+            width="85%"
+          >
+            Hacemos viral a tu mascota perdida para tener resultados rápidos y
+            efectivos! Usamos la misma tecnología que las grandes empresas para
+            asegurarnos de llegar a todas las zonas de tu sector y obtener
+            información de tu mascota mucho más eficaz.
           </Text>
-          <Text mt={returnMarginText2()} color={theme.colors.blue200} width="85%">
+          <Text
+            mt={returnMarginText2()}
+            color={theme.colors.blue200}
+            width="85%"
+          >
             Déjanos ayudarte a encontrar a tu amigo peludo.
           </Text>
           {!isMobile && (
-            <Div 
-              m="40px 0 0 0" 
-              gap="28px"
-              direction="row"
-            >
-              <Button 
-                {...buttonProps} 
-                background={theme.colors.yellow} 
+            <Div m="40px 0 0 0" gap="28px" direction="row">
+              <Button
+                {...buttonProps}
+                background={theme.colors.yellow}
                 hover={theme.colors.yellow}
                 border={theme.colors.yellow}
                 borderHover={theme.colors.yellow}
@@ -98,21 +108,17 @@ const Search = ({ isMobile, isTablet }) => {
         </Div>
       </Div>
       {isMobile && (
-        <Div 
-          m="20px 0 0 0" 
-          gap="15px"
-          direction="column"
-        >
-          <Button 
-            {...buttonProps} 
-            background={theme.colors.yellow} 
+        <Div m="20px 0 0 0" gap="15px" direction="column">
+          <Button
+            {...buttonProps}
+            background={theme.colors.yellow}
             hover={theme.colors.yellow}
             border={theme.colors.yellow}
             borderHover={theme.colors.yellow}
             width={isMobile ? "100%" : "260px"}
             onClick={() => router.push("/pet-bangk/buscamos-tu-mascota")}
           >
-            Conoce como funciona
+            Conoce cómo funciona
           </Button>
         </Div>
       )}

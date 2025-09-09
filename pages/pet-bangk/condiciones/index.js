@@ -141,7 +141,7 @@ const PetConditions = ({ isMobile, isTablet }) => {
         mb="40px"
         style={{ lineHeight: 0.8 }}
       >
-        Asistencia Mastocas
+        Asistencia Mascotas
         <br />
         <span style={{ fontSize: theme.fonts.size.h2 }}>
           Condiciones generales

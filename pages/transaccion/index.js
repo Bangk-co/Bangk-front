@@ -16,6 +16,7 @@ import { setMedFormInfo } from "@/store/med";
 import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 import { setPetsFormInfo } from "@/store/pets";
+import { CustomErrorToast } from "@/components/Common/CustomErrorToast";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
@@ -30,6 +31,9 @@ const TransactionState = ({ isMobile }) => {
   const [transactionReference, setTransactionReference] = useState(null);
   const [transactionInfo, setTransactionInfo] = useState({});
   const [hasErrors, setHasErrors] = useState(false);
+  const [transactionStatus, setTransactionStatus] = useState("");
+  const [bancolombiaInfo, setBancolombiaInfo] = useState({});
+  const [cancelledTransaction, setCancelledTransaction] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false);
 
   const petAssistance =
@@ -47,10 +51,18 @@ const TransactionState = ({ isMobile }) => {
     getTrxBancolombiaStatus;
 
   useEffect(() => {
+    if (isSuccessBancolombia && dataBancolombia?.data?.result?.data?.status === "PENDING") {
+      setLoadingPayment(false);
+      setCancelledTransaction(true);
+    }
+  }, [isSuccessBancolombia, dataBancolombia]);
+
+  useEffect(() => {
     if (
       isSuccessBancolombia &&
       dataBancolombia?.data?.result?.data?.status === "APPROVED"
     ) {
+      setBancolombiaInfo(dataBancolombia?.data?.result?.data);
       const bancolombiaForm = {
         email: formToSend?.email,
         name: formToSend?.name,
@@ -58,7 +70,7 @@ const TransactionState = ({ isMobile }) => {
         documentIdentificationType: formToSend?.documentTypeId,
         documentIdentificationNumber: formToSend?.documentNumber,
         tokenPayment: formToSend?.bancolombiaToken,
-        amount: 4990000, // TODO change for production formToSend?.amount,
+        amount: Number(formToSend?.amount),
         typeApplication: medAssistance ? "MED" : "PET",
         timeApplication: formToSend?.paymentOcurrencyId,
         paymentSourceId: 0,
@@ -70,14 +82,6 @@ const TransactionState = ({ isMobile }) => {
             setTransactionReference(
               resPayment?.data?.result?.transactionReference
             );
-            setTransactionInfo({
-              idNumber: resPayment?.data?.result?.transactionReference,
-              transactionDate: dataBancolombia?.data?.result?.data?.updated_At,
-              status: dataBancolombia?.data?.result?.data?.status,
-              receptor: "Building Life Technologies SAS",
-              paymentAmount: formToSend?.amount,
-              payment: `${dataBancolombia?.data?.result?.data?.bank_Account_Type} ${dataBancolombia?.data?.result?.data?.bank_Account_Last_Four}`,
-            });
           } else {
             if (loadingPayment) {
               setHasErrors(true);
@@ -92,16 +96,53 @@ const TransactionState = ({ isMobile }) => {
   }, [dataBancolombia, isSuccessBancolombia, medForm, petsForm]);
 
   const getStatusTransaction = useGetStatusTransaction(transactionReference);
-  const { data: dataStatusTransaction, isSuccess: isSuccessStatusTransaction } =
+  const { data: dataStatusTransaction, isSuccess: isSuccessStatusTransaction, refetch } =
     getStatusTransaction;
+
   useEffect(() => {
-    if (
-      isSuccessStatusTransaction &&
-      dataStatusTransaction?.data?.result === "APPROVED"
-    ) {
-      setLoadingPayment(false);
+    if (isSuccessStatusTransaction) {
+      setTransactionStatus(dataStatusTransaction?.data?.result);
+
+      if (dataStatusTransaction?.data?.result !== "PENDING") {
+        setLoadingPayment(false);
+      }
+
+      if (dataStatusTransaction?.data?.result === "APPROVED" || dataStatusTransaction?.data?.result === "DECLINED") {
+        setTransactionInfo({
+          idNumber: transactionReference,
+          transactionDate: bancolombiaInfo?.updated_At,
+          status: dataStatusTransaction?.data?.result,
+          receptor: "Building Life Technologies SAS",
+          paymentAmount: formToSend?.amount,
+          payment: `${bancolombiaInfo?.bank_Account_Type} ${bancolombiaInfo?.bank_Account_Last_Four}`,
+        });
+      }
+    };
+  }, [dataStatusTransaction, isSuccessStatusTransaction, bancolombiaInfo]);
+
+  useEffect(() => {
+    if (transactionStatus === "PENDING") {
+      const interval = setInterval(() => {
+        refetch();
+      }, 5000);
+  
+      return () => clearInterval(interval); 
     }
-  }, [dataStatusTransaction, isSuccessStatusTransaction]);
+  }, [transactionStatus, refetch]);
+
+  useEffect(() => {
+    if (transactionStatus === "VOIDED" || transactionStatus === "ERROR") {
+      toast.custom(
+        <CustomErrorToast
+          message={"Ha ocurrido un error con el método de pago. Por favor inténtalo nuevamente"}
+          
+        />,
+        { duration: 5000 }
+      )
+      setTransactionReference(null);
+      setTransactionStatus("");
+    };
+  }, [transactionStatus]);
 
   useEffect(() => {
     if (paymentInfo && Object.keys(paymentInfo).length > 0) {
@@ -186,6 +227,7 @@ const TransactionState = ({ isMobile }) => {
     dispatch(setMedFormInfo({}));
     dispatch(setPetsFormInfo({}));
     dispatch(setPaymentSource(""));
+    setCancelledTransaction(false);
     router.push(
       petAssistance
         ? "/pet-bangk/asegura-ya/?selectedPlan=1&&petsAmount=1"
@@ -297,6 +339,26 @@ const TransactionState = ({ isMobile }) => {
                 >
                   Ha ocurrido un error con el método de pago. Por favor
                   intentalo nuevamente
+                </Text>
+                <Button
+                  {...buttonProps}
+                  style={{ marginTop: "30px", width: "200px" }}
+                  onClick={handleRetry}
+                >
+                  Volver a intentar
+                </Button>
+              </>
+            )}
+            {cancelledTransaction && (
+              <>
+                <Text
+                  font={theme.fonts.family.primary}
+                  color={theme.colors.gray150}
+                  size={
+                    isMobile ? theme.fonts.size.default2 : theme.fonts.size.h6
+                  }
+                >
+                  El pago no se completó. Tu asistencia no fue creada.
                 </Text>
                 <Button
                   {...buttonProps}

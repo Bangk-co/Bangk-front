@@ -17,16 +17,19 @@ import useBancolombiaPayment from "@/hooks/WompiPayment/useBancolombiaPayment";
 import useGetStatusTransaction from "@/hooks/WompiPayment/useGetStatusTransaction";
 import { setPetsFormInfo } from "@/store/pets";
 import { CustomErrorToast } from "@/components/Common/CustomErrorToast";
+import useGetTransactionId from "@/hooks/WompiPayment/useGetTransactionId";
 
 const TransactionState = ({ isMobile }) => {
   const router = useRouter();
-  const { paymentMethod, payAssistance } = router.query;
+  const { paymentMethod, payAssistance, Type, ApplicationId } = router.query;
   const dispatch = useDispatch();
   const { paymentInfo, paymentSource } = useSelector((state) => state.payment);
   const { medForm } = useSelector((state) => state.med);
   const { petsForm } = useSelector((state) => state.pets);
   const bancolombiaPayment = useBancolombiaPayment();
-
+  const getTransactionId = useGetTransactionId(ApplicationId, Type === "0" ? true : false);
+  const { data: dataTransactionId, isSuccess: isSuccessTransactionId } = getTransactionId;
+  const [transactionId, setTransactionId] = useState(null);
   const [loadingPayment, setLoadingPayment] = useState(true);
   const [transactionReference, setTransactionReference] = useState(null);
   const [transactionInfo, setTransactionInfo] = useState({});
@@ -37,16 +40,23 @@ const TransactionState = ({ isMobile }) => {
   const [forceUpdate, setForceUpdate] = useState(false);
 
   const petAssistance =
-    payAssistance === "pet" || paymentSource === "pet";
+    payAssistance === "pet" || paymentSource === "pet" || Type === "1";
   const medAssistance =
-    payAssistance === "med" || paymentSource === "med";
+    payAssistance === "med" || paymentSource === "med" || Type === "0";
 
   const formToSend =
     paymentSource === "med" ? medForm : petsForm;
 
+  useEffect(() => {
+    if (isSuccessTransactionId) {
+      setTransactionId(dataTransactionId?.data);
+    }
+  }, [isSuccessTransactionId, dataTransactionId]);
+
   const getTrxBancolombiaStatus = useGetTrxBancolombiaStatus(
-    paymentMethod === "bancolombia" && formToSend?.bancolombiaToken
+    paymentMethod === "bancolombia" && transactionId
   );
+  
   const { data: dataBancolombia, isSuccess: isSuccessBancolombia } =
     getTrxBancolombiaStatus;
 
@@ -64,15 +74,9 @@ const TransactionState = ({ isMobile }) => {
     ) {
       setBancolombiaInfo(dataBancolombia?.data?.result?.data);
       const bancolombiaForm = {
-        email: formToSend?.email,
-        name: formToSend?.name,
-        applicationId: formToSend?.applicationId,
-        documentIdentificationType: formToSend?.documentTypeId,
-        documentIdentificationNumber: formToSend?.documentNumber,
-        tokenPayment: formToSend?.bancolombiaToken,
-        amount: Number(formToSend?.amount),
+        applicationId: ApplicationId,
+        tokenPayment: transactionId,
         typeApplication: medAssistance ? "MED" : "PET",
-        timeApplication: formToSend?.paymentOcurrencyId,
         paymentSourceId: 0,
       };
       bancolombiaPayment.reset();

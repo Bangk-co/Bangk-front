@@ -37,6 +37,7 @@ const TransactionState = ({ isMobile }) => {
   const [transactionStatus, setTransactionStatus] = useState("");
   const [bancolombiaInfo, setBancolombiaInfo] = useState({});
   const [cancelledTransaction, setCancelledTransaction] = useState(false);
+  const [amount, setAmount] = useState(0);
   const [forceUpdate, setForceUpdate] = useState(false);
 
   const petAssistance =
@@ -83,6 +84,7 @@ const TransactionState = ({ isMobile }) => {
       bancolombiaPayment.mutate(bancolombiaForm, {
         onSuccess: (resPayment) => {
           if (!resPayment?.data?.hasErrors) {
+            setAmount(resPayment?.data?.result?.amount);
             setTransactionReference(
               resPayment?.data?.result?.transactionReference
             );
@@ -117,7 +119,7 @@ const TransactionState = ({ isMobile }) => {
           transactionDate: bancolombiaInfo?.updated_At,
           status: dataStatusTransaction?.data?.result,
           receptor: "Building Life Technologies SAS",
-          paymentAmount: formToSend?.amount,
+          paymentAmount: amount,
           payment: `${bancolombiaInfo?.bank_Account_Type} ${bancolombiaInfo?.bank_Account_Last_Four}`,
         });
       }
@@ -145,6 +147,7 @@ const TransactionState = ({ isMobile }) => {
       )
       setTransactionReference(null);
       setTransactionStatus("");
+      setAmount(0);
     };
   }, [transactionStatus]);
 

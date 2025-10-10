@@ -489,16 +489,22 @@ const SecureItNow = ({ isMobile }) => {
         color: pet.color,
         age: pet.ageTime === "Años" ? pet.age * 12 : pet.age,
       })),
+      amount: getPrice(
+        petsForm.pets.length,
+        Number(petsForm.paymentOcurrencyId),
+        paymentOcurrencyOptions
+      ),
     };
-    delete petPayload.amount;
 
     createPetInsurance.reset();
     createPetInsurance.mutate(petPayload, {
       onSuccess: (res) => {
+        const payload = {
+          applicationId: res?.data?.clientInsuredId,
+          isMed: false,
+        };
         createBancolombiaToken.reset();
-        createBancolombiaToken.mutate(
-          {},
-          {
+        createBancolombiaToken.mutate(payload, {
             onSuccess: (resToken) => {
               dispatch(setMedFormInfo({}));
               dispatch(

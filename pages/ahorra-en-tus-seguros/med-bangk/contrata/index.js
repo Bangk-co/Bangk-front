@@ -220,7 +220,10 @@ const HireAssistance = ({ isMobile }) => {
       onSuccess: (resInsurance) => {
         createBancolombiaToken.reset();
         createBancolombiaToken.mutate(
-          {},
+          {
+            applicationId: resInsurance?.data?.medEnsuranceApplicationId,
+            isMed: true,
+          },
           {
             onSuccess: (resToken) => {
               dispatch(setPetsFormInfo({}));

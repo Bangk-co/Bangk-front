@@ -17,7 +17,7 @@ export const encrypt = (message) => {
       keySize: 256,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7,
-    }
+    },
   );
 
   return encryptedData.toString();
@@ -35,7 +35,7 @@ export const decrypt = (encryptedMessage) => {
       keySize: 256,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7,
-    }
+    },
   );
 
   return decryptedData.toString(CryptoJS.enc.Utf8);
@@ -70,7 +70,7 @@ export const numberFormat = (value) => {
 
     const formattedIntegerPart = integerPart.replace(
       /\B(?=(\d{3})+(?!\d))/g,
-      "."
+      ".",
     );
 
     const truncatedDecimalPart = decimalPart ? decimalPart.slice(0, 2) : "";
@@ -112,7 +112,7 @@ export const formattedPrice = (price) => {
 
 export const formattedPhone = (phone) => {
   return `${String(phone).slice(0, 3)} ${String(phone).slice(3, 6)} ${String(
-    phone
+    phone,
   ).slice(6)}`;
 };
 
@@ -328,7 +328,7 @@ export const getDiseasesNames = (selectedDiseaseIds, allDiseases) => {
     .split(",")
     .map((id) => parseInt(id, 10));
   const selectedDiseases = allDiseases.filter((disease) =>
-    selectedIds.includes(disease.id)
+    selectedIds.includes(disease.id),
   );
   return selectedDiseases.map((disease) => disease.name);
 };
@@ -399,7 +399,7 @@ export const initDataLoanInsurancePolicy = {
 export const getMedBangkPrice = (
   amount,
   frequency,
-  paymentOcurrencyOptions
+  paymentOcurrencyOptions,
 ) => {
   if (!paymentOcurrencyOptions || paymentOcurrencyOptions.length < 3) {
     return 0;
@@ -430,4 +430,4 @@ export const getMedBangkPrice = (
 
   return basePrice;
 };
-export const whatsappNumber = "573117050799";
+export const whatsappNumber = "5731170505812";
